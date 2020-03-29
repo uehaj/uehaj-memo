@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog Grommet v2]]></title><description><![CDATA[This is a DEMO site! SSG - Gatsby JS, UI - Grommet v2]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 29 Mar 2020 13:40:50 GMT</lastBuildDate><item><title><![CDATA[【React+TypeScript】Function Componentで省略可能propsの省略した場合の値を型安全に指定する]]></title><description><![CDATA[https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521 こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。 リンク先から引用。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&quot;&gt;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog Grommet v2]]></title><description><![CDATA[This is a DEMO site! SSG - Gatsby JS, UI - Grommet v2]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 29 Mar 2020 19:09:21 GMT</lastBuildDate><item><title><![CDATA[【React+TypeScript】Function Componentで省略可能propsの省略した場合の値を型安全に指定する]]></title><description><![CDATA[https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521 こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。 リンク先から引用。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&quot;&gt;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。&lt;/p&gt;
 &lt;p&gt;リンク先から引用。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;const MyComponent = (props: { name: string, telephone: string }) =&gt; {
@@ -353,7 +353,139 @@ fn apply(t1:Term, t2:Term) -&gt; Term {
     Apply(Box::new(t1), Box::new(t2))
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;テストコードを含めたものは&lt;a href=&quot;https://gist.github.com/uehaj/07a2f4856a2c51df4e1f&quot;&gt;こちらのgist&lt;/a&gt;にあります。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Reactベース静的サイトジェネレータGatsbyの真の力をお見せします]]></title><description><![CDATA[NTTテクノクロスの上原です。
+&lt;p&gt;テストコードを含めたものは&lt;a href=&quot;https://gist.github.com/uehaj/07a2f4856a2c51df4e1f&quot;&gt;こちらのgist&lt;/a&gt;にあります。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[第27回 オフラインリアルタイムどう書くの問題「分岐と行き止まり」をRustで解く]]></title><description><![CDATA[オフラインリアルタイムどう書くの過去問題「分岐と行き止まり」を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答はこちら) Rustの感想 Rust…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://yhpg.doorkeeper.jp/&quot;&gt;オフラインリアルタイムどう書く&lt;/a&gt;の&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord27raswi/&quot;&gt;過去問題「分岐と行き止まり」&lt;/a&gt;を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答は&lt;a href=&quot;http://qiita.com/Nabetani/items/23ebddb44f0234e7fb15&quot;&gt;こちら&lt;/a&gt;)&lt;/p&gt;
+&lt;h1&gt;Rustの感想&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Rustは関数型プログラミングには向いてない、と思ったが、勘違いだった。&lt;strong&gt;やればできる&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;やればできるのだが(後述)、iter(),into_iter()とcollect::&amp;#x3C;&gt;()だらけのこれが関数型と呼べるのか、関数型プログラミングの成立条件には、簡潔さというものは必須条件なのではないか? あるいはiter()とcollect()は慣れると見えなくなるのか。&lt;/li&gt;
+&lt;li&gt;ただ、ライブラリの作りとしては関数型プログラミングの道具立はそろえられている。&lt;a href=&quot;http://doc.rust-lang.org/std/iter/trait.IteratorExt.html&quot;&gt;flat_mapしかり、zip, fold, fuse, ..&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;ちなみに、iter(),into_iter()はコレクション(Vec,..)をイテレータに変換、collect()はその逆。&lt;/li&gt;
+&lt;li&gt;mapやfilterなどの処理は、イテレータ上で行う(Java8のstreamみたいなもんですね)。&lt;/li&gt;
+&lt;li&gt;iter()は繰り返し要素がborrowing(&amp;#x26;, ポインタ参照)でわたってくる。&lt;/li&gt;
+&lt;li&gt;into_iterは値渡しで、(Copy traitをderiveしてなければ)ムーブセマンティクス。&lt;/li&gt;
+&lt;li&gt;rustcの&lt;strong&gt;エラーメッセージは丁寧ですばらしい&lt;/strong&gt;、賞賛すべきレベル。学習者にとっては、このエラーメッセージが死活的に重要。エラーメッセージがこれほど丁寧でなれば、このレベルのプログラムでも絶対書けなかった(断言)。&lt;/li&gt;
+&lt;li&gt;今でもRustは&lt;strong&gt;どんどん変更されている&lt;/strong&gt;。さすがにbreaking changeの頻度は少なくなっていると思うが、この程度のプログラムでも影響のある変更は結構ある。エラーメッセージがわかりやすくなってたりもするので、できるかぎりnightlyを追うべし。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Rustが関数型プログラミングに向いてないと思った理由と、乗り越えるための対策&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;コレクションライブラリが破壊的操作ベース(sort,dedup) &lt;/li&gt;
+&lt;li&gt;(対策) → BTreeSetを使う&lt;/li&gt;
+&lt;li&gt;文字列操作も同じく破壊的操作ベース。結合するのにpush_str()とか。破壊的以前に煩雑で死ぬ。&lt;/li&gt;
+&lt;li&gt;(対策) → format!()マクロを多用。&lt;/li&gt;
+&lt;li&gt;式中の関数返り値はその場だけのテンポラリなライフタイムなので、直接・間接に後でも使う場合、ローカル変数に保存してライフタイムで延長することで回避するしかないかと思った。&lt;/li&gt;
+&lt;li&gt;(対策) → into_iter()でムーブセマンティクスにすることで回避。&lt;strong&gt;値渡しがRustの基本&lt;/strong&gt;であると心に刻む。&lt;/li&gt;
+&lt;li&gt;(クロージャにmove接頭辞を付ける(move |a| ..)のも関係がありそうだが、どういうときに使うのだろうか謎)&lt;/li&gt;
+&lt;li&gt;collectは多相だが、どんな型を返したいのかを示せる型情報が引数やselfでは与えられないため、多相性の解決を代入先の変数の型で指定するしかないのでは。&lt;/li&gt;
+&lt;li&gt;(対策)→collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()みたいに型アノテーションを使用できる。このとき、「collect::&amp;#x3C;Vec&amp;#x3C;_&gt;&gt;()」のように要素の型は指定しなくても推論されるようだ。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;コード&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;/*
+http://nabetani.sakura.ne.jp/hena/ord27raswi/
+*/
+#![feature(collections)]
+#![feature(core)]
+
+extern crate core;
+use std::string::String;
+use std::collections::BTreeSet;
+use core::iter::FromIterator;
+
+static PATHS:[(char, char);21]
+    = [(&apos;1&apos;,&apos;a&apos;),(&apos;1&apos;,&apos;g&apos;),(&apos;2&apos;,&apos;d&apos;),(&apos;2&apos;,&apos;h&apos;),
+       (&apos;3&apos;,&apos;b&apos;),(&apos;3&apos;,&apos;f&apos;),(&apos;a&apos;,&apos;b&apos;),(&apos;b&apos;,&apos;5&apos;),
+       (&apos;b&apos;,&apos;c&apos;),(&apos;c&apos;,&apos;4&apos;),(&apos;c&apos;,&apos;6&apos;),(&apos;d&apos;,&apos;c&apos;),
+       (&apos;d&apos;,&apos;e&apos;),(&apos;e&apos;,&apos;5&apos;),(&apos;f&apos;,&apos;g&apos;),(&apos;g&apos;,&apos;c&apos;),
+       (&apos;g&apos;,&apos;e&apos;),(&apos;g&apos;,&apos;h&apos;),(&apos;h&apos;,&apos;4&apos;),(&apos;h&apos;,&apos;i&apos;),
+       (&apos;i&apos;,&apos;6&apos;)];
+ 
+fn traverse(node:char, stopper:&amp;#x26;str) -&gt; Vec&amp;#x3C;String&gt; {
+    if stopper.contains(node) {
+        vec![]
+    }
+    else if node == &apos;4&apos; || node == &apos;5&apos; || node == &apos;6&apos; {
+        vec![format!(&quot;{}&quot;, node)]
+    }
+    else {
+        PATHS
+            .iter()
+            .filter(|&amp;#x26;&amp;#x26;(beg,_)|{beg==node})
+            .flat_map(|&amp;#x26;(_,end)|traverse(end, stopper).into_iter())
+            .collect()
+    }
+}
+
+fn solve(stopper:&amp;#x26;str) -&gt; Vec&amp;#x3C;String&gt; {
+    BTreeSet::from_iter(
+        [&apos;1&apos;,&apos;2&apos;,&apos;3&apos;]
+            .iter()
+            .flat_map(|start_point|
+                      traverse(*start_point, stopper)
+                      .iter()
+                      .map(|end_point| format!(&quot;{}{}&quot;, *start_point, end_point))
+                      .collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()
+                      .into_iter()
+                      )).into_iter().collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()
+}
+
+fn test(stopper: &amp;#x26;str, expected: &amp;#x26;str) {
+    let mut answer = solve(stopper)
+        .iter()
+        .map(|s| s.as_slice())
+        .collect::&amp;#x3C;Vec&amp;#x3C;&amp;#x26;str&gt;&gt;().connect(&quot;,&quot;);
+    if answer == &quot;&quot; {
+        answer = String::from_str(&quot;-&quot;);
+    }
+    assert_eq!(answer, expected);
+}
+
+fn main() {
+/*0*/ test( &quot;befi&quot;, &quot;14,16,24,26&quot; );    
+/*1*/ test( &quot;abc&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
+/*2*/ test( &quot;de&quot;, &quot;14,15,16,24,26,34,35,36&quot; );    
+/*3*/ test( &quot;fghi&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
+/*4*/ test( &quot;abcdefghi&quot;, &quot;-&quot; );    
+/*5*/ test( &quot;ag&quot;, &quot;24,25,26,34,35,36&quot; );    
+/*6*/ test( &quot;dh&quot;, &quot;14,15,16,34,35,36&quot; );    
+/*7*/ test( &quot;bf&quot;, &quot;14,15,16,24,25,26&quot; );    
+/*8*/ test( &quot;ch&quot;, &quot;15,25,35&quot; );    
+/*9*/ test( &quot;be&quot;, &quot;14,16,24,26,34,36&quot; );    
+/*10*/ test( &quot;ci&quot;, &quot;14,15,24,25,34,35&quot; );    
+/*11*/ test( &quot;cgi&quot;, &quot;15,24,25,35&quot; );    
+/*12*/ test( &quot;acgi&quot;, &quot;24,25,35&quot; );    
+/*13*/ test( &quot;cdefghi&quot;, &quot;15,35&quot; );    
+/*14*/ test( &quot;acdefghi&quot;, &quot;35&quot; );    
+/*15*/ test( &quot;cdegi&quot;, &quot;15,24,35&quot; );    
+/*16*/ test( &quot;bcdegi&quot;, &quot;24&quot; );    
+/*17*/ test( &quot;afh&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
+/*18*/ test( &quot;abfh&quot;, &quot;14,15,16,24,25,26&quot; );    
+/*19*/ test( &quot;dfh&quot;, &quot;14,15,16,34,35,36&quot; );    
+/*20*/ test( &quot;cdfh&quot;, &quot;15,35&quot; );    
+/*21*/ test( &quot;deh&quot;, &quot;14,15,16,34,35,36&quot; );    
+/*22*/ test( &quot;cdeh&quot;, &quot;15,35&quot; );    
+/*23*/ test( &quot;abefgh&quot;, &quot;24,26&quot; );    
+/*24*/ test( &quot;abdefgh&quot;, &quot;-&quot; );    
+/*25*/ test( &quot;acfghi&quot;, &quot;25,35&quot; );    
+/*26*/ test( &quot;acdfghi&quot;, &quot;35&quot; );    
+/*27*/ test( &quot;cegi&quot;, &quot;15,24,35&quot; );    
+/*28*/ test( &quot;abcfhi&quot;, &quot;15,25&quot; );    
+/*29*/ test( &quot;abcefhi&quot;, &quot;-&quot; );    
+/*30*/ test( &quot;abdi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
+/*31*/ test( &quot;abdfi&quot;, &quot;14,15,16,24&quot; );    
+/*32*/ test( &quot;bdi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
+/*33*/ test( &quot;bdfi&quot;, &quot;14,15,16,24&quot; );    
+/*34*/ test( &quot;adfh&quot;, &quot;14,15,16,34,35,36&quot; );    
+/*35*/ test( &quot;adfgh&quot;, &quot;34,35,36&quot; );    
+/*36*/ test( &quot;acdfhi&quot;, &quot;15,35&quot; );    
+/*37*/ test( &quot;bcdfgi&quot;, &quot;24&quot; );    
+/*38*/ test( &quot;bcdfghi&quot;, &quot;-&quot; );    
+/*39*/ test( &quot;defi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
+/*40*/ test( &quot;defhi&quot;, &quot;14,15,16,34,35,36&quot; );    
+/*41*/ test( &quot;cdefg&quot;, &quot;15,24,26,35&quot; );    
+/*42*/ test( &quot;cdefgi&quot;, &quot;15,24,35&quot; );    
+/*43*/ test( &quot;bdefg&quot;, &quot;24,26&quot; );    
+/*44*/ test( &quot;bdefgi&quot;, &quot;24&quot; );    
+}
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Reactベース静的サイトジェネレータGatsbyの真の力をお見せします]]></title><description><![CDATA[NTTテクノクロスの上原です。
 業務では、社内情報のReact製自前キュレーションサイトの構築を担当しています。過去に社外ブログにReactVRの記事を途中まで書いたりしましたが、ReactVR(今は改名されてReact 36…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1b7f0a86596353587466/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1b7f0a86596353587466/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;NTTテクノクロスの上原です。
 業務では、社内情報のReact製自前キュレーションサイトの構築を担当しています。過去に&lt;a href=&quot;https://www.ntt-tx.co.jp/column/dojo_review_blog/20170511/?utm_source=qiita&amp;#x26;utm_medium=ac2018&amp;#x26;utm_campaign=24&quot;&gt;社外ブログにReactVRの記事&lt;/a&gt;を途中まで書いたりしましたが、ReactVR(今は改名されて&lt;a href=&quot;https://facebook.github.io/react-360/&quot;&gt;React 360&lt;/a&gt;)が思ったより流行らなくて放置してしまい、誠に申し訳ないです。&lt;/p&gt;
 &lt;p&gt;この記事は&lt;a href=&quot;https://qiita.com/advent-calendar/2018/ntt-tx&quot;&gt;NTTテクノクロスAdvent Calendar24日目&lt;/a&gt;の記事であり、社内の勉強会で発表した内容をQiita記事として書きなおしたものです。タイトルは釣りです。
@@ -617,7 +749,70 @@ A: Gatsby can be used to build fully dynamic sites, which surprises some people 
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[TAPLのML実装をRustでやってみるシリーズ「4章 算術式のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみます。 まずは4章の算術式です。書籍でのtype termが保持するinfo…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみます。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[スタンドアローンGORMをGroovyスクリプトからシュっと利用する]]></title><description><![CDATA[G* Advent Calendar 2017 20日目の記事です。 GrailsのO/Rマッピングライブラリである「GORM」は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。 非WebアプリやGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;G* Advent Calendar 2017 20日目の記事です。&lt;/p&gt;
+&lt;p&gt;Grailsの&lt;a href=&quot;http://gorm.grails.org/latest/&quot;&gt;O/Rマッピングライブラリである「GORM」&lt;/a&gt;は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。&lt;/p&gt;
+&lt;p&gt;非WebアプリやGrails以外の他のフレームワークから高機能なORMとして使うことも可能ですし、Grailsでのシステム開発の一部として、バッチやシェルスクリプトやsshでキックしたいとか、シェルアカウントの管理者権限者だけがデータベースにアクセスしたいときには、スタンドアローンGORMが有用なケースがあります。&lt;/p&gt;
+&lt;p&gt;というのも、そういうケースでは以下のような選択肢があるにはあるのですが、いずれも固有の課題を抱えているからです。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://docs.grails.org/latest/guide/commandLine.html#creatingCustomScripts&quot;&gt;grails scripts&lt;/a&gt;としてGrailsサービスやGrailsドメインクラスを呼び出す処理などを記述し、Grailsのプロジェクトフォルダ(GRAILS_PROJ/scriptsを含む)に格納して、grailsコマンドで起動。
+問題は、プロジェクトソースコードを運用環境に展開しておく必要があること。&lt;/li&gt;
+&lt;li&gt;DB処理をWeb APIとして公開して、それを叩くクライアントを開発する。
+転送速度がネックになったり、ポートを公開することでセキュリティの問題になるかもしれない。&lt;/li&gt;
+&lt;li&gt;Service層をGrailsの&lt;a href=&quot;https://grails.org/plugin/remoting&quot;&gt;Remoting Plugin&lt;/a&gt;を使って公開する。
+問題は同上。&lt;/li&gt;
+&lt;li&gt;SQLを叩く別プログラムを開発する(Groovy SQL, ..)。
+この場合の問題は、GrailsのドメインクラスからDDL生成されたデータベースに対して、生SQLを書くのはかったるいだけではなく、ドメインクラスの制約(constraint)の処理を別途しなければならないということ。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;それぞれのケースで示した問題が許容できないとき、スタンドアローンGORMが有用です。&lt;/p&gt;
+&lt;p&gt;さて、具体的な使用方法としては、Spring Bootのアプリケーションから呼び出すこともできるでしょう。
+本記事では、もっとストレートに素のGroovyスクリプトからGORMを呼び出す例を紹介します。&lt;/p&gt;
+&lt;h1&gt;方法&lt;/h1&gt;
+&lt;p&gt;たとえば、こんな感じでGroovyスクリプトを書いて、&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;@Grab(&apos;org.grails:grails-datastore-gorm-hibernate5:6.1.0.RELEASE&apos;)
+@GrabExclude(&apos;javax.transaction:jta&apos;)
+@Grab(&apos;com.h2database:h2:1.4.192&apos;)
+@Grab(&apos;org.apache.tomcat:tomcat-jdbc:8.5.0&apos;)
+@Grab(&apos;org.slf4j:slf4j-log4j12&apos;)
+import java.lang.String
+import org.grails.orm.hibernate.HibernateDatastore
+import grails.gorm.annotation.Entity
+
+@Entity
+class Book {
+    String title
+    static hasMany = [authors: Author]
+    String toString() {&quot;$id: $title&quot;}
+}
+
+@Entity
+class Author {
+    String name
+    static hasMany = [books: Book]
+    static belongsTo = Book
+    String toString() {&quot;$id: $name&quot;}
+}
+
+def hibernateDatastore = new HibernateDatastore([
+        &apos;hibernate.hbm2ddl.auto&apos;: &apos;create-drop&apos;,
+        &apos;dataSource.driverClassName&apos;: &apos;org.h2.Driver&apos;,
+        &apos;dataSource.url&apos;: &apos;jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE&apos;,
+        &apos;dataSource.username&apos;: &apos;sa&apos;,
+        &apos;dataSource.password&apos;: &apos;&apos;,
+    ],
+    Author)
+
+Author.withTransaction {
+    Author a = new Author(name:&apos;上原 潤二&apos;);
+    Book b1 = new Book(title: &apos;プログラミングGROOVY&apos;).addToAuthors(a).save()
+    Book b2 = new Book(title: &apos;Grails徹底入門&apos;).addToAuthors(a).save()
+    println Book.findByTitleLike(&apos;G%&apos;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;GroovyおよびJDKがインストールされていれば、以下で実行できます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&gt; groovy groovyスクリプトファイル名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;GroovyやJDK以外の何かを事前ダウンロードしたりインストールしたりフォルダ構成を考えたりコンパイルしたりビルドしたりビルドスクリプトを書いたりデプロイしたりパッケージングしたりが一切不要なのが利点です✌。&lt;/p&gt;
+&lt;p&gt;なお、上記では@Entityでドメインクラスを定義していますが、データベースがGrailsアプリケーションの一部であるなら、Grailsアプリケーション本体のwar(やjar)に含まれるドメインクラスのクラスファイルのjarをクラスパスに含めれば別に書かなくても利用可能です(多分)。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[TAPLのML実装をRustでやってみるシリーズ「4章 算術式のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみます。 まずは4章の算術式です。書籍でのtype termが保持するinfo…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみます。&lt;/p&gt;
 &lt;p&gt;まずは4章の算術式です。書籍でのtype termが保持するinfoは、ソースからパージングするわけではないので略します。いらなそうなletは省きました(OCamlでの必要性は不明)。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;#![feature(box_patterns)]
 #![feature(box_syntax)]
@@ -692,139 +887,7 @@ fn main() {
 &lt;li&gt;もし完璧に適切に使いわけられないならば、それはコンパイルが通らないことを意味する。やりとげてみると、目から鱗の自然な形なのだが、最初わからないとつらい。根性しかない。&lt;/li&gt;
 &lt;li&gt;今回の場合、match式の背後にある「暗黙の代入」、すなわちマッチ対象から各パターン、ガード、枝の本体に分配されるための代入が、それぞれムーブセマンティクスなのか、ownershipをとらない参照(&amp;#x26;mutではない&amp;#x26;)なのか、boxなのかrefなのかbox refなのか、そのすべてが正しく的確に指定されている必要がある。matchが展開された結果における暗黙の代入の様子を想像する力が問われる。どっかにドキュメントありますかね…。&lt;/li&gt;
 &lt;li&gt;Rustにおけるデータ管理は、「値」が基本になる、というのはたぶん間違いない。しかし、リアルワールドでは「値だけ」でやっていくことはできない。borrwingとclone()を適宜組合せる必要がある。&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[第27回 オフラインリアルタイムどう書くの問題「分岐と行き止まり」をRustで解く]]></title><description><![CDATA[オフラインリアルタイムどう書くの過去問題「分岐と行き止まり」を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答はこちら) Rustの感想 Rust…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://yhpg.doorkeeper.jp/&quot;&gt;オフラインリアルタイムどう書く&lt;/a&gt;の&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord27raswi/&quot;&gt;過去問題「分岐と行き止まり」&lt;/a&gt;を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答は&lt;a href=&quot;http://qiita.com/Nabetani/items/23ebddb44f0234e7fb15&quot;&gt;こちら&lt;/a&gt;)&lt;/p&gt;
-&lt;h1&gt;Rustの感想&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Rustは関数型プログラミングには向いてない、と思ったが、勘違いだった。&lt;strong&gt;やればできる&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;やればできるのだが(後述)、iter(),into_iter()とcollect::&amp;#x3C;&gt;()だらけのこれが関数型と呼べるのか、関数型プログラミングの成立条件には、簡潔さというものは必須条件なのではないか? あるいはiter()とcollect()は慣れると見えなくなるのか。&lt;/li&gt;
-&lt;li&gt;ただ、ライブラリの作りとしては関数型プログラミングの道具立はそろえられている。&lt;a href=&quot;http://doc.rust-lang.org/std/iter/trait.IteratorExt.html&quot;&gt;flat_mapしかり、zip, fold, fuse, ..&lt;/a&gt;。&lt;/li&gt;
-&lt;li&gt;ちなみに、iter(),into_iter()はコレクション(Vec,..)をイテレータに変換、collect()はその逆。&lt;/li&gt;
-&lt;li&gt;mapやfilterなどの処理は、イテレータ上で行う(Java8のstreamみたいなもんですね)。&lt;/li&gt;
-&lt;li&gt;iter()は繰り返し要素がborrowing(&amp;#x26;, ポインタ参照)でわたってくる。&lt;/li&gt;
-&lt;li&gt;into_iterは値渡しで、(Copy traitをderiveしてなければ)ムーブセマンティクス。&lt;/li&gt;
-&lt;li&gt;rustcの&lt;strong&gt;エラーメッセージは丁寧ですばらしい&lt;/strong&gt;、賞賛すべきレベル。学習者にとっては、このエラーメッセージが死活的に重要。エラーメッセージがこれほど丁寧でなれば、このレベルのプログラムでも絶対書けなかった(断言)。&lt;/li&gt;
-&lt;li&gt;今でもRustは&lt;strong&gt;どんどん変更されている&lt;/strong&gt;。さすがにbreaking changeの頻度は少なくなっていると思うが、この程度のプログラムでも影響のある変更は結構ある。エラーメッセージがわかりやすくなってたりもするので、できるかぎりnightlyを追うべし。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;Rustが関数型プログラミングに向いてないと思った理由と、乗り越えるための対策&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;コレクションライブラリが破壊的操作ベース(sort,dedup) &lt;/li&gt;
-&lt;li&gt;(対策) → BTreeSetを使う&lt;/li&gt;
-&lt;li&gt;文字列操作も同じく破壊的操作ベース。結合するのにpush_str()とか。破壊的以前に煩雑で死ぬ。&lt;/li&gt;
-&lt;li&gt;(対策) → format!()マクロを多用。&lt;/li&gt;
-&lt;li&gt;式中の関数返り値はその場だけのテンポラリなライフタイムなので、直接・間接に後でも使う場合、ローカル変数に保存してライフタイムで延長することで回避するしかないかと思った。&lt;/li&gt;
-&lt;li&gt;(対策) → into_iter()でムーブセマンティクスにすることで回避。&lt;strong&gt;値渡しがRustの基本&lt;/strong&gt;であると心に刻む。&lt;/li&gt;
-&lt;li&gt;(クロージャにmove接頭辞を付ける(move |a| ..)のも関係がありそうだが、どういうときに使うのだろうか謎)&lt;/li&gt;
-&lt;li&gt;collectは多相だが、どんな型を返したいのかを示せる型情報が引数やselfでは与えられないため、多相性の解決を代入先の変数の型で指定するしかないのでは。&lt;/li&gt;
-&lt;li&gt;(対策)→collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()みたいに型アノテーションを使用できる。このとき、「collect::&amp;#x3C;Vec&amp;#x3C;_&gt;&gt;()」のように要素の型は指定しなくても推論されるようだ。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;コード&lt;/h1&gt;
-&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;/*
-http://nabetani.sakura.ne.jp/hena/ord27raswi/
-*/
-#![feature(collections)]
-#![feature(core)]
-
-extern crate core;
-use std::string::String;
-use std::collections::BTreeSet;
-use core::iter::FromIterator;
-
-static PATHS:[(char, char);21]
-    = [(&apos;1&apos;,&apos;a&apos;),(&apos;1&apos;,&apos;g&apos;),(&apos;2&apos;,&apos;d&apos;),(&apos;2&apos;,&apos;h&apos;),
-       (&apos;3&apos;,&apos;b&apos;),(&apos;3&apos;,&apos;f&apos;),(&apos;a&apos;,&apos;b&apos;),(&apos;b&apos;,&apos;5&apos;),
-       (&apos;b&apos;,&apos;c&apos;),(&apos;c&apos;,&apos;4&apos;),(&apos;c&apos;,&apos;6&apos;),(&apos;d&apos;,&apos;c&apos;),
-       (&apos;d&apos;,&apos;e&apos;),(&apos;e&apos;,&apos;5&apos;),(&apos;f&apos;,&apos;g&apos;),(&apos;g&apos;,&apos;c&apos;),
-       (&apos;g&apos;,&apos;e&apos;),(&apos;g&apos;,&apos;h&apos;),(&apos;h&apos;,&apos;4&apos;),(&apos;h&apos;,&apos;i&apos;),
-       (&apos;i&apos;,&apos;6&apos;)];
- 
-fn traverse(node:char, stopper:&amp;#x26;str) -&gt; Vec&amp;#x3C;String&gt; {
-    if stopper.contains(node) {
-        vec![]
-    }
-    else if node == &apos;4&apos; || node == &apos;5&apos; || node == &apos;6&apos; {
-        vec![format!(&quot;{}&quot;, node)]
-    }
-    else {
-        PATHS
-            .iter()
-            .filter(|&amp;#x26;&amp;#x26;(beg,_)|{beg==node})
-            .flat_map(|&amp;#x26;(_,end)|traverse(end, stopper).into_iter())
-            .collect()
-    }
-}
-
-fn solve(stopper:&amp;#x26;str) -&gt; Vec&amp;#x3C;String&gt; {
-    BTreeSet::from_iter(
-        [&apos;1&apos;,&apos;2&apos;,&apos;3&apos;]
-            .iter()
-            .flat_map(|start_point|
-                      traverse(*start_point, stopper)
-                      .iter()
-                      .map(|end_point| format!(&quot;{}{}&quot;, *start_point, end_point))
-                      .collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()
-                      .into_iter()
-                      )).into_iter().collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()
-}
-
-fn test(stopper: &amp;#x26;str, expected: &amp;#x26;str) {
-    let mut answer = solve(stopper)
-        .iter()
-        .map(|s| s.as_slice())
-        .collect::&amp;#x3C;Vec&amp;#x3C;&amp;#x26;str&gt;&gt;().connect(&quot;,&quot;);
-    if answer == &quot;&quot; {
-        answer = String::from_str(&quot;-&quot;);
-    }
-    assert_eq!(answer, expected);
-}
-
-fn main() {
-/*0*/ test( &quot;befi&quot;, &quot;14,16,24,26&quot; );    
-/*1*/ test( &quot;abc&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
-/*2*/ test( &quot;de&quot;, &quot;14,15,16,24,26,34,35,36&quot; );    
-/*3*/ test( &quot;fghi&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
-/*4*/ test( &quot;abcdefghi&quot;, &quot;-&quot; );    
-/*5*/ test( &quot;ag&quot;, &quot;24,25,26,34,35,36&quot; );    
-/*6*/ test( &quot;dh&quot;, &quot;14,15,16,34,35,36&quot; );    
-/*7*/ test( &quot;bf&quot;, &quot;14,15,16,24,25,26&quot; );    
-/*8*/ test( &quot;ch&quot;, &quot;15,25,35&quot; );    
-/*9*/ test( &quot;be&quot;, &quot;14,16,24,26,34,36&quot; );    
-/*10*/ test( &quot;ci&quot;, &quot;14,15,24,25,34,35&quot; );    
-/*11*/ test( &quot;cgi&quot;, &quot;15,24,25,35&quot; );    
-/*12*/ test( &quot;acgi&quot;, &quot;24,25,35&quot; );    
-/*13*/ test( &quot;cdefghi&quot;, &quot;15,35&quot; );    
-/*14*/ test( &quot;acdefghi&quot;, &quot;35&quot; );    
-/*15*/ test( &quot;cdegi&quot;, &quot;15,24,35&quot; );    
-/*16*/ test( &quot;bcdegi&quot;, &quot;24&quot; );    
-/*17*/ test( &quot;afh&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
-/*18*/ test( &quot;abfh&quot;, &quot;14,15,16,24,25,26&quot; );    
-/*19*/ test( &quot;dfh&quot;, &quot;14,15,16,34,35,36&quot; );    
-/*20*/ test( &quot;cdfh&quot;, &quot;15,35&quot; );    
-/*21*/ test( &quot;deh&quot;, &quot;14,15,16,34,35,36&quot; );    
-/*22*/ test( &quot;cdeh&quot;, &quot;15,35&quot; );    
-/*23*/ test( &quot;abefgh&quot;, &quot;24,26&quot; );    
-/*24*/ test( &quot;abdefgh&quot;, &quot;-&quot; );    
-/*25*/ test( &quot;acfghi&quot;, &quot;25,35&quot; );    
-/*26*/ test( &quot;acdfghi&quot;, &quot;35&quot; );    
-/*27*/ test( &quot;cegi&quot;, &quot;15,24,35&quot; );    
-/*28*/ test( &quot;abcfhi&quot;, &quot;15,25&quot; );    
-/*29*/ test( &quot;abcefhi&quot;, &quot;-&quot; );    
-/*30*/ test( &quot;abdi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
-/*31*/ test( &quot;abdfi&quot;, &quot;14,15,16,24&quot; );    
-/*32*/ test( &quot;bdi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
-/*33*/ test( &quot;bdfi&quot;, &quot;14,15,16,24&quot; );    
-/*34*/ test( &quot;adfh&quot;, &quot;14,15,16,34,35,36&quot; );    
-/*35*/ test( &quot;adfgh&quot;, &quot;34,35,36&quot; );    
-/*36*/ test( &quot;acdfhi&quot;, &quot;15,35&quot; );    
-/*37*/ test( &quot;bcdfgi&quot;, &quot;24&quot; );    
-/*38*/ test( &quot;bcdfghi&quot;, &quot;-&quot; );    
-/*39*/ test( &quot;defi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
-/*40*/ test( &quot;defhi&quot;, &quot;14,15,16,34,35,36&quot; );    
-/*41*/ test( &quot;cdefg&quot;, &quot;15,24,26,35&quot; );    
-/*42*/ test( &quot;cdefgi&quot;, &quot;15,24,35&quot; );    
-/*43*/ test( &quot;bdefg&quot;, &quot;24,26&quot; );    
-/*44*/ test( &quot;bdefgi&quot;, &quot;24&quot; );    
-}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[React-SpringのHooks APIでブラウザアニメーションを基本から極めよう!]]></title><description><![CDATA[🎄メリークリスマスイブ!🎄 この記事は、React-Springというアニメーションのライブラリを紹介する NTTテクノクロス Advent Calendar 2019 の24日目の記事です。23日目は@yuitomoさんの記事、明日25日最終日は@korodroid…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[React-SpringのHooks APIでブラウザアニメーションを基本から極めよう!]]></title><description><![CDATA[🎄メリークリスマスイブ!🎄 この記事は、React-Springというアニメーションのライブラリを紹介する NTTテクノクロス Advent Calendar 2019 の24日目の記事です。23日目は@yuitomoさんの記事、明日25日最終日は@korodroid…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th align=&quot;center&quot;&gt;&lt;/th&gt;
@@ -1404,70 +1467,7 @@ export default SampleSpring;
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[スタンドアローンGORMをGroovyスクリプトからシュっと利用する]]></title><description><![CDATA[G* Advent Calendar 2017 20日目の記事です。 GrailsのO/Rマッピングライブラリである「GORM」は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。 非WebアプリやGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;G* Advent Calendar 2017 20日目の記事です。&lt;/p&gt;
-&lt;p&gt;Grailsの&lt;a href=&quot;http://gorm.grails.org/latest/&quot;&gt;O/Rマッピングライブラリである「GORM」&lt;/a&gt;は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。&lt;/p&gt;
-&lt;p&gt;非WebアプリやGrails以外の他のフレームワークから高機能なORMとして使うことも可能ですし、Grailsでのシステム開発の一部として、バッチやシェルスクリプトやsshでキックしたいとか、シェルアカウントの管理者権限者だけがデータベースにアクセスしたいときには、スタンドアローンGORMが有用なケースがあります。&lt;/p&gt;
-&lt;p&gt;というのも、そういうケースでは以下のような選択肢があるにはあるのですが、いずれも固有の課題を抱えているからです。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;http://docs.grails.org/latest/guide/commandLine.html#creatingCustomScripts&quot;&gt;grails scripts&lt;/a&gt;としてGrailsサービスやGrailsドメインクラスを呼び出す処理などを記述し、Grailsのプロジェクトフォルダ(GRAILS_PROJ/scriptsを含む)に格納して、grailsコマンドで起動。
-問題は、プロジェクトソースコードを運用環境に展開しておく必要があること。&lt;/li&gt;
-&lt;li&gt;DB処理をWeb APIとして公開して、それを叩くクライアントを開発する。
-転送速度がネックになったり、ポートを公開することでセキュリティの問題になるかもしれない。&lt;/li&gt;
-&lt;li&gt;Service層をGrailsの&lt;a href=&quot;https://grails.org/plugin/remoting&quot;&gt;Remoting Plugin&lt;/a&gt;を使って公開する。
-問題は同上。&lt;/li&gt;
-&lt;li&gt;SQLを叩く別プログラムを開発する(Groovy SQL, ..)。
-この場合の問題は、GrailsのドメインクラスからDDL生成されたデータベースに対して、生SQLを書くのはかったるいだけではなく、ドメインクラスの制約(constraint)の処理を別途しなければならないということ。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;それぞれのケースで示した問題が許容できないとき、スタンドアローンGORMが有用です。&lt;/p&gt;
-&lt;p&gt;さて、具体的な使用方法としては、Spring Bootのアプリケーションから呼び出すこともできるでしょう。
-本記事では、もっとストレートに素のGroovyスクリプトからGORMを呼び出す例を紹介します。&lt;/p&gt;
-&lt;h1&gt;方法&lt;/h1&gt;
-&lt;p&gt;たとえば、こんな感じでGroovyスクリプトを書いて、&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;@Grab(&apos;org.grails:grails-datastore-gorm-hibernate5:6.1.0.RELEASE&apos;)
-@GrabExclude(&apos;javax.transaction:jta&apos;)
-@Grab(&apos;com.h2database:h2:1.4.192&apos;)
-@Grab(&apos;org.apache.tomcat:tomcat-jdbc:8.5.0&apos;)
-@Grab(&apos;org.slf4j:slf4j-log4j12&apos;)
-import java.lang.String
-import org.grails.orm.hibernate.HibernateDatastore
-import grails.gorm.annotation.Entity
-
-@Entity
-class Book {
-    String title
-    static hasMany = [authors: Author]
-    String toString() {&quot;$id: $title&quot;}
-}
-
-@Entity
-class Author {
-    String name
-    static hasMany = [books: Book]
-    static belongsTo = Book
-    String toString() {&quot;$id: $name&quot;}
-}
-
-def hibernateDatastore = new HibernateDatastore([
-        &apos;hibernate.hbm2ddl.auto&apos;: &apos;create-drop&apos;,
-        &apos;dataSource.driverClassName&apos;: &apos;org.h2.Driver&apos;,
-        &apos;dataSource.url&apos;: &apos;jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE&apos;,
-        &apos;dataSource.username&apos;: &apos;sa&apos;,
-        &apos;dataSource.password&apos;: &apos;&apos;,
-    ],
-    Author)
-
-Author.withTransaction {
-    Author a = new Author(name:&apos;上原 潤二&apos;);
-    Book b1 = new Book(title: &apos;プログラミングGROOVY&apos;).addToAuthors(a).save()
-    Book b2 = new Book(title: &apos;Grails徹底入門&apos;).addToAuthors(a).save()
-    println Book.findByTitleLike(&apos;G%&apos;)
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;GroovyおよびJDKがインストールされていれば、以下で実行できます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&gt; groovy groovyスクリプトファイル名
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;GroovyやJDK以外の何かを事前ダウンロードしたりインストールしたりフォルダ構成を考えたりコンパイルしたりビルドしたりビルドスクリプトを書いたりデプロイしたりパッケージングしたりが一切不要なのが利点です✌。&lt;/p&gt;
-&lt;p&gt;なお、上記では@Entityでドメインクラスを定義していますが、データベースがGrailsアプリケーションの一部であるなら、Grailsアプリケーション本体のwar(やjar)に含まれるドメインクラスのクラスファイルのjarをクラスパスに含めれば別に書かなくても利用可能です(多分)。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[npmのモジュールバージョン指定におけるチルダ(~)とキャレット(^)の違いについての直感的な理解]]></title><description><![CDATA[package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。 記法 種別 意味 問題点など ^x.y.z…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[npmのモジュールバージョン指定におけるチルダ(~)とキャレット(^)の違いについての直感的な理解]]></title><description><![CDATA[package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。 記法 種別 意味 問題点など ^x.y.z…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -1974,70 +1974,6 @@ main = do
    test [400,308,105,430,203,428,209] [104,210,429,431]     {- 38  -}
    test [200,305,214] [215]     {- 39  -}
    test [214,408,410,407,317,422] [306,316,409,423] {- 40  -}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Grails3で、Grails2と同様に設定ファイルを外部化する]]></title><description><![CDATA[Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。 本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5cd1e9a1ea3d451e784e/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5cd1e9a1ea3d451e784e/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。&lt;/p&gt;
-&lt;p&gt;本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails 3設定してみます。&lt;/p&gt;
-&lt;p&gt;やることは、Applicationクラス(grails-app/init/hoge/Application.groovy)に以下のようにアノテーションを付与することだけです。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;import org.springframework.context.annotation.*
-
-@PropertySources([
-  @PropertySource(value=&quot;classpath:hoge.properties&quot;),
-  @PropertySource(value=&quot;file:///opt/hoge/conf/hoge.properties&quot;, ignoreResourceNotFound = true),
-  @PropertySource(value=&apos;file:///${hoge.conf.file}&apos;, ignoreResourceNotFound = true)
-])
-class Application extends GrailsAutoConfiguration {
-    static void main(String[] args) {
-  :
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;上記によって以下のように動作します。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;(1) warファイルやクラスパス中のhoge.properties(ソースコードとしてはsrc/main/resouces/hoge.propertiesに置く)を読み込む。このファイル中には設定のデフォルト値を記入しておく。&lt;/li&gt;
-&lt;li&gt;(2) もしファイル「file:///opt/hoge/conf/hoge.properties」があれば設定ファイルとしてそれを読み込む。(1)で設定されたプロパティで同名のものは上書きされる。なければ何もしない。&lt;/li&gt;
-&lt;li&gt;(3) もし、システムプロパティ「hoge.conf.file」もしくは環境変数「HOGE&lt;em&gt;CONF&lt;/em&gt;FILE」で指定されたファイル名のファイルががあればそれを読み込む。(1)(2)で設定されたプロパティで同名のものは上書きされる。なければ何もしない。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;run-app時、およびwar化してtomcatにデプロイしても同様に動作します。
-ちなみに上記はSpring Bootの機能というだけです。(&lt;a href=&quot;https://www.jayway.com/2014/02/16/spring-propertysource/&quot;&gt;→参考&lt;/a&gt;)&lt;/p&gt;
-&lt;h1&gt;余談&lt;/h1&gt;
-&lt;p&gt;Spring Boot標準の設定ファイルの外部化の説明は&lt;a href=&quot;http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html&quot;&gt;こちら&lt;/a&gt;にありますが、非常に高機能かつ汎用的です。Spring Bootの主たる設定ファイルapplication.yaml(application.properties)は、特に何も設定しなくてもシステムプロパティspring.config.location(もしくは環境変数SPRING&lt;em&gt;CONFIG&lt;/em&gt;LOCATION、etc)で切り替えることができます。その場合、&lt;a href=&quot;http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-profile-specific-properties&quot;&gt;Profile-specific application properties&lt;/a&gt;というものに応じてファイル名を選択する、なども可能です。(Seasar2の&lt;a href=&quot;http://s2container.seasar.org/2.4/ja/DIContainer.html#ConditionalInclude&quot;&gt;「暗黙的な条件インクルード」&lt;/a&gt;と似た機能)&lt;/p&gt;
-&lt;p&gt;ただ、spring.config.location方式だと、ベース名(デフォルトでappliction.yamlの「application」)を変更したい場合については、別のシステムプロパティ(spring.config.name)などの設定が必要になり、その設定は設定ファイルに書けない以上、環境変数やシステムプロパティで指定するしかなく、「環境変数やシステムプロパティを指定しない」ときにapplicationから読み込もうとしてしまう、という問題があり、Grails 2までの動作と上手く整合する方法をみつけられませんでした。&lt;/p&gt;
-&lt;p&gt;もし、外部化する設定ファイルのファイル名がapplication.yaml(.properties)のままで良いのであれば、あるいはシステムプロパティや環境変数の設定が必須であるような運用ルールとするならば、spring.config.locationを使う方式でも良いかもしれません。その場合、特に設定はいりません。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Node.jsでgetchar]]></title><description><![CDATA[Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。 Promise…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Promiseベース。以下で「〜を返す」は、「〜をPromiseのresolve値とするPromiseを返す」と読みかえてほしい。&lt;/li&gt;
-&lt;li&gt;呼ぶごとに標準入力から1文字ずつ取得したUnicodeのコードポイント値を返す。readlineから得たstringからcharCodeAtしているのでサロゲートペアは別に対処が必要。&lt;/li&gt;
-&lt;li&gt;バッファにデータがなければブロッキングして入力を待つ(stdinがTTYの場合)。&lt;/li&gt;
-&lt;li&gt;行単位のバッファリングは行う。改行キーを押さない限りブロックは解除されない。&lt;/li&gt;
-&lt;li&gt;バッファにデータが存在する限り、バッファから1文字を取り出し文字コードを返す。&lt;/li&gt;
-&lt;li&gt;EOFでnullを返す。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;const readline = require(&apos;readline&apos;);
-const rl  = readline.createInterface(process.stdin);
-let buf = &quot;&quot;;
-
-function getchar() {
-  if (buf.length == 0) {
-    if (process.stdin.AtEndOfStream) {
-      return Promise.resolve(null); // EOF
-    }
-    return new Promise((resolve, reject) =&gt; {
-      rl.once(&apos;line&apos;, (line) =&gt; {
-        buf = buf + line + &quot;\n&quot;;
-        resolve(getchar());
-      });
-    });
-  } else {
-    const result = buf.charCodeAt(0);
-    buf = buf.substring(1);
-    return Promise.resolve(result);
-  }
-}
-
-async function test() {
-  let ch
-  while ((ch = await getchar()) !== null) {
-    console.log(ch);
-  }
-}
-
-test();
 &lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第12回オフラインリアルタイムどう書くの問題「サイコロを転がす」をHaskellで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの問題「サイコロを転がす」を、Haskellで解きました。
 Stateモナド厨。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5f46b012f13e1d3cee55/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5f46b012f13e1d3cee55/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/f3cca410428f90333e28&quot;&gt;第12回 オフラインリアルタイムどう書く&lt;/a&gt;の問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord12rotdice/&quot;&gt;サイコロを転がす&lt;/a&gt;」を、Haskellで解きました。
 Stateモナド厨。&lt;/p&gt;
@@ -2163,6 +2099,70 @@ main = do
     print $ test &quot;NESEEN&quot; &quot;1531263&quot;  {-- 40 --}
     print $ test &quot;WSW&quot; &quot;1426&quot;  {-- 41 --}
     print $ test &quot;ENEWE&quot; &quot;135656&quot;  {-- 42 --}
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Grails3で、Grails2と同様に設定ファイルを外部化する]]></title><description><![CDATA[Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。 本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5cd1e9a1ea3d451e784e/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5cd1e9a1ea3d451e784e/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。&lt;/p&gt;
+&lt;p&gt;本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails 3設定してみます。&lt;/p&gt;
+&lt;p&gt;やることは、Applicationクラス(grails-app/init/hoge/Application.groovy)に以下のようにアノテーションを付与することだけです。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;import org.springframework.context.annotation.*
+
+@PropertySources([
+  @PropertySource(value=&quot;classpath:hoge.properties&quot;),
+  @PropertySource(value=&quot;file:///opt/hoge/conf/hoge.properties&quot;, ignoreResourceNotFound = true),
+  @PropertySource(value=&apos;file:///${hoge.conf.file}&apos;, ignoreResourceNotFound = true)
+])
+class Application extends GrailsAutoConfiguration {
+    static void main(String[] args) {
+  :
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;上記によって以下のように動作します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(1) warファイルやクラスパス中のhoge.properties(ソースコードとしてはsrc/main/resouces/hoge.propertiesに置く)を読み込む。このファイル中には設定のデフォルト値を記入しておく。&lt;/li&gt;
+&lt;li&gt;(2) もしファイル「file:///opt/hoge/conf/hoge.properties」があれば設定ファイルとしてそれを読み込む。(1)で設定されたプロパティで同名のものは上書きされる。なければ何もしない。&lt;/li&gt;
+&lt;li&gt;(3) もし、システムプロパティ「hoge.conf.file」もしくは環境変数「HOGE&lt;em&gt;CONF&lt;/em&gt;FILE」で指定されたファイル名のファイルががあればそれを読み込む。(1)(2)で設定されたプロパティで同名のものは上書きされる。なければ何もしない。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;run-app時、およびwar化してtomcatにデプロイしても同様に動作します。
+ちなみに上記はSpring Bootの機能というだけです。(&lt;a href=&quot;https://www.jayway.com/2014/02/16/spring-propertysource/&quot;&gt;→参考&lt;/a&gt;)&lt;/p&gt;
+&lt;h1&gt;余談&lt;/h1&gt;
+&lt;p&gt;Spring Boot標準の設定ファイルの外部化の説明は&lt;a href=&quot;http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html&quot;&gt;こちら&lt;/a&gt;にありますが、非常に高機能かつ汎用的です。Spring Bootの主たる設定ファイルapplication.yaml(application.properties)は、特に何も設定しなくてもシステムプロパティspring.config.location(もしくは環境変数SPRING&lt;em&gt;CONFIG&lt;/em&gt;LOCATION、etc)で切り替えることができます。その場合、&lt;a href=&quot;http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-profile-specific-properties&quot;&gt;Profile-specific application properties&lt;/a&gt;というものに応じてファイル名を選択する、なども可能です。(Seasar2の&lt;a href=&quot;http://s2container.seasar.org/2.4/ja/DIContainer.html#ConditionalInclude&quot;&gt;「暗黙的な条件インクルード」&lt;/a&gt;と似た機能)&lt;/p&gt;
+&lt;p&gt;ただ、spring.config.location方式だと、ベース名(デフォルトでappliction.yamlの「application」)を変更したい場合については、別のシステムプロパティ(spring.config.name)などの設定が必要になり、その設定は設定ファイルに書けない以上、環境変数やシステムプロパティで指定するしかなく、「環境変数やシステムプロパティを指定しない」ときにapplicationから読み込もうとしてしまう、という問題があり、Grails 2までの動作と上手く整合する方法をみつけられませんでした。&lt;/p&gt;
+&lt;p&gt;もし、外部化する設定ファイルのファイル名がapplication.yaml(.properties)のままで良いのであれば、あるいはシステムプロパティや環境変数の設定が必須であるような運用ルールとするならば、spring.config.locationを使う方式でも良いかもしれません。その場合、特に設定はいりません。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Node.jsでgetchar]]></title><description><![CDATA[Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。 Promise…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Promiseベース。以下で「〜を返す」は、「〜をPromiseのresolve値とするPromiseを返す」と読みかえてほしい。&lt;/li&gt;
+&lt;li&gt;呼ぶごとに標準入力から1文字ずつ取得したUnicodeのコードポイント値を返す。readlineから得たstringからcharCodeAtしているのでサロゲートペアは別に対処が必要。&lt;/li&gt;
+&lt;li&gt;バッファにデータがなければブロッキングして入力を待つ(stdinがTTYの場合)。&lt;/li&gt;
+&lt;li&gt;行単位のバッファリングは行う。改行キーを押さない限りブロックは解除されない。&lt;/li&gt;
+&lt;li&gt;バッファにデータが存在する限り、バッファから1文字を取り出し文字コードを返す。&lt;/li&gt;
+&lt;li&gt;EOFでnullを返す。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;const readline = require(&apos;readline&apos;);
+const rl  = readline.createInterface(process.stdin);
+let buf = &quot;&quot;;
+
+function getchar() {
+  if (buf.length == 0) {
+    if (process.stdin.AtEndOfStream) {
+      return Promise.resolve(null); // EOF
+    }
+    return new Promise((resolve, reject) =&gt; {
+      rl.once(&apos;line&apos;, (line) =&gt; {
+        buf = buf + line + &quot;\n&quot;;
+        resolve(getchar());
+      });
+    });
+  } else {
+    const result = buf.charCodeAt(0);
+    buf = buf.substring(1);
+    return Promise.resolve(result);
+  }
+}
+
+async function test() {
+  let ch
+  while ((ch = await getchar()) !== null) {
+    console.log(ch);
+  }
+}
+
+test();
 &lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第13回オフラインリアルタイムどう書くの問題をFregeで解く]]></title><description><![CDATA[第13回 オフラインリアルタイムどう書くの問題「積み木の水槽」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/60abb9be0dfac0755dcf/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/60abb9be0dfac0755dcf/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://atnd.org/events/41603&quot;&gt;第13回 オフラインリアルタイムどう書く&lt;/a&gt;の問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord13blocktup/&quot;&gt;積み木の水槽&lt;/a&gt;」を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-frege:shortest.fr&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord13blocktup/
      
@@ -3379,81 +3379,7 @@ export default function* rootSaga() {
 &lt;li&gt;flatMapをネストさせていくときに、JSではdo記法がないので煩雑になるかと思いましたが(当初それが原因かと当て推量していた)、今回のコードではそんな複雑なものではありませんでした。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1&gt;おわりに&lt;/h1&gt;
-&lt;p&gt;元記事「リアクティブプログラミングとは何だったか」をかかれた、hiruberutoさまにおかれましては、上記調査のきっかけを作ってくださったことを感謝いたします。ありがとうございました。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[第13回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第13回 オフラインリアルタイムどう書くの参考問題「増やす減らす二倍する」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://atnd.org/events/41603&quot;&gt;第13回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord13updowndouble/&quot;&gt;増やす減らす二倍する&lt;/a&gt;」を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-frege:shortest.fr&quot;&gt;shortestPath&apos; :: Int -&gt; Int -&gt; Int
-shortestPath&apos; n maxn
-  | n==0 = 0
-  | n==1 = 1
-  | n &gt; maxn = maxBound::Int
-  | even(n) = (shortestPath&apos; (n `div` 2) (maxn-2)) + 1
-  | otherwise = minimum [(shortestPath&apos; (n-1) (maxn-2)) + 1, (shortestPath&apos; (n+1) (maxn-2)) + 1]
-
-shortestPath :: Int -&gt; Int  
-shortestPath n = shortestPath&apos; n (n*2)
-  
-
-main args = do
-  println (shortestPath 59 ==  9)
-  println (shortestPath 10 ==  5)
-  println (shortestPath 11 ==  6)
-  println (shortestPath 12 ==  5)
-  println (shortestPath 13 ==  6)
-  println (shortestPath 14 ==  6)
-  println (shortestPath 15 ==  6)
-  println (shortestPath 16 ==  5)
-  println (shortestPath 17 ==  6)
-  println (shortestPath 18 ==  6)
-  println (shortestPath 27 ==  8)
-  println (shortestPath 28 ==  7)
-  println (shortestPath 29 ==  8)
-  println (shortestPath 30 ==  7)
-  println (shortestPath 31 ==  7)
-  println (shortestPath 32 ==  6)
-  println (shortestPath 33 ==  7)
-  println (shortestPath 34 ==  7)
-  println (shortestPath 35 ==  8)
-  println (shortestPath 41 ==  8)
-  println (shortestPath 71 ==  9)
-  println (shortestPath 1023 ==  12)
-  println (shortestPath 1024 ==  11)
-  println (shortestPath 1025 ==  12)
-  println (shortestPath 1707 ==  17)
-  println (shortestPath 683 ==  15)
-  println (shortestPath 123 ==  10)
-  println (shortestPath 187 ==  11)
-  println (shortestPath 237 ==  12)
-  println (shortestPath 5267 ==  18)
-  println (shortestPath 6737 ==  18)
-  println (shortestPath 14796 ==  20)
-  println (shortestPath 18998 ==  20)
-  println (shortestPath 23820 ==  20)
-  println (shortestPath 30380 ==  21)
-  println (shortestPath 31119 ==  21)
-  println (shortestPath 33301 ==  20)
-  println (shortestPath 33967 ==  21)
-  println (shortestPath 35443 ==  22)
-  println (shortestPath 35641 ==  22)
-  println (shortestPath 43695 ==  23)
-  println (shortestPath 44395 ==  23)
-  println (shortestPath 44666 ==  22)
-  println (shortestPath 987 ==  14)
-  println (shortestPath 1021 ==  13)
-  println (shortestPath 1019 ==  13)
-  println (shortestPath 1015 ==  13)
-  println (shortestPath 1007 ==  13)
-  println (shortestPath 1011 ==  14)
-  println (shortestPath 1003 ==  14)
-  println (shortestPath 983 ==  14)
-  println (shortestPath 999 ==  14)
-  println (shortestPath 2731 ==  18)
-  println (shortestPath 6827 ==  20)
-  println (shortestPath 10923 ==  21)
-  println (shortestPath 27307 ==  23)
-  println (shortestPath 43691 ==  24)
-  println (shortestPath 109227 ==  26)
-  println (shortestPath 174763 ==  27)
-  
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Material UIのスタイル指定(JSS)]]></title><description><![CDATA[Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。 classNameで即値指定 HTMLで言うclass=の指定。Material UI…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。&lt;/p&gt;
+&lt;p&gt;元記事「リアクティブプログラミングとは何だったか」をかかれた、hiruberutoさまにおかれましては、上記調査のきっかけを作ってくださったことを感謝いたします。ありがとうございました。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Material UIのスタイル指定(JSS)]]></title><description><![CDATA[Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。 classNameで即値指定 HTMLで言うclass=の指定。Material UI…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。&lt;/p&gt;
 &lt;h1&gt;classNameで即値指定&lt;/h1&gt;
 &lt;p&gt;HTMLで言うclass=の指定。Material UI的には何もしない。BEMやscssでもなんでもいいのですが、外部スタイルシートを定義してあてがっていくパターン。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;&amp;#x3C;Hoge className=&quot;hoge fuga&quot;/&gt;
@@ -3791,40 +3717,7 @@ useCallbackの使いかたの本道です。&lt;/p&gt;
 &lt;h1&gt;まとめ&lt;/h1&gt;
 &lt;p&gt;まとめると、useCallbackを使うべきなのは、イベントハンドラをローカル関数にせざるを得ない場合、つまり関数コンポーネント本体のスコープ内の引数や、ローカル変数、特にpropの引数や他のuseStateを始めとするhooks呼び出しで得られるローカル変数の値に、関数の処理が依存している場合であり、かつ、そのローカル変数をイベントハンドラとして渡そうとしているReact要素がReact.memoされている場合です。&lt;/p&gt;
 &lt;h1&gt;おわり&lt;/h1&gt;
-&lt;p&gt;hooksは最高なんですが、留意点がありますので気をつけて使っていきましょう。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[macosで Control+[ 押下をEscapeに割り当てる]]></title><description><![CDATA[Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。 Karabinar Elementsをインストールする 以下を作成する。 `json:~/.config/karabiner/assets…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Karabinar Elementsをインストールする&lt;/li&gt;
-&lt;li&gt;以下を作成する。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;`&lt;code&gt;&lt;/code&gt;json:~/.config/karabiner/assets/complex&lt;em&gt;modifications/myconfig.json
-{
-“title”: “Ctrl+[をEscapeにする。”,
-“rules”: [
-{
-“description”: “Ctrl+[をEscapeにする。”,
-“manipulators”: [
-{
-“type”: “basic”,
-“from”: {
-“key&lt;/em&gt;code”: “open&lt;em&gt;bracket”,
-“modifiers”: {
-“mandatory”: [“control”]
-}
-},
-“to”: [
-{
-“key&lt;/em&gt;code”: “escape”
-}
-]
-}
-]
-}
-]
-}&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;3. karabinar-elementsのpreferenceからenableする
-
-&amp;#x3C;img width=&quot;945&quot; alt=&quot;スクリーンショット 2019-02-23 10.45.59.png&quot; src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/2560d287-f1ef-ac12-1d78-3fd3ca60c421.png&quot;&gt;
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[redux-sagaで検索機能の実装を写経してCSPのパワーを感じる]]></title><description><![CDATA[この記事は、@inuscriptさんによる「redux-observableで検索機能の実装を写経してRxJSのパワーを感じる」をRedux-Saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;この記事は、@inuscriptさんによる「&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;redux-observableで検索機能の実装を写経してRxJSのパワーを感じる&lt;/a&gt;」を&lt;a href=&quot;https://github.com/redux-saga/redux-saga&quot;&gt;Redux-Saga&lt;/a&gt;で書きなおしたものです。&lt;/p&gt;
+&lt;p&gt;hooksは最高なんですが、留意点がありますので気をつけて使っていきましょう。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[redux-sagaで検索機能の実装を写経してCSPのパワーを感じる]]></title><description><![CDATA[この記事は、@inuscriptさんによる「redux-observableで検索機能の実装を写経してRxJSのパワーを感じる」をRedux-Saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;この記事は、@inuscriptさんによる「&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;redux-observableで検索機能の実装を写経してRxJSのパワーを感じる&lt;/a&gt;」を&lt;a href=&quot;https://github.com/redux-saga/redux-saga&quot;&gt;Redux-Saga&lt;/a&gt;で書きなおしたものです。&lt;/p&gt;
 &lt;h1&gt;本記事の目的&lt;/h1&gt;
 &lt;p&gt;実用コードにおける非同期処理では以下のような問題が頻出する。これらについて元記事におけるRedux-obserbable(あるいはAngularが提供する)RxJSを用いた解決方法に対して、Redux-sagaによる解決方法を比較する。&lt;/p&gt;
 &lt;p&gt;(&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;元記事&lt;/a&gt;よりの引用)&lt;/p&gt;
@@ -4051,7 +3944,40 @@ main=let f = \w h p-&gt; collage w h ([drawCircle ((toFloat p)*10) 10]++drawMatr
 &lt;h1&gt;関連エントリ&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://uehaj.hatenablog.com/entry/2014/07/03/023808&quot;&gt;http://uehaj.hatenablog.com/entry/2014/07/03/023808&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[JSでデフォルトカリー化]]></title><description><![CDATA[JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。 func = arg1 => arg2 => .. 関数本体 たとえば、以下のように関数を定義して… 呼び出しは以下のようにします。 これでOK…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。&lt;/p&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[macosで Control+[ 押下をEscapeに割り当てる]]></title><description><![CDATA[Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。 Karabinar Elementsをインストールする 以下を作成する。 `json:~/.config/karabiner/assets…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Karabinar Elementsをインストールする&lt;/li&gt;
+&lt;li&gt;以下を作成する。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;`&lt;code&gt;&lt;/code&gt;json:~/.config/karabiner/assets/complex&lt;em&gt;modifications/myconfig.json
+{
+“title”: “Ctrl+[をEscapeにする。”,
+“rules”: [
+{
+“description”: “Ctrl+[をEscapeにする。”,
+“manipulators”: [
+{
+“type”: “basic”,
+“from”: {
+“key&lt;/em&gt;code”: “open&lt;em&gt;bracket”,
+“modifiers”: {
+“mandatory”: [“control”]
+}
+},
+“to”: [
+{
+“key&lt;/em&gt;code”: “escape”
+}
+]
+}
+]
+}
+]
+}&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;3. karabinar-elementsのpreferenceからenableする
+
+&amp;#x3C;img width=&quot;945&quot; alt=&quot;スクリーンショット 2019-02-23 10.45.59.png&quot; src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/2560d287-f1ef-ac12-1d78-3fd3ca60c421.png&quot;&gt;
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[JSでデフォルトカリー化]]></title><description><![CDATA[JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。 func = arg1 => arg2 => .. 関数本体 たとえば、以下のように関数を定義して… 呼び出しは以下のようにします。 これでOK…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;func = arg1 =&gt; arg2 =&gt; .. 関数本体&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;たとえば、以下のように関数を定義して…&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;func = x =&gt; y =&gt; z =&gt; x+y+z;
@@ -4260,6 +4186,308 @@ CMDに関して、「&lt;code&gt;/bin/sh -c&lt;/code&gt;」の付与は、ENTRYP
 &lt;ol&gt;
 &lt;li id=&quot;fn-1&quot;&gt;
 &lt;p&gt;よく考えると、実はENTRYPOINT項目を設定しなかった場合のデフォルト値が/bin/sh -cだと言う話で両者を説明しつくせる気がしてきた。&lt;/p&gt;
+&lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Visual Studio Codeでエスケープキーの代りに^[を使用する設定]]></title><description><![CDATA[TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに ^[を割り当てます。Cmd-K Cmd-s からkeybindigs.jsonを開いて以下を追加。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに &lt;code&gt;^[&lt;/code&gt;を割り当てます。&lt;code&gt;Cmd-K&lt;/code&gt; &lt;code&gt;Cmd-s&lt;/code&gt; からkeybindigs.jsonを開いて以下を追加。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;[
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;search.action.cancel&quot;,
+    &quot;when&quot;: &quot;searchViewletVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeFindWidget&quot;,
+    &quot;when&quot;: &quot;findWidgetVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeReplaceInFilesWidget&quot;,
+    &quot;when&quot;: &quot;replaceInputBoxFocus &amp;#x26;&amp;#x26; searchViewletVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;workbench.action.hideInterfaceOverview&quot;,
+    &quot;when&quot;: &quot;interfaceOverviewVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;workbench.action.terminal.hideFindWidget&quot;,
+    &quot;when&quot;: &quot;terminalFindWidgetVisible &amp;#x26;&amp;#x26; terminalFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;cancelRenameInput&quot;,
+    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; renameInputVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;cancelSelection&quot;,
+    &quot;when&quot;: &quot;editorHasSelection &amp;#x26;&amp;#x26; textInputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeAccessibilityHelp&quot;,
+    &quot;when&quot;: &quot;accessibilityHelpWidgetVisible &amp;#x26;&amp;#x26; editorFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeBreakpointWidget&quot;,
+    &quot;when&quot;: &quot;breakpointWidgetVisible &amp;#x26;&amp;#x26; textInputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeDirtyDiff&quot;,
+    &quot;when&quot;: &quot;dirtyDiffVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeFindWidget&quot;,
+    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; findWidgetVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeMarkersNavigation&quot;,
+    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; markersNavigationVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeParameterHints&quot;,
+    &quot;when&quot;: &quot;editorTextFocus &amp;#x26;&amp;#x26; parameterHintsVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeReferenceSearch&quot;,
+    &quot;when&quot;: &quot;referenceSearchVisible &amp;#x26;&amp;#x26; !config.editor.stablePeek&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeReferenceSearchEditor&quot;,
+    &quot;when&quot;: &quot;inReferenceSearchEditor &amp;#x26;&amp;#x26; !config.editor.stablePeek&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;editor.action.webvieweditor.hideFind&quot;,
+    &quot;when&quot;: &quot;webviewEditorFocus &amp;#x26;&amp;#x26; webviewFindWidgetVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;hideSuggestWidget&quot;,
+    &quot;when&quot;: &quot;suggestWidgetVisible &amp;#x26;&amp;#x26; textInputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;keybindings.editor.clearSearchResults&quot;,
+    &quot;when&quot;: &quot;inKeybindings &amp;#x26;&amp;#x26; inKeybindingsSearch&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;leaveEditorMessage&quot;,
+    &quot;when&quot;: &quot;messageVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;leaveSnippet&quot;,
+    &quot;when&quot;: &quot;editorTextFocus &amp;#x26;&amp;#x26; inSnippetMode&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;list.clear&quot;,
+    &quot;when&quot;: &quot;listFocus &amp;#x26;&amp;#x26; !inputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;notifications.hideList&quot;,
+    &quot;when&quot;: &quot;notificationCenterVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;notifications.hideToasts&quot;,
+    &quot;when&quot;: &quot;notificationToastsVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;removeSecondaryCursors&quot;,
+    &quot;when&quot;: &quot;editorHasMultipleSelections &amp;#x26;&amp;#x26; textInputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;search.action.cancel&quot;,
+    &quot;when&quot;: &quot;listFocus &amp;#x26;&amp;#x26; searchViewletVisible &amp;#x26;&amp;#x26; !inputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;settings.action.clearSearchResults&quot;,
+    &quot;when&quot;: &quot;inSettingsSearch&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;workbench.action.closeQuickOpen&quot;,
+    &quot;when&quot;: &quot;inQuickOpen&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;workbench.action.exitZenMode&quot;,
+    &quot;when&quot;: &quot;inZenMode&quot;
+  }
+]
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Redux Starter KitでHooksとReduxを使いこなそう]]></title><description><![CDATA[React-Reduxの公式から「Redux Starter Kit」というものが公開されています。 これがなにかといえば、私の理解するかぎり以下です。 React-Redux…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f91d68ea4ef8450fc45c/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f91d68ea4ef8450fc45c/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
+&lt;tr&gt;&lt;td&gt;Redux Sterter KitはRedux-Toolkitに名称変更されてAPIも変更されています。本記事はそのままでは最新版redux-toolkitとして動作しません。
+https://github.com/reduxjs/redux-toolkit&lt;/td&gt;&lt;/tr&gt;
+&lt;table&gt;
+#はじめに
+&lt;p&gt;React-Reduxの公式から「&lt;a href=&quot;https://redux-starter-kit.js.org/&quot;&gt;Redux Starter Kit&lt;/a&gt;」というものが公開されています。&lt;/p&gt;
+&lt;p&gt;これがなにかといえば、私の理解するかぎり以下です。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;React-Reduxまわりのベストプラクティス、定番拡張、定番併用ライブラリ、定番ミドルウェアを、簡単に組込むための簡単で軽めのライブラリ、メタパッケージ。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;CLIコマンドではなくライブラリです。
+これは良いものだと思いましたので全力でお勧めしていきます。&lt;/p&gt;
+&lt;h1&gt;特徴&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;TypeScriptフル対応。当然ですね。&lt;/li&gt;
+&lt;li&gt;React Redux 7.1対応、つまりHooks対応。これからはHooksで生きていく。Hooksの無い人生は考えられない。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/immerjs/immer&quot;&gt;Immer&lt;/a&gt;が組込まれることで、&lt;a href=&quot;https://redux-starter-kit.js.org/api/createreducer#direct-state-mutation&quot;&gt;直接state変更&lt;/a&gt;可能になり、reducer記述が簡潔になる。これはイイ! 一番の推しポイントかもしれない。MobXの利点を一部とりこんだと言えるのかも??(追記、後で知ったのですが、MobxとImmerの作者は同じ) Reduxが冗長? 昔の話です。🎉🎉🎉🎉&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Immutable.jsとくらべてImmerのいいところは、Immutable.jsのように記述が特殊にならないことが一つと、他に、同じぐらい重要なのは、他の箇所にImmutable.jsの要求するデータ構造を感染させていかないこと。非侵襲的。重要。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sliceなるものでモジュール化できる。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sliceは&lt;a href=&quot;https://redux.js.org/faq/code-structure#what-should-my-file-structure-look-like-how-should-i-group-my-action-creators-and-reducers-in-my-project-where-should-my-selectors-go&quot;&gt;Redux Ducks&lt;/a&gt;が提供するものと&lt;a href=&quot;https://redux-starter-kit.js.org/api/createslice#return-value&quot;&gt;似た&lt;/a&gt;モジュール概念。同じではないらしい。&lt;/li&gt;
+&lt;li&gt;Sliceは以下を束ねたもの。&lt;/li&gt;
+&lt;li&gt;Redux Stateのトップレベルのslice。ただしこれはオプショナルで、sliceにわけないこともできる。&lt;/li&gt;
+&lt;li&gt;それぞれごとの、combineReducerでまとめる元となるそれぞれのReducer群&lt;/li&gt;
+&lt;li&gt;sliceごとのState初期値&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sliceからaction creatorは&lt;strong&gt;&lt;em&gt;型付き&lt;/em&gt;&lt;/strong&gt;で自動生成される🎉🎉🎉🎉&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ACTION定義は完全に消える。action定数も。creatorも。1行も。一行もだ。Reduxが冗長? 昔の話です。🎉🎉🎉🎉&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;これはReact-Reduxの機能の良さからだが、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;useSelector呼び出すhookをslice Module側で定義すれば、もうほんとにstateとりだしは楽です。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;デフォルトで今は「[immutableStateInvariant, thunk, serializableStateInvariant]の&lt;a href=&quot;https://redux-starter-kit.js.org/api/getdefaultmiddleware#development&quot;&gt;ミドルウェアが設定される&lt;/a&gt;。thunkは議論あるでしょうが、使わないことももちろん可能。&lt;/li&gt;
+&lt;li&gt;Redux DevToolsの設定がデフォルトで入っている。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;上記のようなことのワイアリングが1パッケージでできる。🎉🎉🎉🎉&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://redux-starter-kit.js.org/usage/usage-guide#manual-store-setup&quot;&gt;configureStoreまわりのmiddlewareEnhancerとかapplyMiddlewareとかcomposedEnhancersとかのごちゃごちゃした難しいところ&lt;/a&gt;が&lt;a href=&quot;https://redux-starter-kit.js.org/usage/usage-guide#simplifying-store-setup-with-configurestore&quot;&gt;スッキリ&lt;/a&gt;できる。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上記はこれだけでも素晴らしいと思うのですが、さらに公式から、というのが安心感があって良いです。この形のReduxがデファクトスタンダードと扱われるようになることを期待します。&lt;/p&gt;
+&lt;h1&gt;コード例&lt;/h1&gt;
+&lt;p&gt;まずは、TodoMVCみたいなものを作るとします。そのときのタスクリストをredux stateとしてあつかうとします。そのためにTodoをあつかうためのモジュールをこんな風に定義します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-typescript:todoModule.ts&quot;&gt;import { createSlice } from &quot;redux-starter-kit&quot;;
+import { useSelector } from &quot;react-redux&quot;;
+
+export type TodoItem = {
+    title: string;
+    completed: boolean;
+    key: string;
+}
+// createSlice() で actions と reducers を一気に生成
+const todoModule = createSlice({
+    // slice: &quot;todo&quot;,
+    initialState: [] as TodoItem[],
+    reducers: {
+        addTodo: (state, action: { payload: TodoItem }) =&gt; {
+            state.push(action.payload)
+        },
+        removeTodo: (state, action: { payload: string }) =&gt; {
+            return state.filter((item) =&gt; item.key !== action.payload);
+        },
+        setCompleted: (state, action: { payload: { completed: boolean, key: string } }) =&gt; {
+            state.forEach((item) =&gt; {
+                if (item.key === action.payload.key) {
+                    item.completed = action.payload.completed;
+                }
+            });
+        },
+    }
+});
+
+export const useTodoItems = () =&gt; {
+    return useSelector((state: ReturnType&amp;#x3C;typeof todoModule.reducer&gt;) =&gt; state);
+}
+// 他に便利なuseSelect呼び出しや、粒度の細かいaction creatorのexportをここに追加していってもいい。
+
+export default todoModule;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Immerのおかげで、reducerが劇的に簡潔になってます。stateをまるごとおきかえるときはreturnで返します。あとは代入などで副作用バリバリで書いてますがProxy経由なので実際にはStateを変更していません。&lt;/p&gt;
+&lt;p&gt;上ではcombineReducerも使わないという前提でsliceプロパティは定義してません。もちろん規模が大きくなれば使ってもかまいません。使ったとしてもsliceの存在は最後のuseTodoItemsで隠蔽できます。
+ちなみに、dispatchでまるごと公開するのは楽とはいえ粗い、という人は、&lt;a href=&quot;https://redux-starter-kit.js.org/usage/usage-guide#exporting-and-using-slices&quot;&gt;ちまちまとaction creatorを公開していくこともできます&lt;/a&gt;。お好みで。&lt;/p&gt;
+&lt;p&gt;一つだけ、この記事で独自に提案したいこととして、&lt;strong&gt;useSelectorの呼出は、このモジュール側でHooks(ここではuseTodoItems)として定義して、使いやすくしたものをexportする&lt;/strong&gt;ということです。特に、useSelectorの直接呼出は型定義に関して長く煩雑になりがちで、こちらに隠蔽するメリットがあります。&lt;/p&gt;
+&lt;p&gt;次に、上に含まれるreducerから以下のようにstoreを構築します。デフォルトのミドルウェアが組み込まれますが、もちろん好きなものを組みこめもします。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-typescript:store.ts&quot;&gt;import { configureStore } from &quot;redux-starter-kit&quot;;
+import todoModule from &quot;./modules/todoModule&quot;;
+
+export const setupStore = () =&gt; {
+    const store = configureStore({
+        reducer: todoModule.reducer
+    });
+    return store
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;そのstoreから以下のようにProviderコンポーネントでアプリに組み込んで、&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-typescript:App.tsx&quot;&gt;import React from &apos;react&apos;;
+import ReactDOM from &apos;react-dom&apos;;
+import App from &apos;./App&apos;;
+import { Provider } from &quot;react-redux&quot;;
+import { setupStore } from &quot;./store&quot;;
+
+const store = setupStore();
+
+ReactDOM.render(
+    &amp;#x3C;Provider store={store}&gt;
+        &amp;#x3C;App /&gt;
+    &amp;#x3C;/Provider&gt;,
+    document.getElementById(&apos;root&apos;));
+serviceWorker.unregister();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;準備は完了。
+あとは、それぞれのコンポーネントからstoreの値をつかいたければ、&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-typescript&quot;&gt;import { useTodoItems } from &quot;./modules/todoModule&quot;;
+  :
+  const todos = useTodoItems();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;actionをディスパッチしたければ、&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-typescript&quot;&gt;import { useDispatch } from &quot;react-redux&quot;;
+import todoModule from &quot;./modules/todoModule&quot;;
+
+  ：
+  const dispatch = useDispatch();
+
+  dispatch(todoModule.actions.addTodo({ title: &quot;TITLE&quot;, completed: false, key: &apos;XXX&apos; }))  
+
+  const todos = useTodoItems();
+  const todo = todos[key];
+
+  dispatch(todoModule.actions.setCompleted({ key: todo.key, completed: !todo.completed }));
+  dispatch(todoModule.actions.removeTodo(todo.key));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;のように、任意のコンポーネントからも自由自在です。connect, mapStateToProps, mapDispatchToPropsよさらば。&lt;/p&gt;
+&lt;p&gt;以上です。ザッツオール。ナッシングエルス。驚異的に簡単になったわけです。&lt;/p&gt;
+&lt;p&gt;コンポーネント間で状態を共有する場合は、間違いなく&lt;strong&gt;素のuseStateでやるよりも簡単&lt;/strong&gt;になります。あっちはImmer使えないですし&lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;、stateのsetterをプロパティで取り回したりイベントハンドラとりまわすのはつらいですからね。&lt;/p&gt;
+&lt;h1&gt;参考&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://qiita.com/Ouvill/items/a76e9cbce569d01f2931&quot;&gt;Redux の記述量多すぎなので、 Redux の公式ツールでとことん楽をする ( Redux Starter Kit)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn-1&quot;&gt;
+&lt;p&gt;&lt;a href=&quot;https://qiita.com/seya/items/f6d311b32cf711a02020&quot;&gt;こちら&lt;/a&gt;にあるような各種Hooks(useArrayとか)を使えば、Immerに匹敵するぐらいには楽かもしれない。&lt;/p&gt;
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -4567,308 +4795,6 @@ export function* pieceFall() {
 &lt;a href=&quot;#fnref-4&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Visual Studio Codeでエスケープキーの代りに^[を使用する設定]]></title><description><![CDATA[TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに ^[を割り当てます。Cmd-K Cmd-s からkeybindigs.jsonを開いて以下を追加。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに &lt;code&gt;^[&lt;/code&gt;を割り当てます。&lt;code&gt;Cmd-K&lt;/code&gt; &lt;code&gt;Cmd-s&lt;/code&gt; からkeybindigs.jsonを開いて以下を追加。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;[
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;search.action.cancel&quot;,
-    &quot;when&quot;: &quot;searchViewletVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeFindWidget&quot;,
-    &quot;when&quot;: &quot;findWidgetVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeReplaceInFilesWidget&quot;,
-    &quot;when&quot;: &quot;replaceInputBoxFocus &amp;#x26;&amp;#x26; searchViewletVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;workbench.action.hideInterfaceOverview&quot;,
-    &quot;when&quot;: &quot;interfaceOverviewVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;workbench.action.terminal.hideFindWidget&quot;,
-    &quot;when&quot;: &quot;terminalFindWidgetVisible &amp;#x26;&amp;#x26; terminalFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;cancelRenameInput&quot;,
-    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; renameInputVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;cancelSelection&quot;,
-    &quot;when&quot;: &quot;editorHasSelection &amp;#x26;&amp;#x26; textInputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeAccessibilityHelp&quot;,
-    &quot;when&quot;: &quot;accessibilityHelpWidgetVisible &amp;#x26;&amp;#x26; editorFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeBreakpointWidget&quot;,
-    &quot;when&quot;: &quot;breakpointWidgetVisible &amp;#x26;&amp;#x26; textInputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeDirtyDiff&quot;,
-    &quot;when&quot;: &quot;dirtyDiffVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeFindWidget&quot;,
-    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; findWidgetVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeMarkersNavigation&quot;,
-    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; markersNavigationVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeParameterHints&quot;,
-    &quot;when&quot;: &quot;editorTextFocus &amp;#x26;&amp;#x26; parameterHintsVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeReferenceSearch&quot;,
-    &quot;when&quot;: &quot;referenceSearchVisible &amp;#x26;&amp;#x26; !config.editor.stablePeek&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeReferenceSearchEditor&quot;,
-    &quot;when&quot;: &quot;inReferenceSearchEditor &amp;#x26;&amp;#x26; !config.editor.stablePeek&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;editor.action.webvieweditor.hideFind&quot;,
-    &quot;when&quot;: &quot;webviewEditorFocus &amp;#x26;&amp;#x26; webviewFindWidgetVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;hideSuggestWidget&quot;,
-    &quot;when&quot;: &quot;suggestWidgetVisible &amp;#x26;&amp;#x26; textInputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;keybindings.editor.clearSearchResults&quot;,
-    &quot;when&quot;: &quot;inKeybindings &amp;#x26;&amp;#x26; inKeybindingsSearch&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;leaveEditorMessage&quot;,
-    &quot;when&quot;: &quot;messageVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;leaveSnippet&quot;,
-    &quot;when&quot;: &quot;editorTextFocus &amp;#x26;&amp;#x26; inSnippetMode&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;list.clear&quot;,
-    &quot;when&quot;: &quot;listFocus &amp;#x26;&amp;#x26; !inputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;notifications.hideList&quot;,
-    &quot;when&quot;: &quot;notificationCenterVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;notifications.hideToasts&quot;,
-    &quot;when&quot;: &quot;notificationToastsVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;removeSecondaryCursors&quot;,
-    &quot;when&quot;: &quot;editorHasMultipleSelections &amp;#x26;&amp;#x26; textInputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;search.action.cancel&quot;,
-    &quot;when&quot;: &quot;listFocus &amp;#x26;&amp;#x26; searchViewletVisible &amp;#x26;&amp;#x26; !inputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;settings.action.clearSearchResults&quot;,
-    &quot;when&quot;: &quot;inSettingsSearch&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;workbench.action.closeQuickOpen&quot;,
-    &quot;when&quot;: &quot;inQuickOpen&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;workbench.action.exitZenMode&quot;,
-    &quot;when&quot;: &quot;inZenMode&quot;
-  }
-]
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Redux Starter KitでHooksとReduxを使いこなそう]]></title><description><![CDATA[React-Reduxの公式から「Redux Starter Kit」というものが公開されています。 これがなにかといえば、私の理解するかぎり以下です。 React-Redux…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f91d68ea4ef8450fc45c/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f91d68ea4ef8450fc45c/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
-&lt;tr&gt;&lt;td&gt;Redux Sterter KitはRedux-Toolkitに名称変更されてAPIも変更されています。本記事はそのままでは最新版redux-toolkitとして動作しません。
-https://github.com/reduxjs/redux-toolkit&lt;/td&gt;&lt;/tr&gt;
-&lt;table&gt;
-#はじめに
-&lt;p&gt;React-Reduxの公式から「&lt;a href=&quot;https://redux-starter-kit.js.org/&quot;&gt;Redux Starter Kit&lt;/a&gt;」というものが公開されています。&lt;/p&gt;
-&lt;p&gt;これがなにかといえば、私の理解するかぎり以下です。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;React-Reduxまわりのベストプラクティス、定番拡張、定番併用ライブラリ、定番ミドルウェアを、簡単に組込むための簡単で軽めのライブラリ、メタパッケージ。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;CLIコマンドではなくライブラリです。
-これは良いものだと思いましたので全力でお勧めしていきます。&lt;/p&gt;
-&lt;h1&gt;特徴&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;TypeScriptフル対応。当然ですね。&lt;/li&gt;
-&lt;li&gt;React Redux 7.1対応、つまりHooks対応。これからはHooksで生きていく。Hooksの無い人生は考えられない。&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/immerjs/immer&quot;&gt;Immer&lt;/a&gt;が組込まれることで、&lt;a href=&quot;https://redux-starter-kit.js.org/api/createreducer#direct-state-mutation&quot;&gt;直接state変更&lt;/a&gt;可能になり、reducer記述が簡潔になる。これはイイ! 一番の推しポイントかもしれない。MobXの利点を一部とりこんだと言えるのかも??(追記、後で知ったのですが、MobxとImmerの作者は同じ) Reduxが冗長? 昔の話です。🎉🎉🎉🎉&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Immutable.jsとくらべてImmerのいいところは、Immutable.jsのように記述が特殊にならないことが一つと、他に、同じぐらい重要なのは、他の箇所にImmutable.jsの要求するデータ構造を感染させていかないこと。非侵襲的。重要。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Sliceなるものでモジュール化できる。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Sliceは&lt;a href=&quot;https://redux.js.org/faq/code-structure#what-should-my-file-structure-look-like-how-should-i-group-my-action-creators-and-reducers-in-my-project-where-should-my-selectors-go&quot;&gt;Redux Ducks&lt;/a&gt;が提供するものと&lt;a href=&quot;https://redux-starter-kit.js.org/api/createslice#return-value&quot;&gt;似た&lt;/a&gt;モジュール概念。同じではないらしい。&lt;/li&gt;
-&lt;li&gt;Sliceは以下を束ねたもの。&lt;/li&gt;
-&lt;li&gt;Redux Stateのトップレベルのslice。ただしこれはオプショナルで、sliceにわけないこともできる。&lt;/li&gt;
-&lt;li&gt;それぞれごとの、combineReducerでまとめる元となるそれぞれのReducer群&lt;/li&gt;
-&lt;li&gt;sliceごとのState初期値&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Sliceからaction creatorは&lt;strong&gt;&lt;em&gt;型付き&lt;/em&gt;&lt;/strong&gt;で自動生成される🎉🎉🎉🎉&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ACTION定義は完全に消える。action定数も。creatorも。1行も。一行もだ。Reduxが冗長? 昔の話です。🎉🎉🎉🎉&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;これはReact-Reduxの機能の良さからだが、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;useSelector呼び出すhookをslice Module側で定義すれば、もうほんとにstateとりだしは楽です。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;デフォルトで今は「[immutableStateInvariant, thunk, serializableStateInvariant]の&lt;a href=&quot;https://redux-starter-kit.js.org/api/getdefaultmiddleware#development&quot;&gt;ミドルウェアが設定される&lt;/a&gt;。thunkは議論あるでしょうが、使わないことももちろん可能。&lt;/li&gt;
-&lt;li&gt;Redux DevToolsの設定がデフォルトで入っている。&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;上記のようなことのワイアリングが1パッケージでできる。🎉🎉🎉🎉&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://redux-starter-kit.js.org/usage/usage-guide#manual-store-setup&quot;&gt;configureStoreまわりのmiddlewareEnhancerとかapplyMiddlewareとかcomposedEnhancersとかのごちゃごちゃした難しいところ&lt;/a&gt;が&lt;a href=&quot;https://redux-starter-kit.js.org/usage/usage-guide#simplifying-store-setup-with-configurestore&quot;&gt;スッキリ&lt;/a&gt;できる。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;上記はこれだけでも素晴らしいと思うのですが、さらに公式から、というのが安心感があって良いです。この形のReduxがデファクトスタンダードと扱われるようになることを期待します。&lt;/p&gt;
-&lt;h1&gt;コード例&lt;/h1&gt;
-&lt;p&gt;まずは、TodoMVCみたいなものを作るとします。そのときのタスクリストをredux stateとしてあつかうとします。そのためにTodoをあつかうためのモジュールをこんな風に定義します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-typescript:todoModule.ts&quot;&gt;import { createSlice } from &quot;redux-starter-kit&quot;;
-import { useSelector } from &quot;react-redux&quot;;
-
-export type TodoItem = {
-    title: string;
-    completed: boolean;
-    key: string;
-}
-// createSlice() で actions と reducers を一気に生成
-const todoModule = createSlice({
-    // slice: &quot;todo&quot;,
-    initialState: [] as TodoItem[],
-    reducers: {
-        addTodo: (state, action: { payload: TodoItem }) =&gt; {
-            state.push(action.payload)
-        },
-        removeTodo: (state, action: { payload: string }) =&gt; {
-            return state.filter((item) =&gt; item.key !== action.payload);
-        },
-        setCompleted: (state, action: { payload: { completed: boolean, key: string } }) =&gt; {
-            state.forEach((item) =&gt; {
-                if (item.key === action.payload.key) {
-                    item.completed = action.payload.completed;
-                }
-            });
-        },
-    }
-});
-
-export const useTodoItems = () =&gt; {
-    return useSelector((state: ReturnType&amp;#x3C;typeof todoModule.reducer&gt;) =&gt; state);
-}
-// 他に便利なuseSelect呼び出しや、粒度の細かいaction creatorのexportをここに追加していってもいい。
-
-export default todoModule;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Immerのおかげで、reducerが劇的に簡潔になってます。stateをまるごとおきかえるときはreturnで返します。あとは代入などで副作用バリバリで書いてますがProxy経由なので実際にはStateを変更していません。&lt;/p&gt;
-&lt;p&gt;上ではcombineReducerも使わないという前提でsliceプロパティは定義してません。もちろん規模が大きくなれば使ってもかまいません。使ったとしてもsliceの存在は最後のuseTodoItemsで隠蔽できます。
-ちなみに、dispatchでまるごと公開するのは楽とはいえ粗い、という人は、&lt;a href=&quot;https://redux-starter-kit.js.org/usage/usage-guide#exporting-and-using-slices&quot;&gt;ちまちまとaction creatorを公開していくこともできます&lt;/a&gt;。お好みで。&lt;/p&gt;
-&lt;p&gt;一つだけ、この記事で独自に提案したいこととして、&lt;strong&gt;useSelectorの呼出は、このモジュール側でHooks(ここではuseTodoItems)として定義して、使いやすくしたものをexportする&lt;/strong&gt;ということです。特に、useSelectorの直接呼出は型定義に関して長く煩雑になりがちで、こちらに隠蔽するメリットがあります。&lt;/p&gt;
-&lt;p&gt;次に、上に含まれるreducerから以下のようにstoreを構築します。デフォルトのミドルウェアが組み込まれますが、もちろん好きなものを組みこめもします。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-typescript:store.ts&quot;&gt;import { configureStore } from &quot;redux-starter-kit&quot;;
-import todoModule from &quot;./modules/todoModule&quot;;
-
-export const setupStore = () =&gt; {
-    const store = configureStore({
-        reducer: todoModule.reducer
-    });
-    return store
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;そのstoreから以下のようにProviderコンポーネントでアプリに組み込んで、&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-typescript:App.tsx&quot;&gt;import React from &apos;react&apos;;
-import ReactDOM from &apos;react-dom&apos;;
-import App from &apos;./App&apos;;
-import { Provider } from &quot;react-redux&quot;;
-import { setupStore } from &quot;./store&quot;;
-
-const store = setupStore();
-
-ReactDOM.render(
-    &amp;#x3C;Provider store={store}&gt;
-        &amp;#x3C;App /&gt;
-    &amp;#x3C;/Provider&gt;,
-    document.getElementById(&apos;root&apos;));
-serviceWorker.unregister();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;準備は完了。
-あとは、それぞれのコンポーネントからstoreの値をつかいたければ、&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-typescript&quot;&gt;import { useTodoItems } from &quot;./modules/todoModule&quot;;
-  :
-  const todos = useTodoItems();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;actionをディスパッチしたければ、&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-typescript&quot;&gt;import { useDispatch } from &quot;react-redux&quot;;
-import todoModule from &quot;./modules/todoModule&quot;;
-
-  ：
-  const dispatch = useDispatch();
-
-  dispatch(todoModule.actions.addTodo({ title: &quot;TITLE&quot;, completed: false, key: &apos;XXX&apos; }))  
-
-  const todos = useTodoItems();
-  const todo = todos[key];
-
-  dispatch(todoModule.actions.setCompleted({ key: todo.key, completed: !todo.completed }));
-  dispatch(todoModule.actions.removeTodo(todo.key));
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;のように、任意のコンポーネントからも自由自在です。connect, mapStateToProps, mapDispatchToPropsよさらば。&lt;/p&gt;
-&lt;p&gt;以上です。ザッツオール。ナッシングエルス。驚異的に簡単になったわけです。&lt;/p&gt;
-&lt;p&gt;コンポーネント間で状態を共有する場合は、間違いなく&lt;strong&gt;素のuseStateでやるよりも簡単&lt;/strong&gt;になります。あっちはImmer使えないですし&lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;、stateのsetterをプロパティで取り回したりイベントハンドラとりまわすのはつらいですからね。&lt;/p&gt;
-&lt;h1&gt;参考&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://qiita.com/Ouvill/items/a76e9cbce569d01f2931&quot;&gt;Redux の記述量多すぎなので、 Redux の公式ツールでとことん楽をする ( Redux Starter Kit)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;footnotes&quot;&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id=&quot;fn-1&quot;&gt;
-&lt;p&gt;&lt;a href=&quot;https://qiita.com/seya/items/f6d311b32cf711a02020&quot;&gt;こちら&lt;/a&gt;にあるような各種Hooks(useArrayとか)を使えば、Immerに匹敵するぐらいには楽かもしれない。&lt;/p&gt;
-&lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
 &lt;/div&gt;</content:encoded></item><item><title><![CDATA[関数型プログラミングを業務開発に適用するための架空の社内勉強会資料]]></title><description><![CDATA[関数型プログラミングを業務開発で活用するために HaskellやScala、Erlang/Elixir、Clojure…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ff13229413b785cd9cf8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ff13229413b785cd9cf8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;関数型プログラミングを業務開発で活用するために&lt;/h1&gt;
 &lt;p&gt;HaskellやScala、Erlang/Elixir、Clojureなどの関数型プログラミング言語に興味がある人は多いと思いますが、自分らが日常行なっている業務での開発では到底それらの関数型言語を採用できないのが現実、という場合があるかもしれません。&lt;/p&gt;
 &lt;p&gt;なので、当面はJavaやGroovy、JS,Ruby,Pythonなどの非関数型プログラミング言語の上で関数型プログラミングスタイルや考え方をなるべく使っていくことでFPの考え方や技法に馴染み広めていき、利点を享受しつつ、将来は大手を振って&lt;strike&gt;転職&lt;/strike&gt;業務開発で本格的な関数型言語を使えるようにしていこうというのが現実的な戦略かもしれません。&lt;/p&gt;
@@ -5151,7 +5077,81 @@ assert q.remove() == 6
 &lt;li&gt;イミュータブルデータモデル&lt;/li&gt;
 &lt;li&gt;Elm, Frege&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;さあみなさんも関数型ライフを!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[As You]]></title><description><![CDATA[This is my first post on my new fake blog! How exciting! I’m sure I’ll write a lot more interesting things in the future. Oh, and here’s a…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/as-you/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/as-you/</guid><pubDate>Sat, 01 Sep 2018 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;This is my first post on my new fake blog! How exciting!&lt;/p&gt;
+&lt;p&gt;さあみなさんも関数型ライフを!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[第13回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第13回 オフラインリアルタイムどう書くの参考問題「増やす減らす二倍する」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://atnd.org/events/41603&quot;&gt;第13回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord13updowndouble/&quot;&gt;増やす減らす二倍する&lt;/a&gt;」を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-frege:shortest.fr&quot;&gt;shortestPath&apos; :: Int -&gt; Int -&gt; Int
+shortestPath&apos; n maxn
+  | n==0 = 0
+  | n==1 = 1
+  | n &gt; maxn = maxBound::Int
+  | even(n) = (shortestPath&apos; (n `div` 2) (maxn-2)) + 1
+  | otherwise = minimum [(shortestPath&apos; (n-1) (maxn-2)) + 1, (shortestPath&apos; (n+1) (maxn-2)) + 1]
+
+shortestPath :: Int -&gt; Int  
+shortestPath n = shortestPath&apos; n (n*2)
+  
+
+main args = do
+  println (shortestPath 59 ==  9)
+  println (shortestPath 10 ==  5)
+  println (shortestPath 11 ==  6)
+  println (shortestPath 12 ==  5)
+  println (shortestPath 13 ==  6)
+  println (shortestPath 14 ==  6)
+  println (shortestPath 15 ==  6)
+  println (shortestPath 16 ==  5)
+  println (shortestPath 17 ==  6)
+  println (shortestPath 18 ==  6)
+  println (shortestPath 27 ==  8)
+  println (shortestPath 28 ==  7)
+  println (shortestPath 29 ==  8)
+  println (shortestPath 30 ==  7)
+  println (shortestPath 31 ==  7)
+  println (shortestPath 32 ==  6)
+  println (shortestPath 33 ==  7)
+  println (shortestPath 34 ==  7)
+  println (shortestPath 35 ==  8)
+  println (shortestPath 41 ==  8)
+  println (shortestPath 71 ==  9)
+  println (shortestPath 1023 ==  12)
+  println (shortestPath 1024 ==  11)
+  println (shortestPath 1025 ==  12)
+  println (shortestPath 1707 ==  17)
+  println (shortestPath 683 ==  15)
+  println (shortestPath 123 ==  10)
+  println (shortestPath 187 ==  11)
+  println (shortestPath 237 ==  12)
+  println (shortestPath 5267 ==  18)
+  println (shortestPath 6737 ==  18)
+  println (shortestPath 14796 ==  20)
+  println (shortestPath 18998 ==  20)
+  println (shortestPath 23820 ==  20)
+  println (shortestPath 30380 ==  21)
+  println (shortestPath 31119 ==  21)
+  println (shortestPath 33301 ==  20)
+  println (shortestPath 33967 ==  21)
+  println (shortestPath 35443 ==  22)
+  println (shortestPath 35641 ==  22)
+  println (shortestPath 43695 ==  23)
+  println (shortestPath 44395 ==  23)
+  println (shortestPath 44666 ==  22)
+  println (shortestPath 987 ==  14)
+  println (shortestPath 1021 ==  13)
+  println (shortestPath 1019 ==  13)
+  println (shortestPath 1015 ==  13)
+  println (shortestPath 1007 ==  13)
+  println (shortestPath 1011 ==  14)
+  println (shortestPath 1003 ==  14)
+  println (shortestPath 983 ==  14)
+  println (shortestPath 999 ==  14)
+  println (shortestPath 2731 ==  18)
+  println (shortestPath 6827 ==  20)
+  println (shortestPath 10923 ==  21)
+  println (shortestPath 27307 ==  23)
+  println (shortestPath 43691 ==  24)
+  println (shortestPath 109227 ==  26)
+  println (shortestPath 174763 ==  27)
+  
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[As You]]></title><description><![CDATA[This is my first post on my new fake blog! How exciting! I’m sure I’ll write a lot more interesting things in the future. Oh, and here’s a…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/as-you/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/as-you/</guid><pubDate>Sat, 01 Sep 2018 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;This is my first post on my new fake blog! How exciting!&lt;/p&gt;
 &lt;p&gt;I’m sure I’ll write a lot more interesting things in the future.&lt;/p&gt;
 &lt;p&gt;Oh, and here’s a great quote from this Wikipedia on
 &lt;a href=&quot;http://en.wikipedia.org/wiki/Salted_duck_egg&quot;&gt;salted duck eggs&lt;/a&gt;.&lt;/p&gt;
