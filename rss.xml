@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog Grommet v2]]></title><description><![CDATA[This is a DEMO site! SSG - Gatsby JS, UI - Grommet v2]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 29 Mar 2020 13:39:00 GMT</lastBuildDate><item><title><![CDATA[【React+TypeScript】Function Componentで省略可能propsの省略した場合の値を型安全に指定する]]></title><description><![CDATA[https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521 こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。 リンク先から引用。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&quot;&gt;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog Grommet v2]]></title><description><![CDATA[This is a DEMO site! SSG - Gatsby JS, UI - Grommet v2]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 29 Mar 2020 13:40:50 GMT</lastBuildDate><item><title><![CDATA[【React+TypeScript】Function Componentで省略可能propsの省略した場合の値を型安全に指定する]]></title><description><![CDATA[https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521 こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。 リンク先から引用。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&quot;&gt;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。&lt;/p&gt;
 &lt;p&gt;リンク先から引用。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;const MyComponent = (props: { name: string, telephone: string }) =&gt; {
@@ -12,6 +12,114 @@ const test = &amp;#x3C;MyComponent name=&quot;Hulk Hogan&quot; /&gt;
 
 // Doesn&apos;t work - missing name, good
 const test = &amp;#x3C;MyComponent /&gt;
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第12回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/1de39df381dfeee305ab&quot;&gt;第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」&lt;/a&gt;を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-frege:turtle.fr&quot;&gt;package sample.Turtle where
+
+type Position = Char
+type Direction = Char
+type Command = Char
+
+pure native elemIndex indexOf :: String -&gt; Int -&gt; Int
+
+ewData :: String
+ewData = &quot;?&quot;++packed [&apos;A&apos;..&apos;K&apos;]++&quot;?&quot;++packed [&apos;L&apos;..&apos;V&apos;]++&quot;?&quot;++packed [&apos;W&apos;..&apos;Z&apos;]++packed [&apos;a&apos;..&apos;g&apos;]++&quot;?&quot;
+         ++&quot;?hij?klm?nop?qrs?tuv?wxy?z01?234?567?&quot;
+
+nsData :: String
+nsData = &quot;?&quot;++&quot;ALWhknqtwz25&quot;++&quot;?&quot;++&quot;BMXilorux036&quot;++&quot;?&quot;++&quot;CNYjmpsvy147&quot;
+         ++ &quot;?&quot; ++&quot;DOZ&quot; ++ &quot;?&quot; ++ &quot;EPa&quot; ++ &quot;?&quot; ++ &quot;FQb&quot; ++ &quot;?&quot; ++ &quot;GRc&quot; ++ &quot;?&quot; ++ &quot;HSd&quot;
+         ++ &quot;?&quot; ++ &quot;ITe&quot; ++ &quot;?&quot; ++ &quot;JUf&quot; ++ &quot;?&quot; ++ &quot;KVg&quot; ++ &quot;?&quot;
+
+moveForward :: (Position, Direction, [Char]) -&gt; Int -&gt; (Position, Direction, [Char])
+moveForward (pos, dir, hist) 0 = (pos, dir, hist)
+moveForward (&apos;7&apos;, &apos;S&apos;, hist) n = moveForward (&apos;e&apos;, &apos;N&apos;, hist++[&apos;e&apos;]) (n-1)
+moveForward (&apos;6&apos;, &apos;S&apos;, hist) n = moveForward (&apos;f&apos;, &apos;N&apos;, hist++[&apos;f&apos;]) (n-1)
+moveForward (&apos;5&apos;, &apos;S&apos;, hist) n = moveForward (&apos;g&apos;, &apos;N&apos;, hist++[&apos;g&apos;]) (n-1)
+moveForward (&apos;e&apos;, &apos;S&apos;, hist) n = moveForward (&apos;7&apos;, &apos;N&apos;, hist++[&apos;7&apos;]) (n-1)
+moveForward (&apos;f&apos;, &apos;S&apos;, hist) n = moveForward (&apos;6&apos;, &apos;N&apos;, hist++[&apos;6&apos;]) (n-1)
+moveForward (&apos;g&apos;, &apos;S&apos;, hist) n = moveForward (&apos;5&apos;, &apos;N&apos;, hist++[&apos;5&apos;]) (n-1)
+moveForward (pos, dir, hist) n = moveForward nextState (n-1)
+    where
+          nextState :: (Char, Char, [Char])
+          nextState = (nextPos, dir, hist++(nextPos:[]))
+          nextPos :: Char
+          nextPos = case dir of
+                      &apos;N&apos; -&gt; nextPosOf pos nsData (subtract 1)
+                      &apos;W&apos; -&gt; nextPosOf pos ewData (subtract 1)
+                      &apos;S&apos; -&gt; nextPosOf pos nsData (+1)
+                      &apos;E&apos; -&gt; nextPosOf pos ewData (+1)
+          nextPosOf :: Char -&gt; String -&gt; (Int -&gt; Int) -&gt; Char
+          nextPosOf c map f = let i=map `elemIndex` (ord c) in if (i/=0) then ((unpacked map) !! (f i)) else &apos;?&apos;
+
+turnDir :: Direction -&gt; String -&gt; Position -&gt; [Char] -&gt; State (Position, Direction, [Char]) ()
+turnDir dir dirs pos hist = State.put (pos, (let x=(dirs `elemIndex` (ord dir)) in ((unpacked dirs) !! (x+1))), hist)
+
+oneStep :: Command -&gt; State (Position, Direction, [Char]) ()
+oneStep ch = do
+  (pos, dir, hist) &amp;#x3C;- State.get
+  case ch of
+    &apos;L&apos; -&gt; turnDir dir &quot;ENWSE&quot; pos hist
+    &apos;R&apos; -&gt; turnDir dir &quot;ESWNE&quot; pos hist
+    _
+          | ch `elem` [&apos;1&apos;..&apos;9&apos;] -&gt; State.put (moveForward (pos, dir, hist) (ord ch-ord &apos;0&apos;))
+          | ch `elem` [&apos;a&apos;..&apos;f&apos;] -&gt; State.put (moveForward (pos, dir, hist) ((ord ch-ord &apos;a&apos;)+10))
+
+solve :: [Command] -&gt; [Position]
+solve cmd = reduce hist
+        where (_,_,hist) = (let (v,s) = State.run (mapM_ oneStep cmd) initialState in s)
+              reduce [] = []
+              reduce (xs:&apos;?&apos;:_) = xs:(unpacked &quot;?&quot;)
+              reduce (x:xs) = x:(reduce xs)
+              initialState = (&apos;A&apos;,&apos;E&apos;,(unpacked &quot;A&quot;))
+
+test cmd expected = do
+    let result = packed $ solve (unpacked cmd)
+    println $ result == expected
+
+main args = do
+    test &quot;2RcL3LL22&quot; &quot;ABCNYjmpsvy147edcbcdef&quot;  {- 0 -}
+    test &quot;L3R4L5RR5R3L5&quot; &quot;A?&quot;  {- 1 -}
+    test &quot;2ReLLe&quot; &quot;ABCNYjmpsvy147eTITe741yvspmjYNC&quot;  {- 2 -}
+    test &quot;1ReRRe&quot; &quot;ABMXilorux036fUJUf630xuroliXMB&quot;  {- 3 -}
+    test &quot;ReRRe&quot; &quot;ALWhknqtwz25gVKVg52zwtqnkhWLA&quot;  {- 4 -}
+    test &quot;f&quot; &quot;ABCDEFGHIJK?&quot;  {- 5 -}
+    test &quot;Rf&quot; &quot;ALWhknqtwz25gVK?&quot;  {- 6 -}
+    test &quot;1Rf&quot; &quot;ABMXilorux036fUJ?&quot;  {- 7 -}
+    test &quot;2Rf&quot; &quot;ABCNYjmpsvy147eTI?&quot;  {- 8 -}
+    test &quot;aR1RaL1LaR1R2L1L2&quot; &quot;ABCDEFGHIJKVUTSRQPONMLWXYZabcdefg567432&quot;  {- 9 -}
+    test &quot;2R1R2L1L2R1R2L1L2R1R2L1L2R1R2L1L2&quot; &quot;ABCNMLWXYjihklmponqrsvutwxy&quot;  {- 10 -}
+    test &quot;2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ABCNYjmlknqtwxy147efgVK?&quot;  {- 11 -}
+    test &quot;R1L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALMNYjmponqtwz0147eTUVK?&quot;  {- 12 -}
+    test &quot;R2L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALWXYjmpsrqtwz2347eTIJK?&quot;  {- 13 -}
+    test &quot;R3L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALWhijmpsvutwz2567eTI?&quot;  {- 14 -}
+    test &quot;R5L2L5L1LaR1L4L5&quot; &quot;ALWhknopmjYNCBMXilorux0325gVKJIHGF&quot;  {- 15 -}
+    test &quot;1R2L4L2R4R2L4L2R4&quot; &quot;ABMXYZabQFGHIJUfg?&quot;  {- 16 -}
+    test &quot;2R2L4L2R4R2L4L2R4&quot; &quot;ABCNYZabcRGHIJKVg?&quot;  {- 17 -}
+    test &quot;3R2L4L2R4R2L4L2R4&quot; &quot;ABCDOZabcdSHIJK?&quot;  {- 18 -}
+    test &quot;4R2L4L2R4R2L4L2R4&quot; &quot;ABCDEPabcdeTIJK?&quot;  {- 19 -}
+    test &quot;5R2L4L2R4R2L4L2R4&quot; &quot;ABCDEFQbcdefUJK?&quot;  {- 20 -}
+    test &quot;LLL1RRR1LLL1RRR2R1&quot; &quot;ALMXYZ?&quot;  {- 21 -}
+    test &quot;R3RRR3&quot; &quot;ALWhij?&quot;  {- 22 -}
+    test &quot;1LLL4RRR1LR1RL1&quot; &quot;ABMXilm?&quot;  {- 23 -}
+    test &quot;R2L1R2L1R3R4&quot; &quot;ALWXilmpsvut?&quot;  {- 24 -}
+    test &quot;7R4f47LLLc6R9L&quot; &quot;ABCDEFGHSd?&quot;  {- 25 -}
+    test &quot;5RR868L8448LL4R6&quot; &quot;ABCDEFEDCBA?&quot;  {- 26 -}
+    test &quot;42Rd1RLLa7L5&quot; &quot;ABCDEFGRc?&quot;  {- 27 -}
+    test &quot;RRLL6RLR1L5d12LaLRRL529L&quot; &quot;ABCDEFGRSTUV?&quot;  {- 28 -}
+    test &quot;RLR7L6LL1LRRRcRL52R&quot; &quot;ALWhknqtuv?&quot;  {- 29 -}
+    test &quot;1RLR8RLR1R437L99636R&quot; &quot;ABMXiloruxwtqnkhWLA?&quot;  {- 30 -}
+    test &quot;LLL2L3La9Le5LRR&quot; &quot;ALWXYZOD?&quot;  {- 31 -}
+    test &quot;R1LcRR491&quot; &quot;ALMNOPQRSTUV?&quot;  {- 32 -}
+    test &quot;R8L1R1R512L8RLLReRf&quot; &quot;ALWhknqtwx0z?&quot;  {- 33 -}
+    test &quot;1RcL8f1L29a5&quot; &quot;ABMXilorux036fedcbaZYXW?&quot;  {- 34 -}
+    test &quot;R822LeL46LL39LL&quot; &quot;ALWhknqtwz25gfedcbaZYXW?&quot;  {- 35 -}
+    test &quot;9R3L5LRRLb5R3L7cLLLR4L&quot; &quot;ABCDEFGHIJUf65?&quot;  {- 36 -}
+    test &quot;7LLRRR2R3R69Lf76eR2L&quot; &quot;ABCDEFGHSdcbaPE?&quot;  {- 37 -}
+    test &quot;8RRRLL3Le&quot; &quot;ABCDEFGHITe765?&quot;  {- 38 -}
+    test &quot;8R5RLL6LbL4LL5bL&quot; &quot;ABCDEFGHITe7410z?&quot;  {- 39 -}
+    test &quot;6LR2R1LR5LRLRL484L63&quot; &quot;ABCDEFGHITe741yxw?&quot;         {- 40 -}
+
+  
 &lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[TaPLのML実装をRustでやってみるシリーズ「7章 ラムダ計算のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみるシリーズ、「7章のラムダ計算のML実装」です。…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/161f3c943faf35c6aefc/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/161f3c943faf35c6aefc/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみるシリーズ、「7章のラムダ計算のML実装」です。&lt;a href=&quot;http://qiita.com/uehaj/items/1ac71855d05132d54eb8&quot;&gt;4章の&lt;/a&gt;に比べるといきなり難易度が上がります。全体からしたら序の口でしょうが。&lt;/p&gt;
 &lt;h1&gt;説明&lt;/h1&gt;
 &lt;ul&gt;
@@ -245,190 +353,7 @@ fn apply(t1:Term, t2:Term) -&gt; Term {
     Apply(Box::new(t1), Box::new(t2))
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;テストコードを含めたものは&lt;a href=&quot;https://gist.github.com/uehaj/07a2f4856a2c51df4e1f&quot;&gt;こちらのgist&lt;/a&gt;にあります。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[第12回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/1de39df381dfeee305ab&quot;&gt;第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」&lt;/a&gt;を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-frege:turtle.fr&quot;&gt;package sample.Turtle where
-
-type Position = Char
-type Direction = Char
-type Command = Char
-
-pure native elemIndex indexOf :: String -&gt; Int -&gt; Int
-
-ewData :: String
-ewData = &quot;?&quot;++packed [&apos;A&apos;..&apos;K&apos;]++&quot;?&quot;++packed [&apos;L&apos;..&apos;V&apos;]++&quot;?&quot;++packed [&apos;W&apos;..&apos;Z&apos;]++packed [&apos;a&apos;..&apos;g&apos;]++&quot;?&quot;
-         ++&quot;?hij?klm?nop?qrs?tuv?wxy?z01?234?567?&quot;
-
-nsData :: String
-nsData = &quot;?&quot;++&quot;ALWhknqtwz25&quot;++&quot;?&quot;++&quot;BMXilorux036&quot;++&quot;?&quot;++&quot;CNYjmpsvy147&quot;
-         ++ &quot;?&quot; ++&quot;DOZ&quot; ++ &quot;?&quot; ++ &quot;EPa&quot; ++ &quot;?&quot; ++ &quot;FQb&quot; ++ &quot;?&quot; ++ &quot;GRc&quot; ++ &quot;?&quot; ++ &quot;HSd&quot;
-         ++ &quot;?&quot; ++ &quot;ITe&quot; ++ &quot;?&quot; ++ &quot;JUf&quot; ++ &quot;?&quot; ++ &quot;KVg&quot; ++ &quot;?&quot;
-
-moveForward :: (Position, Direction, [Char]) -&gt; Int -&gt; (Position, Direction, [Char])
-moveForward (pos, dir, hist) 0 = (pos, dir, hist)
-moveForward (&apos;7&apos;, &apos;S&apos;, hist) n = moveForward (&apos;e&apos;, &apos;N&apos;, hist++[&apos;e&apos;]) (n-1)
-moveForward (&apos;6&apos;, &apos;S&apos;, hist) n = moveForward (&apos;f&apos;, &apos;N&apos;, hist++[&apos;f&apos;]) (n-1)
-moveForward (&apos;5&apos;, &apos;S&apos;, hist) n = moveForward (&apos;g&apos;, &apos;N&apos;, hist++[&apos;g&apos;]) (n-1)
-moveForward (&apos;e&apos;, &apos;S&apos;, hist) n = moveForward (&apos;7&apos;, &apos;N&apos;, hist++[&apos;7&apos;]) (n-1)
-moveForward (&apos;f&apos;, &apos;S&apos;, hist) n = moveForward (&apos;6&apos;, &apos;N&apos;, hist++[&apos;6&apos;]) (n-1)
-moveForward (&apos;g&apos;, &apos;S&apos;, hist) n = moveForward (&apos;5&apos;, &apos;N&apos;, hist++[&apos;5&apos;]) (n-1)
-moveForward (pos, dir, hist) n = moveForward nextState (n-1)
-    where
-          nextState :: (Char, Char, [Char])
-          nextState = (nextPos, dir, hist++(nextPos:[]))
-          nextPos :: Char
-          nextPos = case dir of
-                      &apos;N&apos; -&gt; nextPosOf pos nsData (subtract 1)
-                      &apos;W&apos; -&gt; nextPosOf pos ewData (subtract 1)
-                      &apos;S&apos; -&gt; nextPosOf pos nsData (+1)
-                      &apos;E&apos; -&gt; nextPosOf pos ewData (+1)
-          nextPosOf :: Char -&gt; String -&gt; (Int -&gt; Int) -&gt; Char
-          nextPosOf c map f = let i=map `elemIndex` (ord c) in if (i/=0) then ((unpacked map) !! (f i)) else &apos;?&apos;
-
-turnDir :: Direction -&gt; String -&gt; Position -&gt; [Char] -&gt; State (Position, Direction, [Char]) ()
-turnDir dir dirs pos hist = State.put (pos, (let x=(dirs `elemIndex` (ord dir)) in ((unpacked dirs) !! (x+1))), hist)
-
-oneStep :: Command -&gt; State (Position, Direction, [Char]) ()
-oneStep ch = do
-  (pos, dir, hist) &amp;#x3C;- State.get
-  case ch of
-    &apos;L&apos; -&gt; turnDir dir &quot;ENWSE&quot; pos hist
-    &apos;R&apos; -&gt; turnDir dir &quot;ESWNE&quot; pos hist
-    _
-          | ch `elem` [&apos;1&apos;..&apos;9&apos;] -&gt; State.put (moveForward (pos, dir, hist) (ord ch-ord &apos;0&apos;))
-          | ch `elem` [&apos;a&apos;..&apos;f&apos;] -&gt; State.put (moveForward (pos, dir, hist) ((ord ch-ord &apos;a&apos;)+10))
-
-solve :: [Command] -&gt; [Position]
-solve cmd = reduce hist
-        where (_,_,hist) = (let (v,s) = State.run (mapM_ oneStep cmd) initialState in s)
-              reduce [] = []
-              reduce (xs:&apos;?&apos;:_) = xs:(unpacked &quot;?&quot;)
-              reduce (x:xs) = x:(reduce xs)
-              initialState = (&apos;A&apos;,&apos;E&apos;,(unpacked &quot;A&quot;))
-
-test cmd expected = do
-    let result = packed $ solve (unpacked cmd)
-    println $ result == expected
-
-main args = do
-    test &quot;2RcL3LL22&quot; &quot;ABCNYjmpsvy147edcbcdef&quot;  {- 0 -}
-    test &quot;L3R4L5RR5R3L5&quot; &quot;A?&quot;  {- 1 -}
-    test &quot;2ReLLe&quot; &quot;ABCNYjmpsvy147eTITe741yvspmjYNC&quot;  {- 2 -}
-    test &quot;1ReRRe&quot; &quot;ABMXilorux036fUJUf630xuroliXMB&quot;  {- 3 -}
-    test &quot;ReRRe&quot; &quot;ALWhknqtwz25gVKVg52zwtqnkhWLA&quot;  {- 4 -}
-    test &quot;f&quot; &quot;ABCDEFGHIJK?&quot;  {- 5 -}
-    test &quot;Rf&quot; &quot;ALWhknqtwz25gVK?&quot;  {- 6 -}
-    test &quot;1Rf&quot; &quot;ABMXilorux036fUJ?&quot;  {- 7 -}
-    test &quot;2Rf&quot; &quot;ABCNYjmpsvy147eTI?&quot;  {- 8 -}
-    test &quot;aR1RaL1LaR1R2L1L2&quot; &quot;ABCDEFGHIJKVUTSRQPONMLWXYZabcdefg567432&quot;  {- 9 -}
-    test &quot;2R1R2L1L2R1R2L1L2R1R2L1L2R1R2L1L2&quot; &quot;ABCNMLWXYjihklmponqrsvutwxy&quot;  {- 10 -}
-    test &quot;2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ABCNYjmlknqtwxy147efgVK?&quot;  {- 11 -}
-    test &quot;R1L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALMNYjmponqtwz0147eTUVK?&quot;  {- 12 -}
-    test &quot;R2L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALWXYjmpsrqtwz2347eTIJK?&quot;  {- 13 -}
-    test &quot;R3L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALWhijmpsvutwz2567eTI?&quot;  {- 14 -}
-    test &quot;R5L2L5L1LaR1L4L5&quot; &quot;ALWhknopmjYNCBMXilorux0325gVKJIHGF&quot;  {- 15 -}
-    test &quot;1R2L4L2R4R2L4L2R4&quot; &quot;ABMXYZabQFGHIJUfg?&quot;  {- 16 -}
-    test &quot;2R2L4L2R4R2L4L2R4&quot; &quot;ABCNYZabcRGHIJKVg?&quot;  {- 17 -}
-    test &quot;3R2L4L2R4R2L4L2R4&quot; &quot;ABCDOZabcdSHIJK?&quot;  {- 18 -}
-    test &quot;4R2L4L2R4R2L4L2R4&quot; &quot;ABCDEPabcdeTIJK?&quot;  {- 19 -}
-    test &quot;5R2L4L2R4R2L4L2R4&quot; &quot;ABCDEFQbcdefUJK?&quot;  {- 20 -}
-    test &quot;LLL1RRR1LLL1RRR2R1&quot; &quot;ALMXYZ?&quot;  {- 21 -}
-    test &quot;R3RRR3&quot; &quot;ALWhij?&quot;  {- 22 -}
-    test &quot;1LLL4RRR1LR1RL1&quot; &quot;ABMXilm?&quot;  {- 23 -}
-    test &quot;R2L1R2L1R3R4&quot; &quot;ALWXilmpsvut?&quot;  {- 24 -}
-    test &quot;7R4f47LLLc6R9L&quot; &quot;ABCDEFGHSd?&quot;  {- 25 -}
-    test &quot;5RR868L8448LL4R6&quot; &quot;ABCDEFEDCBA?&quot;  {- 26 -}
-    test &quot;42Rd1RLLa7L5&quot; &quot;ABCDEFGRc?&quot;  {- 27 -}
-    test &quot;RRLL6RLR1L5d12LaLRRL529L&quot; &quot;ABCDEFGRSTUV?&quot;  {- 28 -}
-    test &quot;RLR7L6LL1LRRRcRL52R&quot; &quot;ALWhknqtuv?&quot;  {- 29 -}
-    test &quot;1RLR8RLR1R437L99636R&quot; &quot;ABMXiloruxwtqnkhWLA?&quot;  {- 30 -}
-    test &quot;LLL2L3La9Le5LRR&quot; &quot;ALWXYZOD?&quot;  {- 31 -}
-    test &quot;R1LcRR491&quot; &quot;ALMNOPQRSTUV?&quot;  {- 32 -}
-    test &quot;R8L1R1R512L8RLLReRf&quot; &quot;ALWhknqtwx0z?&quot;  {- 33 -}
-    test &quot;1RcL8f1L29a5&quot; &quot;ABMXilorux036fedcbaZYXW?&quot;  {- 34 -}
-    test &quot;R822LeL46LL39LL&quot; &quot;ALWhknqtwz25gfedcbaZYXW?&quot;  {- 35 -}
-    test &quot;9R3L5LRRLb5R3L7cLLLR4L&quot; &quot;ABCDEFGHIJUf65?&quot;  {- 36 -}
-    test &quot;7LLRRR2R3R69Lf76eR2L&quot; &quot;ABCDEFGHSdcbaPE?&quot;  {- 37 -}
-    test &quot;8RRRLL3Le&quot; &quot;ABCDEFGHITe765?&quot;  {- 38 -}
-    test &quot;8R5RLL6LbL4LL5bL&quot; &quot;ABCDEFGHITe7410z?&quot;  {- 39 -}
-    test &quot;6LR2R1LR5LRLRL484L63&quot; &quot;ABCDEFGHITe741yxw?&quot;         {- 40 -}
-
-  
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[TAPLのML実装をRustでやってみるシリーズ「4章 算術式のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみます。 まずは4章の算術式です。書籍でのtype termが保持するinfo…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみます。&lt;/p&gt;
-&lt;p&gt;まずは4章の算術式です。書籍でのtype termが保持するinfoは、ソースからパージングするわけではないので略します。いらなそうなletは省きました(OCamlでの必要性は不明)。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;#![feature(box_patterns)]
-#![feature(box_syntax)]
-
-#[derive(Debug,Clone)]
-enum Term {
-    True,
-    False,
-    If(Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;),
-    Zero,
-    Succ(Box&amp;#x3C;Term&gt;),
-    Pred(Box&amp;#x3C;Term&gt;),
-    IsZero(Box&amp;#x3C;Term&gt;)
-}
-
-use Term::*;
-
-fn is_numerical(t: &amp;#x26;Term) -&gt; bool {
-    match *t {
-        Zero =&gt; true,
-        Succ(box ref t1) =&gt; is_numerical(t1),
-        _ =&gt; false
-    }
-}
-
-fn is_val(t: &amp;#x26;Term) -&gt; bool {
-    match *t {
-        True =&gt; true,
-        False =&gt; true,
-        _ =&gt; is_numerical(t)
-    }
-}
-
-fn eval1(t: Term) -&gt; Term {
-    match t {
-        Zero =&gt; Zero,
-        If(box True, box t2, _) =&gt; t2,
-        If(box False, _, box t3) =&gt; t3,
-        If(box t1, t2, t3) =&gt; If(box eval1(t1), t2, t3),
-        Succ(box t1) =&gt; Succ(box eval1(t1)),
-        Pred(box Zero) =&gt; Zero,
-        Pred(box Succ(box ref t1)) if is_numerical(t1) =&gt; t1.clone(),
-        Pred(box t1) =&gt; Pred(box eval1(t1)),
-        IsZero(box Zero) =&gt; True,
-        IsZero(box Succ(box ref t1)) if is_numerical(t1) =&gt; False,
-        IsZero(box t1) =&gt; IsZero(box eval1(t1)),
-        _ =&gt; panic!()
-    }
-}
-
-fn main() {
-    assert_eq!(format!(&quot;{:?}&quot;, True), &quot;True&quot;);
-    assert_eq!(is_numerical(&amp;#x26;True), false);
-    assert_eq!(is_numerical(&amp;#x26;Zero), true);
-    assert_eq!(is_val(&amp;#x26;True), true);
-    assert_eq!(is_val(&amp;#x26;If(box True,box True,box False)), false);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box True,box True,box False))), &quot;True&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box False,box True,box False))), &quot;False&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box IsZero(box Zero), box True, box False))), &quot;If(True, True, False)&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Succ(box Succ(box Zero)))), &quot;Succ(Succ(Zero))&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Zero))), &quot;Zero&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Zero))), &quot;True&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Succ(box Zero)))), &quot;False&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Pred(box Succ(box Zero))))), &quot;IsZero(Zero)&quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-&lt;li&gt;boxを除けば、ほぼOCamlと同等。GCの無い言語としては、良い線に行っていると思う。&lt;/li&gt;
-&lt;li&gt;実行メモリモデルがまさにC/C++なので、参照と値、cloneを完璧に適切に使いわける必要がある。OCaml版では全く意識する必要がない点である。この区別をてきとうにやっておけばうまく動く、ということはない。ここがGC言語との違い。&lt;/li&gt;
-&lt;li&gt;もし完璧に適切に使いわけられないならば、それはコンパイルが通らないことを意味する。やりとげてみると、目から鱗の自然な形なのだが、最初わからないとつらい。根性しかない。&lt;/li&gt;
-&lt;li&gt;今回の場合、match式の背後にある「暗黙の代入」、すなわちマッチ対象から各パターン、ガード、枝の本体に分配されるための代入が、それぞれムーブセマンティクスなのか、ownershipをとらない参照(&amp;#x26;mutではない&amp;#x26;)なのか、boxなのかrefなのかbox refなのか、そのすべてが正しく的確に指定されている必要がある。matchが展開された結果における暗黙の代入の様子を想像する力が問われる。どっかにドキュメントありますかね…。&lt;/li&gt;
-&lt;li&gt;Rustにおけるデータ管理は、「値」が基本になる、というのはたぶん間違いない。しかし、リアルワールドでは「値だけ」でやっていくことはできない。borrwingとclone()を適宜組合せる必要がある。&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Reactベース静的サイトジェネレータGatsbyの真の力をお見せします]]></title><description><![CDATA[NTTテクノクロスの上原です。
+&lt;p&gt;テストコードを含めたものは&lt;a href=&quot;https://gist.github.com/uehaj/07a2f4856a2c51df4e1f&quot;&gt;こちらのgist&lt;/a&gt;にあります。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Reactベース静的サイトジェネレータGatsbyの真の力をお見せします]]></title><description><![CDATA[NTTテクノクロスの上原です。
 業務では、社内情報のReact製自前キュレーションサイトの構築を担当しています。過去に社外ブログにReactVRの記事を途中まで書いたりしましたが、ReactVR(今は改名されてReact 36…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1b7f0a86596353587466/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1b7f0a86596353587466/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;NTTテクノクロスの上原です。
 業務では、社内情報のReact製自前キュレーションサイトの構築を担当しています。過去に&lt;a href=&quot;https://www.ntt-tx.co.jp/column/dojo_review_blog/20170511/?utm_source=qiita&amp;#x26;utm_medium=ac2018&amp;#x26;utm_campaign=24&quot;&gt;社外ブログにReactVRの記事&lt;/a&gt;を途中まで書いたりしましたが、ReactVR(今は改名されて&lt;a href=&quot;https://facebook.github.io/react-360/&quot;&gt;React 360&lt;/a&gt;)が思ったより流行らなくて放置してしまい、誠に申し訳ないです。&lt;/p&gt;
 &lt;p&gt;この記事は&lt;a href=&quot;https://qiita.com/advent-calendar/2018/ntt-tx&quot;&gt;NTTテクノクロスAdvent Calendar24日目&lt;/a&gt;の記事であり、社内の勉強会で発表した内容をQiita記事として書きなおしたものです。タイトルは釣りです。
@@ -692,7 +617,82 @@ A: Gatsby can be used to build fully dynamic sites, which surprises some people 
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[第27回 オフラインリアルタイムどう書くの問題「分岐と行き止まり」をRustで解く]]></title><description><![CDATA[オフラインリアルタイムどう書くの過去問題「分岐と行き止まり」を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答はこちら) Rustの感想 Rust…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://yhpg.doorkeeper.jp/&quot;&gt;オフラインリアルタイムどう書く&lt;/a&gt;の&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord27raswi/&quot;&gt;過去問題「分岐と行き止まり」&lt;/a&gt;を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答は&lt;a href=&quot;http://qiita.com/Nabetani/items/23ebddb44f0234e7fb15&quot;&gt;こちら&lt;/a&gt;)&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[TAPLのML実装をRustでやってみるシリーズ「4章 算術式のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみます。 まずは4章の算術式です。書籍でのtype termが保持するinfo…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみます。&lt;/p&gt;
+&lt;p&gt;まずは4章の算術式です。書籍でのtype termが保持するinfoは、ソースからパージングするわけではないので略します。いらなそうなletは省きました(OCamlでの必要性は不明)。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;#![feature(box_patterns)]
+#![feature(box_syntax)]
+
+#[derive(Debug,Clone)]
+enum Term {
+    True,
+    False,
+    If(Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;),
+    Zero,
+    Succ(Box&amp;#x3C;Term&gt;),
+    Pred(Box&amp;#x3C;Term&gt;),
+    IsZero(Box&amp;#x3C;Term&gt;)
+}
+
+use Term::*;
+
+fn is_numerical(t: &amp;#x26;Term) -&gt; bool {
+    match *t {
+        Zero =&gt; true,
+        Succ(box ref t1) =&gt; is_numerical(t1),
+        _ =&gt; false
+    }
+}
+
+fn is_val(t: &amp;#x26;Term) -&gt; bool {
+    match *t {
+        True =&gt; true,
+        False =&gt; true,
+        _ =&gt; is_numerical(t)
+    }
+}
+
+fn eval1(t: Term) -&gt; Term {
+    match t {
+        Zero =&gt; Zero,
+        If(box True, box t2, _) =&gt; t2,
+        If(box False, _, box t3) =&gt; t3,
+        If(box t1, t2, t3) =&gt; If(box eval1(t1), t2, t3),
+        Succ(box t1) =&gt; Succ(box eval1(t1)),
+        Pred(box Zero) =&gt; Zero,
+        Pred(box Succ(box ref t1)) if is_numerical(t1) =&gt; t1.clone(),
+        Pred(box t1) =&gt; Pred(box eval1(t1)),
+        IsZero(box Zero) =&gt; True,
+        IsZero(box Succ(box ref t1)) if is_numerical(t1) =&gt; False,
+        IsZero(box t1) =&gt; IsZero(box eval1(t1)),
+        _ =&gt; panic!()
+    }
+}
+
+fn main() {
+    assert_eq!(format!(&quot;{:?}&quot;, True), &quot;True&quot;);
+    assert_eq!(is_numerical(&amp;#x26;True), false);
+    assert_eq!(is_numerical(&amp;#x26;Zero), true);
+    assert_eq!(is_val(&amp;#x26;True), true);
+    assert_eq!(is_val(&amp;#x26;If(box True,box True,box False)), false);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box True,box True,box False))), &quot;True&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box False,box True,box False))), &quot;False&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box IsZero(box Zero), box True, box False))), &quot;If(True, True, False)&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Succ(box Succ(box Zero)))), &quot;Succ(Succ(Zero))&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Zero))), &quot;Zero&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Zero))), &quot;True&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Succ(box Zero)))), &quot;False&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Pred(box Succ(box Zero))))), &quot;IsZero(Zero)&quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;boxを除けば、ほぼOCamlと同等。GCの無い言語としては、良い線に行っていると思う。&lt;/li&gt;
+&lt;li&gt;実行メモリモデルがまさにC/C++なので、参照と値、cloneを完璧に適切に使いわける必要がある。OCaml版では全く意識する必要がない点である。この区別をてきとうにやっておけばうまく動く、ということはない。ここがGC言語との違い。&lt;/li&gt;
+&lt;li&gt;もし完璧に適切に使いわけられないならば、それはコンパイルが通らないことを意味する。やりとげてみると、目から鱗の自然な形なのだが、最初わからないとつらい。根性しかない。&lt;/li&gt;
+&lt;li&gt;今回の場合、match式の背後にある「暗黙の代入」、すなわちマッチ対象から各パターン、ガード、枝の本体に分配されるための代入が、それぞれムーブセマンティクスなのか、ownershipをとらない参照(&amp;#x26;mutではない&amp;#x26;)なのか、boxなのかrefなのかbox refなのか、そのすべてが正しく的確に指定されている必要がある。matchが展開された結果における暗黙の代入の様子を想像する力が問われる。どっかにドキュメントありますかね…。&lt;/li&gt;
+&lt;li&gt;Rustにおけるデータ管理は、「値」が基本になる、というのはたぶん間違いない。しかし、リアルワールドでは「値だけ」でやっていくことはできない。borrwingとclone()を適宜組合せる必要がある。&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[第27回 オフラインリアルタイムどう書くの問題「分岐と行き止まり」をRustで解く]]></title><description><![CDATA[オフラインリアルタイムどう書くの過去問題「分岐と行き止まり」を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答はこちら) Rustの感想 Rust…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://yhpg.doorkeeper.jp/&quot;&gt;オフラインリアルタイムどう書く&lt;/a&gt;の&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord27raswi/&quot;&gt;過去問題「分岐と行き止まり」&lt;/a&gt;を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答は&lt;a href=&quot;http://qiita.com/Nabetani/items/23ebddb44f0234e7fb15&quot;&gt;こちら&lt;/a&gt;)&lt;/p&gt;
 &lt;h1&gt;Rustの感想&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Rustは関数型プログラミングには向いてない、と思ったが、勘違いだった。&lt;strong&gt;やればできる&lt;/strong&gt;。&lt;/li&gt;
@@ -3824,39 +3824,7 @@ useCallbackの使いかたの本道です。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;3. karabinar-elementsのpreferenceからenableする
 
 &amp;#x3C;img width=&quot;945&quot; alt=&quot;スクリーンショット 2019-02-23 10.45.59.png&quot; src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/2560d287-f1ef-ac12-1d78-3fd3ca60c421.png&quot;&gt;
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Elmでやってみようシリーズ1]]></title><description><![CDATA[elmでやってみるシリーズ1: ●を動かす。 こちらで実行できます。 感想 foldpは好き。 inputに対応するSignal…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ce95865dc999be1d68eb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ce95865dc999be1d68eb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://elm-lang.org/&quot;&gt;elm&lt;/a&gt;でやってみるシリーズ1: ●を動かす。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-haskell&quot;&gt;import Window
-
-pos : Signal Int
-pos =let f = \tmp -&gt; (tmp `mod` 30) - 10
-        in f &amp;#x3C;~ foldp (\it acc-&gt; acc + 1) 0 (fps 50)
-
-drawCircle : Float -&gt; Float -&gt; Form
-drawCircle x y = move (x,y) &amp;#x3C;| filled red (circle 20)
-
-drawMatrix : [Form]
-drawMatrix = map (\x -&gt; drawLine &amp;#x3C;| x*10) [-10..10]
-
-drawLine : Float -&gt; Form
-drawLine x = traced (solid blue) ( segment (x,-100) (x,100) )
-
-main : Signal Element
-main=let f = \w h p-&gt; collage w h ([drawCircle ((toFloat p)*10) 10]++drawMatrix)
-     in f &amp;#x3C;~ Window.width ~ Window.height ~ pos
-&lt;/code&gt;&lt;/pre&gt;
-&lt;iframe width=&quot;100%&quot; src=&quot;http://share-elm.com/sprout/53c8a01ee4b07afa6f983053/stable/view&quot;&gt;
-&lt;/iframe&gt;
-# 実行する
-&lt;p&gt;&lt;a href=&quot;http://share-elm.com/sprout/53c8a01ee4b07afa6f983053/stable/view&quot;&gt;こちら&lt;/a&gt;で実行できます。&lt;/p&gt;
-&lt;h1&gt;感想&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;foldpは好き。&lt;/li&gt;
-&lt;li&gt;inputに対応するSignalってグローバル変数じゃね?まあ「マウスがクリックされる」とか「時間が経過する」という事実はグローバルなんだが、それによって引き起こされるイベントもそうなる…。プログラムからその値を能動的に制御できないから変数とは呼べない…のかな。でもユーザがフィールドに値を入力したり、ラジオボタンをクリックしたり、という操作によって設定項目をリアクティブに変更したその結果の、Signalである設定項目って、どう見てもグローバル変数だよね。まだよくわからない。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;関連エントリ&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://uehaj.hatenablog.com/entry/2014/07/03/023808&quot;&gt;http://uehaj.hatenablog.com/entry/2014/07/03/023808&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[redux-sagaで検索機能の実装を写経してCSPのパワーを感じる]]></title><description><![CDATA[この記事は、@inuscriptさんによる「redux-observableで検索機能の実装を写経してRxJSのパワーを感じる」をRedux-Saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;この記事は、@inuscriptさんによる「&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;redux-observableで検索機能の実装を写経してRxJSのパワーを感じる&lt;/a&gt;」を&lt;a href=&quot;https://github.com/redux-saga/redux-saga&quot;&gt;Redux-Saga&lt;/a&gt;で書きなおしたものです。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[redux-sagaで検索機能の実装を写経してCSPのパワーを感じる]]></title><description><![CDATA[この記事は、@inuscriptさんによる「redux-observableで検索機能の実装を写経してRxJSのパワーを感じる」をRedux-Saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;この記事は、@inuscriptさんによる「&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;redux-observableで検索機能の実装を写経してRxJSのパワーを感じる&lt;/a&gt;」を&lt;a href=&quot;https://github.com/redux-saga/redux-saga&quot;&gt;Redux-Saga&lt;/a&gt;で書きなおしたものです。&lt;/p&gt;
 &lt;h1&gt;本記事の目的&lt;/h1&gt;
 &lt;p&gt;実用コードにおける非同期処理では以下のような問題が頻出する。これらについて元記事におけるRedux-obserbable(あるいはAngularが提供する)RxJSを用いた解決方法に対して、Redux-sagaによる解決方法を比較する。&lt;/p&gt;
 &lt;p&gt;(&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;元記事&lt;/a&gt;よりの引用)&lt;/p&gt;
@@ -4051,7 +4019,39 @@ function* changeInput() {
 &lt;a href=&quot;#fnref-2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[JSでデフォルトカリー化]]></title><description><![CDATA[JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。 func = arg1 => arg2 => .. 関数本体 たとえば、以下のように関数を定義して… 呼び出しは以下のようにします。 これでOK…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Elmでやってみようシリーズ1]]></title><description><![CDATA[elmでやってみるシリーズ1: ●を動かす。 こちらで実行できます。 感想 foldpは好き。 inputに対応するSignal…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ce95865dc999be1d68eb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ce95865dc999be1d68eb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://elm-lang.org/&quot;&gt;elm&lt;/a&gt;でやってみるシリーズ1: ●を動かす。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-haskell&quot;&gt;import Window
+
+pos : Signal Int
+pos =let f = \tmp -&gt; (tmp `mod` 30) - 10
+        in f &amp;#x3C;~ foldp (\it acc-&gt; acc + 1) 0 (fps 50)
+
+drawCircle : Float -&gt; Float -&gt; Form
+drawCircle x y = move (x,y) &amp;#x3C;| filled red (circle 20)
+
+drawMatrix : [Form]
+drawMatrix = map (\x -&gt; drawLine &amp;#x3C;| x*10) [-10..10]
+
+drawLine : Float -&gt; Form
+drawLine x = traced (solid blue) ( segment (x,-100) (x,100) )
+
+main : Signal Element
+main=let f = \w h p-&gt; collage w h ([drawCircle ((toFloat p)*10) 10]++drawMatrix)
+     in f &amp;#x3C;~ Window.width ~ Window.height ~ pos
+&lt;/code&gt;&lt;/pre&gt;
+&lt;iframe width=&quot;100%&quot; src=&quot;http://share-elm.com/sprout/53c8a01ee4b07afa6f983053/stable/view&quot;&gt;
+&lt;/iframe&gt;
+# 実行する
+&lt;p&gt;&lt;a href=&quot;http://share-elm.com/sprout/53c8a01ee4b07afa6f983053/stable/view&quot;&gt;こちら&lt;/a&gt;で実行できます。&lt;/p&gt;
+&lt;h1&gt;感想&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;foldpは好き。&lt;/li&gt;
+&lt;li&gt;inputに対応するSignalってグローバル変数じゃね?まあ「マウスがクリックされる」とか「時間が経過する」という事実はグローバルなんだが、それによって引き起こされるイベントもそうなる…。プログラムからその値を能動的に制御できないから変数とは呼べない…のかな。でもユーザがフィールドに値を入力したり、ラジオボタンをクリックしたり、という操作によって設定項目をリアクティブに変更したその結果の、Signalである設定項目って、どう見てもグローバル変数だよね。まだよくわからない。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;関連エントリ&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://uehaj.hatenablog.com/entry/2014/07/03/023808&quot;&gt;http://uehaj.hatenablog.com/entry/2014/07/03/023808&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[JSでデフォルトカリー化]]></title><description><![CDATA[JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。 func = arg1 => arg2 => .. 関数本体 たとえば、以下のように関数を定義して… 呼び出しは以下のようにします。 これでOK…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;func = arg1 =&gt; arg2 =&gt; .. 関数本体&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;たとえば、以下のように関数を定義して…&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;func = x =&gt; y =&gt; z =&gt; x+y+z;
@@ -4263,150 +4263,7 @@ CMDに関して、「&lt;code&gt;/bin/sh -c&lt;/code&gt;」の付与は、ENTRYP
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Visual Studio Codeでエスケープキーの代りに^[を使用する設定]]></title><description><![CDATA[TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに ^[を割り当てます。Cmd-K Cmd-s からkeybindigs.jsonを開いて以下を追加。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに &lt;code&gt;^[&lt;/code&gt;を割り当てます。&lt;code&gt;Cmd-K&lt;/code&gt; &lt;code&gt;Cmd-s&lt;/code&gt; からkeybindigs.jsonを開いて以下を追加。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;[
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;search.action.cancel&quot;,
-    &quot;when&quot;: &quot;searchViewletVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeFindWidget&quot;,
-    &quot;when&quot;: &quot;findWidgetVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeReplaceInFilesWidget&quot;,
-    &quot;when&quot;: &quot;replaceInputBoxFocus &amp;#x26;&amp;#x26; searchViewletVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;workbench.action.hideInterfaceOverview&quot;,
-    &quot;when&quot;: &quot;interfaceOverviewVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;workbench.action.terminal.hideFindWidget&quot;,
-    &quot;when&quot;: &quot;terminalFindWidgetVisible &amp;#x26;&amp;#x26; terminalFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;cancelRenameInput&quot;,
-    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; renameInputVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;cancelSelection&quot;,
-    &quot;when&quot;: &quot;editorHasSelection &amp;#x26;&amp;#x26; textInputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeAccessibilityHelp&quot;,
-    &quot;when&quot;: &quot;accessibilityHelpWidgetVisible &amp;#x26;&amp;#x26; editorFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeBreakpointWidget&quot;,
-    &quot;when&quot;: &quot;breakpointWidgetVisible &amp;#x26;&amp;#x26; textInputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeDirtyDiff&quot;,
-    &quot;when&quot;: &quot;dirtyDiffVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeFindWidget&quot;,
-    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; findWidgetVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeMarkersNavigation&quot;,
-    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; markersNavigationVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeParameterHints&quot;,
-    &quot;when&quot;: &quot;editorTextFocus &amp;#x26;&amp;#x26; parameterHintsVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeReferenceSearch&quot;,
-    &quot;when&quot;: &quot;referenceSearchVisible &amp;#x26;&amp;#x26; !config.editor.stablePeek&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;closeReferenceSearchEditor&quot;,
-    &quot;when&quot;: &quot;inReferenceSearchEditor &amp;#x26;&amp;#x26; !config.editor.stablePeek&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;editor.action.webvieweditor.hideFind&quot;,
-    &quot;when&quot;: &quot;webviewEditorFocus &amp;#x26;&amp;#x26; webviewFindWidgetVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;hideSuggestWidget&quot;,
-    &quot;when&quot;: &quot;suggestWidgetVisible &amp;#x26;&amp;#x26; textInputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;keybindings.editor.clearSearchResults&quot;,
-    &quot;when&quot;: &quot;inKeybindings &amp;#x26;&amp;#x26; inKeybindingsSearch&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;leaveEditorMessage&quot;,
-    &quot;when&quot;: &quot;messageVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;leaveSnippet&quot;,
-    &quot;when&quot;: &quot;editorTextFocus &amp;#x26;&amp;#x26; inSnippetMode&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;list.clear&quot;,
-    &quot;when&quot;: &quot;listFocus &amp;#x26;&amp;#x26; !inputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;notifications.hideList&quot;,
-    &quot;when&quot;: &quot;notificationCenterVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;notifications.hideToasts&quot;,
-    &quot;when&quot;: &quot;notificationToastsVisible&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;removeSecondaryCursors&quot;,
-    &quot;when&quot;: &quot;editorHasMultipleSelections &amp;#x26;&amp;#x26; textInputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;search.action.cancel&quot;,
-    &quot;when&quot;: &quot;listFocus &amp;#x26;&amp;#x26; searchViewletVisible &amp;#x26;&amp;#x26; !inputFocus&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;settings.action.clearSearchResults&quot;,
-    &quot;when&quot;: &quot;inSettingsSearch&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;workbench.action.closeQuickOpen&quot;,
-    &quot;when&quot;: &quot;inQuickOpen&quot;
-  },
-  {
-    &quot;key&quot;: &quot;ctrl+[&quot;,
-    &quot;command&quot;: &quot;workbench.action.exitZenMode&quot;,
-    &quot;when&quot;: &quot;inZenMode&quot;
-  }
-]
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Redux-Sagaでテトリス風ゲームを実装して学んだこと]]></title><description><![CDATA[はじめに React #1 Advent Calendar 2017の11日目です。 Reduxのミドルウェア「Redux-saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/eaa039a7ce44d5969f06/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/eaa039a7ce44d5969f06/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;はじめに&lt;/h1&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Redux-Sagaでテトリス風ゲームを実装して学んだこと]]></title><description><![CDATA[はじめに React #1 Advent Calendar 2017の11日目です。 Reduxのミドルウェア「Redux-saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/eaa039a7ce44d5969f06/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/eaa039a7ce44d5969f06/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&quot;https://qiita.com/advent-calendar/2017/react&quot;&gt;React #1 Advent Calendar 2017&lt;/a&gt;の11日目です。&lt;/p&gt;
 &lt;p&gt;Reduxのミドルウェア「Redux-saga」で「やや複雑なリアルタイムゲーム」としてテトリス風のゲームの基本部分を開発し、それを通じて学んだこと・感じたことを紹介します。&lt;/p&gt;
 &lt;h1&gt;画面例&lt;/h1&gt;
@@ -4710,7 +4567,150 @@ export function* pieceFall() {
 &lt;a href=&quot;#fnref-4&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Redux Starter KitでHooksとReduxを使いこなそう]]></title><description><![CDATA[React-Reduxの公式から「Redux Starter Kit」というものが公開されています。 これがなにかといえば、私の理解するかぎり以下です。 React-Redux…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f91d68ea4ef8450fc45c/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f91d68ea4ef8450fc45c/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Visual Studio Codeでエスケープキーの代りに^[を使用する設定]]></title><description><![CDATA[TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに ^[を割り当てます。Cmd-K Cmd-s からkeybindigs.jsonを開いて以下を追加。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに &lt;code&gt;^[&lt;/code&gt;を割り当てます。&lt;code&gt;Cmd-K&lt;/code&gt; &lt;code&gt;Cmd-s&lt;/code&gt; からkeybindigs.jsonを開いて以下を追加。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;[
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;search.action.cancel&quot;,
+    &quot;when&quot;: &quot;searchViewletVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeFindWidget&quot;,
+    &quot;when&quot;: &quot;findWidgetVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeReplaceInFilesWidget&quot;,
+    &quot;when&quot;: &quot;replaceInputBoxFocus &amp;#x26;&amp;#x26; searchViewletVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;workbench.action.hideInterfaceOverview&quot;,
+    &quot;when&quot;: &quot;interfaceOverviewVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;workbench.action.terminal.hideFindWidget&quot;,
+    &quot;when&quot;: &quot;terminalFindWidgetVisible &amp;#x26;&amp;#x26; terminalFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;cancelRenameInput&quot;,
+    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; renameInputVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;cancelSelection&quot;,
+    &quot;when&quot;: &quot;editorHasSelection &amp;#x26;&amp;#x26; textInputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeAccessibilityHelp&quot;,
+    &quot;when&quot;: &quot;accessibilityHelpWidgetVisible &amp;#x26;&amp;#x26; editorFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeBreakpointWidget&quot;,
+    &quot;when&quot;: &quot;breakpointWidgetVisible &amp;#x26;&amp;#x26; textInputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeDirtyDiff&quot;,
+    &quot;when&quot;: &quot;dirtyDiffVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeFindWidget&quot;,
+    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; findWidgetVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeMarkersNavigation&quot;,
+    &quot;when&quot;: &quot;editorFocus &amp;#x26;&amp;#x26; markersNavigationVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeParameterHints&quot;,
+    &quot;when&quot;: &quot;editorTextFocus &amp;#x26;&amp;#x26; parameterHintsVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeReferenceSearch&quot;,
+    &quot;when&quot;: &quot;referenceSearchVisible &amp;#x26;&amp;#x26; !config.editor.stablePeek&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;closeReferenceSearchEditor&quot;,
+    &quot;when&quot;: &quot;inReferenceSearchEditor &amp;#x26;&amp;#x26; !config.editor.stablePeek&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;editor.action.webvieweditor.hideFind&quot;,
+    &quot;when&quot;: &quot;webviewEditorFocus &amp;#x26;&amp;#x26; webviewFindWidgetVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;hideSuggestWidget&quot;,
+    &quot;when&quot;: &quot;suggestWidgetVisible &amp;#x26;&amp;#x26; textInputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;keybindings.editor.clearSearchResults&quot;,
+    &quot;when&quot;: &quot;inKeybindings &amp;#x26;&amp;#x26; inKeybindingsSearch&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;leaveEditorMessage&quot;,
+    &quot;when&quot;: &quot;messageVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;leaveSnippet&quot;,
+    &quot;when&quot;: &quot;editorTextFocus &amp;#x26;&amp;#x26; inSnippetMode&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;list.clear&quot;,
+    &quot;when&quot;: &quot;listFocus &amp;#x26;&amp;#x26; !inputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;notifications.hideList&quot;,
+    &quot;when&quot;: &quot;notificationCenterVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;notifications.hideToasts&quot;,
+    &quot;when&quot;: &quot;notificationToastsVisible&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;removeSecondaryCursors&quot;,
+    &quot;when&quot;: &quot;editorHasMultipleSelections &amp;#x26;&amp;#x26; textInputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;search.action.cancel&quot;,
+    &quot;when&quot;: &quot;listFocus &amp;#x26;&amp;#x26; searchViewletVisible &amp;#x26;&amp;#x26; !inputFocus&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;settings.action.clearSearchResults&quot;,
+    &quot;when&quot;: &quot;inSettingsSearch&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;workbench.action.closeQuickOpen&quot;,
+    &quot;when&quot;: &quot;inQuickOpen&quot;
+  },
+  {
+    &quot;key&quot;: &quot;ctrl+[&quot;,
+    &quot;command&quot;: &quot;workbench.action.exitZenMode&quot;,
+    &quot;when&quot;: &quot;inZenMode&quot;
+  }
+]
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Redux Starter KitでHooksとReduxを使いこなそう]]></title><description><![CDATA[React-Reduxの公式から「Redux Starter Kit」というものが公開されています。 これがなにかといえば、私の理解するかぎり以下です。 React-Redux…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f91d68ea4ef8450fc45c/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f91d68ea4ef8450fc45c/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
 &lt;tr&gt;&lt;td&gt;Redux Sterter KitはRedux-Toolkitに名称変更されてAPIも変更されています。本記事はそのままでは最新版redux-toolkitとして動作しません。
 https://github.com/reduxjs/redux-toolkit&lt;/td&gt;&lt;/tr&gt;
 &lt;table&gt;
