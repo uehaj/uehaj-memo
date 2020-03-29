@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 2.20.8"/><link rel="preconnect dns-prefetch" href="https://www.google-analytics.com"/><link rel="alternate" type="application/rss+xml" href="/rss.xml"/><link rel="icon" href="/icons/icon-48x48.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="manifest" href="/manifest.webmanifest"/><meta name="theme-color" content="#663399"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=edf3d310d67f8284a562bc3a58c3e761"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=edf3d310d67f8284a562bc3a58c3e761"/><title data-react-helmet="true">Redux Starter KitでHooksとReduxを使いこなそう|Gatsby Starter Blog Grommet v2</title><meta data-react-helmet="true" name="description" content="React-Reduxの公式から「Redux Starter Kit」というものが公開されています。 これがなにかといえば、私の理解するかぎり以下です。 React-Redux…"/><style data-styled="cxdnGv eUfLDp  ibXjqB gKMlfy hiQlop fbPEuv cRdLPJ fmlxal konoRe juZNvr cHqCJo kTNrrC cPEInk dusloy koruWX fhTKrx egLqqe kPraOX cXcbzr gqUMTP hehAPz gAyINP jRjNKe ffajHy AGUoN fYEUgR ikIgfp fIeKgP fiDkPX jfbKsv iOkQrb bUsBUB hGMbC UumnI gRPiLc" data-styled-version="4.4.1">
+/* sc-component-id: StyledIcon-ofa7kd-0 */
+.iOkQrb{display:inline-block;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;width:24px;height:24px;fill:#666666;stroke:#666666;} .iOkQrb g{fill:inherit;stroke:inherit;} .iOkQrb *:not([stroke])[fill="none"]{stroke-width:0;} .iOkQrb *[stroke*="#"],.iOkQrb *[STROKE*="#"]{stroke:inherit;fill:none;} .iOkQrb *[fill-rule],.iOkQrb *[FILL-RULE],.iOkQrb *[fill*="#"],.iOkQrb *[FILL*="#"]{fill:inherit;stroke:none;}
+/* sc-component-id: StyledBox-sc-13pk1d4-0 */
+.ibXjqB{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;min-width:0;min-height:0;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}.gKMlfy{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;min-width:0;min-height:0;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:1152px;}.hiQlop{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;margin:12px;min-width:0;min-height:0;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;} @media only screen and (max-width:1000px){.hiQlop{margin:6px;}}.fbPEuv{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;min-width:0;min-height:0;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;} @media only screen and (max-width:1000px){.fbPEuv{-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-flex-basis:auto;-ms-flex-preferred-size:auto;flex-basis:auto;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-align-items:stretch;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch;}}.cRdLPJ{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;min-width:0;min-height:0;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-flex:1 0;-ms-flex:1 0;flex:1 0;-webkit-flex-basis:768px;-ms-flex-preferred-size:768px;flex-basis:768px;} @media only screen and (max-width:1000px){.cRdLPJ{-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-flex-basis:auto;-ms-flex-preferred-size:auto;flex-basis:auto;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-align-items:stretch;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch;}}.fmlxal{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;margin:12px;min-width:0;min-height:0;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;border-radius:12px;} @media only screen and (max-width:1000px){.fmlxal{margin:6px;}} @media only screen and (max-width:1000px){.fmlxal{border-radius:6px;}}.konoRe{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;min-width:0;min-height:0;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;padding-left:24px;padding-right:24px;} @media only screen and (max-width:1000px){.konoRe{padding-left:12px;padding-right:12px;}}.juZNvr{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;margin:48px;min-width:0;min-height:0;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;} @media only screen and (max-width:1000px){.juZNvr{margin:24px;}}.cHqCJo{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;min-width:0;min-height:0;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;}.kTNrrC{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;min-width:0;min-height:0;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-flex-basis:384px;-ms-flex-preferred-size:384px;flex-basis:384px;}.cPEInk{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;margin:12px;border:solid 1px rgba(0,0,0,0.33);min-width:0;min-height:0;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;padding:24px;border-radius:12px;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;overflow:hidden;} @media only screen and (max-width:1000px){.cPEInk{margin:6px;}} @media only screen and (max-width:1000px){.cPEInk{border:solid 1px rgba(0,0,0,0.33);}} @media only screen and (max-width:1000px){.cPEInk{padding:12px;}} @media only screen and (max-width:1000px){.cPEInk{border-radius:6px;}}.dusloy{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;margin-bottom:12px;margin-left:0px;margin-right:12px;min-width:0;min-height:0;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;height:96px;width:96px;border-radius:12px;overflow:hidden;} @media only screen and (max-width:1000px){.dusloy{margin-bottom:6px;}} @media only screen and (max-width:1000px){.dusloy{margin-left:0px;}} @media only screen and (max-width:1000px){.dusloy{margin-right:6px;}} @media only screen and (max-width:1000px){.dusloy{border-radius:6px;}}.koruWX{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;min-width:0;min-height:0;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}.fhTKrx{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;min-width:0;min-height:0;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;}.egLqqe{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;min-width:0;min-height:0;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;overflow:hidden;}.kPraOX{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;background-color:rgba(61,19,141,0.1);border:solid 1px rgba(0,0,0,0.33);min-width:0;min-height:0;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;border-radius:12px;box-shadow:0px 2px 4px rgba(0,0,0,0.20);} @media only screen and (max-width:1000px){.kPraOX{border:solid 1px rgba(0,0,0,0.33);}} @media only screen and (max-width:1000px){.kPraOX{-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-flex-basis:auto;-ms-flex-preferred-size:auto;flex-basis:auto;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-align-items:stretch;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch;}} @media only screen and (max-width:1000px){.kPraOX{padding-left:12px;padding-right:12px;}} @media only screen and (max-width:1000px){.kPraOX{padding-top:6px;padding-bottom:6px;}} @media only screen and (max-width:1000px){.kPraOX{border-radius:6px;}}.cXcbzr{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;box-sizing:border-box;outline:none;max-width:100%;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;min-width:0;min-height:0;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;padding:48px;} @media only screen and (max-width:1000px){.cXcbzr{padding:24px;}}
+/* sc-component-id: StyledBox__StyledBoxGap-sc-13pk1d4-1 */
+.bUsBUB{-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;-webkit-align-self:stretch;-ms-flex-item-align:stretch;align-self:stretch;width:12px;}.hGMbC{-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;-webkit-align-self:stretch;-ms-flex-item-align:stretch;align-self:stretch;width:48px;}
+/* sc-component-id: StyledButton-sc-323bzc-0 */
+.fIeKgP{display:inline-block;box-sizing:border-box;cursor:pointer;outline:none;font:inherit;-webkit-text-decoration:none;text-decoration:none;margin:0;background:transparent;overflow:visible;text-transform:none;border:2px solid;border-radius:18px;color:#444444;padding:4px 22px;font-size:18px;line-height:24px;-webkit-transition-property:color,background-color,border-color,box-shadow;transition-property:color,background-color,border-color,box-shadow;-webkit-transition-duration:0.1s;transition-duration:0.1s;-webkit-transition-timing-function:ease-in-out;transition-timing-function:ease-in-out;} .fIeKgP:hover{background-color:rgba(221,221,221,0.4);color:#000000;box-shadow:0px 0px 0px 2px;}.fiDkPX{display:inline-block;box-sizing:border-box;cursor:pointer;outline:none;font:inherit;-webkit-text-decoration:none;text-decoration:none;margin:0;background:transparent;overflow:visible;text-transform:none;color:inherit;border:none;padding:0;text-align:inherit;line-height:0;padding:12px;}.jfbKsv{display:inline-block;box-sizing:border-box;cursor:pointer;outline:none;font:inherit;-webkit-text-decoration:none;text-decoration:none;margin:0;background:transparent;overflow:visible;text-transform:none;color:inherit;border:none;padding:0;text-align:inherit;}
+/* sc-component-id: StyledHeading-sc-1rdh4aw-0 */
+.gqUMTP{margin:12px;font-size:50px;line-height:56px;max-width:1200px;font-weight:600;text-align:center;} @media only screen and (max-width:1000px){.gqUMTP{margin:6px;}} @media only screen and (max-width:1000px){.gqUMTP{font-size:34px;line-height:40px;max-width:816px;}}.hehAPz{margin-top:48px;margin-bottom:12px;font-size:50px;line-height:56px;max-width:1200px;font-weight:600;} @media only screen and (max-width:1000px){.hehAPz{margin-top:24px;}} @media only screen and (max-width:1000px){.hehAPz{margin-bottom:6px;}} @media only screen and (max-width:1000px){.hehAPz{font-size:34px;line-height:40px;max-width:816px;}}
+/* sc-component-id: StyledAnchor-sc-1rp7lwl-0 */
+.gRPiLc{box-sizing:border-box;font-size:inherit;line-height:inherit;font-weight:600;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;outline:none;} .gRPiLc:hover{-webkit-text-decoration:underline;text-decoration:underline;}
+/* sc-component-id: StyledText-sc-1sadyjn-0 */
+.gAyINP{font-size:18px;line-height:24px;text-align:center;color:#444444;}.jRjNKe{margin-bottom:12px;font-size:18px;line-height:24px;}.ffajHy{font-size:22px;line-height:28px;color:#444444;font-weight:bold;}.AGUoN{font-size:14px;line-height:20px;color:#444444;}.fYEUgR{margin-left:6px;margin-right:6px;font-size:22px;line-height:28px;color:#444444;font-weight:bold;}.ikIgfp{font-size:18px;line-height:24px;color:#444444;}
+/* sc-component-id: StyledGrommet-sc-19lkkz7-0 */
+.cxdnGv{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial,sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-size:18px;line-height:24px;background:#ffffff;color:#444444;box-sizing:border-box;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;}.eUfLDp{font-size:18px;line-height:24px;box-sizing:border-box;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;}
+/* sc-component-id: StyledImage-ey4zx9-0 */
+.UumnI{-webkit-flex:1 1;-ms-flex:1 1;flex:1 1;overflow:hidden;object-fit:cover;}
+/* sc-component-id: sc-global-4065286833 */
+img{max-width:100%;} body{margin:0;} a:hover{opacity:0.9;}</style><link as="script" rel="preload" href="/webpack-runtime-49b2b953b418709d23c0.js"/><link as="script" rel="preload" href="/framework-a61069b645629c49bb6a.js"/><link as="script" rel="preload" href="/app-030fd0dffd6bfd55860e.js"/><link as="script" rel="preload" href="/7f7e17e10404ffebb7b543ed2a7939618d5b9b2d-3331c6b539b75be206a6.js"/><link as="script" rel="preload" href="/02d529e9c63de17f611aad8b1faf348db0081e69-ac0923b45693387c242c.js"/><link as="script" rel="preload" href="/component---src-templates-blog-post-tsx-99185ea61b7c1db80950.js"/><link as="fetch" rel="preload" href="/page-data/uehaj-memo/f91d68ea4ef8450fc45c/page-data.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/page-data/app-data.json" crossorigin="anonymous"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="StyledGrommet-sc-19lkkz7-0 cxdnGv"><div class="StyledGrommet-sc-19lkkz7-0 eUfLDp"><div class="StyledBox-sc-13pk1d4-0 ibXjqB"><div class="StyledBox-sc-13pk1d4-0 gKMlfy"><header><div class="StyledBox-sc-13pk1d4-0 hiQlop"><a style="box-shadow:none;text-decoration:none" href="/"><h1 class="StyledHeading-sc-1rdh4aw-0 gqUMTP">Gatsby Starter Blog Grommet v2</h1></a><span class="StyledText-sc-1sadyjn-0 gAyINP">This is a DEMO site! SSG - Gatsby JS, UI - Grommet v2</span></div></header><main><div><div class="StyledBox-sc-13pk1d4-0 fbPEuv"><div class="StyledBox-sc-13pk1d4-0 cRdLPJ"><div><article><div class="StyledBox-sc-13pk1d4-0 fmlxal"><div><header><div class="StyledBox-sc-13pk1d4-0 konoRe"><h1 class="StyledHeading-sc-1rdh4aw-0 hehAPz">Redux Starter KitでHooksとReduxを使いこなそう</h1><span class="StyledText-sc-1sadyjn-0 jRjNKe">February 20, 2020</span></div></header></div><div class="StyledBox-sc-13pk1d4-0 konoRe"><div><table>
+<tr><td>Redux Sterter KitはRedux-Toolkitに名称変更されてAPIも変更されています。本記事はそのままでは最新版redux-toolkitとして動作しません。
+https://github.com/reduxjs/redux-toolkit</td></tr>
+<table>
+#はじめに
+<p>React-Reduxの公式から「<a href="https://redux-starter-kit.js.org/">Redux Starter Kit</a>」というものが公開されています。</p>
+<p>これがなにかといえば、私の理解するかぎり以下です。</p>
+<blockquote>
+<p>React-Reduxまわりのベストプラクティス、定番拡張、定番併用ライブラリ、定番ミドルウェアを、簡単に組込むための簡単で軽めのライブラリ、メタパッケージ。</p>
+</blockquote>
+<p>CLIコマンドではなくライブラリです。
+これは良いものだと思いましたので全力でお勧めしていきます。</p>
+<h1>特徴</h1>
+<ul>
+<li>TypeScriptフル対応。当然ですね。</li>
+<li>React Redux 7.1対応、つまりHooks対応。これからはHooksで生きていく。Hooksの無い人生は考えられない。</li>
+<li>
+<p><a href="https://github.com/immerjs/immer">Immer</a>が組込まれることで、<a href="https://redux-starter-kit.js.org/api/createreducer#direct-state-mutation">直接state変更</a>可能になり、reducer記述が簡潔になる。これはイイ! 一番の推しポイントかもしれない。MobXの利点を一部とりこんだと言えるのかも??(追記、後で知ったのですが、MobxとImmerの作者は同じ) Reduxが冗長? 昔の話です。🎉🎉🎉🎉</p>
+<ul>
+<li>Immutable.jsとくらべてImmerのいいところは、Immutable.jsのように記述が特殊にならないことが一つと、他に、同じぐらい重要なのは、他の箇所にImmutable.jsの要求するデータ構造を感染させていかないこと。非侵襲的。重要。</li>
+</ul>
+</li>
+<li>
+<p>Sliceなるものでモジュール化できる。</p>
+<ul>
+<li>Sliceは<a href="https://redux.js.org/faq/code-structure#what-should-my-file-structure-look-like-how-should-i-group-my-action-creators-and-reducers-in-my-project-where-should-my-selectors-go">Redux Ducks</a>が提供するものと<a href="https://redux-starter-kit.js.org/api/createslice#return-value">似た</a>モジュール概念。同じではないらしい。</li>
+<li>Sliceは以下を束ねたもの。</li>
+<li>Redux Stateのトップレベルのslice。ただしこれはオプショナルで、sliceにわけないこともできる。</li>
+<li>それぞれごとの、combineReducerでまとめる元となるそれぞれのReducer群</li>
+<li>sliceごとのState初期値</li>
+</ul>
+</li>
+<li>
+<p>Sliceからaction creatorは<strong><em>型付き</em></strong>で自動生成される🎉🎉🎉🎉</p>
+<ul>
+<li>ACTION定義は完全に消える。action定数も。creatorも。1行も。一行もだ。Reduxが冗長? 昔の話です。🎉🎉🎉🎉</li>
+</ul>
+</li>
+<li>
+<p>これはReact-Reduxの機能の良さからだが、</p>
+<ul>
+<li>useSelector呼び出すhookをslice Module側で定義すれば、もうほんとにstateとりだしは楽です。</li>
+</ul>
+</li>
+<li>デフォルトで今は「[immutableStateInvariant, thunk, serializableStateInvariant]の<a href="https://redux-starter-kit.js.org/api/getdefaultmiddleware#development">ミドルウェアが設定される</a>。thunkは議論あるでしょうが、使わないことももちろん可能。</li>
+<li>Redux DevToolsの設定がデフォルトで入っている。</li>
+<li>
+<p>上記のようなことのワイアリングが1パッケージでできる。🎉🎉🎉🎉</p>
+<ul>
+<li><a href="https://redux-starter-kit.js.org/usage/usage-guide#manual-store-setup">configureStoreまわりのmiddlewareEnhancerとかapplyMiddlewareとかcomposedEnhancersとかのごちゃごちゃした難しいところ</a>が<a href="https://redux-starter-kit.js.org/usage/usage-guide#simplifying-store-setup-with-configurestore">スッキリ</a>できる。</li>
+</ul>
+</li>
+</ul>
+<p>上記はこれだけでも素晴らしいと思うのですが、さらに公式から、というのが安心感があって良いです。この形のReduxがデファクトスタンダードと扱われるようになることを期待します。</p>
+<h1>コード例</h1>
+<p>まずは、TodoMVCみたいなものを作るとします。そのときのタスクリストをredux stateとしてあつかうとします。そのためにTodoをあつかうためのモジュールをこんな風に定義します。</p>
+<pre><code class="language-typescript:todoModule.ts">import { createSlice } from "redux-starter-kit";
+import { useSelector } from "react-redux";
+
+export type TodoItem = {
+    title: string;
+    completed: boolean;
+    key: string;
+}
+// createSlice() で actions と reducers を一気に生成
+const todoModule = createSlice({
+    // slice: "todo",
+    initialState: [] as TodoItem[],
+    reducers: {
+        addTodo: (state, action: { payload: TodoItem }) => {
+            state.push(action.payload)
+        },
+        removeTodo: (state, action: { payload: string }) => {
+            return state.filter((item) => item.key !== action.payload);
+        },
+        setCompleted: (state, action: { payload: { completed: boolean, key: string } }) => {
+            state.forEach((item) => {
+                if (item.key === action.payload.key) {
+                    item.completed = action.payload.completed;
+                }
+            });
+        },
+    }
+});
+
+export const useTodoItems = () => {
+    return useSelector((state: ReturnType&#x3C;typeof todoModule.reducer>) => state);
+}
+// 他に便利なuseSelect呼び出しや、粒度の細かいaction creatorのexportをここに追加していってもいい。
+
+export default todoModule;
+</code></pre>
+<p>Immerのおかげで、reducerが劇的に簡潔になってます。stateをまるごとおきかえるときはreturnで返します。あとは代入などで副作用バリバリで書いてますがProxy経由なので実際にはStateを変更していません。</p>
+<p>上ではcombineReducerも使わないという前提でsliceプロパティは定義してません。もちろん規模が大きくなれば使ってもかまいません。使ったとしてもsliceの存在は最後のuseTodoItemsで隠蔽できます。
+ちなみに、dispatchでまるごと公開するのは楽とはいえ粗い、という人は、<a href="https://redux-starter-kit.js.org/usage/usage-guide#exporting-and-using-slices">ちまちまとaction creatorを公開していくこともできます</a>。お好みで。</p>
+<p>一つだけ、この記事で独自に提案したいこととして、<strong>useSelectorの呼出は、このモジュール側でHooks(ここではuseTodoItems)として定義して、使いやすくしたものをexportする</strong>ということです。特に、useSelectorの直接呼出は型定義に関して長く煩雑になりがちで、こちらに隠蔽するメリットがあります。</p>
+<p>次に、上に含まれるreducerから以下のようにstoreを構築します。デフォルトのミドルウェアが組み込まれますが、もちろん好きなものを組みこめもします。</p>
+<pre><code class="language-typescript:store.ts">import { configureStore } from "redux-starter-kit";
+import todoModule from "./modules/todoModule";
+
+export const setupStore = () => {
+    const store = configureStore({
+        reducer: todoModule.reducer
+    });
+    return store
+}
+</code></pre>
+<p>そのstoreから以下のようにProviderコンポーネントでアプリに組み込んで、</p>
+<pre><code class="language-typescript:App.tsx">import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { Provider } from "react-redux";
+import { setupStore } from "./store";
+
+const store = setupStore();
+
+ReactDOM.render(
+    &#x3C;Provider store={store}>
+        &#x3C;App />
+    &#x3C;/Provider>,
+    document.getElementById('root'));
+serviceWorker.unregister();
+</code></pre>
+<p>準備は完了。
+あとは、それぞれのコンポーネントからstoreの値をつかいたければ、</p>
+<pre><code class="language-typescript">import { useTodoItems } from "./modules/todoModule";
+  :
+  const todos = useTodoItems();
+</code></pre>
+<p>actionをディスパッチしたければ、</p>
+<pre><code class="language-typescript">import { useDispatch } from "react-redux";
+import todoModule from "./modules/todoModule";
+
+  ：
+  const dispatch = useDispatch();
+
+  dispatch(todoModule.actions.addTodo({ title: "TITLE", completed: false, key: 'XXX' }))  
+
+  const todos = useTodoItems();
+  const todo = todos[key];
+
+  dispatch(todoModule.actions.setCompleted({ key: todo.key, completed: !todo.completed }));
+  dispatch(todoModule.actions.removeTodo(todo.key));
+</code></pre>
+<p>のように、任意のコンポーネントからも自由自在です。connect, mapStateToProps, mapDispatchToPropsよさらば。</p>
+<p>以上です。ザッツオール。ナッシングエルス。驚異的に簡単になったわけです。</p>
+<p>コンポーネント間で状態を共有する場合は、間違いなく<strong>素のuseStateでやるよりも簡単</strong>になります。あっちはImmer使えないですし<sup id="fnref-1"><a href="#fn-1" class="footnote-ref">1</a></sup>、stateのsetterをプロパティで取り回したりイベントハンドラとりまわすのはつらいですからね。</p>
+<h1>参考</h1>
+<ul>
+<li><a href="https://qiita.com/Ouvill/items/a76e9cbce569d01f2931">Redux の記述量多すぎなので、 Redux の公式ツールでとことん楽をする ( Redux Starter Kit)</a></li>
+</ul>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn-1">
+<p><a href="https://qiita.com/seya/items/f6d311b32cf711a02020">こちら</a>にあるような各種Hooks(useArrayとか)を使えば、Immerに匹敵するぐらいには楽かもしれない。</p>
+<a href="#fnref-1" class="footnote-backref">↩</a>
+</li>
+</ol>
+</div></div></div></div></article><aside><div class="StyledBox-sc-13pk1d4-0 juZNvr"><button type="button" class="StyledButton-sc-323bzc-0 fIeKgP"><div class="StyledBox-sc-13pk1d4-0 cHqCJo"><svg aria-label="Previous" viewBox="0 0 24 24" class="StyledIcon-ofa7kd-0 iOkQrb"><polyline fill="none" stroke="#000" stroke-width="2" points="7 2 17 12 7 22" transform="matrix(-1 0 0 1 24 0)"></polyline></svg><div class="StyledBox__StyledBoxGap-sc-13pk1d4-1 bUsBUB"></div>Previous</div></button><div class="StyledBox__StyledBoxGap-sc-13pk1d4-1 hGMbC"></div><button type="button" class="StyledButton-sc-323bzc-0 fIeKgP"><div class="StyledBox-sc-13pk1d4-0 cHqCJo">Next<div class="StyledBox__StyledBoxGap-sc-13pk1d4-1 bUsBUB"></div><svg aria-label="Next" viewBox="0 0 24 24" class="StyledIcon-ofa7kd-0 iOkQrb"><polyline fill="none" stroke="#000" stroke-width="2" points="7 2 17 12 7 22"></polyline></svg></div></button></div></aside></div></div><div class="StyledBox-sc-13pk1d4-0 kTNrrC"><div><div></div><aside><div><div><div class="StyledBox-sc-13pk1d4-0 cPEInk"><div class="StyledBox-sc-13pk1d4-0 fbPEuv"><div class="StyledBox-sc-13pk1d4-0 dusloy"><img title="Ivan Ganev" alt="Ivan Ganev" src="https://pbs.twimg.com/profile_images/986603715732934656/7A4Nt68k_400x400.jpg" class="StyledImage-ey4zx9-0 UumnI"/></div><div class="StyledBox-sc-13pk1d4-0 koruWX"><span class="StyledText-sc-1sadyjn-0 ffajHy">Ivan Ganev</span></div></div><div class="StyledBox-sc-13pk1d4-0 fhTKrx"><a href="https://twitter.com/ganevru" class="StyledButton-sc-323bzc-0 fiDkPX"><svg aria-label="Twitter" viewBox="0 0 24 24" class="StyledIcon-ofa7kd-0 iOkQrb"><path fill="#1DA1F2" fill-rule="evenodd" d="M24,4.3086 C23.117,4.7006 22.168,4.9646 21.172,5.0836 C22.188,4.4746 22.969,3.5096 23.337,2.3596 C22.386,2.9246 21.332,3.3336 20.21,3.5556 C19.312,2.5976 18.032,1.9996 16.616,1.9996 C13.897,1.9996 11.692,4.2046 11.692,6.9236 C11.692,7.3096 11.736,7.6856 11.82,8.0456 C7.728,7.8406 4.099,5.8806 1.671,2.9006 C1.247,3.6286 1.004,4.4736 1.004,5.3766 C1.004,7.0846 1.873,8.5926 3.195,9.4756 C2.388,9.4486 1.628,9.2276 0.964,8.8596 L0.964,8.9206 C0.964,11.3066 2.661,13.2966 4.914,13.7486 C4.501,13.8626 4.065,13.9216 3.617,13.9216 C3.299,13.9216 2.991,13.8906 2.69,13.8336 C3.317,15.7896 5.135,17.2136 7.29,17.2536 C5.604,18.5736 3.481,19.3606 1.175,19.3606 C0.777,19.3606 0.385,19.3376 0,19.2926 C2.179,20.6886 4.767,21.5046 7.548,21.5046 C16.605,21.5046 21.557,14.0016 21.557,7.4946 C21.557,7.2816 21.552,7.0696 21.543,6.8586 C22.505,6.1636 23.34,5.2966 24,4.3086"></path></svg></a><a href="https://github.com/ganevru" class="StyledButton-sc-323bzc-0 fiDkPX"><svg aria-label="Github" viewBox="0 0 24 24" class="StyledIcon-ofa7kd-0 iOkQrb"><path fill="#333" fill-rule="evenodd" d="M11.9989871,1 C5.92550416,1 1,5.92482888 1,12.0003376 C1,16.8603395 4.15153934,20.9829338 8.52263728,22.4374904 C9.0729918,22.5387827 9.27355045,22.199116 9.27355045,21.9073943 C9.27355045,21.6467356 9.2640965,20.954572 9.25869425,20.0368642 C6.19899322,20.7013414 5.55342398,18.5620492 5.55342398,18.5620492 C5.0530403,17.2911692 4.33183953,16.9528531 4.33183953,16.9528531 C3.33309801,16.2708186 4.40747107,16.2843243 4.40747107,16.2843243 C5.51155652,16.3619816 6.09229872,17.4181221 6.09229872,17.4181221 C7.07348292,19.0988981 8.66714755,18.6133706 9.2938089,18.3317781 C9.39375058,17.6213819 9.67804414,17.1365297 9.99205009,16.86169 C7.54955646,16.5841493 4.98146045,15.6401056 4.98146045,11.4249977 C4.98146045,10.224347 5.41026428,9.24181221 6.11390773,8.47334172 C6.00046042,8.19512569 5.62297799,7.07618404 6.22195279,5.56220265 C6.22195279,5.56220265 7.14506277,5.26642929 9.24653918,6.68992296 C10.12373,6.44547101 11.0650726,6.32392032 12.0003376,6.31919335 C12.9349274,6.32392032 13.8755947,6.44547101 14.7541361,6.68992296 C16.8542619,5.26642929 17.7760214,5.56220265 17.7760214,5.56220265 C18.3763467,7.07618404 17.9988643,8.19512569 17.8860923,8.47334172 C18.5910863,9.24181221 19.0165137,10.224347 19.0165137,11.4249977 C19.0165137,15.6509101 16.444366,16.5807729 13.9944443,16.8529114 C14.3888087,17.192578 14.7406305,17.863808 14.7406305,18.890236 C14.7406305,20.3603241 14.7271248,21.5467939 14.7271248,21.9073943 C14.7271248,22.2018171 14.9256576,22.5441849 15.4834403,22.4368151 C19.8511618,20.9788821 23,16.8589889 23,12.0003376 C23,5.92482888 18.0744958,1 11.9989871,1"></path></svg></a><a href="https://reddit.com/user/ganevru" class="StyledButton-sc-323bzc-0 fiDkPX"><svg aria-label="Reddit" viewBox="0 0 24 24" class="StyledIcon-ofa7kd-0 iOkQrb"><path fill="#FF4500" fill-rule="evenodd" d="M15.57,15.284 C14.673,15.284 13.91925,14.5565 13.91925,13.6595 C13.91925,12.7625 14.673,12.011 15.57,12.011 C16.467,12.011 17.1945,12.7625 17.1945,13.6595 C17.1945,14.5565 16.467,15.284 15.57,15.284 M15.951,18.437 C15.1155,19.27175 13.827,19.6775 12.012,19.6775 C12.00825,19.6775 12.00375,19.67675 11.99925,19.67675 C11.9955,19.67675 11.991,19.6775 11.9865,19.6775 C10.1715,19.6775 8.88375,19.27175 8.049,18.437 C7.7925,18.1805 7.7925,17.76575 8.049,17.51 C8.30475,17.25425 8.7195,17.25425 8.976,17.51 C9.552,18.086 10.53675,18.3665 11.9865,18.3665 C11.991,18.3665 11.9955,18.36725 11.99925,18.36725 C12.00375,18.36725 12.00825,18.3665 12.012,18.3665 C13.46175,18.3665 14.44725,18.086 15.024,17.51 C15.2805,17.2535 15.69525,17.25425 15.951,17.51 C16.20675,17.7665 16.20675,18.18125 15.951,18.437 M6.8055,13.6595 C6.8055,12.76325 7.55775,12.011 8.454,12.011 C9.351,12.011 10.0785,12.76325 10.0785,13.6595 C10.0785,14.5565 9.351,15.284 8.454,15.284 C7.55775,15.284 6.8055,14.5565 6.8055,13.6595 M19.998,3.311 C20.6055,3.311 21.09975,3.80525 21.09975,4.412 C21.09975,5.0195 20.6055,5.51375 19.998,5.51375 C19.3905,5.51375 18.89625,5.0195 18.89625,4.412 C18.89625,3.80525 19.3905,3.311 19.998,3.311 M24,11.87525 C24,10.2845 22.70625,8.99075 21.1155,8.99075 C20.427,8.99075 19.79475,9.23375 19.29825,9.638 C17.5395,8.5325 15.3075,7.8665 12.915,7.7255 L14.163,3.77975 L17.59275,4.5875 C17.68275,5.83625 18.72675,6.82475 19.998,6.82475 C21.32775,6.82475 22.41,5.7425 22.41,4.412 C22.41,3.08225 21.32775,2 19.998,2 C19.068,2 18.2595,2.5295 17.85675,3.30275 L13.87125,2.3645 C13.5375,2.28575 13.2,2.47775 13.0965,2.80475 L11.547,7.70225 C8.96925,7.76525 6.546,8.4335 4.65825,9.6035 C4.1685,9.22025 3.55275,8.99075 2.8845,8.99075 C1.29375,8.99075 0,10.2845 0,11.87525 C0,12.8585 0.495,13.72775 1.24875,14.24825 C1.21725,14.477 1.20075,14.70725 1.20075,14.9405 C1.20075,16.92875 2.3565,18.77825 4.455,20.14775 C6.4665,21.461 9.129,22.184 11.95125,22.184 C14.7735,22.184 17.436,21.461 19.4475,20.14775 C21.546,18.77825 22.70175,16.92875 22.70175,14.9405 C22.70175,14.72825 22.6875,14.5175 22.66125,14.30825 C23.46525,13.796 24,12.89675 24,11.87525"></path></svg></a></div><div class="StyledBox-sc-13pk1d4-0 egLqqe"><span class="StyledText-sc-1sadyjn-0 AGUoN"><span>Hello, I&#x27;m Ivan Ganev and I made this blog starter for Gatsby js using UI Grommet v2. <br/><br/>Repo of this starter: <a class="StyledAnchor-sc-1rp7lwl-0 gRPiLc" href="https://github.com/ganevru/gatsby-starter-blog-grommet">github.com/ganevru/gatsby-starter-blog-grommet</a><br/><br/>Go here: site-config.js, and replace this text with your own</span></span></div></div></div><div class="StyledBox-sc-13pk1d4-0 hiQlop"><button type="button" class="StyledButton-sc-323bzc-0 jfbKsv"><div class="StyledBox-sc-13pk1d4-0 kPraOX"><svg aria-label="Actions" viewBox="0 0 24 24" class="StyledIcon-ofa7kd-0 iOkQrb"><path fill="none" stroke="#000" stroke-width="2" d="M12,17.5 C15.0375661,17.5 17.5,15.0375661 17.5,12 C17.5,8.96243388 15.0375661,6.5 12,6.5 C8.96243388,6.5 6.5,8.96243388 6.5,12 C6.5,15.0375661 8.96243388,17.5 12,17.5 Z M12,6.5 L12,1 M12,23 L12,17.5 M1,12 L6.5,12 M17.5,12 L23,12 M4.4375,4.4375 L8.5625,8.5625 M15.4375,15.4375 L19.5625,19.5625 M19.5625,4.4375 L15.4375,8.5625 M8.5625,15.4375 L4.4375,19.5625"></path></svg><span class="StyledText-sc-1sadyjn-0 fYEUgR">Enable Dark Theme</span></div></button></div></div></aside></div></div></div></div></main></div></div><footer><div class="StyledBox-sc-13pk1d4-0 cXcbzr"><span class="StyledText-sc-1sadyjn-0 ikIgfp"><span><strong>2018</strong><br/><br/>Go here: site-config.js, and replace this text with your own</span></span></div></footer></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script>
+  
+  
+  if(true) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  }
+  if (typeof ga === "function") {
+    ga('create', 'ADD YOUR TRACKING ID HERE', 'auto', {});
+      
+      
+      
+      
+      
+      }</script><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/uehaj-memo/f91d68ea4ef8450fc45c/";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-030fd0dffd6bfd55860e.js"],"component---node-modules-gatsby-plugin-offline-app-shell-js":["/component---node-modules-gatsby-plugin-offline-app-shell-js-ebda79b2f242b4f85f83.js"],"component---src-templates-blog-post-tsx":["/component---src-templates-blog-post-tsx-99185ea61b7c1db80950.js"],"component---src-pages-404-tsx":["/component---src-pages-404-tsx-6b4c408d24e05a7f5e56.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx-631502b66e8bcf4559a7.js"]};/*]]>*/</script><script src="/component---src-templates-blog-post-tsx-99185ea61b7c1db80950.js" async=""></script><script src="/02d529e9c63de17f611aad8b1faf348db0081e69-ac0923b45693387c242c.js" async=""></script><script src="/7f7e17e10404ffebb7b543ed2a7939618d5b9b2d-3331c6b539b75be206a6.js" async=""></script><script src="/app-030fd0dffd6bfd55860e.js" async=""></script><script src="/framework-a61069b645629c49bb6a.js" async=""></script><script src="/webpack-runtime-49b2b953b418709d23c0.js" async=""></script></body></html>
