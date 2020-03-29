@@ -23,7 +23,11 @@
     "lint": "npm run lint:ts && npm run lint:js",
     "lint-staged": "lint-staged",
     "lint:js": "eslint \"./src/**/*.js\" \"./src/**/*.jsx\"",
-    "lint:ts": "eslint \"./src/**/*.ts\" \"./src/**/*.tsx\""
+    "lint:ts": "eslint \"./src/**/*.ts\" \"./src/**/*.tsx\"",
+    "deploy": "gh-pages -d public",
+    "update": "cd content/blog && curl -s 'https://qiita.com/api/v2/users/uehaj/items?per_page=100' | jq -r '.[].url' | xargs -n1 -I{} bash -c 'curl -o $(basename {}).md -s {}.md' && for i in *.md; do perl -i -pe \"s|^title:|date: 2020-02-20T15:08:12.174Z\npath: /$i/index.html\ntemplate: BlogPost\ntitle:|;\" $i ;  done",
+
+    "update_build_deploy" : "yarn run clean && yarn run update && yarn run build && yarn run deploy"
   },
   "dependencies": {
     "@types/lodash": "^4.14.123",
@@ -51,6 +55,7 @@
     "gatsby-source-filesystem": "^2.0.27",
     "gatsby-transformer-remark": "^2.3.7",
     "gatsby-transformer-sharp": "^2.1.17",
+    "gh-pages": "^2.2.0",
     "grommet": "^2.5.5",
     "grommet-icons": "^4.2.0",
     "grommet-theme-aruba": "^0.1.2",
