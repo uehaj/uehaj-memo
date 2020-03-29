@@ -1,93 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog Grommet v2]]></title><description><![CDATA[This is a DEMO site! SSG - Gatsby JS, UI - Grommet v2]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 29 Mar 2020 19:30:56 GMT</lastBuildDate><item><title><![CDATA[【React+TypeScript】Function Componentで省略可能propsの省略した場合の値を型安全に指定する]]></title><description><![CDATA[https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521 こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。 リンク先から引用。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/036e17f54cf623cee1a6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/036e17f54cf623cee1a6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&quot;&gt;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。&lt;/p&gt;
-&lt;p&gt;リンク先から引用。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;const MyComponent = (props: { name: string, telephone: string }) =&gt; {
-  ...
-}
-
-MyComponent.defaultProps = { telephone: &quot;222-333-4444&quot; }
-
-// Works - good
-const test = &amp;#x3C;MyComponent name=&quot;Hulk Hogan&quot; /&gt;
-
-// Doesn&apos;t work - missing name, good
-const test = &amp;#x3C;MyComponent /&gt;
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[TAPLのML実装をRustでやってみるシリーズ「4章 算術式のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみます。 まずは4章の算術式です。書籍でのtype termが保持するinfo…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/1ac71855d05132d54eb8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/1ac71855d05132d54eb8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみます。&lt;/p&gt;
-&lt;p&gt;まずは4章の算術式です。書籍でのtype termが保持するinfoは、ソースからパージングするわけではないので略します。いらなそうなletは省きました(OCamlでの必要性は不明)。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;#![feature(box_patterns)]
-#![feature(box_syntax)]
-
-#[derive(Debug,Clone)]
-enum Term {
-    True,
-    False,
-    If(Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;),
-    Zero,
-    Succ(Box&amp;#x3C;Term&gt;),
-    Pred(Box&amp;#x3C;Term&gt;),
-    IsZero(Box&amp;#x3C;Term&gt;)
-}
-
-use Term::*;
-
-fn is_numerical(t: &amp;#x26;Term) -&gt; bool {
-    match *t {
-        Zero =&gt; true,
-        Succ(box ref t1) =&gt; is_numerical(t1),
-        _ =&gt; false
-    }
-}
-
-fn is_val(t: &amp;#x26;Term) -&gt; bool {
-    match *t {
-        True =&gt; true,
-        False =&gt; true,
-        _ =&gt; is_numerical(t)
-    }
-}
-
-fn eval1(t: Term) -&gt; Term {
-    match t {
-        Zero =&gt; Zero,
-        If(box True, box t2, _) =&gt; t2,
-        If(box False, _, box t3) =&gt; t3,
-        If(box t1, t2, t3) =&gt; If(box eval1(t1), t2, t3),
-        Succ(box t1) =&gt; Succ(box eval1(t1)),
-        Pred(box Zero) =&gt; Zero,
-        Pred(box Succ(box ref t1)) if is_numerical(t1) =&gt; t1.clone(),
-        Pred(box t1) =&gt; Pred(box eval1(t1)),
-        IsZero(box Zero) =&gt; True,
-        IsZero(box Succ(box ref t1)) if is_numerical(t1) =&gt; False,
-        IsZero(box t1) =&gt; IsZero(box eval1(t1)),
-        _ =&gt; panic!()
-    }
-}
-
-fn main() {
-    assert_eq!(format!(&quot;{:?}&quot;, True), &quot;True&quot;);
-    assert_eq!(is_numerical(&amp;#x26;True), false);
-    assert_eq!(is_numerical(&amp;#x26;Zero), true);
-    assert_eq!(is_val(&amp;#x26;True), true);
-    assert_eq!(is_val(&amp;#x26;If(box True,box True,box False)), false);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box True,box True,box False))), &quot;True&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box False,box True,box False))), &quot;False&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box IsZero(box Zero), box True, box False))), &quot;If(True, True, False)&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Succ(box Succ(box Zero)))), &quot;Succ(Succ(Zero))&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Zero))), &quot;Zero&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Zero))), &quot;True&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Succ(box Zero)))), &quot;False&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Pred(box Succ(box Zero))))), &quot;IsZero(Zero)&quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-&lt;li&gt;boxを除けば、ほぼOCamlと同等。GCの無い言語としては、良い線に行っていると思う。&lt;/li&gt;
-&lt;li&gt;実行メモリモデルがまさにC/C++なので、参照と値、cloneを完璧に適切に使いわける必要がある。OCaml版では全く意識する必要がない点である。この区別をてきとうにやっておけばうまく動く、ということはない。ここがGC言語との違い。&lt;/li&gt;
-&lt;li&gt;もし完璧に適切に使いわけられないならば、それはコンパイルが通らないことを意味する。やりとげてみると、目から鱗の自然な形なのだが、最初わからないとつらい。根性しかない。&lt;/li&gt;
-&lt;li&gt;今回の場合、match式の背後にある「暗黙の代入」、すなわちマッチ対象から各パターン、ガード、枝の本体に分配されるための代入が、それぞれムーブセマンティクスなのか、ownershipをとらない参照(&amp;#x26;mutではない&amp;#x26;)なのか、boxなのかrefなのかbox refなのか、そのすべてが正しく的確に指定されている必要がある。matchが展開された結果における暗黙の代入の様子を想像する力が問われる。どっかにドキュメントありますかね…。&lt;/li&gt;
-&lt;li&gt;Rustにおけるデータ管理は、「値」が基本になる、というのはたぶん間違いない。しかし、リアルワールドでは「値だけ」でやっていくことはできない。borrwingとclone()を適宜組合せる必要がある。&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[第12回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/0e0e7979b7e2b19e55f5/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/0e0e7979b7e2b19e55f5/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/1de39df381dfeee305ab&quot;&gt;第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」&lt;/a&gt;を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog Grommet v2]]></title><description><![CDATA[This is a DEMO site! SSG - Gatsby JS, UI - Grommet v2]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 29 Mar 2020 19:36:21 GMT</lastBuildDate><item><title><![CDATA[第12回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/0e0e7979b7e2b19e55f5/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/0e0e7979b7e2b19e55f5/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/1de39df381dfeee305ab&quot;&gt;第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」&lt;/a&gt;を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-frege:turtle.fr&quot;&gt;package sample.Turtle where
 
 type Position = Char
@@ -195,6 +106,20 @@ main args = do
     test &quot;6LR2R1LR5LRLRL484L63&quot; &quot;ABCDEFGHITe741yxw?&quot;         {- 40 -}
 
   
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[【React+TypeScript】Function Componentで省略可能propsの省略した場合の値を型安全に指定する]]></title><description><![CDATA[https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521 こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。 リンク先から引用。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/036e17f54cf623cee1a6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/036e17f54cf623cee1a6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&quot;&gt;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。&lt;/p&gt;
+&lt;p&gt;リンク先から引用。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;const MyComponent = (props: { name: string, telephone: string }) =&gt; {
+  ...
+}
+
+MyComponent.defaultProps = { telephone: &quot;222-333-4444&quot; }
+
+// Works - good
+const test = &amp;#x3C;MyComponent name=&quot;Hulk Hogan&quot; /&gt;
+
+// Doesn&apos;t work - missing name, good
+const test = &amp;#x3C;MyComponent /&gt;
 &lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[TaPLのML実装をRustでやってみるシリーズ「7章 ラムダ計算のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみるシリーズ、「7章のラムダ計算のML実装」です。…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/161f3c943faf35c6aefc/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/161f3c943faf35c6aefc/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみるシリーズ、「7章のラムダ計算のML実装」です。&lt;a href=&quot;http://qiita.com/uehaj/items/1ac71855d05132d54eb8&quot;&gt;4章の&lt;/a&gt;に比べるといきなり難易度が上がります。全体からしたら序の口でしょうが。&lt;/p&gt;
 &lt;h1&gt;説明&lt;/h1&gt;
 &lt;ul&gt;
@@ -428,7 +353,82 @@ fn apply(t1:Term, t2:Term) -&gt; Term {
     Apply(Box::new(t1), Box::new(t2))
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;テストコードを含めたものは&lt;a href=&quot;https://gist.github.com/uehaj/07a2f4856a2c51df4e1f&quot;&gt;こちらのgist&lt;/a&gt;にあります。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Reactベース静的サイトジェネレータGatsbyの真の力をお見せします]]></title><description><![CDATA[NTTテクノクロスの上原です。
+&lt;p&gt;テストコードを含めたものは&lt;a href=&quot;https://gist.github.com/uehaj/07a2f4856a2c51df4e1f&quot;&gt;こちらのgist&lt;/a&gt;にあります。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[TAPLのML実装をRustでやってみるシリーズ「4章 算術式のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみます。 まずは4章の算術式です。書籍でのtype termが保持するinfo…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/1ac71855d05132d54eb8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/1ac71855d05132d54eb8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみます。&lt;/p&gt;
+&lt;p&gt;まずは4章の算術式です。書籍でのtype termが保持するinfoは、ソースからパージングするわけではないので略します。いらなそうなletは省きました(OCamlでの必要性は不明)。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;#![feature(box_patterns)]
+#![feature(box_syntax)]
+
+#[derive(Debug,Clone)]
+enum Term {
+    True,
+    False,
+    If(Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;),
+    Zero,
+    Succ(Box&amp;#x3C;Term&gt;),
+    Pred(Box&amp;#x3C;Term&gt;),
+    IsZero(Box&amp;#x3C;Term&gt;)
+}
+
+use Term::*;
+
+fn is_numerical(t: &amp;#x26;Term) -&gt; bool {
+    match *t {
+        Zero =&gt; true,
+        Succ(box ref t1) =&gt; is_numerical(t1),
+        _ =&gt; false
+    }
+}
+
+fn is_val(t: &amp;#x26;Term) -&gt; bool {
+    match *t {
+        True =&gt; true,
+        False =&gt; true,
+        _ =&gt; is_numerical(t)
+    }
+}
+
+fn eval1(t: Term) -&gt; Term {
+    match t {
+        Zero =&gt; Zero,
+        If(box True, box t2, _) =&gt; t2,
+        If(box False, _, box t3) =&gt; t3,
+        If(box t1, t2, t3) =&gt; If(box eval1(t1), t2, t3),
+        Succ(box t1) =&gt; Succ(box eval1(t1)),
+        Pred(box Zero) =&gt; Zero,
+        Pred(box Succ(box ref t1)) if is_numerical(t1) =&gt; t1.clone(),
+        Pred(box t1) =&gt; Pred(box eval1(t1)),
+        IsZero(box Zero) =&gt; True,
+        IsZero(box Succ(box ref t1)) if is_numerical(t1) =&gt; False,
+        IsZero(box t1) =&gt; IsZero(box eval1(t1)),
+        _ =&gt; panic!()
+    }
+}
+
+fn main() {
+    assert_eq!(format!(&quot;{:?}&quot;, True), &quot;True&quot;);
+    assert_eq!(is_numerical(&amp;#x26;True), false);
+    assert_eq!(is_numerical(&amp;#x26;Zero), true);
+    assert_eq!(is_val(&amp;#x26;True), true);
+    assert_eq!(is_val(&amp;#x26;If(box True,box True,box False)), false);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box True,box True,box False))), &quot;True&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box False,box True,box False))), &quot;False&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box IsZero(box Zero), box True, box False))), &quot;If(True, True, False)&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Succ(box Succ(box Zero)))), &quot;Succ(Succ(Zero))&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Zero))), &quot;Zero&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Zero))), &quot;True&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Succ(box Zero)))), &quot;False&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Pred(box Succ(box Zero))))), &quot;IsZero(Zero)&quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;boxを除けば、ほぼOCamlと同等。GCの無い言語としては、良い線に行っていると思う。&lt;/li&gt;
+&lt;li&gt;実行メモリモデルがまさにC/C++なので、参照と値、cloneを完璧に適切に使いわける必要がある。OCaml版では全く意識する必要がない点である。この区別をてきとうにやっておけばうまく動く、ということはない。ここがGC言語との違い。&lt;/li&gt;
+&lt;li&gt;もし完璧に適切に使いわけられないならば、それはコンパイルが通らないことを意味する。やりとげてみると、目から鱗の自然な形なのだが、最初わからないとつらい。根性しかない。&lt;/li&gt;
+&lt;li&gt;今回の場合、match式の背後にある「暗黙の代入」、すなわちマッチ対象から各パターン、ガード、枝の本体に分配されるための代入が、それぞれムーブセマンティクスなのか、ownershipをとらない参照(&amp;#x26;mutではない&amp;#x26;)なのか、boxなのかrefなのかbox refなのか、そのすべてが正しく的確に指定されている必要がある。matchが展開された結果における暗黙の代入の様子を想像する力が問われる。どっかにドキュメントありますかね…。&lt;/li&gt;
+&lt;li&gt;Rustにおけるデータ管理は、「値」が基本になる、というのはたぶん間違いない。しかし、リアルワールドでは「値だけ」でやっていくことはできない。borrwingとclone()を適宜組合せる必要がある。&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Reactベース静的サイトジェネレータGatsbyの真の力をお見せします]]></title><description><![CDATA[NTTテクノクロスの上原です。
 業務では、社内情報のReact製自前キュレーションサイトの構築を担当しています。過去に社外ブログにReactVRの記事を途中まで書いたりしましたが、ReactVR(今は改名されてReact 36…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/1b7f0a86596353587466/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/1b7f0a86596353587466/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;NTTテクノクロスの上原です。
 業務では、社内情報のReact製自前キュレーションサイトの構築を担当しています。過去に&lt;a href=&quot;https://www.ntt-tx.co.jp/column/dojo_review_blog/20170511/?utm_source=qiita&amp;#x26;utm_medium=ac2018&amp;#x26;utm_campaign=24&quot;&gt;社外ブログにReactVRの記事&lt;/a&gt;を途中まで書いたりしましたが、ReactVR(今は改名されて&lt;a href=&quot;https://facebook.github.io/react-360/&quot;&gt;React 360&lt;/a&gt;)が思ったより流行らなくて放置してしまい、誠に申し訳ないです。&lt;/p&gt;
 &lt;p&gt;この記事は&lt;a href=&quot;https://qiita.com/advent-calendar/2018/ntt-tx&quot;&gt;NTTテクノクロスAdvent Calendar24日目&lt;/a&gt;の記事であり、社内の勉強会で発表した内容をQiita記事として書きなおしたものです。タイトルは釣りです。
@@ -824,70 +824,191 @@ fn main() {
 /*43*/ test( &quot;bdefg&quot;, &quot;24,26&quot; );    
 /*44*/ test( &quot;bdefgi&quot;, &quot;24&quot; );    
 }
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[スタンドアローンGORMをGroovyスクリプトからシュっと利用する]]></title><description><![CDATA[G* Advent Calendar 2017 20日目の記事です。 GrailsのO/Rマッピングライブラリである「GORM」は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。 非WebアプリやGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/3a65b9c7dcbcc800fbf4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/3a65b9c7dcbcc800fbf4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;G* Advent Calendar 2017 20日目の記事です。&lt;/p&gt;
-&lt;p&gt;Grailsの&lt;a href=&quot;http://gorm.grails.org/latest/&quot;&gt;O/Rマッピングライブラリである「GORM」&lt;/a&gt;は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。&lt;/p&gt;
-&lt;p&gt;非WebアプリやGrails以外の他のフレームワークから高機能なORMとして使うことも可能ですし、Grailsでのシステム開発の一部として、バッチやシェルスクリプトやsshでキックしたいとか、シェルアカウントの管理者権限者だけがデータベースにアクセスしたいときには、スタンドアローンGORMが有用なケースがあります。&lt;/p&gt;
-&lt;p&gt;というのも、そういうケースでは以下のような選択肢があるにはあるのですが、いずれも固有の課題を抱えているからです。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;http://docs.grails.org/latest/guide/commandLine.html#creatingCustomScripts&quot;&gt;grails scripts&lt;/a&gt;としてGrailsサービスやGrailsドメインクラスを呼び出す処理などを記述し、Grailsのプロジェクトフォルダ(GRAILS_PROJ/scriptsを含む)に格納して、grailsコマンドで起動。
-問題は、プロジェクトソースコードを運用環境に展開しておく必要があること。&lt;/li&gt;
-&lt;li&gt;DB処理をWeb APIとして公開して、それを叩くクライアントを開発する。
-転送速度がネックになったり、ポートを公開することでセキュリティの問題になるかもしれない。&lt;/li&gt;
-&lt;li&gt;Service層をGrailsの&lt;a href=&quot;https://grails.org/plugin/remoting&quot;&gt;Remoting Plugin&lt;/a&gt;を使って公開する。
-問題は同上。&lt;/li&gt;
-&lt;li&gt;SQLを叩く別プログラムを開発する(Groovy SQL, ..)。
-この場合の問題は、GrailsのドメインクラスからDDL生成されたデータベースに対して、生SQLを書くのはかったるいだけではなく、ドメインクラスの制約(constraint)の処理を別途しなければならないということ。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;それぞれのケースで示した問題が許容できないとき、スタンドアローンGORMが有用です。&lt;/p&gt;
-&lt;p&gt;さて、具体的な使用方法としては、Spring Bootのアプリケーションから呼び出すこともできるでしょう。
-本記事では、もっとストレートに素のGroovyスクリプトからGORMを呼び出す例を紹介します。&lt;/p&gt;
-&lt;h1&gt;方法&lt;/h1&gt;
-&lt;p&gt;たとえば、こんな感じでGroovyスクリプトを書いて、&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;@Grab(&apos;org.grails:grails-datastore-gorm-hibernate5:6.1.0.RELEASE&apos;)
-@GrabExclude(&apos;javax.transaction:jta&apos;)
-@Grab(&apos;com.h2database:h2:1.4.192&apos;)
-@Grab(&apos;org.apache.tomcat:tomcat-jdbc:8.5.0&apos;)
-@Grab(&apos;org.slf4j:slf4j-log4j12&apos;)
-import java.lang.String
-import org.grails.orm.hibernate.HibernateDatastore
-import grails.gorm.annotation.Entity
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第14回オフラインリアルタイムどう書くの参考問題をHaskellで解く]]></title><description><![CDATA[第14回 オフラインリアルタイムどう書くの参考問題「眠れるモンスターを狩る」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/48cb682cc3441f1066a3/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/48cb682cc3441f1066a3/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/0597bd3af481e5834ae1&quot;&gt;第14回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord14linedung/&quot;&gt;眠れるモンスターを狩る&lt;/a&gt;」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-haskell:monster.hs&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord14linedung/
+import Control.Monad
+import Control.Monad.State
+    
+data Monster = B|D|F|H|J|L deriving (Eq, Show)
+data Arm = A|C|E|G|I|K deriving (Eq, Show)
 
-@Entity
-class Book {
-    String title
-    static hasMany = [authors: Author]
-    String toString() {&quot;$id: $title&quot;}
-}
+removeOne e xs
+    | after == [] = before
+    | otherwise = before ++ tail(after)
+    where
+      before = takeWhile (\t-&gt; t /= e) xs
+      after = dropWhile (\t-&gt; t /= e) xs
 
-@Entity
-class Author {
-    String name
-    static hasMany = [books: Book]
-    static belongsTo = Book
-    String toString() {&quot;$id: $name&quot;}
-}
+step (ms, as, n)
+    | A `elem` as &amp;#x26;&amp;#x26; B `elem` ms = (True, (removeOne B ms, C:as, n+1))
+    | C `elem` as &amp;#x26;&amp;#x26; D `elem` ms = (True, (removeOne D ms, E:as, n+1))
+    | E `elem` as &amp;#x26;&amp;#x26; F `elem` ms = (True, (removeOne F ms, G:as, n+1))
+    | G `elem` as &amp;#x26;&amp;#x26; H `elem` ms = (True, (removeOne H ms, I:as, n+1))
+    | I `elem` as &amp;#x26;&amp;#x26; J `elem` ms = (True, (removeOne J ms, K:as, n+1))
+    | K `elem` as &amp;#x26;&amp;#x26; L `elem` ms = (True, (removeOne L ms, A:as, n+1))
+    | otherwise = (False, (ms, as, n))
 
-def hibernateDatastore = new HibernateDatastore([
-        &apos;hibernate.hbm2ddl.auto&apos;: &apos;create-drop&apos;,
-        &apos;dataSource.driverClassName&apos;: &apos;org.h2.Driver&apos;,
-        &apos;dataSource.url&apos;: &apos;jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE&apos;,
-        &apos;dataSource.username&apos;: &apos;sa&apos;,
-        &apos;dataSource.password&apos;: &apos;&apos;,
-    ],
-    Author)
+next :: State ([Monster],[Arm],Int) Bool
+next = state $ \(ms, as, n) -&gt; step (ms, as, n)
 
-Author.withTransaction {
-    Author a = new Author(name:&apos;上原 潤二&apos;);
-    Book b1 = new Book(title: &apos;プログラミングGROOVY&apos;).addToAuthors(a).save()
-    Book b2 = new Book(title: &apos;Grails徹底入門&apos;).addToAuthors(a).save()
-    println Book.findByTitleLike(&apos;G%&apos;)
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;GroovyおよびJDKがインストールされていれば、以下で実行できます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&gt; groovy groovyスクリプトファイル名
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;GroovyやJDK以外の何かを事前ダウンロードしたりインストールしたりフォルダ構成を考えたりコンパイルしたりビルドしたりビルドスクリプトを書いたりデプロイしたりパッケージングしたりが一切不要なのが利点です✌。&lt;/p&gt;
-&lt;p&gt;なお、上記では@Entityでドメインクラスを定義していますが、データベースがGrailsアプリケーションの一部であるなら、Grailsアプリケーション本体のwar(やjar)に含まれるドメインクラスのクラスファイルのjarをクラスパスに含めれば別に書かなくても利用可能です(多分)。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[React-SpringのHooks APIでブラウザアニメーションを基本から極めよう!]]></title><description><![CDATA[🎄メリークリスマスイブ!🎄 この記事は、React-Springというアニメーションのライブラリを紹介する NTTテクノクロス Advent Calendar 2019 の24日目の記事です。23日目は@yuitomoさんの記事、明日25日最終日は@korodroid…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/260f188851045cc091ac/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/260f188851045cc091ac/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
+toMonster :: [Monster] -&gt; Char -&gt; [Monster]
+toMonster xs ch = case ch of
+                    &apos;B&apos; -&gt; B:xs
+                    &apos;D&apos; -&gt; D:xs
+                    &apos;F&apos; -&gt; F:xs
+                    &apos;H&apos; -&gt; H:xs
+                    &apos;J&apos; -&gt; J:xs
+                    &apos;L&apos; -&gt; L:xs
+                    _ -&gt; xs
+
+toArm :: [Arm] -&gt; Char -&gt; [Arm]
+toArm xs ch = case ch of
+                &apos;a&apos; -&gt; A:xs
+                &apos;c&apos; -&gt; C:xs
+                &apos;e&apos; -&gt; E:xs
+                &apos;g&apos; -&gt; G:xs
+                &apos;i&apos; -&gt; I:xs
+                &apos;k&apos; -&gt; K:xs
+                _ -&gt; xs
+
+toState :: [Char] -&gt; ([Monster], [Arm], Int)
+toState str = (foldl (toMonster) [] str, foldl (toArm) [] str, 0)
+
+solve :: State ([Monster], [Arm], Int) ()
+solve = do
+  result &amp;#x3C;- next
+  if (result == False) then return () else solve
+
+solve&apos; :: [Char] -&gt; ([Monster], [Arm], Int)
+solve&apos; str = do
+  execState solve (toState str)
+   
+test :: [Char] -&gt; String -&gt; Bool
+test str expected = do
+  let (_, _, n) = solve&apos; str
+  n == read expected
+
+main :: IO ()
+main = do
+  print $ test &quot;gLDLBgBgHDaD&quot; &quot;6&quot; {-0-}
+  print $ test &quot;DBcDLaLgDBH&quot; &quot;6&quot; {-1-}
+  print $ test &quot;JJca&quot; &quot;0&quot; {-2-}
+  print $ test &quot;FJDLBH&quot; &quot;0&quot; {-3-}
+  print $ test &quot;HJBLFDg&quot; &quot;6&quot; {-4-}
+  print $ test &quot;HBaDLFJ&quot; &quot;6&quot; {-5-}
+  print $ test &quot;DJaHLB&quot; &quot;2&quot; {-6-}
+  print $ test &quot;gDLHJF&quot; &quot;3&quot; {-7-}
+  print $ test &quot;cJFgLHD&quot; &quot;5&quot; {-8-}
+  print $ test &quot;FFBJaJJ&quot; &quot;1&quot; {-9-}
+  print $ test &quot;FJeJFBJ&quot; &quot;2&quot; {-10-}
+  print $ test &quot;iJFFJJB&quot; &quot;3&quot; {-11-}
+  print $ test &quot;JBJiLFJF&quot; &quot;5&quot; {-12-}
+  print $ test &quot;JDiFLFBJJ&quot; &quot;8&quot; {-13-}
+  print $ test &quot;BDFDFFDFFLLFFJFDBFDFFFFDDFaDBFFB&quot; &quot;28&quot; {-14-}
+  print $ test &quot;DDFBFcBDFFFFFFLBFDFFBFLFDFDJDFDF&quot; &quot;24&quot; {-15-}
+  print $ test &quot;FDLBFDDBFFFeFFFFFDFBLDDFDDFBFFJF&quot; &quot;16&quot; {-16-}
+  print $ test &quot;FDBFFLFDFFDBBDFFBJDLFgDFFFDFFDFF&quot; &quot;0&quot; {-17-}
+  print $ test &quot;FDiFLDFFFFBDDJDDBFBFDFFFBFFDFLFF&quot; &quot;31&quot; {-18-}
+  print $ test &quot;FDFDJBLBLBFFDDFFFDFFFFFDDFBkFDFF&quot; &quot;30&quot; {-19-}
+  print $ test &quot;HBkFFFFHBLH&quot; &quot;3&quot; {-20-}
+  print $ test &quot;FBHHFFFHLaB&quot; &quot;2&quot; {-21-}
+  print $ test &quot;LFHFBBcHFHF&quot; &quot;0&quot; {-22-}
+  print $ test &quot;LFBHFFeFHBH&quot; &quot;7&quot; {-23-}
+  print $ test &quot;LgFHHHBFBFF&quot; &quot;3&quot; {-24-}
+  print $ test &quot;FFiFHBHLBFH&quot; &quot;0&quot; {-25-}
+  print $ test &quot;BFHHFFHBeFLk&quot; &quot;10&quot; {-26-}
+  print $ test &quot;FHFaBBHFHLFg&quot; &quot;5&quot; {-27-}
+  print $ test &quot;FFgacaFg&quot; &quot;0&quot; {-28-}
+  print $ test &quot;JHDaDcBJiiHccBHDBDH&quot; &quot;9&quot; {-29-}
+  print $ test &quot;FHJJLckFckFJHDFF&quot; &quot;12&quot; {-30-}
+  print $ test &quot;DeDHJHDFHJBLHDLLDHJLBDD&quot; &quot;22&quot; {-31-}
+  print $ test &quot;gJLLLJgJgJLJL&quot; &quot;0&quot; {-32-}
+  print $ test &quot;DaaaDDD&quot; &quot;0&quot; {-33-}
+  print $ test &quot;HFeJFHiBiiBJeJBBFFB&quot; &quot;9&quot; {-34-}
+  print $ test &quot;FJFFJDBHBHaLJBHJHDLHkLLLFFFgJgHJLHkJkB&quot; &quot;32&quot; {-35-}
+  print $ test &quot;giFLBiBJLLJgHBFJigJJJBLHFLDLL&quot; &quot;23&quot; {-36-}
+  print $ test &quot;cgkLJcLJJJJgJc&quot; &quot;2&quot; {-37-}
+  print $ test &quot;LDFHJHcFBDBLJBLFLcFJcDFBL&quot; &quot;22&quot; {-38-}
+  print $ test &quot;JJHHHkHJkHLJk&quot; &quot;1&quot; {-39-}
+  print $ test &quot;kHHBBaBgHagHgaHBBB&quot; &quot;11&quot; {-40-}
+  print $ test &quot;HDBFFDHHHDFLDcHHLFDcJD&quot; &quot;20&quot; {-41-}
+  print $ test &quot;HFFFHeFFee&quot; &quot;7&quot; {-42-}
+  print $ test &quot;gLLDHgDLgFL&quot; &quot;1&quot; {-43-}
+  print $ test &quot;JJJBBaBBHBBHaLBHJ&quot; &quot;7&quot; {-44-}
+  print $ test &quot;FBFBgJBDBDgF&quot; &quot;0&quot; {-45-}
+  print $ test &quot;LLLLakakLakLL&quot; &quot;7&quot; {-46-}
+  print $ test &quot;HeJHeJe&quot; &quot;0&quot; {-47-}
+  print $ test &quot;LDFLBLLeBLDBBFFBLFBB&quot; &quot;4&quot; {-48-}
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解く]]></title><description><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/53460a9772f2bfbaa3c1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/53460a9772f2bfbaa3c1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/9810b301648099028bf0&quot;&gt;第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」&lt;/a&gt;を、Haskellで解きました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-haskell:sectors.hs&quot;&gt;import Data.Ratio
+import Data.List
+
+hasIntersect :: (Ratio Int, Ratio Int, Int) -&gt; (Ratio Int, Ratio Int, Int) -&gt; Bool
+hasIntersect (fst_a,snd_a,_) (fst_b,snd_b,_) = (fst_a&amp;#x3C;=snd_b &amp;#x26;&amp;#x26; fst_b &amp;#x3C;=snd_a) || (fst_b &amp;#x3C;=snd_a &amp;#x26;&amp;#x26; snd_a&amp;#x3C;=snd_b)
+
+ranges n = take (8*n+2) $ [(low,up,n*100+(m `mod` (8*n))) | m&amp;#x3C;-[-1..], let w=(1%(8*n)), let low=(-w/2+(w*(m%1))), let up=low+w]
+
+inRange n m = filter $ hasIntersect (ranges n !! (m+1))
+
+neighbor&apos; n m = (ranges n !! (m+1-1)) : (ranges n !! (m+1+1)) : neighbor&apos;&apos; n m
+ where
+   neighbor&apos;&apos; n m
+     | n &amp;#x3C;= 1 = nub $ (inRange n m (ranges $ n+1))
+     | n == 4 = nub $ (inRange n m (ranges $ n-1))
+     | otherwise = nub ((inRange n m (ranges $ n-1)) ++
+                        (inRange n m (ranges $ n+1)))
+
+neighbor n = neighbor&apos; (n `div` 100) (n `mod` 100)
+
+reserved xs = map (!!0) $ filter (\ x -&gt; length x &gt; 1) $ group $ sort $ filter (\x-&gt;not (x `elem` xs)) $ map (\(_,_,n)-&gt;n) $ concatMap neighbor xs
+
+test :: [Int] -&gt; [Int] -&gt; IO()
+test s1 s2 = do
+   putStrLn $ show $ reserved s1 == s2
+
+main = do
+   test [400,401,302] [300,301,402] {- 0 -}
+   test [105,100,306,414] [] {- 1 -}
+   test [100] [] {- 2 -}
+   test [211] [] {- 3 -}
+   test [317] [] {- 4 -}
+   test [414] [] {- 5 -}
+   test [100,106] [107] {- 6 -}
+   test [205,203] [102,204] {- 7 -}
+   test [303,305] [304] {- 8 -}
+   test [407,409] [306,408] {- 9  -}
+   test [104,103] [207] {- 10  -}
+   test [204,203] [102,305]     {- 11  -}
+   test [313,314] [209,418]     {- 12  -}
+   test [419,418] [314]     {- 13  -}
+   test [100,102,101] [201,203]     {- 14  -}
+   test [103,206,309] [205,207,308,310]     {- 15  -}
+   test [414,310,309] [206,311,413]     {- 16  -}
+   test [104,102,206,307,102,202] [101,103,203,204,205,207,308]     {- 17  -}
+   test [104,206,308,409,407] [103,205,207,306,307,309,408,410]     {- 18  -}
+   test [313,406,213,301,409,422,412,102,428] []     {- 19  -}
+   test [101,300,210,308,423,321,403,408,415] []     {- 20  -}
+   test [304,316,307,207,427,402,107,431,412,418,424] []     {- 21  -}
+   test [205,408,210,215,425,302,311,400,428,412] []     {- 22  -}
+   test [200,311,306,412,403,318,427,105,420] []     {- 23  -}
+   test [105,305,407,408,309,208,427] [104,209,306,406]     {- 24  -}
+   test [311,304,322,404,429,305,316] [203,303,321,405,406,430]     {- 25  -}
+   test [210,401,316,425,101] [211,315]     {- 26  -}
+   test [414,403,404,416,428,421] [303,415]     {- 27  -}
+   test [207,300,103,211,428] [104,206]     {- 28  -}
+   test [322,314,310] []     {- 29  -}
+   test [427,200,215] [100,323]     {- 30  -}
+   test [311,402,424,307,318,430,323,305,201] [200,204,301,302,306,322,423,425,431]     {- 31  -}
+   test [425,430,408] []     {- 32  -}
+   test [202,320,209,426] [319,427]     {- 33  -}
+   test [430,209,302,310,304,431,320] [202,303,323]     {- 34  -}
+   test [208,206,406,424,213,312] [207,311,313]     {- 35  -}
+   test [420,302,313,413,317,402] [301,403]     {- 36  -}
+   test [319,306,309,418,204,411] [305,307,308,412]     {- 37  -}
+   test [400,308,105,430,203,428,209] [104,210,429,431]     {- 38  -}
+   test [200,305,214] [215]     {- 39  -}
+   test [214,408,410,407,317,422] [306,316,409,423] {- 40  -}
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[React-SpringのHooks APIでブラウザアニメーションを基本から極めよう!]]></title><description><![CDATA[🎄メリークリスマスイブ!🎄 この記事は、React-Springというアニメーションのライブラリを紹介する NTTテクノクロス Advent Calendar 2019 の24日目の記事です。23日目は@yuitomoさんの記事、明日25日最終日は@korodroid…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/260f188851045cc091ac/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/260f188851045cc091ac/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th align=&quot;center&quot;&gt;&lt;/th&gt;
@@ -1467,513 +1588,6 @@ export default SampleSpring;
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[npmのモジュールバージョン指定におけるチルダ(~)とキャレット(^)の違いについての直感的な理解]]></title><description><![CDATA[package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。 記法 種別 意味 問題点など ^x.y.z…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/443580da712d2ccee159/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/443580da712d2ccee159/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&quot;left&quot;&gt;記法&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;種別&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;意味&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;問題点など&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;^x.y.z&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;キャレット表記&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;&lt;a href=&quot;http://semver.org/lang/ja/&quot;&gt;セマンティックバージョニング&lt;/a&gt;に従う。つまり、メジャーバージョンxを指定し、マイナーバージョンyの上昇、パッチバージョンzの上昇は互換性があるはずだと信じて、「x.{y以上}.{yが同じならz以上、yが上昇していれば任意} 」にあてはまる最新のものを使う。&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;開発時点と、ソース共有を経ての再ビルド(npm install)時の間で、NPMリポジトリ上の対象パッケージのバージョンが上がっている場合、より新しいものが使われることになる可能性があるが、セマンティックバージョニングの仕様に厳密に従わないパッケージは世の中に結構あるのではまり易い。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;~x.y.z&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;チルダ表記&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;セマンティックバージョニングにおける「マイナーバージョンが上がっても互換性が保たれるはずだ」という建前を信じないが、パッチバージョン上昇だったら互換性があるだろうとは信じて、「x.y.{z以上}」にあてはまるものを使う。&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;キャレット表記に比べて、上記の可能性がパッチバージョンのみなので少ない。とはいえ、はまるときははまるだろう。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;x.y.z&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;固定&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;指定したバージョン「x.y.z」に厳密にあてはまるものを使う。&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;開発時と異なるバージョンが使用される問題は回避できるが、たとえばセキュリテイ問題があってそのバージョンのNPMがリポジトリから削除された場合に(互換性のある後継バージョンがあるのに)ビルド不可能になったり、許容できるバージョン上昇を指定できないなど、セマンティックバージョンのメリットを全く享受できない。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;いずれも問題があるので、^なり~で指定した上で、&lt;a href=&quot;https://docs.npmjs.com/files/package-lock.json&quot;&gt;package-lock.json&lt;/a&gt;なり&lt;a href=&quot;https://yarnpkg.com/lang/en/docs/yarn-lock/&quot;&gt;yarn.lock&lt;/a&gt;を併用するのが正しい(それぞれNPM5、yarnのデフォルト動作)。&lt;/p&gt;
-&lt;p&gt;これらのロックファイルを使うのは、セマンティックバージョニングの建前と本音を使いわけることである。つまり、^~をつかって「このバージョンの範囲なら、互換性に問題ないはずだ」という希望と理想をpackage.jsonに記す。それはその上で、「実際にはこのバージョン使ってビルドしましたよ、動作保証するのはこっちなんで、こちらをお使い下さいね、げっひっひ」とlockファイルを裏で提供する。&lt;/p&gt;
-&lt;p&gt;左端の桁が0であったり、3桁以外の場合を含めては&lt;a href=&quot;http://qiita.com/sotarok/items/4ebd4cfedab186355867&quot;&gt;こちら&lt;/a&gt;の記事などを参照のこと。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[第14回オフラインリアルタイムどう書くの参考問題をHaskellで解く]]></title><description><![CDATA[第14回 オフラインリアルタイムどう書くの参考問題「眠れるモンスターを狩る」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/48cb682cc3441f1066a3/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/48cb682cc3441f1066a3/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/0597bd3af481e5834ae1&quot;&gt;第14回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord14linedung/&quot;&gt;眠れるモンスターを狩る&lt;/a&gt;」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-haskell:monster.hs&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord14linedung/
-import Control.Monad
-import Control.Monad.State
-    
-data Monster = B|D|F|H|J|L deriving (Eq, Show)
-data Arm = A|C|E|G|I|K deriving (Eq, Show)
-
-removeOne e xs
-    | after == [] = before
-    | otherwise = before ++ tail(after)
-    where
-      before = takeWhile (\t-&gt; t /= e) xs
-      after = dropWhile (\t-&gt; t /= e) xs
-
-step (ms, as, n)
-    | A `elem` as &amp;#x26;&amp;#x26; B `elem` ms = (True, (removeOne B ms, C:as, n+1))
-    | C `elem` as &amp;#x26;&amp;#x26; D `elem` ms = (True, (removeOne D ms, E:as, n+1))
-    | E `elem` as &amp;#x26;&amp;#x26; F `elem` ms = (True, (removeOne F ms, G:as, n+1))
-    | G `elem` as &amp;#x26;&amp;#x26; H `elem` ms = (True, (removeOne H ms, I:as, n+1))
-    | I `elem` as &amp;#x26;&amp;#x26; J `elem` ms = (True, (removeOne J ms, K:as, n+1))
-    | K `elem` as &amp;#x26;&amp;#x26; L `elem` ms = (True, (removeOne L ms, A:as, n+1))
-    | otherwise = (False, (ms, as, n))
-
-next :: State ([Monster],[Arm],Int) Bool
-next = state $ \(ms, as, n) -&gt; step (ms, as, n)
-
-toMonster :: [Monster] -&gt; Char -&gt; [Monster]
-toMonster xs ch = case ch of
-                    &apos;B&apos; -&gt; B:xs
-                    &apos;D&apos; -&gt; D:xs
-                    &apos;F&apos; -&gt; F:xs
-                    &apos;H&apos; -&gt; H:xs
-                    &apos;J&apos; -&gt; J:xs
-                    &apos;L&apos; -&gt; L:xs
-                    _ -&gt; xs
-
-toArm :: [Arm] -&gt; Char -&gt; [Arm]
-toArm xs ch = case ch of
-                &apos;a&apos; -&gt; A:xs
-                &apos;c&apos; -&gt; C:xs
-                &apos;e&apos; -&gt; E:xs
-                &apos;g&apos; -&gt; G:xs
-                &apos;i&apos; -&gt; I:xs
-                &apos;k&apos; -&gt; K:xs
-                _ -&gt; xs
-
-toState :: [Char] -&gt; ([Monster], [Arm], Int)
-toState str = (foldl (toMonster) [] str, foldl (toArm) [] str, 0)
-
-solve :: State ([Monster], [Arm], Int) ()
-solve = do
-  result &amp;#x3C;- next
-  if (result == False) then return () else solve
-
-solve&apos; :: [Char] -&gt; ([Monster], [Arm], Int)
-solve&apos; str = do
-  execState solve (toState str)
-   
-test :: [Char] -&gt; String -&gt; Bool
-test str expected = do
-  let (_, _, n) = solve&apos; str
-  n == read expected
-
-main :: IO ()
-main = do
-  print $ test &quot;gLDLBgBgHDaD&quot; &quot;6&quot; {-0-}
-  print $ test &quot;DBcDLaLgDBH&quot; &quot;6&quot; {-1-}
-  print $ test &quot;JJca&quot; &quot;0&quot; {-2-}
-  print $ test &quot;FJDLBH&quot; &quot;0&quot; {-3-}
-  print $ test &quot;HJBLFDg&quot; &quot;6&quot; {-4-}
-  print $ test &quot;HBaDLFJ&quot; &quot;6&quot; {-5-}
-  print $ test &quot;DJaHLB&quot; &quot;2&quot; {-6-}
-  print $ test &quot;gDLHJF&quot; &quot;3&quot; {-7-}
-  print $ test &quot;cJFgLHD&quot; &quot;5&quot; {-8-}
-  print $ test &quot;FFBJaJJ&quot; &quot;1&quot; {-9-}
-  print $ test &quot;FJeJFBJ&quot; &quot;2&quot; {-10-}
-  print $ test &quot;iJFFJJB&quot; &quot;3&quot; {-11-}
-  print $ test &quot;JBJiLFJF&quot; &quot;5&quot; {-12-}
-  print $ test &quot;JDiFLFBJJ&quot; &quot;8&quot; {-13-}
-  print $ test &quot;BDFDFFDFFLLFFJFDBFDFFFFDDFaDBFFB&quot; &quot;28&quot; {-14-}
-  print $ test &quot;DDFBFcBDFFFFFFLBFDFFBFLFDFDJDFDF&quot; &quot;24&quot; {-15-}
-  print $ test &quot;FDLBFDDBFFFeFFFFFDFBLDDFDDFBFFJF&quot; &quot;16&quot; {-16-}
-  print $ test &quot;FDBFFLFDFFDBBDFFBJDLFgDFFFDFFDFF&quot; &quot;0&quot; {-17-}
-  print $ test &quot;FDiFLDFFFFBDDJDDBFBFDFFFBFFDFLFF&quot; &quot;31&quot; {-18-}
-  print $ test &quot;FDFDJBLBLBFFDDFFFDFFFFFDDFBkFDFF&quot; &quot;30&quot; {-19-}
-  print $ test &quot;HBkFFFFHBLH&quot; &quot;3&quot; {-20-}
-  print $ test &quot;FBHHFFFHLaB&quot; &quot;2&quot; {-21-}
-  print $ test &quot;LFHFBBcHFHF&quot; &quot;0&quot; {-22-}
-  print $ test &quot;LFBHFFeFHBH&quot; &quot;7&quot; {-23-}
-  print $ test &quot;LgFHHHBFBFF&quot; &quot;3&quot; {-24-}
-  print $ test &quot;FFiFHBHLBFH&quot; &quot;0&quot; {-25-}
-  print $ test &quot;BFHHFFHBeFLk&quot; &quot;10&quot; {-26-}
-  print $ test &quot;FHFaBBHFHLFg&quot; &quot;5&quot; {-27-}
-  print $ test &quot;FFgacaFg&quot; &quot;0&quot; {-28-}
-  print $ test &quot;JHDaDcBJiiHccBHDBDH&quot; &quot;9&quot; {-29-}
-  print $ test &quot;FHJJLckFckFJHDFF&quot; &quot;12&quot; {-30-}
-  print $ test &quot;DeDHJHDFHJBLHDLLDHJLBDD&quot; &quot;22&quot; {-31-}
-  print $ test &quot;gJLLLJgJgJLJL&quot; &quot;0&quot; {-32-}
-  print $ test &quot;DaaaDDD&quot; &quot;0&quot; {-33-}
-  print $ test &quot;HFeJFHiBiiBJeJBBFFB&quot; &quot;9&quot; {-34-}
-  print $ test &quot;FJFFJDBHBHaLJBHJHDLHkLLLFFFgJgHJLHkJkB&quot; &quot;32&quot; {-35-}
-  print $ test &quot;giFLBiBJLLJgHBFJigJJJBLHFLDLL&quot; &quot;23&quot; {-36-}
-  print $ test &quot;cgkLJcLJJJJgJc&quot; &quot;2&quot; {-37-}
-  print $ test &quot;LDFHJHcFBDBLJBLFLcFJcDFBL&quot; &quot;22&quot; {-38-}
-  print $ test &quot;JJHHHkHJkHLJk&quot; &quot;1&quot; {-39-}
-  print $ test &quot;kHHBBaBgHagHgaHBBB&quot; &quot;11&quot; {-40-}
-  print $ test &quot;HDBFFDHHHDFLDcHHLFDcJD&quot; &quot;20&quot; {-41-}
-  print $ test &quot;HFFFHeFFee&quot; &quot;7&quot; {-42-}
-  print $ test &quot;gLLDHgDLgFL&quot; &quot;1&quot; {-43-}
-  print $ test &quot;JJJBBaBBHBBHaLBHJ&quot; &quot;7&quot; {-44-}
-  print $ test &quot;FBFBgJBDBDgF&quot; &quot;0&quot; {-45-}
-  print $ test &quot;LLLLakakLakLL&quot; &quot;7&quot; {-46-}
-  print $ test &quot;HeJHeJe&quot; &quot;0&quot; {-47-}
-  print $ test &quot;LDFLBLLeBLDBBFFBLFBB&quot; &quot;4&quot; {-48-}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解く]]></title><description><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/53460a9772f2bfbaa3c1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/53460a9772f2bfbaa3c1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/9810b301648099028bf0&quot;&gt;第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」&lt;/a&gt;を、Haskellで解きました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-haskell:sectors.hs&quot;&gt;import Data.Ratio
-import Data.List
-
-hasIntersect :: (Ratio Int, Ratio Int, Int) -&gt; (Ratio Int, Ratio Int, Int) -&gt; Bool
-hasIntersect (fst_a,snd_a,_) (fst_b,snd_b,_) = (fst_a&amp;#x3C;=snd_b &amp;#x26;&amp;#x26; fst_b &amp;#x3C;=snd_a) || (fst_b &amp;#x3C;=snd_a &amp;#x26;&amp;#x26; snd_a&amp;#x3C;=snd_b)
-
-ranges n = take (8*n+2) $ [(low,up,n*100+(m `mod` (8*n))) | m&amp;#x3C;-[-1..], let w=(1%(8*n)), let low=(-w/2+(w*(m%1))), let up=low+w]
-
-inRange n m = filter $ hasIntersect (ranges n !! (m+1))
-
-neighbor&apos; n m = (ranges n !! (m+1-1)) : (ranges n !! (m+1+1)) : neighbor&apos;&apos; n m
- where
-   neighbor&apos;&apos; n m
-     | n &amp;#x3C;= 1 = nub $ (inRange n m (ranges $ n+1))
-     | n == 4 = nub $ (inRange n m (ranges $ n-1))
-     | otherwise = nub ((inRange n m (ranges $ n-1)) ++
-                        (inRange n m (ranges $ n+1)))
-
-neighbor n = neighbor&apos; (n `div` 100) (n `mod` 100)
-
-reserved xs = map (!!0) $ filter (\ x -&gt; length x &gt; 1) $ group $ sort $ filter (\x-&gt;not (x `elem` xs)) $ map (\(_,_,n)-&gt;n) $ concatMap neighbor xs
-
-test :: [Int] -&gt; [Int] -&gt; IO()
-test s1 s2 = do
-   putStrLn $ show $ reserved s1 == s2
-
-main = do
-   test [400,401,302] [300,301,402] {- 0 -}
-   test [105,100,306,414] [] {- 1 -}
-   test [100] [] {- 2 -}
-   test [211] [] {- 3 -}
-   test [317] [] {- 4 -}
-   test [414] [] {- 5 -}
-   test [100,106] [107] {- 6 -}
-   test [205,203] [102,204] {- 7 -}
-   test [303,305] [304] {- 8 -}
-   test [407,409] [306,408] {- 9  -}
-   test [104,103] [207] {- 10  -}
-   test [204,203] [102,305]     {- 11  -}
-   test [313,314] [209,418]     {- 12  -}
-   test [419,418] [314]     {- 13  -}
-   test [100,102,101] [201,203]     {- 14  -}
-   test [103,206,309] [205,207,308,310]     {- 15  -}
-   test [414,310,309] [206,311,413]     {- 16  -}
-   test [104,102,206,307,102,202] [101,103,203,204,205,207,308]     {- 17  -}
-   test [104,206,308,409,407] [103,205,207,306,307,309,408,410]     {- 18  -}
-   test [313,406,213,301,409,422,412,102,428] []     {- 19  -}
-   test [101,300,210,308,423,321,403,408,415] []     {- 20  -}
-   test [304,316,307,207,427,402,107,431,412,418,424] []     {- 21  -}
-   test [205,408,210,215,425,302,311,400,428,412] []     {- 22  -}
-   test [200,311,306,412,403,318,427,105,420] []     {- 23  -}
-   test [105,305,407,408,309,208,427] [104,209,306,406]     {- 24  -}
-   test [311,304,322,404,429,305,316] [203,303,321,405,406,430]     {- 25  -}
-   test [210,401,316,425,101] [211,315]     {- 26  -}
-   test [414,403,404,416,428,421] [303,415]     {- 27  -}
-   test [207,300,103,211,428] [104,206]     {- 28  -}
-   test [322,314,310] []     {- 29  -}
-   test [427,200,215] [100,323]     {- 30  -}
-   test [311,402,424,307,318,430,323,305,201] [200,204,301,302,306,322,423,425,431]     {- 31  -}
-   test [425,430,408] []     {- 32  -}
-   test [202,320,209,426] [319,427]     {- 33  -}
-   test [430,209,302,310,304,431,320] [202,303,323]     {- 34  -}
-   test [208,206,406,424,213,312] [207,311,313]     {- 35  -}
-   test [420,302,313,413,317,402] [301,403]     {- 36  -}
-   test [319,306,309,418,204,411] [305,307,308,412]     {- 37  -}
-   test [400,308,105,430,203,428,209] [104,210,429,431]     {- 38  -}
-   test [200,305,214] [215]     {- 39  -}
-   test [214,408,410,407,317,422] [306,316,409,423] {- 40  -}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[WebAssemblyへのコンパイラ言語を簡単に実装]]></title><description><![CDATA[後入りですみませんが、WebAssemblyアドベントカレンダー未投稿のところ埋めさせて頂きます。 本記事では、WebAssemblyをターゲットとするコンパイラ処理系を実装します。 方針 WebAssembly…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/5276bd3425d1000e48ba/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/5276bd3425d1000e48ba/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;後入りですみませんが、WebAssemblyアドベントカレンダー未投稿のところ埋めさせて頂きます。&lt;/p&gt;
-&lt;p&gt;本記事では、WebAssemblyをターゲットとするコンパイラ処理系を実装します。&lt;/p&gt;
-&lt;h1&gt;方針&lt;/h1&gt;
-&lt;p&gt;WebAssemblyへのコンパイル言語処理系を&lt;strong&gt;&lt;em&gt;最も簡単に&lt;/em&gt;&lt;/strong&gt; &lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;実装するための方針は以下のとおり。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;言語は「&lt;a href=&quot;https://ja.wikipedia.org/wiki/Brainfuck&quot;&gt;コンパイラがなるべく小さくなる言語として考案&lt;/a&gt;」されたBrainf*ckを採用&lt;/li&gt;
-&lt;li&gt;文法は&lt;a href=&quot;https://ja.wikipedia.org/wiki/Parsing_Expression_Grammar&quot;&gt;PEG(Parsing Expression Grammar)&lt;/a&gt;で記述し、生成系&lt;a href=&quot;https://pegjs.org/&quot;&gt;PEG.js&lt;/a&gt;でパーサを実行時に生成する&lt;/li&gt;
-&lt;li&gt;WebAssemblyコード生成では文字列でWAST形式を生成し、&lt;a href=&quot;https://github.com/ewasm/wast2wasm&quot;&gt;wast2wasm&lt;/a&gt;&lt;sup id=&quot;fnref-3&quot;&gt;&lt;a href=&quot;#fn-3&quot; class=&quot;footnote-ref&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;で変換する(直接WASMを生成しない)。またEmscriptenやbinaryenは使用しない&lt;/li&gt;
-&lt;li&gt;WASTの表現ではflat形式ではなくs-expression形式を使用する&lt;/li&gt;
-&lt;li&gt;ブラウザ上ではなくNode上で実行する。なのでWebAssemblyを実行できるバージョンのNode.jsが必要。Node8以降では普通に実行できる&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;コードは&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly&quot;&gt;こちら&lt;/a&gt;に。
-NPMに登録されているので以下で実行できます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;% cat hello.bf
-+++++++++[&gt;++++++++&gt;+++++++++++&gt;+++++&amp;#x3C;&amp;#x3C;&amp;#x3C;-]&gt;.&gt;++.+++++++..+++.&gt;-.------------.&amp;#x3C;++++++++.--------.+++.------.--------.&gt;+.
-
-% npx bf-compiler-webassembly hello.bf
-npx: 5個のパッケージを1.592秒でインストールしました。
-Hello, world!
-
-% npx bf-compiler-webassembly -e &apos;+++++++++[&gt;++++++++&gt;+++++++++++&gt;+++++&amp;#x3C;&amp;#x3C;&amp;#x3C;-]&gt;.&gt;++.+++++++..+++.&gt;-.------------.&amp;#x3C;++++++++.--------.+++.------.--------.&gt;+.&apos;
-npx: 5個のパッケージを2.06秒でインストールしました。
-Hello, world!
-
-% npx bf-compiler-webassembly --help
-npx: 5個のパッケージを1.506秒でインストールしました。
-
-  Usage: bf-compiler-webassembly [options] [file...]
-
-
-  Options:
-
-    -V, --version         output the version number
-    -e,--script [script]  run script from command line
-    -v,--verbose          verbose output
-    -h, --help            output usage information
-
-
-  Examples:
-
-    $ npx bf-compiler-webassembly -e &quot;+++&quot;
-    $ npx bf-compiler-webassembly hello.bf
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;実行例&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/d79db6b1-f1ba-f816-b6ea-7f5481a650b3.gif&quot; alt=&quot;bf2.mov.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;以降、コードの説明をしていきます。&lt;/p&gt;
-&lt;h1&gt;全体の流れ&lt;/h1&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:driver.js&quot;&gt;// compile from string
-async function compileAndRunString(bfSource, opts) {
-  const bfAst = bfParser.parse(bfSource, opts);
-  const wast = bfCompiler.compile(bfAst, opts);
-  const wasm = await wast2wasm.convert(wast, opts);
-  return await wasmRuner.run(wasm, opts);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/driver.js&quot;&gt;driver.js&lt;/a&gt;でコンパイル・実行の全体の流れを制御しています。以下の順で処理が実行されます。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Brainf*ckコードの構文解析(パース)、ASTの生成。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/bfParser.js&quot;&gt;bfParser.parse()&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;ASTをwastに変換する(コード生成)。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/bfCompiler.js&quot;&gt;bfCompiler.compile()&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;wast形式をwasmに変換し、WASMのバイト列表現に変換。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/wast2wasm.js&quot;&gt;wast2wasm.convert()&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;WASMバイト列をWebAssemblyの内部形式(機械語?)に変換・コンパイルし、wasmコードを呼び出して実行する。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/wasmRunner.js&quot;&gt;wasmRunner.run()&lt;/a&gt;)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;それぞれ以下のように処理ごとにモジュール化しています。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:driver.js&quot;&gt;const bfParser = require(&apos;./bfParser&apos;);
-const bfCompiler = require(&apos;./bfCompiler&apos;);
-const wast2wasm = require(&apos;./wast2wasm&apos;);
-const wasmRuner = require(&apos;./wasmRunner&apos;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;パーサ&lt;/h1&gt;
-&lt;p&gt;rainf*ckを構文解析してASTを生成するパーサをPEG.jsで作成します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:bfParser.js&quot;&gt;const peg = require(&apos;pegjs&apos;);
-
-const syntax = `
-code = (normal_insn / block_insn / otherchar) *
-
-normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
-block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
-
-block = cod:code {
-  return cod;
-}
-
-otherchar = [^&gt;&amp;#x3C;+-.,\\[\\]] {
-  return undefined
-}
-`;
-
-const parser = peg.generate(syntax);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;syntaxという文字列変数にPEG文法を与えてpeg.generate()でパーサを生成しています。
-PEGでBNFのように構文を表現します。PEGでは構文解析と字句解析を分ける必要がありません。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:bfParser.js&quot;&gt;function parse(bfSource, opts) {
-  const bfAst = parser.parse(bfSource);
-  return bfAst;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;生成したパーサにBrainf*ckのコードを与えて抽象構文木を返します。
-PEGのJS実装であるPEG.jsが生成するパーサは、JSONで抽象構文木を返してくれます。
-抽象構文木(という程のものでもありませんが)では、[と]で表現されるブロックは配列、それ以外はその文字の配列が返ります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-brainfuck&quot;&gt;,[-&gt;+&amp;#x3C;]&gt;+.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;であれば、以下のようなJSONが返ります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;[ &apos;,&apos;, [ &apos;-&apos;, &apos;&gt;&apos;, &apos;+&apos;, &apos;&amp;#x3C;&apos; ], &apos;&gt;&apos;, &apos;+&apos;, &apos;.&apos; ]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;[と]の対応は静的にコンパイル時チェックされることになります。&lt;/p&gt;
-&lt;h1&gt;コード生成&lt;/h1&gt;
-&lt;p&gt;抽象構文木を再帰的に辿って&lt;a href=&quot;https://ukyo.github.io/wasm-usui-book/webroot/text-format.html&quot;&gt;WAST形式テキスト&lt;/a&gt;を生成します。
-先のBFコードは以下を生成します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-lisp&quot;&gt;(module
-  (func $getchar (import &quot;imports&quot; &quot;getchar&quot;) (result i32))
-  (func $putchar (import &quot;imports&quot; &quot;putchar&quot;) (param i32))
-  (memory $0 (export &quot;memory&quot;) 1 1)
-
-  (func (export &quot;main&quot;) (local $ptr i32)
-    (i32.store8 (get_local $ptr) (call $getchar)) ;; ,
-    (block ;; [
-      (loop
-        (br_if 1 (i32.eqz (i32.load8_s (get_local $ptr))))
-        (i32.store8 (get_local $ptr) (i32.sub (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; -
-        (set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
-        (i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
-        (set_local $ptr (i32.sub (get_local $ptr) (i32.const 1))) ;; &amp;#x3C;
-        (br 0)
-      )
-    ) ;; ]
-    (set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
-    (i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
-    (i32.load8_s (get_local $ptr)) (call $putchar) ;; .
-  )
-)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;生成コードの説明&lt;/h1&gt;
-&lt;h2&gt;冒頭のいくつかの宣言&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;  (func $getchar (import &quot;imports&quot; &quot;getchar&quot;) (result i32))
-  (func $putchar (import &quot;imports&quot; &quot;putchar&quot;) (param i32))
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;BFでの入出力を行うためのgetchar、putcharを外部JS関数として供給します。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  (memory $0 (export &quot;memory&quot;) 1 1)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;memoryでWebAssemby側でメモリ領域を&lt;a href=&quot;https://github.com/sunfishcode/wasm-reference-manual/blob/master/WebAssembly.md#linear-memories&quot;&gt;リニアメモリ&lt;/a&gt;として確保。サイズと最大サイズをブロックサイズで指定。ここではいずれも1ブロック(64 KiB)を指定。&lt;/p&gt;
-&lt;h2&gt;コード本体の定義&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;  (func (export &quot;main&quot;) (local $ptr i32)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;JSから呼べる関数としてWebAssembly関数をmainという名前でexport。&lt;/p&gt;
-&lt;p&gt;以降、関数本体となる実行命令の説明をしていきます。&lt;/p&gt;
-&lt;h2&gt;’[‘と’]‘に対応するコード&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;    (block ;; [
-      (loop
-        (br_if 1 (i32.eqz (i32.load8_s (get_local $ptr))))
-:
-        (br 0)
-      )
-    ) ;; ]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;whileループに相当する[〜]のブロックがコンパイルされたコード。ptrの内容がゼロならループを抜け&lt;code&gt;(br_if 1)&lt;/code&gt;、loop末尾でloopの先頭にジャンプ&lt;code&gt;(br 0)&lt;/code&gt;しています。brはbranchの略で、分岐もしくは条件付き分岐命令です。
-wast2wasmではなぜかbrの飛び先をラベルで指定できなかったので、ネストレベルの相対指定&lt;sup id=&quot;fnref-2&quot;&gt;&lt;a href=&quot;#fn-2&quot; class=&quot;footnote-ref&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;で飛び先を指定しています。「0」は最内周のloopもしくはblock、「1」は1段外側のレベルのloopもしくはblockを意味します。ラベルを管理する必要がないので、ここでは好都合です。&lt;/p&gt;
-&lt;p&gt;brやbr_ifのジャンプの動作は、指定したネストレベルに対応するものがloopであればloop冒頭にジャンプ(ここではwhileループ内でのcontinue文の動作)、blockであればblockの末尾にジャンプ(ここではwhileループのbreak)をします。&lt;/p&gt;
-&lt;h2&gt;’+‘と’-‘に対応するコード&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;(i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
-(i32.store8 (get_local $ptr) (i32.sub (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; -
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;$ptrで間接参照したリニアメモリの指す先の内容を1バイトloadして加減算してリニアメモリにstoreし戻します。i32.load8は拡幅になるので符号付きと無しがあり、この場合は符号付きで処理するように注意します。&lt;/p&gt;
-&lt;h2&gt;’&gt;‘と’&amp;#x3C;‘に対応するコード&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;(set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
-(set_local $ptr (i32.sub (get_local $ptr) (i32.const 1))) ;; &amp;#x3C;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;$ptrを増減させます。&lt;/p&gt;
-&lt;h2&gt;’.‘と’,‘に対応するコード&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;(i32.load8_s (get_local $ptr)) (call $putchar) ;; .
-(i32.store8 (get_local $ptr) (call $getchar)) ;; ,
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;importsで宣言されているJS関数を指定して呼び出します。ここで用意したのはいずれも同期的な関数です。非同期関数を呼ぶ際にはコールバック関数を指定する必要がありますが、ここでは簡単さを優先するために同期関数で以下のように実装しておいたものを呼び出しています。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:wasmRunner.js&quot;&gt;const readlineSync = require(&apos;readline-sync&apos;);
- :
-function putchar(ch) {
-  process.stdout.write(String.fromCharCode(ch));
-}
-
-let buf = &apos;&apos;;
-function getchar() {
-  if (buf === &apos;&apos;) {
-    buf = buf + readlineSync.question() + &apos;\n&apos;;
-  }
-  const result = buf.charCodeAt(0);
-  buf = buf.substring(1);
-  return result;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;WAST→WASM変換&lt;/h1&gt;
-&lt;pre&gt;&lt;code class=&quot;language-wast2wasm.js&quot;&gt;const wast2wasm = require(&apos;wast2wasm&apos;);
-
-async function convert(wasmTextCode, opts) {
-  const wasm = await wast2wasm(wasmTextCode, true);
-  if (opts.verbose || process.env.NODE_ENV === &apos;debug&apos;) {
-    console.log(wasm.log);
-  }
-  return wasm.buffer;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;wastをwasmのバイト列表現に変換します。&lt;/p&gt;
-&lt;h1&gt;実行&lt;/h1&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:wastRunner.js&quot;&gt;async function run(uint8array, opts) {
-  const wasm = await WebAssembly.instantiate(uint8array, {
-    imports: {
-      getchar,
-      putchar,
-    },
-  });
-
-  const result = wasm.instance.exports.main();
-  if (opts.verbose || process.env.NODE_ENV === &apos;debug&apos;) {
-    const memory = new Uint8Array(wasm.instance.exports.memory.buffer);
-    console.log(memory);
-  }
-  return result;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;受け取ったwasmのバイト列表現をWebAssembly.instantiate()で実際のコンパイルを行い、WebAssemblyインスタンスを生成します。通常のWebAssembly実行であれば、wasm生成までは事前コンパイルでできていて、wasmのロードから始まるところ。
-そして、exportされた関数(ここではmainで固定)を実行します。&lt;/p&gt;
-&lt;h1&gt;コマンドラインの処理&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.npmjs.com/package/commander&quot;&gt;commander&lt;/a&gt;を使用して簡潔に。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:index.js&quot;&gt;const program = require(&apos;commander&apos;);
-const driver = require(&apos;../lib/driver&apos;);
-
-function main(argv) {
-  program
-    .version(&apos;0.1.0&apos;)
-    .option(&apos;-e,--script [script]&apos;, &apos;run script from command line&apos;)
-    .option(&apos;-v,--verbose&apos;, &apos;verbose output&apos;)
-    .arguments(&apos;[file...]&apos;, &apos;Brainf*ck file&apos;)
-    .action(function(files, opts) {
-      for (const file of files) {
-        driver
-          .compileAndRunFile(file, { verbose: opts.verbose })
-          .catch(e =&gt; console.log(&apos;error:&apos; + e));
-      }
-    })
-    .on(&apos;--help&apos;, function() {
-      console.log(`
-      
-  Examples:
-
-    $ npx bf-compiler-webassembly -e &quot;+++&quot;
-    $ npx bf-compiler-webassembly hello.bf
-
-`);
-    })
-    .parse(argv);
-
-  // for -e,--script option
-  if (program.script) {
-    driver
-      .compileAndRunString(program.script, { verbose: program.verbose })
-      .catch(e =&gt; console.log(&apos;error:&apos; + e));
-  } else {
-    program.args.length !== 0 || program.help();
-  }
-}
-
-main(process.argv);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;WASM所感&lt;/h1&gt;
-&lt;p&gt;スタックマシンで変数も使え命令の対称性も高くわかりやすい。JVMのようにクラスベースではなく関数ベースであることが様々な効果を発揮しすっきりしている。
-呼び出しスタックを(引数やローカル変数を通じないで)直接見ることも書くこともできないのでスタック上をバッファオーバーフローで書き壊したり、リターンアドレス書き換えてコード呼び出される攻撃について安全。ヒープは別問題だが、間接参照呼び出しはtableという構造のインデックスのみで実現されるので列挙される関数の範囲に限定されるので比較的安全。引数や返り値の型や個数を指定する必要があり、軽くバイトコードベリファイがなされスタックズレなどは防止される。&lt;/p&gt;
-&lt;h1&gt;WAST形式所感&lt;/h1&gt;
-&lt;p&gt;WAST形式のS-expressionはLispっぽいですが、バイナリフォーマットとしてのWASMでの実際のバイト配置としてはFORTHのような逆ポーランド記法であり、これに対応するflat形式という記法もあるそうです(併用もできる?)。引数の評価順が決まっているのでS-Expressionとflat形式は1対1対応です。&lt;/p&gt;
-&lt;h1&gt;最適化&lt;/h1&gt;
-&lt;p&gt;していませんが、本来なら種々の最適化を実行することができるでしょう。たとえば複数連続する+や-、&gt;や&amp;#x3C;をまとめて計算するなどは効果的だろうし、BFの個々の命令をテーブルジャンプとか間接参照にすることも考えられます。&lt;/p&gt;
-&lt;h1&gt;まとめ&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;WebAssemblyはコンパイラの勉強のターゲットとしてモチベーションが高まるし、しきいも低いのでぜひどうぞ。&lt;/li&gt;
-&lt;li&gt;ただし現時点ではドキュメント不足、今後仕様が変化していくだろう、という予測もできます。&lt;/li&gt;
-&lt;li&gt;PEG.jsは便利。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;footnotes&quot;&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id=&quot;fn-1&quot;&gt;
-&lt;p&gt;主観です。&lt;/p&gt;
-&lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
-&lt;/li&gt;
-&lt;li id=&quot;fn-3&quot;&gt;
-&lt;p&gt;wast2wabtはたぶん&lt;a href=&quot;https://github.com/WebAssembly/wabt&quot;&gt;WABT(The WebAssembly Binary Toolkit)&lt;/a&gt;からEmscriptenか何かでJSに変換されている。&lt;/p&gt;
-&lt;a href=&quot;#fnref-3&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
-&lt;/li&gt;
-&lt;li id=&quot;fn-2&quot;&gt;
-&lt;p&gt;ネストレベルの外側向きの相対指定であることがドキュメント上読み取れず、ものすごく苦労した。&lt;/p&gt;
-&lt;a href=&quot;#fnref-2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
 &lt;/div&gt;</content:encoded></item><item><title><![CDATA[Grails3で、Grails2と同様に設定ファイルを外部化する]]></title><description><![CDATA[Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。 本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/5cd1e9a1ea3d451e784e/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/5cd1e9a1ea3d451e784e/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。&lt;/p&gt;
 &lt;p&gt;本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails 3設定してみます。&lt;/p&gt;
 &lt;p&gt;やることは、Applicationクラス(grails-app/init/hoge/Application.groovy)に以下のようにアノテーションを付与することだけです。&lt;/p&gt;
@@ -2038,6 +1652,131 @@ async function test() {
 }
 
 test();
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第12回オフラインリアルタイムどう書くの問題「サイコロを転がす」をHaskellで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの問題「サイコロを転がす」を、Haskellで解きました。
+Stateモナド厨。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/5f46b012f13e1d3cee55/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/5f46b012f13e1d3cee55/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/f3cca410428f90333e28&quot;&gt;第12回 オフラインリアルタイムどう書く&lt;/a&gt;の問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord12rotdice/&quot;&gt;サイコロを転がす&lt;/a&gt;」を、Haskellで解きました。
+Stateモナド厨。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-diceState.hs&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord12rotdice/
+import Data.List
+import Control.Monad.State
+
+-- 1と2の向きで表わしたサイコロの方向の状態。NEは「1の目が北(N)、2の目が東(E)」を表わす。Uは上、Dは下を表わす。
+data DiceState = NE|ES|SW|WN|EN|SE|WS|NW|UN|ND|DS|SU|NU|DN|SD|US|UE|ED|DW|WU|EU|DE|WD|UW deriving (Show, Eq)
+
+-- それぞれのサイコロの状態で上面の数字(目)を表わす連想リスト。
+deuce :: [(DiceState, Char)]
+deuce = [(NE,&apos;4&apos;),(ES,&apos;4&apos;),(SW,&apos;4&apos;),(WN,&apos;4&apos;),(EN,&apos;3&apos;),(SE,&apos;3&apos;),
+         (WS,&apos;3&apos;),(NW,&apos;3&apos;),(UN,&apos;1&apos;),(ND,&apos;5&apos;),(DS,&apos;6&apos;),(SU,&apos;2&apos;),
+         (NU,&apos;2&apos;),(DN,&apos;6&apos;),(SD,&apos;5&apos;),(US,&apos;1&apos;),(UE,&apos;1&apos;),(ED,&apos;5&apos;),
+         (DW,&apos;6&apos;),(WU,&apos;2&apos;),(EU,&apos;2&apos;),(DE,&apos;6&apos;),(WD,&apos;5&apos;),(UW,&apos;1&apos;)]
+
+-- ころがし操作。&apos;N&apos;:北へころがす, &apos;W&apos;:西へころがす, &apos;S&apos;:南へころがす, &apos;E&apos;:東へころがす
+type Roll = Char
+
+-- サイコロの状態における目(上を向いている面の数値)を返す
+getDeuce :: DiceState -&gt; Char
+getDeuce state = let (Just n) = lookup state deuce in n
+
+mkpair :: (t, t, t, t) -&gt; [(t, t)]
+mkpair (a,b,c,d) = [(a,b),(b,c),(c,d),(d,a)]
+
+-- 東にころがす回転(&apos;E&apos;)におけるサイコロ状態の変化
+-- [(回転前の状態,回転後の状態), ...]の連想リスト
+moveDataToEast :: [(DiceState, DiceState)]
+moveDataToEast = concat [mkpair (UN,EN,DN,WN),
+                         mkpair (ND,NW,NU,NE),
+                         mkpair (DS,WS,US,ES),
+                         mkpair (SU,SE,SD,SW),
+                         mkpair (ED,DW,WU,UE),
+                         mkpair (EU,DE,WD,UW)]
+-- 北にころがす回転(&apos;N&apos;)におけるサイコロ状態の変化
+-- [(回転前の状態,回転後の状態), ...]の連想リスト
+moveDataToNorth :: [(DiceState, DiceState)]
+moveDataToNorth = concat [mkpair (UN,ND,DS,SU),
+                          mkpair (EN,ED,ES,EU),
+                          mkpair (DN,SD,US,NU),
+                          mkpair (WN,WD,WS,WU),
+                          mkpair (NW,DW,SW,UW),
+                          mkpair (SE,UE,NE,DE)]
+
+-- 指定した状態に対して、ころがし操作を与えたとき、次状態を得る
+step :: Roll -&gt; DiceState -&gt; DiceState
+step r direc = case r of
+                 &apos;N&apos; -&gt; moveN direc
+                 &apos;W&apos; -&gt; moveW direc
+                 &apos;S&apos; -&gt; moveS direc
+                 &apos;E&apos; -&gt; moveE direc
+               where
+                 -- 北にころがしたときの次状態を返す
+                 moveN :: DiceState -&gt; DiceState
+                 moveN s = let (Just d) = lookup s moveDataToNorth in d
+                 -- 西にころがしたときの次状態を返す
+                 moveW :: DiceState -&gt; DiceState
+                 moveW s = moveE $ moveE $ moveE s
+                 -- 南にころがしたときの次状態を返す
+                 moveS :: DiceState -&gt; DiceState
+                 moveS s = moveN $ moveN $ moveN s
+                 -- 東にころがしたときの次状態を返す
+                 moveE :: DiceState -&gt; DiceState
+                 moveE s = let (Just d) = lookup s moveDataToEast in d
+
+-- ころがし操作を与えると次の状態モナドを返すモナディック関数
+-- 状態は、(サイコロ上面の数値(目)の履歴, サイコロの状態)というタプルで表現。
+stepSt :: Roll -&gt; State (String, DiceState) ()
+stepSt ch = do
+  (xs, direc) &amp;#x3C;- get
+  let nextDirec = step ch direc
+  state $ const ((), (getDeuce nextDirec:xs, nextDirec))
+
+-- ころがし操作の列と、結果(目の履歴)の期待値を与え、一致しているかどうかを返す
+test :: String -&gt; String -&gt; Bool
+test opr expected = let (xs, _) = execState (mapM stepSt opr) ([&apos;1&apos;], UN)
+                    in (reverse xs == expected)
+
+main :: IO ()
+main = do
+    print $ test &quot;NNESWWS&quot; &quot;15635624&quot;  {-- 0 --}
+    print $ test &quot;EEEE&quot; &quot;13641&quot;  {-- 1 --}
+    print $ test &quot;WWWW&quot; &quot;14631&quot;  {-- 2 --}
+    print $ test &quot;SSSS&quot; &quot;12651&quot;  {-- 3 --}
+    print $ test &quot;NNNN&quot; &quot;15621&quot;  {-- 4 --}
+    print $ test &quot;EENN&quot; &quot;13651&quot;  {-- 5 --}
+    print $ test &quot;WWNN&quot; &quot;14651&quot;  {-- 6 --}
+    print $ test &quot;SSNN&quot; &quot;12621&quot;  {-- 7 --}
+    print $ test &quot;NENNN&quot; &quot;153641&quot;  {-- 8 --}
+    print $ test &quot;NWNNN&quot; &quot;154631&quot;  {-- 9 --}
+    print $ test &quot;SWWWSNEEEN&quot; &quot;12453635421&quot;  {-- 10 --}
+    print $ test &quot;SENWSWSNSWE&quot; &quot;123123656545&quot;  {-- 11 --}
+    print $ test &quot;SSSWNNNE&quot; &quot;126546315&quot;  {-- 12 --}
+    print $ test &quot;SWNWSSSWWE&quot; &quot;12415423646&quot;  {-- 13 --}
+    print $ test &quot;ENNWWS&quot; &quot;1354135&quot;  {-- 14 --}
+    print $ test &quot;ESWNNW&quot; &quot;1321365&quot;  {-- 15 --}
+    print $ test &quot;NWSSE&quot; &quot;154135&quot;  {-- 16 --}
+    print $ test &quot;SWNWEWSEEN&quot; &quot;12415154135&quot;  {-- 17 --}
+    print $ test &quot;EWNWEEEEWN&quot; &quot;13154532426&quot;  {-- 18 --}
+    print $ test &quot;WNEWEWWWSNW&quot; &quot;145151562421&quot;  {-- 19 --}
+    print $ test &quot;NNEE&quot; &quot;15631&quot;  {-- 20 --}
+    print $ test &quot;EEEEWNWSW&quot; &quot;1364145642&quot;  {-- 21 --}
+    print $ test &quot;SENNWWES&quot; &quot;123142321&quot;  {-- 22 --}
+    print $ test &quot;SWWWSNSNESWW&quot; &quot;1245363635631&quot;  {-- 23 --}
+    print $ test &quot;WESSENSE&quot; &quot;141263231&quot;  {-- 24 --}
+    print $ test &quot;SWNSSESESSS&quot; &quot;124146231562&quot;  {-- 25 --}
+    print $ test &quot;ENS&quot; &quot;1353&quot;  {-- 26 --}
+    print $ test &quot;WNN&quot; &quot;1453&quot;  {-- 27 --}
+    print $ test &quot;SSEENEEEN&quot; &quot;1263124536&quot;  {-- 28 --}
+    print $ test &quot;NWSNNNW&quot; &quot;15414632&quot;  {-- 29 --}
+    print $ test &quot;ESSSSSWW&quot; &quot;132453215&quot;  {-- 30 --}
+    print $ test &quot;ESE&quot; &quot;1326&quot;  {-- 31 --}
+    print $ test &quot;SNWNWWNSSSS&quot; &quot;121456232453&quot;  {-- 32 --}
+    print $ test &quot;SWEESEN&quot; &quot;12423653&quot;  {-- 33 --}
+    print $ test &quot;NEEWNSSWWW&quot; &quot;15323631562&quot;  {-- 34 --}
+    print $ test &quot;WSEW&quot; &quot;14212&quot;  {-- 35 --}
+    print $ test &quot;SWSNNNSNWE&quot; &quot;12464131353&quot;  {-- 36 --}
+    print $ test &quot;ENWEWSEEW&quot; &quot;1351513545&quot;  {-- 37 --}
+    print $ test &quot;WSEWN&quot; &quot;142124&quot;  {-- 38 --}
+    print $ test &quot;EWNEESEWE&quot; &quot;1315321414&quot;  {-- 39 --}
+    print $ test &quot;NESEEN&quot; &quot;1531263&quot;  {-- 40 --}
+    print $ test &quot;WSW&quot; &quot;1426&quot;  {-- 41 --}
+    print $ test &quot;ENEWE&quot; &quot;135656&quot;  {-- 42 --}
 &lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第13回オフラインリアルタイムどう書くの問題をFregeで解く]]></title><description><![CDATA[第13回 オフラインリアルタイムどう書くの問題「積み木の水槽」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/60abb9be0dfac0755dcf/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/60abb9be0dfac0755dcf/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://atnd.org/events/41603&quot;&gt;第13回 オフラインリアルタイムどう書く&lt;/a&gt;の問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord13blocktup/&quot;&gt;積み木の水槽&lt;/a&gt;」を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-frege:shortest.fr&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord13blocktup/
      
@@ -2171,132 +1910,103 @@ main _ = do
    println $ test &quot;655589141599534035&quot; &quot;29&quot; {-29-}
    println $ test &quot;7411279689677738&quot; &quot;34&quot; {-30-}
    println $ test &quot;268131111165754619136819109839402&quot; &quot;102&quot; {-31-}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第12回オフラインリアルタイムどう書くの問題「サイコロを転がす」をHaskellで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの問題「サイコロを転がす」を、Haskellで解きました。
-Stateモナド厨。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/5f46b012f13e1d3cee55/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/5f46b012f13e1d3cee55/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/f3cca410428f90333e28&quot;&gt;第12回 オフラインリアルタイムどう書く&lt;/a&gt;の問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord12rotdice/&quot;&gt;サイコロを転がす&lt;/a&gt;」を、Haskellで解きました。
-Stateモナド厨。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-diceState.hs&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord12rotdice/
-import Data.List
-import Control.Monad.State
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[スタンドアローンGORMをGroovyスクリプトからシュっと利用する]]></title><description><![CDATA[G* Advent Calendar 2017 20日目の記事です。 GrailsのO/Rマッピングライブラリである「GORM」は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。 非WebアプリやGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/3a65b9c7dcbcc800fbf4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/3a65b9c7dcbcc800fbf4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;G* Advent Calendar 2017 20日目の記事です。&lt;/p&gt;
+&lt;p&gt;Grailsの&lt;a href=&quot;http://gorm.grails.org/latest/&quot;&gt;O/Rマッピングライブラリである「GORM」&lt;/a&gt;は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。&lt;/p&gt;
+&lt;p&gt;非WebアプリやGrails以外の他のフレームワークから高機能なORMとして使うことも可能ですし、Grailsでのシステム開発の一部として、バッチやシェルスクリプトやsshでキックしたいとか、シェルアカウントの管理者権限者だけがデータベースにアクセスしたいときには、スタンドアローンGORMが有用なケースがあります。&lt;/p&gt;
+&lt;p&gt;というのも、そういうケースでは以下のような選択肢があるにはあるのですが、いずれも固有の課題を抱えているからです。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://docs.grails.org/latest/guide/commandLine.html#creatingCustomScripts&quot;&gt;grails scripts&lt;/a&gt;としてGrailsサービスやGrailsドメインクラスを呼び出す処理などを記述し、Grailsのプロジェクトフォルダ(GRAILS_PROJ/scriptsを含む)に格納して、grailsコマンドで起動。
+問題は、プロジェクトソースコードを運用環境に展開しておく必要があること。&lt;/li&gt;
+&lt;li&gt;DB処理をWeb APIとして公開して、それを叩くクライアントを開発する。
+転送速度がネックになったり、ポートを公開することでセキュリティの問題になるかもしれない。&lt;/li&gt;
+&lt;li&gt;Service層をGrailsの&lt;a href=&quot;https://grails.org/plugin/remoting&quot;&gt;Remoting Plugin&lt;/a&gt;を使って公開する。
+問題は同上。&lt;/li&gt;
+&lt;li&gt;SQLを叩く別プログラムを開発する(Groovy SQL, ..)。
+この場合の問題は、GrailsのドメインクラスからDDL生成されたデータベースに対して、生SQLを書くのはかったるいだけではなく、ドメインクラスの制約(constraint)の処理を別途しなければならないということ。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;それぞれのケースで示した問題が許容できないとき、スタンドアローンGORMが有用です。&lt;/p&gt;
+&lt;p&gt;さて、具体的な使用方法としては、Spring Bootのアプリケーションから呼び出すこともできるでしょう。
+本記事では、もっとストレートに素のGroovyスクリプトからGORMを呼び出す例を紹介します。&lt;/p&gt;
+&lt;h1&gt;方法&lt;/h1&gt;
+&lt;p&gt;たとえば、こんな感じでGroovyスクリプトを書いて、&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;@Grab(&apos;org.grails:grails-datastore-gorm-hibernate5:6.1.0.RELEASE&apos;)
+@GrabExclude(&apos;javax.transaction:jta&apos;)
+@Grab(&apos;com.h2database:h2:1.4.192&apos;)
+@Grab(&apos;org.apache.tomcat:tomcat-jdbc:8.5.0&apos;)
+@Grab(&apos;org.slf4j:slf4j-log4j12&apos;)
+import java.lang.String
+import org.grails.orm.hibernate.HibernateDatastore
+import grails.gorm.annotation.Entity
 
--- 1と2の向きで表わしたサイコロの方向の状態。NEは「1の目が北(N)、2の目が東(E)」を表わす。Uは上、Dは下を表わす。
-data DiceState = NE|ES|SW|WN|EN|SE|WS|NW|UN|ND|DS|SU|NU|DN|SD|US|UE|ED|DW|WU|EU|DE|WD|UW deriving (Show, Eq)
+@Entity
+class Book {
+    String title
+    static hasMany = [authors: Author]
+    String toString() {&quot;$id: $title&quot;}
+}
 
--- それぞれのサイコロの状態で上面の数字(目)を表わす連想リスト。
-deuce :: [(DiceState, Char)]
-deuce = [(NE,&apos;4&apos;),(ES,&apos;4&apos;),(SW,&apos;4&apos;),(WN,&apos;4&apos;),(EN,&apos;3&apos;),(SE,&apos;3&apos;),
-         (WS,&apos;3&apos;),(NW,&apos;3&apos;),(UN,&apos;1&apos;),(ND,&apos;5&apos;),(DS,&apos;6&apos;),(SU,&apos;2&apos;),
-         (NU,&apos;2&apos;),(DN,&apos;6&apos;),(SD,&apos;5&apos;),(US,&apos;1&apos;),(UE,&apos;1&apos;),(ED,&apos;5&apos;),
-         (DW,&apos;6&apos;),(WU,&apos;2&apos;),(EU,&apos;2&apos;),(DE,&apos;6&apos;),(WD,&apos;5&apos;),(UW,&apos;1&apos;)]
+@Entity
+class Author {
+    String name
+    static hasMany = [books: Book]
+    static belongsTo = Book
+    String toString() {&quot;$id: $name&quot;}
+}
 
--- ころがし操作。&apos;N&apos;:北へころがす, &apos;W&apos;:西へころがす, &apos;S&apos;:南へころがす, &apos;E&apos;:東へころがす
-type Roll = Char
+def hibernateDatastore = new HibernateDatastore([
+        &apos;hibernate.hbm2ddl.auto&apos;: &apos;create-drop&apos;,
+        &apos;dataSource.driverClassName&apos;: &apos;org.h2.Driver&apos;,
+        &apos;dataSource.url&apos;: &apos;jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE&apos;,
+        &apos;dataSource.username&apos;: &apos;sa&apos;,
+        &apos;dataSource.password&apos;: &apos;&apos;,
+    ],
+    Author)
 
--- サイコロの状態における目(上を向いている面の数値)を返す
-getDeuce :: DiceState -&gt; Char
-getDeuce state = let (Just n) = lookup state deuce in n
-
-mkpair :: (t, t, t, t) -&gt; [(t, t)]
-mkpair (a,b,c,d) = [(a,b),(b,c),(c,d),(d,a)]
-
--- 東にころがす回転(&apos;E&apos;)におけるサイコロ状態の変化
--- [(回転前の状態,回転後の状態), ...]の連想リスト
-moveDataToEast :: [(DiceState, DiceState)]
-moveDataToEast = concat [mkpair (UN,EN,DN,WN),
-                         mkpair (ND,NW,NU,NE),
-                         mkpair (DS,WS,US,ES),
-                         mkpair (SU,SE,SD,SW),
-                         mkpair (ED,DW,WU,UE),
-                         mkpair (EU,DE,WD,UW)]
--- 北にころがす回転(&apos;N&apos;)におけるサイコロ状態の変化
--- [(回転前の状態,回転後の状態), ...]の連想リスト
-moveDataToNorth :: [(DiceState, DiceState)]
-moveDataToNorth = concat [mkpair (UN,ND,DS,SU),
-                          mkpair (EN,ED,ES,EU),
-                          mkpair (DN,SD,US,NU),
-                          mkpair (WN,WD,WS,WU),
-                          mkpair (NW,DW,SW,UW),
-                          mkpair (SE,UE,NE,DE)]
-
--- 指定した状態に対して、ころがし操作を与えたとき、次状態を得る
-step :: Roll -&gt; DiceState -&gt; DiceState
-step r direc = case r of
-                 &apos;N&apos; -&gt; moveN direc
-                 &apos;W&apos; -&gt; moveW direc
-                 &apos;S&apos; -&gt; moveS direc
-                 &apos;E&apos; -&gt; moveE direc
-               where
-                 -- 北にころがしたときの次状態を返す
-                 moveN :: DiceState -&gt; DiceState
-                 moveN s = let (Just d) = lookup s moveDataToNorth in d
-                 -- 西にころがしたときの次状態を返す
-                 moveW :: DiceState -&gt; DiceState
-                 moveW s = moveE $ moveE $ moveE s
-                 -- 南にころがしたときの次状態を返す
-                 moveS :: DiceState -&gt; DiceState
-                 moveS s = moveN $ moveN $ moveN s
-                 -- 東にころがしたときの次状態を返す
-                 moveE :: DiceState -&gt; DiceState
-                 moveE s = let (Just d) = lookup s moveDataToEast in d
-
--- ころがし操作を与えると次の状態モナドを返すモナディック関数
--- 状態は、(サイコロ上面の数値(目)の履歴, サイコロの状態)というタプルで表現。
-stepSt :: Roll -&gt; State (String, DiceState) ()
-stepSt ch = do
-  (xs, direc) &amp;#x3C;- get
-  let nextDirec = step ch direc
-  state $ const ((), (getDeuce nextDirec:xs, nextDirec))
-
--- ころがし操作の列と、結果(目の履歴)の期待値を与え、一致しているかどうかを返す
-test :: String -&gt; String -&gt; Bool
-test opr expected = let (xs, _) = execState (mapM stepSt opr) ([&apos;1&apos;], UN)
-                    in (reverse xs == expected)
-
-main :: IO ()
-main = do
-    print $ test &quot;NNESWWS&quot; &quot;15635624&quot;  {-- 0 --}
-    print $ test &quot;EEEE&quot; &quot;13641&quot;  {-- 1 --}
-    print $ test &quot;WWWW&quot; &quot;14631&quot;  {-- 2 --}
-    print $ test &quot;SSSS&quot; &quot;12651&quot;  {-- 3 --}
-    print $ test &quot;NNNN&quot; &quot;15621&quot;  {-- 4 --}
-    print $ test &quot;EENN&quot; &quot;13651&quot;  {-- 5 --}
-    print $ test &quot;WWNN&quot; &quot;14651&quot;  {-- 6 --}
-    print $ test &quot;SSNN&quot; &quot;12621&quot;  {-- 7 --}
-    print $ test &quot;NENNN&quot; &quot;153641&quot;  {-- 8 --}
-    print $ test &quot;NWNNN&quot; &quot;154631&quot;  {-- 9 --}
-    print $ test &quot;SWWWSNEEEN&quot; &quot;12453635421&quot;  {-- 10 --}
-    print $ test &quot;SENWSWSNSWE&quot; &quot;123123656545&quot;  {-- 11 --}
-    print $ test &quot;SSSWNNNE&quot; &quot;126546315&quot;  {-- 12 --}
-    print $ test &quot;SWNWSSSWWE&quot; &quot;12415423646&quot;  {-- 13 --}
-    print $ test &quot;ENNWWS&quot; &quot;1354135&quot;  {-- 14 --}
-    print $ test &quot;ESWNNW&quot; &quot;1321365&quot;  {-- 15 --}
-    print $ test &quot;NWSSE&quot; &quot;154135&quot;  {-- 16 --}
-    print $ test &quot;SWNWEWSEEN&quot; &quot;12415154135&quot;  {-- 17 --}
-    print $ test &quot;EWNWEEEEWN&quot; &quot;13154532426&quot;  {-- 18 --}
-    print $ test &quot;WNEWEWWWSNW&quot; &quot;145151562421&quot;  {-- 19 --}
-    print $ test &quot;NNEE&quot; &quot;15631&quot;  {-- 20 --}
-    print $ test &quot;EEEEWNWSW&quot; &quot;1364145642&quot;  {-- 21 --}
-    print $ test &quot;SENNWWES&quot; &quot;123142321&quot;  {-- 22 --}
-    print $ test &quot;SWWWSNSNESWW&quot; &quot;1245363635631&quot;  {-- 23 --}
-    print $ test &quot;WESSENSE&quot; &quot;141263231&quot;  {-- 24 --}
-    print $ test &quot;SWNSSESESSS&quot; &quot;124146231562&quot;  {-- 25 --}
-    print $ test &quot;ENS&quot; &quot;1353&quot;  {-- 26 --}
-    print $ test &quot;WNN&quot; &quot;1453&quot;  {-- 27 --}
-    print $ test &quot;SSEENEEEN&quot; &quot;1263124536&quot;  {-- 28 --}
-    print $ test &quot;NWSNNNW&quot; &quot;15414632&quot;  {-- 29 --}
-    print $ test &quot;ESSSSSWW&quot; &quot;132453215&quot;  {-- 30 --}
-    print $ test &quot;ESE&quot; &quot;1326&quot;  {-- 31 --}
-    print $ test &quot;SNWNWWNSSSS&quot; &quot;121456232453&quot;  {-- 32 --}
-    print $ test &quot;SWEESEN&quot; &quot;12423653&quot;  {-- 33 --}
-    print $ test &quot;NEEWNSSWWW&quot; &quot;15323631562&quot;  {-- 34 --}
-    print $ test &quot;WSEW&quot; &quot;14212&quot;  {-- 35 --}
-    print $ test &quot;SWSNNNSNWE&quot; &quot;12464131353&quot;  {-- 36 --}
-    print $ test &quot;ENWEWSEEW&quot; &quot;1351513545&quot;  {-- 37 --}
-    print $ test &quot;WSEWN&quot; &quot;142124&quot;  {-- 38 --}
-    print $ test &quot;EWNEESEWE&quot; &quot;1315321414&quot;  {-- 39 --}
-    print $ test &quot;NESEEN&quot; &quot;1531263&quot;  {-- 40 --}
-    print $ test &quot;WSW&quot; &quot;1426&quot;  {-- 41 --}
-    print $ test &quot;ENEWE&quot; &quot;135656&quot;  {-- 42 --}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Dartのアイソレート間で相互通信をする例]]></title><description><![CDATA[DartのIsolateを使って相互に通信をする例。 追記あり Isolate→spawn元(main)の方向の通信は、ReceivePort.sendPortをspawn時に渡してやれば良いが、逆方向の通信(main→Isolate)は、spawnしたIsolate…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/69d1eba89ebe51af6d02/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/69d1eba89ebe51af6d02/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;DartのIsolateを使って相互に通信をする例。&lt;/p&gt;
+Author.withTransaction {
+    Author a = new Author(name:&apos;上原 潤二&apos;);
+    Book b1 = new Book(title: &apos;プログラミングGROOVY&apos;).addToAuthors(a).save()
+    Book b2 = new Book(title: &apos;Grails徹底入門&apos;).addToAuthors(a).save()
+    println Book.findByTitleLike(&apos;G%&apos;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;GroovyおよびJDKがインストールされていれば、以下で実行できます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&gt; groovy groovyスクリプトファイル名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;GroovyやJDK以外の何かを事前ダウンロードしたりインストールしたりフォルダ構成を考えたりコンパイルしたりビルドしたりビルドスクリプトを書いたりデプロイしたりパッケージングしたりが一切不要なのが利点です✌。&lt;/p&gt;
+&lt;p&gt;なお、上記では@Entityでドメインクラスを定義していますが、データベースがGrailsアプリケーションの一部であるなら、Grailsアプリケーション本体のwar(やjar)に含まれるドメインクラスのクラスファイルのjarをクラスパスに含めれば別に書かなくても利用可能です(多分)。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[npmのモジュールバージョン指定におけるチルダ(~)とキャレット(^)の違いについての直感的な理解]]></title><description><![CDATA[package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。 記法 種別 意味 問題点など ^x.y.z…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/443580da712d2ccee159/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/443580da712d2ccee159/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;記法&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;種別&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;意味&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;問題点など&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;^x.y.z&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;キャレット表記&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;a href=&quot;http://semver.org/lang/ja/&quot;&gt;セマンティックバージョニング&lt;/a&gt;に従う。つまり、メジャーバージョンxを指定し、マイナーバージョンyの上昇、パッチバージョンzの上昇は互換性があるはずだと信じて、「x.{y以上}.{yが同じならz以上、yが上昇していれば任意} 」にあてはまる最新のものを使う。&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;開発時点と、ソース共有を経ての再ビルド(npm install)時の間で、NPMリポジトリ上の対象パッケージのバージョンが上がっている場合、より新しいものが使われることになる可能性があるが、セマンティックバージョニングの仕様に厳密に従わないパッケージは世の中に結構あるのではまり易い。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;~x.y.z&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;チルダ表記&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;セマンティックバージョニングにおける「マイナーバージョンが上がっても互換性が保たれるはずだ」という建前を信じないが、パッチバージョン上昇だったら互換性があるだろうとは信じて、「x.y.{z以上}」にあてはまるものを使う。&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;キャレット表記に比べて、上記の可能性がパッチバージョンのみなので少ない。とはいえ、はまるときははまるだろう。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;x.y.z&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;固定&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;指定したバージョン「x.y.z」に厳密にあてはまるものを使う。&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;開発時と異なるバージョンが使用される問題は回避できるが、たとえばセキュリテイ問題があってそのバージョンのNPMがリポジトリから削除された場合に(互換性のある後継バージョンがあるのに)ビルド不可能になったり、許容できるバージョン上昇を指定できないなど、セマンティックバージョンのメリットを全く享受できない。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;いずれも問題があるので、^なり~で指定した上で、&lt;a href=&quot;https://docs.npmjs.com/files/package-lock.json&quot;&gt;package-lock.json&lt;/a&gt;なり&lt;a href=&quot;https://yarnpkg.com/lang/en/docs/yarn-lock/&quot;&gt;yarn.lock&lt;/a&gt;を併用するのが正しい(それぞれNPM5、yarnのデフォルト動作)。&lt;/p&gt;
+&lt;p&gt;これらのロックファイルを使うのは、セマンティックバージョニングの建前と本音を使いわけることである。つまり、^~をつかって「このバージョンの範囲なら、互換性に問題ないはずだ」という希望と理想をpackage.jsonに記す。それはその上で、「実際にはこのバージョン使ってビルドしましたよ、動作保証するのはこっちなんで、こちらをお使い下さいね、げっひっひ」とlockファイルを裏で提供する。&lt;/p&gt;
+&lt;p&gt;左端の桁が0であったり、3桁以外の場合を含めては&lt;a href=&quot;http://qiita.com/sotarok/items/4ebd4cfedab186355867&quot;&gt;こちら&lt;/a&gt;の記事などを参照のこと。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Dartのアイソレート間で相互通信をする例]]></title><description><![CDATA[DartのIsolateを使って相互に通信をする例。 追記あり Isolate→spawn元(main)の方向の通信は、ReceivePort.sendPortをspawn時に渡してやれば良いが、逆方向の通信(main→Isolate)は、spawnしたIsolate…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/69d1eba89ebe51af6d02/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/69d1eba89ebe51af6d02/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;DartのIsolateを使って相互に通信をする例。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://qiita.com/uehaj/items/69d1eba89ebe51af6d02#%E8%BF%BD%E8%A8%982&quot;&gt;追記あり&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Isolate→spawn元(main)の方向の通信は、ReceivePort.sendPortをspawn時に渡してやれば良いが、逆方向の通信(main→Isolate)は、spawnしたIsolate先でReceivePortを作成し、そのsendPortをmainに戻してもらい、そのsendport経由で送信することになる。&lt;/p&gt;
 &lt;p&gt;sendPortをどうやって戻すかだが、以下ではIsolateに渡すReceivePort経由で受けとっている。(これ以外の良い方法は、グローバル変数にするとか以外にあるかな。どなたかご存知の方教えて!)&lt;/p&gt;
@@ -2421,116 +2131,7 @@ Future echo(sendPort) async {
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Node.jsでPEG.jsでBrainf*ck]]></title><description><![CDATA[Node.jsでのBrainf*ckインタプリタ実装。PEG.js使用。
-PEG.jsの勉強に作ってみました。PEG.js便利です。JSに馴染むぞぉ〜。 BF…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/68fa097e03d0572aefe4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/68fa097e03d0572aefe4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Node.jsでのBrainf*ckインタプリタ実装。&lt;a href=&quot;https://pegjs.org/&quot;&gt;PEG.js&lt;/a&gt;使用。
-PEG.jsの勉強に作ってみました。PEG.js便利です。JSに馴染むぞぉ〜。&lt;/p&gt;
-&lt;p&gt;BF処理系として、工夫といえば工夫なのは、ループブロック構文[と]の対応を、実行時に命令列からスキャンするのではなく、パース/AST構築の段階でシンタックスの問題として解決するところ。まあ、普通に考えればそうなるべきな話ではあるのですが。&lt;/p&gt;
-&lt;p&gt;苦労したのは、1文字入力で、標準ライブラリを呼べばいいのかなと思ったら、見付けられなかったので作りました(&lt;a href=&quot;https://qiita.com/uehaj/items/5d9fec1ba6cc4c76e378&quot;&gt;別記事&lt;/a&gt;)。&lt;/p&gt;
-&lt;p&gt;require(‘./parser’)しているところは、&lt;a href=&quot;https://pegjs.org/online&quot;&gt;PEG.js online&lt;/a&gt;で以下から生成させたパーサをparser.jsというファイル名でダウンロードし、同じディレクトリに保存してください。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;code = (normal_insn / block_insn / otherchar) *
-
-normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
-block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
-
-block = cod:code {
-  return cod;
-}
-
-otherchar = [^&gt;&amp;#x3C;+-.,\[\]] {
-  return undefined
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;実行例:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/a2428b6b-bb1e-2ff6-7ed0-c25ba2286b2a.gif&quot; alt=&quot;bfjs.mov.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;以下、main.js&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;const readline = require(&apos;readline&apos;);
-const rl = readline.createInterface({input:process.stdin});
-let buf = &quot;&quot;;
-
-function getchar() {
-  if (buf.length == 0) {
-    if (process.stdin.AtEndOfStream) {
-      return Promise.resolve(null); // EOF
-    }
-    return new Promise((resolve, reject) =&gt; {
-      rl.once(&apos;line&apos;, (line) =&gt; {
-        buf = buf + line + &quot;\n&quot;;
-        resolve(getchar());
-      });
-    });
-  } else {
-    const result = buf.charCodeAt(0);
-    buf = buf.substring(1);
-    return Promise.resolve(result);
-  }
-}
-
-/*
-  code = (normal_insn / block_insn / otherchar) *
-
-  normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
-  block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
-
-  block = cod:code {
-  return cod;
-  }
-
-  otherchar = [^&gt;&amp;#x3C;+-.,\[\]] {
-  return undefined
-  }
-*/
-// generated with PEG.js from above peg syntax.
-const parser = require(&quot;./parser.js&quot;); 
-
-
-const source = `
-&gt;&gt;++++++++[-&gt;++++++++&amp;#x3C;]&gt;&gt;&gt;&gt;+++++++++[-&gt;++++++++++&amp;#x3C;]&gt;[&amp;#x3C;&amp;#x3C;,[-&gt;+&amp;#x3C;&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;[
--&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;&gt;&gt;&gt;[-&gt;+&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;[&amp;#x3C;&amp;#x3C;[-&gt;+&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;&gt;[-&amp;#x3C;&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;[[-]&amp;#x3C;-&gt;]&gt;-]&gt;&gt;[-&amp;#x3C;&amp;#x3C;&amp;#x3C;+
-&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;[-&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;[&gt;&gt;[-&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;[-&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;[[-]&gt;-&amp;#x3C;]&amp;#x3C;-]&amp;#x3C;&amp;#x3C;[-&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;
-]&gt;&gt;&gt;&gt;&gt;&amp;#x3C;[[-]&gt;++++++++++++++++++++++++++++++++&gt;[[-]&amp;#x3C;------------------------
---------&gt;]&amp;#x3C;&amp;#x3C;]&gt;&gt;[-]&amp;#x3C;.&gt;&gt;]`;
-
-const ast = parser.parse(source);
-
-const memSize = 20;
-let ptr = 0;
-const memory = Array(memSize).fill(0);
-
-async function run(code, prefix) {
-  // console.log(&quot;run code=&quot;,code,&apos;mem=&apos;,memory,&apos;ptr=&apos;,ptr);
-  for (const i of code) {
-    // console.log(&quot;  ins=&quot;,i);
-    if (Array.isArray(i)) {
-      while (memory[ptr] !== 0) {
-        await run(i, prefix+&quot; &quot;);
-      }
-    }
-    else if (i === &apos;&gt;&apos;){
-      ptr += 1;
-    }
-    else if (i === &apos;&amp;#x3C;&apos;){
-      ptr -= 1;
-    }
-    else if (i === &apos;+&apos;){
-      memory[ptr] += 1;
-    }
-    else if (i === &apos;-&apos;){
-      memory[ptr] -= 1;
-    }
-    else if (i === &apos;.&apos;){
-      process.stdout.write(String.fromCharCode(memory[ptr]));
-    }
-    else if (i === &apos;,&apos;){
-      memory[ptr] = await getchar();
-    }
-  }
-}
-
-run(ast, &quot;&quot;).then(()=&gt;{
-  console.log(memory);
-  process.exit()
-});
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[TypeScriptの関数の型指定まとめ]]></title><description><![CDATA[はじめに TypeScriptの関数型について、いまいちすっきりしてなかったので整理してみました。
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[TypeScriptの関数の型指定まとめ]]></title><description><![CDATA[はじめに TypeScriptの関数型について、いまいちすっきりしてなかったので整理してみました。
 まず、準備としてとして とします。 関数定義の基本パターン 次に、関数定義の基本パターンとして とします。このときfunc1の型は「function func1(a: IHoge…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/79c277301f89d109c11d/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/79c277301f89d109c11d/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;TypeScriptの関数型について、いまいちすっきりしてなかったので整理してみました。
 まず、準備としてとして&lt;/p&gt;
@@ -3145,7 +2746,297 @@ fn main() {
     assert_eq!(solve(314159, 265358, 979323, 84626, 89099331642), &quot;S&quot;);
     assert_eq!(solve(314159, 265358, 979323, 84626, 89099331643), &quot;W&quot;);
 }
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[「リアクティブプログラミングが読み難い」というのは本当なのか?]]></title><description><![CDATA[追記(2017/05/2) redux-sagaでの非同期バージョンの紹介とリンクを追記。 追記(2017/2/23修正) 元記事の追記…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/80056c1ff10c63dc7810/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/80056c1ff10c63dc7810/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;追記(2017/05/2)&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[WebAssemblyへのコンパイラ言語を簡単に実装]]></title><description><![CDATA[後入りですみませんが、WebAssemblyアドベントカレンダー未投稿のところ埋めさせて頂きます。 本記事では、WebAssemblyをターゲットとするコンパイラ処理系を実装します。 方針 WebAssembly…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/5276bd3425d1000e48ba/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/5276bd3425d1000e48ba/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;後入りですみませんが、WebAssemblyアドベントカレンダー未投稿のところ埋めさせて頂きます。&lt;/p&gt;
+&lt;p&gt;本記事では、WebAssemblyをターゲットとするコンパイラ処理系を実装します。&lt;/p&gt;
+&lt;h1&gt;方針&lt;/h1&gt;
+&lt;p&gt;WebAssemblyへのコンパイル言語処理系を&lt;strong&gt;&lt;em&gt;最も簡単に&lt;/em&gt;&lt;/strong&gt; &lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;実装するための方針は以下のとおり。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;言語は「&lt;a href=&quot;https://ja.wikipedia.org/wiki/Brainfuck&quot;&gt;コンパイラがなるべく小さくなる言語として考案&lt;/a&gt;」されたBrainf*ckを採用&lt;/li&gt;
+&lt;li&gt;文法は&lt;a href=&quot;https://ja.wikipedia.org/wiki/Parsing_Expression_Grammar&quot;&gt;PEG(Parsing Expression Grammar)&lt;/a&gt;で記述し、生成系&lt;a href=&quot;https://pegjs.org/&quot;&gt;PEG.js&lt;/a&gt;でパーサを実行時に生成する&lt;/li&gt;
+&lt;li&gt;WebAssemblyコード生成では文字列でWAST形式を生成し、&lt;a href=&quot;https://github.com/ewasm/wast2wasm&quot;&gt;wast2wasm&lt;/a&gt;&lt;sup id=&quot;fnref-3&quot;&gt;&lt;a href=&quot;#fn-3&quot; class=&quot;footnote-ref&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;で変換する(直接WASMを生成しない)。またEmscriptenやbinaryenは使用しない&lt;/li&gt;
+&lt;li&gt;WASTの表現ではflat形式ではなくs-expression形式を使用する&lt;/li&gt;
+&lt;li&gt;ブラウザ上ではなくNode上で実行する。なのでWebAssemblyを実行できるバージョンのNode.jsが必要。Node8以降では普通に実行できる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;コードは&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly&quot;&gt;こちら&lt;/a&gt;に。
+NPMに登録されているので以下で実行できます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;% cat hello.bf
++++++++++[&gt;++++++++&gt;+++++++++++&gt;+++++&amp;#x3C;&amp;#x3C;&amp;#x3C;-]&gt;.&gt;++.+++++++..+++.&gt;-.------------.&amp;#x3C;++++++++.--------.+++.------.--------.&gt;+.
+
+% npx bf-compiler-webassembly hello.bf
+npx: 5個のパッケージを1.592秒でインストールしました。
+Hello, world!
+
+% npx bf-compiler-webassembly -e &apos;+++++++++[&gt;++++++++&gt;+++++++++++&gt;+++++&amp;#x3C;&amp;#x3C;&amp;#x3C;-]&gt;.&gt;++.+++++++..+++.&gt;-.------------.&amp;#x3C;++++++++.--------.+++.------.--------.&gt;+.&apos;
+npx: 5個のパッケージを2.06秒でインストールしました。
+Hello, world!
+
+% npx bf-compiler-webassembly --help
+npx: 5個のパッケージを1.506秒でインストールしました。
+
+  Usage: bf-compiler-webassembly [options] [file...]
+
+
+  Options:
+
+    -V, --version         output the version number
+    -e,--script [script]  run script from command line
+    -v,--verbose          verbose output
+    -h, --help            output usage information
+
+
+  Examples:
+
+    $ npx bf-compiler-webassembly -e &quot;+++&quot;
+    $ npx bf-compiler-webassembly hello.bf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;実行例&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/d79db6b1-f1ba-f816-b6ea-7f5481a650b3.gif&quot; alt=&quot;bf2.mov.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;以降、コードの説明をしていきます。&lt;/p&gt;
+&lt;h1&gt;全体の流れ&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:driver.js&quot;&gt;// compile from string
+async function compileAndRunString(bfSource, opts) {
+  const bfAst = bfParser.parse(bfSource, opts);
+  const wast = bfCompiler.compile(bfAst, opts);
+  const wasm = await wast2wasm.convert(wast, opts);
+  return await wasmRuner.run(wasm, opts);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/driver.js&quot;&gt;driver.js&lt;/a&gt;でコンパイル・実行の全体の流れを制御しています。以下の順で処理が実行されます。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Brainf*ckコードの構文解析(パース)、ASTの生成。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/bfParser.js&quot;&gt;bfParser.parse()&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;ASTをwastに変換する(コード生成)。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/bfCompiler.js&quot;&gt;bfCompiler.compile()&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;wast形式をwasmに変換し、WASMのバイト列表現に変換。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/wast2wasm.js&quot;&gt;wast2wasm.convert()&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;WASMバイト列をWebAssemblyの内部形式(機械語?)に変換・コンパイルし、wasmコードを呼び出して実行する。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/wasmRunner.js&quot;&gt;wasmRunner.run()&lt;/a&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;それぞれ以下のように処理ごとにモジュール化しています。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:driver.js&quot;&gt;const bfParser = require(&apos;./bfParser&apos;);
+const bfCompiler = require(&apos;./bfCompiler&apos;);
+const wast2wasm = require(&apos;./wast2wasm&apos;);
+const wasmRuner = require(&apos;./wasmRunner&apos;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;パーサ&lt;/h1&gt;
+&lt;p&gt;rainf*ckを構文解析してASTを生成するパーサをPEG.jsで作成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:bfParser.js&quot;&gt;const peg = require(&apos;pegjs&apos;);
+
+const syntax = `
+code = (normal_insn / block_insn / otherchar) *
+
+normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
+block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
+
+block = cod:code {
+  return cod;
+}
+
+otherchar = [^&gt;&amp;#x3C;+-.,\\[\\]] {
+  return undefined
+}
+`;
+
+const parser = peg.generate(syntax);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;syntaxという文字列変数にPEG文法を与えてpeg.generate()でパーサを生成しています。
+PEGでBNFのように構文を表現します。PEGでは構文解析と字句解析を分ける必要がありません。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:bfParser.js&quot;&gt;function parse(bfSource, opts) {
+  const bfAst = parser.parse(bfSource);
+  return bfAst;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;生成したパーサにBrainf*ckのコードを与えて抽象構文木を返します。
+PEGのJS実装であるPEG.jsが生成するパーサは、JSONで抽象構文木を返してくれます。
+抽象構文木(という程のものでもありませんが)では、[と]で表現されるブロックは配列、それ以外はその文字の配列が返ります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-brainfuck&quot;&gt;,[-&gt;+&amp;#x3C;]&gt;+.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;であれば、以下のようなJSONが返ります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;[ &apos;,&apos;, [ &apos;-&apos;, &apos;&gt;&apos;, &apos;+&apos;, &apos;&amp;#x3C;&apos; ], &apos;&gt;&apos;, &apos;+&apos;, &apos;.&apos; ]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;[と]の対応は静的にコンパイル時チェックされることになります。&lt;/p&gt;
+&lt;h1&gt;コード生成&lt;/h1&gt;
+&lt;p&gt;抽象構文木を再帰的に辿って&lt;a href=&quot;https://ukyo.github.io/wasm-usui-book/webroot/text-format.html&quot;&gt;WAST形式テキスト&lt;/a&gt;を生成します。
+先のBFコードは以下を生成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-lisp&quot;&gt;(module
+  (func $getchar (import &quot;imports&quot; &quot;getchar&quot;) (result i32))
+  (func $putchar (import &quot;imports&quot; &quot;putchar&quot;) (param i32))
+  (memory $0 (export &quot;memory&quot;) 1 1)
+
+  (func (export &quot;main&quot;) (local $ptr i32)
+    (i32.store8 (get_local $ptr) (call $getchar)) ;; ,
+    (block ;; [
+      (loop
+        (br_if 1 (i32.eqz (i32.load8_s (get_local $ptr))))
+        (i32.store8 (get_local $ptr) (i32.sub (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; -
+        (set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
+        (i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
+        (set_local $ptr (i32.sub (get_local $ptr) (i32.const 1))) ;; &amp;#x3C;
+        (br 0)
+      )
+    ) ;; ]
+    (set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
+    (i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
+    (i32.load8_s (get_local $ptr)) (call $putchar) ;; .
+  )
+)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;生成コードの説明&lt;/h1&gt;
+&lt;h2&gt;冒頭のいくつかの宣言&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;  (func $getchar (import &quot;imports&quot; &quot;getchar&quot;) (result i32))
+  (func $putchar (import &quot;imports&quot; &quot;putchar&quot;) (param i32))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;BFでの入出力を行うためのgetchar、putcharを外部JS関数として供給します。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  (memory $0 (export &quot;memory&quot;) 1 1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;memoryでWebAssemby側でメモリ領域を&lt;a href=&quot;https://github.com/sunfishcode/wasm-reference-manual/blob/master/WebAssembly.md#linear-memories&quot;&gt;リニアメモリ&lt;/a&gt;として確保。サイズと最大サイズをブロックサイズで指定。ここではいずれも1ブロック(64 KiB)を指定。&lt;/p&gt;
+&lt;h2&gt;コード本体の定義&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;  (func (export &quot;main&quot;) (local $ptr i32)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;JSから呼べる関数としてWebAssembly関数をmainという名前でexport。&lt;/p&gt;
+&lt;p&gt;以降、関数本体となる実行命令の説明をしていきます。&lt;/p&gt;
+&lt;h2&gt;’[‘と’]‘に対応するコード&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;    (block ;; [
+      (loop
+        (br_if 1 (i32.eqz (i32.load8_s (get_local $ptr))))
+:
+        (br 0)
+      )
+    ) ;; ]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;whileループに相当する[〜]のブロックがコンパイルされたコード。ptrの内容がゼロならループを抜け&lt;code&gt;(br_if 1)&lt;/code&gt;、loop末尾でloopの先頭にジャンプ&lt;code&gt;(br 0)&lt;/code&gt;しています。brはbranchの略で、分岐もしくは条件付き分岐命令です。
+wast2wasmではなぜかbrの飛び先をラベルで指定できなかったので、ネストレベルの相対指定&lt;sup id=&quot;fnref-2&quot;&gt;&lt;a href=&quot;#fn-2&quot; class=&quot;footnote-ref&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;で飛び先を指定しています。「0」は最内周のloopもしくはblock、「1」は1段外側のレベルのloopもしくはblockを意味します。ラベルを管理する必要がないので、ここでは好都合です。&lt;/p&gt;
+&lt;p&gt;brやbr_ifのジャンプの動作は、指定したネストレベルに対応するものがloopであればloop冒頭にジャンプ(ここではwhileループ内でのcontinue文の動作)、blockであればblockの末尾にジャンプ(ここではwhileループのbreak)をします。&lt;/p&gt;
+&lt;h2&gt;’+‘と’-‘に対応するコード&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;(i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
+(i32.store8 (get_local $ptr) (i32.sub (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; -
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;$ptrで間接参照したリニアメモリの指す先の内容を1バイトloadして加減算してリニアメモリにstoreし戻します。i32.load8は拡幅になるので符号付きと無しがあり、この場合は符号付きで処理するように注意します。&lt;/p&gt;
+&lt;h2&gt;’&gt;‘と’&amp;#x3C;‘に対応するコード&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;(set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
+(set_local $ptr (i32.sub (get_local $ptr) (i32.const 1))) ;; &amp;#x3C;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;$ptrを増減させます。&lt;/p&gt;
+&lt;h2&gt;’.‘と’,‘に対応するコード&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;(i32.load8_s (get_local $ptr)) (call $putchar) ;; .
+(i32.store8 (get_local $ptr) (call $getchar)) ;; ,
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;importsで宣言されているJS関数を指定して呼び出します。ここで用意したのはいずれも同期的な関数です。非同期関数を呼ぶ際にはコールバック関数を指定する必要がありますが、ここでは簡単さを優先するために同期関数で以下のように実装しておいたものを呼び出しています。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:wasmRunner.js&quot;&gt;const readlineSync = require(&apos;readline-sync&apos;);
+ :
+function putchar(ch) {
+  process.stdout.write(String.fromCharCode(ch));
+}
+
+let buf = &apos;&apos;;
+function getchar() {
+  if (buf === &apos;&apos;) {
+    buf = buf + readlineSync.question() + &apos;\n&apos;;
+  }
+  const result = buf.charCodeAt(0);
+  buf = buf.substring(1);
+  return result;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;WAST→WASM変換&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&quot;language-wast2wasm.js&quot;&gt;const wast2wasm = require(&apos;wast2wasm&apos;);
+
+async function convert(wasmTextCode, opts) {
+  const wasm = await wast2wasm(wasmTextCode, true);
+  if (opts.verbose || process.env.NODE_ENV === &apos;debug&apos;) {
+    console.log(wasm.log);
+  }
+  return wasm.buffer;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;wastをwasmのバイト列表現に変換します。&lt;/p&gt;
+&lt;h1&gt;実行&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:wastRunner.js&quot;&gt;async function run(uint8array, opts) {
+  const wasm = await WebAssembly.instantiate(uint8array, {
+    imports: {
+      getchar,
+      putchar,
+    },
+  });
+
+  const result = wasm.instance.exports.main();
+  if (opts.verbose || process.env.NODE_ENV === &apos;debug&apos;) {
+    const memory = new Uint8Array(wasm.instance.exports.memory.buffer);
+    console.log(memory);
+  }
+  return result;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;受け取ったwasmのバイト列表現をWebAssembly.instantiate()で実際のコンパイルを行い、WebAssemblyインスタンスを生成します。通常のWebAssembly実行であれば、wasm生成までは事前コンパイルでできていて、wasmのロードから始まるところ。
+そして、exportされた関数(ここではmainで固定)を実行します。&lt;/p&gt;
+&lt;h1&gt;コマンドラインの処理&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.npmjs.com/package/commander&quot;&gt;commander&lt;/a&gt;を使用して簡潔に。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:index.js&quot;&gt;const program = require(&apos;commander&apos;);
+const driver = require(&apos;../lib/driver&apos;);
+
+function main(argv) {
+  program
+    .version(&apos;0.1.0&apos;)
+    .option(&apos;-e,--script [script]&apos;, &apos;run script from command line&apos;)
+    .option(&apos;-v,--verbose&apos;, &apos;verbose output&apos;)
+    .arguments(&apos;[file...]&apos;, &apos;Brainf*ck file&apos;)
+    .action(function(files, opts) {
+      for (const file of files) {
+        driver
+          .compileAndRunFile(file, { verbose: opts.verbose })
+          .catch(e =&gt; console.log(&apos;error:&apos; + e));
+      }
+    })
+    .on(&apos;--help&apos;, function() {
+      console.log(`
+      
+  Examples:
+
+    $ npx bf-compiler-webassembly -e &quot;+++&quot;
+    $ npx bf-compiler-webassembly hello.bf
+
+`);
+    })
+    .parse(argv);
+
+  // for -e,--script option
+  if (program.script) {
+    driver
+      .compileAndRunString(program.script, { verbose: program.verbose })
+      .catch(e =&gt; console.log(&apos;error:&apos; + e));
+  } else {
+    program.args.length !== 0 || program.help();
+  }
+}
+
+main(process.argv);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;WASM所感&lt;/h1&gt;
+&lt;p&gt;スタックマシンで変数も使え命令の対称性も高くわかりやすい。JVMのようにクラスベースではなく関数ベースであることが様々な効果を発揮しすっきりしている。
+呼び出しスタックを(引数やローカル変数を通じないで)直接見ることも書くこともできないのでスタック上をバッファオーバーフローで書き壊したり、リターンアドレス書き換えてコード呼び出される攻撃について安全。ヒープは別問題だが、間接参照呼び出しはtableという構造のインデックスのみで実現されるので列挙される関数の範囲に限定されるので比較的安全。引数や返り値の型や個数を指定する必要があり、軽くバイトコードベリファイがなされスタックズレなどは防止される。&lt;/p&gt;
+&lt;h1&gt;WAST形式所感&lt;/h1&gt;
+&lt;p&gt;WAST形式のS-expressionはLispっぽいですが、バイナリフォーマットとしてのWASMでの実際のバイト配置としてはFORTHのような逆ポーランド記法であり、これに対応するflat形式という記法もあるそうです(併用もできる?)。引数の評価順が決まっているのでS-Expressionとflat形式は1対1対応です。&lt;/p&gt;
+&lt;h1&gt;最適化&lt;/h1&gt;
+&lt;p&gt;していませんが、本来なら種々の最適化を実行することができるでしょう。たとえば複数連続する+や-、&gt;や&amp;#x3C;をまとめて計算するなどは効果的だろうし、BFの個々の命令をテーブルジャンプとか間接参照にすることも考えられます。&lt;/p&gt;
+&lt;h1&gt;まとめ&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;WebAssemblyはコンパイラの勉強のターゲットとしてモチベーションが高まるし、しきいも低いのでぜひどうぞ。&lt;/li&gt;
+&lt;li&gt;ただし現時点ではドキュメント不足、今後仕様が変化していくだろう、という予測もできます。&lt;/li&gt;
+&lt;li&gt;PEG.jsは便利。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn-1&quot;&gt;
+&lt;p&gt;主観です。&lt;/p&gt;
+&lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn-3&quot;&gt;
+&lt;p&gt;wast2wabtはたぶん&lt;a href=&quot;https://github.com/WebAssembly/wabt&quot;&gt;WABT(The WebAssembly Binary Toolkit)&lt;/a&gt;からEmscriptenか何かでJSに変換されている。&lt;/p&gt;
+&lt;a href=&quot;#fnref-3&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn-2&quot;&gt;
+&lt;p&gt;ネストレベルの外側向きの相対指定であることがドキュメント上読み取れず、ものすごく苦労した。&lt;/p&gt;
+&lt;a href=&quot;#fnref-2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[「リアクティブプログラミングが読み難い」というのは本当なのか?]]></title><description><![CDATA[追記(2017/05/2) redux-sagaでの非同期バージョンの紹介とリンクを追記。 追記(2017/2/23修正) 元記事の追記…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/80056c1ff10c63dc7810/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/80056c1ff10c63dc7810/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;追記(2017/05/2)&lt;/h1&gt;
 &lt;p&gt;redux-sagaでの非同期バージョンの紹介とリンクを追記。&lt;/p&gt;
 &lt;h1&gt;追記(2017/2/23修正)&lt;/h1&gt;
 &lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;a href=&quot;http://qiita.com/hiruberuto/items/39e4126f470d8b84b291#%E8%BF%BD%E8%A8%98%EF%BC%93%E3%82%AB%E3%82%A6%E3%83%B3%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%B3%E3%83%88%E3%83%AA%E3%82%92%E9%A0%82%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E3%81%99%E3%81%8C%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%AB%E8%AA%A4%E3%82%8A%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99&quot;&gt;元記事の追記3&lt;/a&gt;にて言及を頂いたように、&lt;/font&gt;以下の「見易い版」コードは元コードが実現していた機能が抜けおちているという誤りがあります。遅くなりましたが、お詫びの上修正させていただきます。
@@ -3453,6 +3344,115 @@ main args = do
   println (shortestPath 109227 ==  26)
   println (shortestPath 174763 ==  27)
   
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Node.jsでPEG.jsでBrainf*ck]]></title><description><![CDATA[Node.jsでのBrainf*ckインタプリタ実装。PEG.js使用。
+PEG.jsの勉強に作ってみました。PEG.js便利です。JSに馴染むぞぉ〜。 BF…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/68fa097e03d0572aefe4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/68fa097e03d0572aefe4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Node.jsでのBrainf*ckインタプリタ実装。&lt;a href=&quot;https://pegjs.org/&quot;&gt;PEG.js&lt;/a&gt;使用。
+PEG.jsの勉強に作ってみました。PEG.js便利です。JSに馴染むぞぉ〜。&lt;/p&gt;
+&lt;p&gt;BF処理系として、工夫といえば工夫なのは、ループブロック構文[と]の対応を、実行時に命令列からスキャンするのではなく、パース/AST構築の段階でシンタックスの問題として解決するところ。まあ、普通に考えればそうなるべきな話ではあるのですが。&lt;/p&gt;
+&lt;p&gt;苦労したのは、1文字入力で、標準ライブラリを呼べばいいのかなと思ったら、見付けられなかったので作りました(&lt;a href=&quot;https://qiita.com/uehaj/items/5d9fec1ba6cc4c76e378&quot;&gt;別記事&lt;/a&gt;)。&lt;/p&gt;
+&lt;p&gt;require(‘./parser’)しているところは、&lt;a href=&quot;https://pegjs.org/online&quot;&gt;PEG.js online&lt;/a&gt;で以下から生成させたパーサをparser.jsというファイル名でダウンロードし、同じディレクトリに保存してください。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;code = (normal_insn / block_insn / otherchar) *
+
+normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
+block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
+
+block = cod:code {
+  return cod;
+}
+
+otherchar = [^&gt;&amp;#x3C;+-.,\[\]] {
+  return undefined
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;実行例:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/a2428b6b-bb1e-2ff6-7ed0-c25ba2286b2a.gif&quot; alt=&quot;bfjs.mov.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;以下、main.js&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;const readline = require(&apos;readline&apos;);
+const rl = readline.createInterface({input:process.stdin});
+let buf = &quot;&quot;;
+
+function getchar() {
+  if (buf.length == 0) {
+    if (process.stdin.AtEndOfStream) {
+      return Promise.resolve(null); // EOF
+    }
+    return new Promise((resolve, reject) =&gt; {
+      rl.once(&apos;line&apos;, (line) =&gt; {
+        buf = buf + line + &quot;\n&quot;;
+        resolve(getchar());
+      });
+    });
+  } else {
+    const result = buf.charCodeAt(0);
+    buf = buf.substring(1);
+    return Promise.resolve(result);
+  }
+}
+
+/*
+  code = (normal_insn / block_insn / otherchar) *
+
+  normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
+  block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
+
+  block = cod:code {
+  return cod;
+  }
+
+  otherchar = [^&gt;&amp;#x3C;+-.,\[\]] {
+  return undefined
+  }
+*/
+// generated with PEG.js from above peg syntax.
+const parser = require(&quot;./parser.js&quot;); 
+
+
+const source = `
+&gt;&gt;++++++++[-&gt;++++++++&amp;#x3C;]&gt;&gt;&gt;&gt;+++++++++[-&gt;++++++++++&amp;#x3C;]&gt;[&amp;#x3C;&amp;#x3C;,[-&gt;+&amp;#x3C;&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;[
+-&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;&gt;&gt;&gt;[-&gt;+&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;[&amp;#x3C;&amp;#x3C;[-&gt;+&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;&gt;[-&amp;#x3C;&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;[[-]&amp;#x3C;-&gt;]&gt;-]&gt;&gt;[-&amp;#x3C;&amp;#x3C;&amp;#x3C;+
+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;[-&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;[&gt;&gt;[-&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;[-&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;[[-]&gt;-&amp;#x3C;]&amp;#x3C;-]&amp;#x3C;&amp;#x3C;[-&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;
+]&gt;&gt;&gt;&gt;&gt;&amp;#x3C;[[-]&gt;++++++++++++++++++++++++++++++++&gt;[[-]&amp;#x3C;------------------------
+--------&gt;]&amp;#x3C;&amp;#x3C;]&gt;&gt;[-]&amp;#x3C;.&gt;&gt;]`;
+
+const ast = parser.parse(source);
+
+const memSize = 20;
+let ptr = 0;
+const memory = Array(memSize).fill(0);
+
+async function run(code, prefix) {
+  // console.log(&quot;run code=&quot;,code,&apos;mem=&apos;,memory,&apos;ptr=&apos;,ptr);
+  for (const i of code) {
+    // console.log(&quot;  ins=&quot;,i);
+    if (Array.isArray(i)) {
+      while (memory[ptr] !== 0) {
+        await run(i, prefix+&quot; &quot;);
+      }
+    }
+    else if (i === &apos;&gt;&apos;){
+      ptr += 1;
+    }
+    else if (i === &apos;&amp;#x3C;&apos;){
+      ptr -= 1;
+    }
+    else if (i === &apos;+&apos;){
+      memory[ptr] += 1;
+    }
+    else if (i === &apos;-&apos;){
+      memory[ptr] -= 1;
+    }
+    else if (i === &apos;.&apos;){
+      process.stdout.write(String.fromCharCode(memory[ptr]));
+    }
+    else if (i === &apos;,&apos;){
+      memory[ptr] = await getchar();
+    }
+  }
+}
+
+run(ast, &quot;&quot;).then(()=&gt;{
+  console.log(memory);
+  process.exit()
+});
 &lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Material UIのスタイル指定(JSS)]]></title><description><![CDATA[Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。 classNameで即値指定 HTMLで言うclass=の指定。Material UI…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/969ef20ccef850d2e9b1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/969ef20ccef850d2e9b1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。&lt;/p&gt;
 &lt;h1&gt;classNameで即値指定&lt;/h1&gt;
 &lt;p&gt;HTMLで言うclass=の指定。Material UI的には何もしない。BEMやscssでもなんでもいいのですが、外部スタイルシートを定義してあてがっていくパターン。&lt;/p&gt;
@@ -3640,39 +3640,7 @@ export default withStyles(styles)(MyComponent);
                :
           &amp;#x3C;/Tabs&gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;するともともとMUIで定義されていたCSSに上書きされる形でCSSスタイルが定義される。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Elmでやってみようシリーズ1]]></title><description><![CDATA[elmでやってみるシリーズ1: ●を動かす。 こちらで実行できます。 感想 foldpは好き。 inputに対応するSignal…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/ce95865dc999be1d68eb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/ce95865dc999be1d68eb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://elm-lang.org/&quot;&gt;elm&lt;/a&gt;でやってみるシリーズ1: ●を動かす。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-haskell&quot;&gt;import Window
-
-pos : Signal Int
-pos =let f = \tmp -&gt; (tmp `mod` 30) - 10
-        in f &amp;#x3C;~ foldp (\it acc-&gt; acc + 1) 0 (fps 50)
-
-drawCircle : Float -&gt; Float -&gt; Form
-drawCircle x y = move (x,y) &amp;#x3C;| filled red (circle 20)
-
-drawMatrix : [Form]
-drawMatrix = map (\x -&gt; drawLine &amp;#x3C;| x*10) [-10..10]
-
-drawLine : Float -&gt; Form
-drawLine x = traced (solid blue) ( segment (x,-100) (x,100) )
-
-main : Signal Element
-main=let f = \w h p-&gt; collage w h ([drawCircle ((toFloat p)*10) 10]++drawMatrix)
-     in f &amp;#x3C;~ Window.width ~ Window.height ~ pos
-&lt;/code&gt;&lt;/pre&gt;
-&lt;iframe width=&quot;100%&quot; src=&quot;http://share-elm.com/sprout/53c8a01ee4b07afa6f983053/stable/view&quot;&gt;
-&lt;/iframe&gt;
-# 実行する
-&lt;p&gt;&lt;a href=&quot;http://share-elm.com/sprout/53c8a01ee4b07afa6f983053/stable/view&quot;&gt;こちら&lt;/a&gt;で実行できます。&lt;/p&gt;
-&lt;h1&gt;感想&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;foldpは好き。&lt;/li&gt;
-&lt;li&gt;inputに対応するSignalってグローバル変数じゃね?まあ「マウスがクリックされる」とか「時間が経過する」という事実はグローバルなんだが、それによって引き起こされるイベントもそうなる…。プログラムからその値を能動的に制御できないから変数とは呼べない…のかな。でもユーザがフィールドに値を入力したり、ラジオボタンをクリックしたり、という操作によって設定項目をリアクティブに変更したその結果の、Signalである設定項目って、どう見てもグローバル変数だよね。まだよくわからない。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;関連エントリ&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://uehaj.hatenablog.com/entry/2014/07/03/023808&quot;&gt;http://uehaj.hatenablog.com/entry/2014/07/03/023808&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[macosで Control+[ 押下をEscapeに割り当てる]]></title><description><![CDATA[Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。 Karabinar Elementsをインストールする 以下を作成する。 `json:~/.config/karabiner/assets…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/a6637482c5f6246cb30f/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/a6637482c5f6246cb30f/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。&lt;/p&gt;
+&lt;p&gt;するともともとMUIで定義されていたCSSに上書きされる形でCSSスタイルが定義される。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[macosで Control+[ 押下をEscapeに割り当てる]]></title><description><![CDATA[Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。 Karabinar Elementsをインストールする 以下を作成する。 `json:~/.config/karabiner/assets…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/a6637482c5f6246cb30f/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/a6637482c5f6246cb30f/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Karabinar Elementsをインストールする&lt;/li&gt;
 &lt;li&gt;以下を作成する。&lt;/li&gt;
@@ -3856,7 +3824,39 @@ useCallbackの使いかたの本道です。&lt;/p&gt;
 &lt;h1&gt;まとめ&lt;/h1&gt;
 &lt;p&gt;まとめると、useCallbackを使うべきなのは、イベントハンドラをローカル関数にせざるを得ない場合、つまり関数コンポーネント本体のスコープ内の引数や、ローカル変数、特にpropの引数や他のuseStateを始めとするhooks呼び出しで得られるローカル変数の値に、関数の処理が依存している場合であり、かつ、そのローカル変数をイベントハンドラとして渡そうとしているReact要素がReact.memoされている場合です。&lt;/p&gt;
 &lt;h1&gt;おわり&lt;/h1&gt;
-&lt;p&gt;hooksは最高なんですが、留意点がありますので気をつけて使っていきましょう。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[JSでデフォルトカリー化]]></title><description><![CDATA[JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。 func = arg1 => arg2 => .. 関数本体 たとえば、以下のように関数を定義して… 呼び出しは以下のようにします。 これでOK…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/d3dd93bc9266d35bd1c6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/d3dd93bc9266d35bd1c6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。&lt;/p&gt;
+&lt;p&gt;hooksは最高なんですが、留意点がありますので気をつけて使っていきましょう。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Elmでやってみようシリーズ1]]></title><description><![CDATA[elmでやってみるシリーズ1: ●を動かす。 こちらで実行できます。 感想 foldpは好き。 inputに対応するSignal…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/ce95865dc999be1d68eb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/ce95865dc999be1d68eb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://elm-lang.org/&quot;&gt;elm&lt;/a&gt;でやってみるシリーズ1: ●を動かす。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-haskell&quot;&gt;import Window
+
+pos : Signal Int
+pos =let f = \tmp -&gt; (tmp `mod` 30) - 10
+        in f &amp;#x3C;~ foldp (\it acc-&gt; acc + 1) 0 (fps 50)
+
+drawCircle : Float -&gt; Float -&gt; Form
+drawCircle x y = move (x,y) &amp;#x3C;| filled red (circle 20)
+
+drawMatrix : [Form]
+drawMatrix = map (\x -&gt; drawLine &amp;#x3C;| x*10) [-10..10]
+
+drawLine : Float -&gt; Form
+drawLine x = traced (solid blue) ( segment (x,-100) (x,100) )
+
+main : Signal Element
+main=let f = \w h p-&gt; collage w h ([drawCircle ((toFloat p)*10) 10]++drawMatrix)
+     in f &amp;#x3C;~ Window.width ~ Window.height ~ pos
+&lt;/code&gt;&lt;/pre&gt;
+&lt;iframe width=&quot;100%&quot; src=&quot;http://share-elm.com/sprout/53c8a01ee4b07afa6f983053/stable/view&quot;&gt;
+&lt;/iframe&gt;
+# 実行する
+&lt;p&gt;&lt;a href=&quot;http://share-elm.com/sprout/53c8a01ee4b07afa6f983053/stable/view&quot;&gt;こちら&lt;/a&gt;で実行できます。&lt;/p&gt;
+&lt;h1&gt;感想&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;foldpは好き。&lt;/li&gt;
+&lt;li&gt;inputに対応するSignalってグローバル変数じゃね?まあ「マウスがクリックされる」とか「時間が経過する」という事実はグローバルなんだが、それによって引き起こされるイベントもそうなる…。プログラムからその値を能動的に制御できないから変数とは呼べない…のかな。でもユーザがフィールドに値を入力したり、ラジオボタンをクリックしたり、という操作によって設定項目をリアクティブに変更したその結果の、Signalである設定項目って、どう見てもグローバル変数だよね。まだよくわからない。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;関連エントリ&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://uehaj.hatenablog.com/entry/2014/07/03/023808&quot;&gt;http://uehaj.hatenablog.com/entry/2014/07/03/023808&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[JSでデフォルトカリー化]]></title><description><![CDATA[JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。 func = arg1 => arg2 => .. 関数本体 たとえば、以下のように関数を定義して… 呼び出しは以下のようにします。 これでOK…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/d3dd93bc9266d35bd1c6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/uehaj-memo/d3dd93bc9266d35bd1c6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;func = arg1 =&gt; arg2 =&gt; .. 関数本体&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;たとえば、以下のように関数を定義して…&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;func = x =&gt; y =&gt; z =&gt; x+y+z;
