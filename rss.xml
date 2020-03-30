@@ -1,4 +1,126 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog Grommet v2]]></title><description><![CDATA[This is a DEMO site! SSG - Gatsby JS, UI - Grommet v2]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 30 Mar 2020 11:21:14 GMT</lastBuildDate><item><title><![CDATA[TAPLのML実装をRustでやってみるシリーズ「4章 算術式のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみます。 まずは4章の算術式です。書籍でのtype termが保持するinfo…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみます。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog Grommet v2]]></title><description><![CDATA[This is a DEMO site! SSG - Gatsby JS, UI - Grommet v2]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 30 Mar 2020 11:25:58 GMT</lastBuildDate><item><title><![CDATA[【React+TypeScript】Function Componentで省略可能propsの省略した場合の値を型安全に指定する]]></title><description><![CDATA[https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521 こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。 リンク先から引用。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&quot;&gt;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。&lt;/p&gt;
+&lt;p&gt;リンク先から引用。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;const MyComponent = (props: { name: string, telephone: string }) =&gt; {
+  ...
+}
+
+MyComponent.defaultProps = { telephone: &quot;222-333-4444&quot; }
+
+// Works - good
+const test = &amp;#x3C;MyComponent name=&quot;Hulk Hogan&quot; /&gt;
+
+// Doesn&apos;t work - missing name, good
+const test = &amp;#x3C;MyComponent /&gt;
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第12回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/1de39df381dfeee305ab&quot;&gt;第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」&lt;/a&gt;を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-frege:turtle.fr&quot;&gt;package sample.Turtle where
+
+type Position = Char
+type Direction = Char
+type Command = Char
+
+pure native elemIndex indexOf :: String -&gt; Int -&gt; Int
+
+ewData :: String
+ewData = &quot;?&quot;++packed [&apos;A&apos;..&apos;K&apos;]++&quot;?&quot;++packed [&apos;L&apos;..&apos;V&apos;]++&quot;?&quot;++packed [&apos;W&apos;..&apos;Z&apos;]++packed [&apos;a&apos;..&apos;g&apos;]++&quot;?&quot;
+         ++&quot;?hij?klm?nop?qrs?tuv?wxy?z01?234?567?&quot;
+
+nsData :: String
+nsData = &quot;?&quot;++&quot;ALWhknqtwz25&quot;++&quot;?&quot;++&quot;BMXilorux036&quot;++&quot;?&quot;++&quot;CNYjmpsvy147&quot;
+         ++ &quot;?&quot; ++&quot;DOZ&quot; ++ &quot;?&quot; ++ &quot;EPa&quot; ++ &quot;?&quot; ++ &quot;FQb&quot; ++ &quot;?&quot; ++ &quot;GRc&quot; ++ &quot;?&quot; ++ &quot;HSd&quot;
+         ++ &quot;?&quot; ++ &quot;ITe&quot; ++ &quot;?&quot; ++ &quot;JUf&quot; ++ &quot;?&quot; ++ &quot;KVg&quot; ++ &quot;?&quot;
+
+moveForward :: (Position, Direction, [Char]) -&gt; Int -&gt; (Position, Direction, [Char])
+moveForward (pos, dir, hist) 0 = (pos, dir, hist)
+moveForward (&apos;7&apos;, &apos;S&apos;, hist) n = moveForward (&apos;e&apos;, &apos;N&apos;, hist++[&apos;e&apos;]) (n-1)
+moveForward (&apos;6&apos;, &apos;S&apos;, hist) n = moveForward (&apos;f&apos;, &apos;N&apos;, hist++[&apos;f&apos;]) (n-1)
+moveForward (&apos;5&apos;, &apos;S&apos;, hist) n = moveForward (&apos;g&apos;, &apos;N&apos;, hist++[&apos;g&apos;]) (n-1)
+moveForward (&apos;e&apos;, &apos;S&apos;, hist) n = moveForward (&apos;7&apos;, &apos;N&apos;, hist++[&apos;7&apos;]) (n-1)
+moveForward (&apos;f&apos;, &apos;S&apos;, hist) n = moveForward (&apos;6&apos;, &apos;N&apos;, hist++[&apos;6&apos;]) (n-1)
+moveForward (&apos;g&apos;, &apos;S&apos;, hist) n = moveForward (&apos;5&apos;, &apos;N&apos;, hist++[&apos;5&apos;]) (n-1)
+moveForward (pos, dir, hist) n = moveForward nextState (n-1)
+    where
+          nextState :: (Char, Char, [Char])
+          nextState = (nextPos, dir, hist++(nextPos:[]))
+          nextPos :: Char
+          nextPos = case dir of
+                      &apos;N&apos; -&gt; nextPosOf pos nsData (subtract 1)
+                      &apos;W&apos; -&gt; nextPosOf pos ewData (subtract 1)
+                      &apos;S&apos; -&gt; nextPosOf pos nsData (+1)
+                      &apos;E&apos; -&gt; nextPosOf pos ewData (+1)
+          nextPosOf :: Char -&gt; String -&gt; (Int -&gt; Int) -&gt; Char
+          nextPosOf c map f = let i=map `elemIndex` (ord c) in if (i/=0) then ((unpacked map) !! (f i)) else &apos;?&apos;
+
+turnDir :: Direction -&gt; String -&gt; Position -&gt; [Char] -&gt; State (Position, Direction, [Char]) ()
+turnDir dir dirs pos hist = State.put (pos, (let x=(dirs `elemIndex` (ord dir)) in ((unpacked dirs) !! (x+1))), hist)
+
+oneStep :: Command -&gt; State (Position, Direction, [Char]) ()
+oneStep ch = do
+  (pos, dir, hist) &amp;#x3C;- State.get
+  case ch of
+    &apos;L&apos; -&gt; turnDir dir &quot;ENWSE&quot; pos hist
+    &apos;R&apos; -&gt; turnDir dir &quot;ESWNE&quot; pos hist
+    _
+          | ch `elem` [&apos;1&apos;..&apos;9&apos;] -&gt; State.put (moveForward (pos, dir, hist) (ord ch-ord &apos;0&apos;))
+          | ch `elem` [&apos;a&apos;..&apos;f&apos;] -&gt; State.put (moveForward (pos, dir, hist) ((ord ch-ord &apos;a&apos;)+10))
+
+solve :: [Command] -&gt; [Position]
+solve cmd = reduce hist
+        where (_,_,hist) = (let (v,s) = State.run (mapM_ oneStep cmd) initialState in s)
+              reduce [] = []
+              reduce (xs:&apos;?&apos;:_) = xs:(unpacked &quot;?&quot;)
+              reduce (x:xs) = x:(reduce xs)
+              initialState = (&apos;A&apos;,&apos;E&apos;,(unpacked &quot;A&quot;))
+
+test cmd expected = do
+    let result = packed $ solve (unpacked cmd)
+    println $ result == expected
+
+main args = do
+    test &quot;2RcL3LL22&quot; &quot;ABCNYjmpsvy147edcbcdef&quot;  {- 0 -}
+    test &quot;L3R4L5RR5R3L5&quot; &quot;A?&quot;  {- 1 -}
+    test &quot;2ReLLe&quot; &quot;ABCNYjmpsvy147eTITe741yvspmjYNC&quot;  {- 2 -}
+    test &quot;1ReRRe&quot; &quot;ABMXilorux036fUJUf630xuroliXMB&quot;  {- 3 -}
+    test &quot;ReRRe&quot; &quot;ALWhknqtwz25gVKVg52zwtqnkhWLA&quot;  {- 4 -}
+    test &quot;f&quot; &quot;ABCDEFGHIJK?&quot;  {- 5 -}
+    test &quot;Rf&quot; &quot;ALWhknqtwz25gVK?&quot;  {- 6 -}
+    test &quot;1Rf&quot; &quot;ABMXilorux036fUJ?&quot;  {- 7 -}
+    test &quot;2Rf&quot; &quot;ABCNYjmpsvy147eTI?&quot;  {- 8 -}
+    test &quot;aR1RaL1LaR1R2L1L2&quot; &quot;ABCDEFGHIJKVUTSRQPONMLWXYZabcdefg567432&quot;  {- 9 -}
+    test &quot;2R1R2L1L2R1R2L1L2R1R2L1L2R1R2L1L2&quot; &quot;ABCNMLWXYjihklmponqrsvutwxy&quot;  {- 10 -}
+    test &quot;2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ABCNYjmlknqtwxy147efgVK?&quot;  {- 11 -}
+    test &quot;R1L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALMNYjmponqtwz0147eTUVK?&quot;  {- 12 -}
+    test &quot;R2L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALWXYjmpsrqtwz2347eTIJK?&quot;  {- 13 -}
+    test &quot;R3L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALWhijmpsvutwz2567eTI?&quot;  {- 14 -}
+    test &quot;R5L2L5L1LaR1L4L5&quot; &quot;ALWhknopmjYNCBMXilorux0325gVKJIHGF&quot;  {- 15 -}
+    test &quot;1R2L4L2R4R2L4L2R4&quot; &quot;ABMXYZabQFGHIJUfg?&quot;  {- 16 -}
+    test &quot;2R2L4L2R4R2L4L2R4&quot; &quot;ABCNYZabcRGHIJKVg?&quot;  {- 17 -}
+    test &quot;3R2L4L2R4R2L4L2R4&quot; &quot;ABCDOZabcdSHIJK?&quot;  {- 18 -}
+    test &quot;4R2L4L2R4R2L4L2R4&quot; &quot;ABCDEPabcdeTIJK?&quot;  {- 19 -}
+    test &quot;5R2L4L2R4R2L4L2R4&quot; &quot;ABCDEFQbcdefUJK?&quot;  {- 20 -}
+    test &quot;LLL1RRR1LLL1RRR2R1&quot; &quot;ALMXYZ?&quot;  {- 21 -}
+    test &quot;R3RRR3&quot; &quot;ALWhij?&quot;  {- 22 -}
+    test &quot;1LLL4RRR1LR1RL1&quot; &quot;ABMXilm?&quot;  {- 23 -}
+    test &quot;R2L1R2L1R3R4&quot; &quot;ALWXilmpsvut?&quot;  {- 24 -}
+    test &quot;7R4f47LLLc6R9L&quot; &quot;ABCDEFGHSd?&quot;  {- 25 -}
+    test &quot;5RR868L8448LL4R6&quot; &quot;ABCDEFEDCBA?&quot;  {- 26 -}
+    test &quot;42Rd1RLLa7L5&quot; &quot;ABCDEFGRc?&quot;  {- 27 -}
+    test &quot;RRLL6RLR1L5d12LaLRRL529L&quot; &quot;ABCDEFGRSTUV?&quot;  {- 28 -}
+    test &quot;RLR7L6LL1LRRRcRL52R&quot; &quot;ALWhknqtuv?&quot;  {- 29 -}
+    test &quot;1RLR8RLR1R437L99636R&quot; &quot;ABMXiloruxwtqnkhWLA?&quot;  {- 30 -}
+    test &quot;LLL2L3La9Le5LRR&quot; &quot;ALWXYZOD?&quot;  {- 31 -}
+    test &quot;R1LcRR491&quot; &quot;ALMNOPQRSTUV?&quot;  {- 32 -}
+    test &quot;R8L1R1R512L8RLLReRf&quot; &quot;ALWhknqtwx0z?&quot;  {- 33 -}
+    test &quot;1RcL8f1L29a5&quot; &quot;ABMXilorux036fedcbaZYXW?&quot;  {- 34 -}
+    test &quot;R822LeL46LL39LL&quot; &quot;ALWhknqtwz25gfedcbaZYXW?&quot;  {- 35 -}
+    test &quot;9R3L5LRRLb5R3L7cLLLR4L&quot; &quot;ABCDEFGHIJUf65?&quot;  {- 36 -}
+    test &quot;7LLRRR2R3R69Lf76eR2L&quot; &quot;ABCDEFGHSdcbaPE?&quot;  {- 37 -}
+    test &quot;8RRRLL3Le&quot; &quot;ABCDEFGHITe765?&quot;  {- 38 -}
+    test &quot;8R5RLL6LbL4LL5bL&quot; &quot;ABCDEFGHITe7410z?&quot;  {- 39 -}
+    test &quot;6LR2R1LR5LRLRL484L63&quot; &quot;ABCDEFGHITe741yxw?&quot;         {- 40 -}
+
+  
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[TAPLのML実装をRustでやってみるシリーズ「4章 算術式のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみます。 まずは4章の算術式です。書籍でのtype termが保持するinfo…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみます。&lt;/p&gt;
 &lt;p&gt;まずは4章の算術式です。書籍でのtype termが保持するinfoは、ソースからパージングするわけではないので略します。いらなそうなletは省きました(OCamlでの必要性は不明)。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;#![feature(box_patterns)]
 #![feature(box_syntax)]
@@ -73,21 +195,7 @@ fn main() {
 &lt;li&gt;もし完璧に適切に使いわけられないならば、それはコンパイルが通らないことを意味する。やりとげてみると、目から鱗の自然な形なのだが、最初わからないとつらい。根性しかない。&lt;/li&gt;
 &lt;li&gt;今回の場合、match式の背後にある「暗黙の代入」、すなわちマッチ対象から各パターン、ガード、枝の本体に分配されるための代入が、それぞれムーブセマンティクスなのか、ownershipをとらない参照(&amp;#x26;mutではない&amp;#x26;)なのか、boxなのかrefなのかbox refなのか、そのすべてが正しく的確に指定されている必要がある。matchが展開された結果における暗黙の代入の様子を想像する力が問われる。どっかにドキュメントありますかね…。&lt;/li&gt;
 &lt;li&gt;Rustにおけるデータ管理は、「値」が基本になる、というのはたぶん間違いない。しかし、リアルワールドでは「値だけ」でやっていくことはできない。borrwingとclone()を適宜組合せる必要がある。&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[【React+TypeScript】Function Componentで省略可能propsの省略した場合の値を型安全に指定する]]></title><description><![CDATA[https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521 こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。 リンク先から引用。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&quot;&gt;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。&lt;/p&gt;
-&lt;p&gt;リンク先から引用。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;const MyComponent = (props: { name: string, telephone: string }) =&gt; {
-  ...
-}
-
-MyComponent.defaultProps = { telephone: &quot;222-333-4444&quot; }
-
-// Works - good
-const test = &amp;#x3C;MyComponent name=&quot;Hulk Hogan&quot; /&gt;
-
-// Doesn&apos;t work - missing name, good
-const test = &amp;#x3C;MyComponent /&gt;
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[TaPLのML実装をRustでやってみるシリーズ「7章 ラムダ計算のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみるシリーズ、「7章のラムダ計算のML実装」です。…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/161f3c943faf35c6aefc/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/161f3c943faf35c6aefc/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみるシリーズ、「7章のラムダ計算のML実装」です。&lt;a href=&quot;http://qiita.com/uehaj/items/1ac71855d05132d54eb8&quot;&gt;4章の&lt;/a&gt;に比べるといきなり難易度が上がります。全体からしたら序の口でしょうが。&lt;/p&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[TaPLのML実装をRustでやってみるシリーズ「7章 ラムダ計算のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみるシリーズ、「7章のラムダ計算のML実装」です。…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/161f3c943faf35c6aefc/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/161f3c943faf35c6aefc/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみるシリーズ、「7章のラムダ計算のML実装」です。&lt;a href=&quot;http://qiita.com/uehaj/items/1ac71855d05132d54eb8&quot;&gt;4章の&lt;/a&gt;に比べるといきなり難易度が上がります。全体からしたら序の口でしょうが。&lt;/p&gt;
 &lt;h1&gt;説明&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;unstableなゲート化された機能&lt;a href=&quot;https://doc.rust-lang.org/book/box-syntax-and-patterns.html&quot;&gt;box_patterns&lt;/a&gt;を1箇所で使用しているので、Rust 1.0 betaではコンパイルできず、unstable機能がerrorにならないnightly版でしかコンパイルできません。趣旨からして、おそらく1.0 release版でも実行できないでしょう。でもこれを使わずに実装することができなかったのでやむなく。(&lt;a href=&quot;https://github.com/rust-lang/rfcs/blob/master/text/0469-feature-gate-box-patterns.md&quot;&gt;参考&lt;/a&gt;)&lt;/li&gt;
@@ -584,326 +692,7 @@ A: Gatsby can be used to build fully dynamic sites, which surprises some people 
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[npmのモジュールバージョン指定におけるチルダ(~)とキャレット(^)の違いについての直感的な理解]]></title><description><![CDATA[package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。 記法 種別 意味 問題点など ^x.y.z…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&quot;left&quot;&gt;記法&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;種別&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;意味&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;問題点など&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;^x.y.z&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;キャレット表記&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;&lt;a href=&quot;http://semver.org/lang/ja/&quot;&gt;セマンティックバージョニング&lt;/a&gt;に従う。つまり、メジャーバージョンxを指定し、マイナーバージョンyの上昇、パッチバージョンzの上昇は互換性があるはずだと信じて、「x.{y以上}.{yが同じならz以上、yが上昇していれば任意} 」にあてはまる最新のものを使う。&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;開発時点と、ソース共有を経ての再ビルド(npm install)時の間で、NPMリポジトリ上の対象パッケージのバージョンが上がっている場合、より新しいものが使われることになる可能性があるが、セマンティックバージョニングの仕様に厳密に従わないパッケージは世の中に結構あるのではまり易い。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;~x.y.z&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;チルダ表記&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;セマンティックバージョニングにおける「マイナーバージョンが上がっても互換性が保たれるはずだ」という建前を信じないが、パッチバージョン上昇だったら互換性があるだろうとは信じて、「x.y.{z以上}」にあてはまるものを使う。&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;キャレット表記に比べて、上記の可能性がパッチバージョンのみなので少ない。とはいえ、はまるときははまるだろう。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;x.y.z&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;固定&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;指定したバージョン「x.y.z」に厳密にあてはまるものを使う。&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;開発時と異なるバージョンが使用される問題は回避できるが、たとえばセキュリテイ問題があってそのバージョンのNPMがリポジトリから削除された場合に(互換性のある後継バージョンがあるのに)ビルド不可能になったり、許容できるバージョン上昇を指定できないなど、セマンティックバージョンのメリットを全く享受できない。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;いずれも問題があるので、^なり~で指定した上で、&lt;a href=&quot;https://docs.npmjs.com/files/package-lock.json&quot;&gt;package-lock.json&lt;/a&gt;なり&lt;a href=&quot;https://yarnpkg.com/lang/en/docs/yarn-lock/&quot;&gt;yarn.lock&lt;/a&gt;を併用するのが正しい(それぞれNPM5、yarnのデフォルト動作)。&lt;/p&gt;
-&lt;p&gt;これらのロックファイルを使うのは、セマンティックバージョニングの建前と本音を使いわけることである。つまり、^~をつかって「このバージョンの範囲なら、互換性に問題ないはずだ」という希望と理想をpackage.jsonに記す。それはその上で、「実際にはこのバージョン使ってビルドしましたよ、動作保証するのはこっちなんで、こちらをお使い下さいね、げっひっひ」とlockファイルを裏で提供する。&lt;/p&gt;
-&lt;p&gt;左端の桁が0であったり、3桁以外の場合を含めては&lt;a href=&quot;http://qiita.com/sotarok/items/4ebd4cfedab186355867&quot;&gt;こちら&lt;/a&gt;の記事などを参照のこと。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[スタンドアローンGORMをGroovyスクリプトからシュっと利用する]]></title><description><![CDATA[G* Advent Calendar 2017 20日目の記事です。 GrailsのO/Rマッピングライブラリである「GORM」は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。 非WebアプリやGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;G* Advent Calendar 2017 20日目の記事です。&lt;/p&gt;
-&lt;p&gt;Grailsの&lt;a href=&quot;http://gorm.grails.org/latest/&quot;&gt;O/Rマッピングライブラリである「GORM」&lt;/a&gt;は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。&lt;/p&gt;
-&lt;p&gt;非WebアプリやGrails以外の他のフレームワークから高機能なORMとして使うことも可能ですし、Grailsでのシステム開発の一部として、バッチやシェルスクリプトやsshでキックしたいとか、シェルアカウントの管理者権限者だけがデータベースにアクセスしたいときには、スタンドアローンGORMが有用なケースがあります。&lt;/p&gt;
-&lt;p&gt;というのも、そういうケースでは以下のような選択肢があるにはあるのですが、いずれも固有の課題を抱えているからです。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;http://docs.grails.org/latest/guide/commandLine.html#creatingCustomScripts&quot;&gt;grails scripts&lt;/a&gt;としてGrailsサービスやGrailsドメインクラスを呼び出す処理などを記述し、Grailsのプロジェクトフォルダ(GRAILS_PROJ/scriptsを含む)に格納して、grailsコマンドで起動。
-問題は、プロジェクトソースコードを運用環境に展開しておく必要があること。&lt;/li&gt;
-&lt;li&gt;DB処理をWeb APIとして公開して、それを叩くクライアントを開発する。
-転送速度がネックになったり、ポートを公開することでセキュリティの問題になるかもしれない。&lt;/li&gt;
-&lt;li&gt;Service層をGrailsの&lt;a href=&quot;https://grails.org/plugin/remoting&quot;&gt;Remoting Plugin&lt;/a&gt;を使って公開する。
-問題は同上。&lt;/li&gt;
-&lt;li&gt;SQLを叩く別プログラムを開発する(Groovy SQL, ..)。
-この場合の問題は、GrailsのドメインクラスからDDL生成されたデータベースに対して、生SQLを書くのはかったるいだけではなく、ドメインクラスの制約(constraint)の処理を別途しなければならないということ。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;それぞれのケースで示した問題が許容できないとき、スタンドアローンGORMが有用です。&lt;/p&gt;
-&lt;p&gt;さて、具体的な使用方法としては、Spring Bootのアプリケーションから呼び出すこともできるでしょう。
-本記事では、もっとストレートに素のGroovyスクリプトからGORMを呼び出す例を紹介します。&lt;/p&gt;
-&lt;h1&gt;方法&lt;/h1&gt;
-&lt;p&gt;たとえば、こんな感じでGroovyスクリプトを書いて、&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;@Grab(&apos;org.grails:grails-datastore-gorm-hibernate5:6.1.0.RELEASE&apos;)
-@GrabExclude(&apos;javax.transaction:jta&apos;)
-@Grab(&apos;com.h2database:h2:1.4.192&apos;)
-@Grab(&apos;org.apache.tomcat:tomcat-jdbc:8.5.0&apos;)
-@Grab(&apos;org.slf4j:slf4j-log4j12&apos;)
-import java.lang.String
-import org.grails.orm.hibernate.HibernateDatastore
-import grails.gorm.annotation.Entity
-
-@Entity
-class Book {
-    String title
-    static hasMany = [authors: Author]
-    String toString() {&quot;$id: $title&quot;}
-}
-
-@Entity
-class Author {
-    String name
-    static hasMany = [books: Book]
-    static belongsTo = Book
-    String toString() {&quot;$id: $name&quot;}
-}
-
-def hibernateDatastore = new HibernateDatastore([
-        &apos;hibernate.hbm2ddl.auto&apos;: &apos;create-drop&apos;,
-        &apos;dataSource.driverClassName&apos;: &apos;org.h2.Driver&apos;,
-        &apos;dataSource.url&apos;: &apos;jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE&apos;,
-        &apos;dataSource.username&apos;: &apos;sa&apos;,
-        &apos;dataSource.password&apos;: &apos;&apos;,
-    ],
-    Author)
-
-Author.withTransaction {
-    Author a = new Author(name:&apos;上原 潤二&apos;);
-    Book b1 = new Book(title: &apos;プログラミングGROOVY&apos;).addToAuthors(a).save()
-    Book b2 = new Book(title: &apos;Grails徹底入門&apos;).addToAuthors(a).save()
-    println Book.findByTitleLike(&apos;G%&apos;)
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;GroovyおよびJDKがインストールされていれば、以下で実行できます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&gt; groovy groovyスクリプトファイル名
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;GroovyやJDK以外の何かを事前ダウンロードしたりインストールしたりフォルダ構成を考えたりコンパイルしたりビルドしたりビルドスクリプトを書いたりデプロイしたりパッケージングしたりが一切不要なのが利点です✌。&lt;/p&gt;
-&lt;p&gt;なお、上記では@Entityでドメインクラスを定義していますが、データベースがGrailsアプリケーションの一部であるなら、Grailsアプリケーション本体のwar(やjar)に含まれるドメインクラスのクラスファイルのjarをクラスパスに含めれば別に書かなくても利用可能です(多分)。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[第12回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/1de39df381dfeee305ab&quot;&gt;第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」&lt;/a&gt;を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-frege:turtle.fr&quot;&gt;package sample.Turtle where
-
-type Position = Char
-type Direction = Char
-type Command = Char
-
-pure native elemIndex indexOf :: String -&gt; Int -&gt; Int
-
-ewData :: String
-ewData = &quot;?&quot;++packed [&apos;A&apos;..&apos;K&apos;]++&quot;?&quot;++packed [&apos;L&apos;..&apos;V&apos;]++&quot;?&quot;++packed [&apos;W&apos;..&apos;Z&apos;]++packed [&apos;a&apos;..&apos;g&apos;]++&quot;?&quot;
-         ++&quot;?hij?klm?nop?qrs?tuv?wxy?z01?234?567?&quot;
-
-nsData :: String
-nsData = &quot;?&quot;++&quot;ALWhknqtwz25&quot;++&quot;?&quot;++&quot;BMXilorux036&quot;++&quot;?&quot;++&quot;CNYjmpsvy147&quot;
-         ++ &quot;?&quot; ++&quot;DOZ&quot; ++ &quot;?&quot; ++ &quot;EPa&quot; ++ &quot;?&quot; ++ &quot;FQb&quot; ++ &quot;?&quot; ++ &quot;GRc&quot; ++ &quot;?&quot; ++ &quot;HSd&quot;
-         ++ &quot;?&quot; ++ &quot;ITe&quot; ++ &quot;?&quot; ++ &quot;JUf&quot; ++ &quot;?&quot; ++ &quot;KVg&quot; ++ &quot;?&quot;
-
-moveForward :: (Position, Direction, [Char]) -&gt; Int -&gt; (Position, Direction, [Char])
-moveForward (pos, dir, hist) 0 = (pos, dir, hist)
-moveForward (&apos;7&apos;, &apos;S&apos;, hist) n = moveForward (&apos;e&apos;, &apos;N&apos;, hist++[&apos;e&apos;]) (n-1)
-moveForward (&apos;6&apos;, &apos;S&apos;, hist) n = moveForward (&apos;f&apos;, &apos;N&apos;, hist++[&apos;f&apos;]) (n-1)
-moveForward (&apos;5&apos;, &apos;S&apos;, hist) n = moveForward (&apos;g&apos;, &apos;N&apos;, hist++[&apos;g&apos;]) (n-1)
-moveForward (&apos;e&apos;, &apos;S&apos;, hist) n = moveForward (&apos;7&apos;, &apos;N&apos;, hist++[&apos;7&apos;]) (n-1)
-moveForward (&apos;f&apos;, &apos;S&apos;, hist) n = moveForward (&apos;6&apos;, &apos;N&apos;, hist++[&apos;6&apos;]) (n-1)
-moveForward (&apos;g&apos;, &apos;S&apos;, hist) n = moveForward (&apos;5&apos;, &apos;N&apos;, hist++[&apos;5&apos;]) (n-1)
-moveForward (pos, dir, hist) n = moveForward nextState (n-1)
-    where
-          nextState :: (Char, Char, [Char])
-          nextState = (nextPos, dir, hist++(nextPos:[]))
-          nextPos :: Char
-          nextPos = case dir of
-                      &apos;N&apos; -&gt; nextPosOf pos nsData (subtract 1)
-                      &apos;W&apos; -&gt; nextPosOf pos ewData (subtract 1)
-                      &apos;S&apos; -&gt; nextPosOf pos nsData (+1)
-                      &apos;E&apos; -&gt; nextPosOf pos ewData (+1)
-          nextPosOf :: Char -&gt; String -&gt; (Int -&gt; Int) -&gt; Char
-          nextPosOf c map f = let i=map `elemIndex` (ord c) in if (i/=0) then ((unpacked map) !! (f i)) else &apos;?&apos;
-
-turnDir :: Direction -&gt; String -&gt; Position -&gt; [Char] -&gt; State (Position, Direction, [Char]) ()
-turnDir dir dirs pos hist = State.put (pos, (let x=(dirs `elemIndex` (ord dir)) in ((unpacked dirs) !! (x+1))), hist)
-
-oneStep :: Command -&gt; State (Position, Direction, [Char]) ()
-oneStep ch = do
-  (pos, dir, hist) &amp;#x3C;- State.get
-  case ch of
-    &apos;L&apos; -&gt; turnDir dir &quot;ENWSE&quot; pos hist
-    &apos;R&apos; -&gt; turnDir dir &quot;ESWNE&quot; pos hist
-    _
-          | ch `elem` [&apos;1&apos;..&apos;9&apos;] -&gt; State.put (moveForward (pos, dir, hist) (ord ch-ord &apos;0&apos;))
-          | ch `elem` [&apos;a&apos;..&apos;f&apos;] -&gt; State.put (moveForward (pos, dir, hist) ((ord ch-ord &apos;a&apos;)+10))
-
-solve :: [Command] -&gt; [Position]
-solve cmd = reduce hist
-        where (_,_,hist) = (let (v,s) = State.run (mapM_ oneStep cmd) initialState in s)
-              reduce [] = []
-              reduce (xs:&apos;?&apos;:_) = xs:(unpacked &quot;?&quot;)
-              reduce (x:xs) = x:(reduce xs)
-              initialState = (&apos;A&apos;,&apos;E&apos;,(unpacked &quot;A&quot;))
-
-test cmd expected = do
-    let result = packed $ solve (unpacked cmd)
-    println $ result == expected
-
-main args = do
-    test &quot;2RcL3LL22&quot; &quot;ABCNYjmpsvy147edcbcdef&quot;  {- 0 -}
-    test &quot;L3R4L5RR5R3L5&quot; &quot;A?&quot;  {- 1 -}
-    test &quot;2ReLLe&quot; &quot;ABCNYjmpsvy147eTITe741yvspmjYNC&quot;  {- 2 -}
-    test &quot;1ReRRe&quot; &quot;ABMXilorux036fUJUf630xuroliXMB&quot;  {- 3 -}
-    test &quot;ReRRe&quot; &quot;ALWhknqtwz25gVKVg52zwtqnkhWLA&quot;  {- 4 -}
-    test &quot;f&quot; &quot;ABCDEFGHIJK?&quot;  {- 5 -}
-    test &quot;Rf&quot; &quot;ALWhknqtwz25gVK?&quot;  {- 6 -}
-    test &quot;1Rf&quot; &quot;ABMXilorux036fUJ?&quot;  {- 7 -}
-    test &quot;2Rf&quot; &quot;ABCNYjmpsvy147eTI?&quot;  {- 8 -}
-    test &quot;aR1RaL1LaR1R2L1L2&quot; &quot;ABCDEFGHIJKVUTSRQPONMLWXYZabcdefg567432&quot;  {- 9 -}
-    test &quot;2R1R2L1L2R1R2L1L2R1R2L1L2R1R2L1L2&quot; &quot;ABCNMLWXYjihklmponqrsvutwxy&quot;  {- 10 -}
-    test &quot;2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ABCNYjmlknqtwxy147efgVK?&quot;  {- 11 -}
-    test &quot;R1L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALMNYjmponqtwz0147eTUVK?&quot;  {- 12 -}
-    test &quot;R2L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALWXYjmpsrqtwz2347eTIJK?&quot;  {- 13 -}
-    test &quot;R3L2R4R2L4L2R4R2L4L2R4R2L4L2&quot; &quot;ALWhijmpsvutwz2567eTI?&quot;  {- 14 -}
-    test &quot;R5L2L5L1LaR1L4L5&quot; &quot;ALWhknopmjYNCBMXilorux0325gVKJIHGF&quot;  {- 15 -}
-    test &quot;1R2L4L2R4R2L4L2R4&quot; &quot;ABMXYZabQFGHIJUfg?&quot;  {- 16 -}
-    test &quot;2R2L4L2R4R2L4L2R4&quot; &quot;ABCNYZabcRGHIJKVg?&quot;  {- 17 -}
-    test &quot;3R2L4L2R4R2L4L2R4&quot; &quot;ABCDOZabcdSHIJK?&quot;  {- 18 -}
-    test &quot;4R2L4L2R4R2L4L2R4&quot; &quot;ABCDEPabcdeTIJK?&quot;  {- 19 -}
-    test &quot;5R2L4L2R4R2L4L2R4&quot; &quot;ABCDEFQbcdefUJK?&quot;  {- 20 -}
-    test &quot;LLL1RRR1LLL1RRR2R1&quot; &quot;ALMXYZ?&quot;  {- 21 -}
-    test &quot;R3RRR3&quot; &quot;ALWhij?&quot;  {- 22 -}
-    test &quot;1LLL4RRR1LR1RL1&quot; &quot;ABMXilm?&quot;  {- 23 -}
-    test &quot;R2L1R2L1R3R4&quot; &quot;ALWXilmpsvut?&quot;  {- 24 -}
-    test &quot;7R4f47LLLc6R9L&quot; &quot;ABCDEFGHSd?&quot;  {- 25 -}
-    test &quot;5RR868L8448LL4R6&quot; &quot;ABCDEFEDCBA?&quot;  {- 26 -}
-    test &quot;42Rd1RLLa7L5&quot; &quot;ABCDEFGRc?&quot;  {- 27 -}
-    test &quot;RRLL6RLR1L5d12LaLRRL529L&quot; &quot;ABCDEFGRSTUV?&quot;  {- 28 -}
-    test &quot;RLR7L6LL1LRRRcRL52R&quot; &quot;ALWhknqtuv?&quot;  {- 29 -}
-    test &quot;1RLR8RLR1R437L99636R&quot; &quot;ABMXiloruxwtqnkhWLA?&quot;  {- 30 -}
-    test &quot;LLL2L3La9Le5LRR&quot; &quot;ALWXYZOD?&quot;  {- 31 -}
-    test &quot;R1LcRR491&quot; &quot;ALMNOPQRSTUV?&quot;  {- 32 -}
-    test &quot;R8L1R1R512L8RLLReRf&quot; &quot;ALWhknqtwx0z?&quot;  {- 33 -}
-    test &quot;1RcL8f1L29a5&quot; &quot;ABMXilorux036fedcbaZYXW?&quot;  {- 34 -}
-    test &quot;R822LeL46LL39LL&quot; &quot;ALWhknqtwz25gfedcbaZYXW?&quot;  {- 35 -}
-    test &quot;9R3L5LRRLb5R3L7cLLLR4L&quot; &quot;ABCDEFGHIJUf65?&quot;  {- 36 -}
-    test &quot;7LLRRR2R3R69Lf76eR2L&quot; &quot;ABCDEFGHSdcbaPE?&quot;  {- 37 -}
-    test &quot;8RRRLL3Le&quot; &quot;ABCDEFGHITe765?&quot;  {- 38 -}
-    test &quot;8R5RLL6LbL4LL5bL&quot; &quot;ABCDEFGHITe7410z?&quot;  {- 39 -}
-    test &quot;6LR2R1LR5LRLRL484L63&quot; &quot;ABCDEFGHITe741yxw?&quot;         {- 40 -}
-
-  
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第14回オフラインリアルタイムどう書くの参考問題をHaskellで解く]]></title><description><![CDATA[第14回 オフラインリアルタイムどう書くの参考問題「眠れるモンスターを狩る」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/48cb682cc3441f1066a3/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/48cb682cc3441f1066a3/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/0597bd3af481e5834ae1&quot;&gt;第14回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord14linedung/&quot;&gt;眠れるモンスターを狩る&lt;/a&gt;」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-haskell:monster.hs&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord14linedung/
-import Control.Monad
-import Control.Monad.State
-    
-data Monster = B|D|F|H|J|L deriving (Eq, Show)
-data Arm = A|C|E|G|I|K deriving (Eq, Show)
-
-removeOne e xs
-    | after == [] = before
-    | otherwise = before ++ tail(after)
-    where
-      before = takeWhile (\t-&gt; t /= e) xs
-      after = dropWhile (\t-&gt; t /= e) xs
-
-step (ms, as, n)
-    | A `elem` as &amp;#x26;&amp;#x26; B `elem` ms = (True, (removeOne B ms, C:as, n+1))
-    | C `elem` as &amp;#x26;&amp;#x26; D `elem` ms = (True, (removeOne D ms, E:as, n+1))
-    | E `elem` as &amp;#x26;&amp;#x26; F `elem` ms = (True, (removeOne F ms, G:as, n+1))
-    | G `elem` as &amp;#x26;&amp;#x26; H `elem` ms = (True, (removeOne H ms, I:as, n+1))
-    | I `elem` as &amp;#x26;&amp;#x26; J `elem` ms = (True, (removeOne J ms, K:as, n+1))
-    | K `elem` as &amp;#x26;&amp;#x26; L `elem` ms = (True, (removeOne L ms, A:as, n+1))
-    | otherwise = (False, (ms, as, n))
-
-next :: State ([Monster],[Arm],Int) Bool
-next = state $ \(ms, as, n) -&gt; step (ms, as, n)
-
-toMonster :: [Monster] -&gt; Char -&gt; [Monster]
-toMonster xs ch = case ch of
-                    &apos;B&apos; -&gt; B:xs
-                    &apos;D&apos; -&gt; D:xs
-                    &apos;F&apos; -&gt; F:xs
-                    &apos;H&apos; -&gt; H:xs
-                    &apos;J&apos; -&gt; J:xs
-                    &apos;L&apos; -&gt; L:xs
-                    _ -&gt; xs
-
-toArm :: [Arm] -&gt; Char -&gt; [Arm]
-toArm xs ch = case ch of
-                &apos;a&apos; -&gt; A:xs
-                &apos;c&apos; -&gt; C:xs
-                &apos;e&apos; -&gt; E:xs
-                &apos;g&apos; -&gt; G:xs
-                &apos;i&apos; -&gt; I:xs
-                &apos;k&apos; -&gt; K:xs
-                _ -&gt; xs
-
-toState :: [Char] -&gt; ([Monster], [Arm], Int)
-toState str = (foldl (toMonster) [] str, foldl (toArm) [] str, 0)
-
-solve :: State ([Monster], [Arm], Int) ()
-solve = do
-  result &amp;#x3C;- next
-  if (result == False) then return () else solve
-
-solve&apos; :: [Char] -&gt; ([Monster], [Arm], Int)
-solve&apos; str = do
-  execState solve (toState str)
-   
-test :: [Char] -&gt; String -&gt; Bool
-test str expected = do
-  let (_, _, n) = solve&apos; str
-  n == read expected
-
-main :: IO ()
-main = do
-  print $ test &quot;gLDLBgBgHDaD&quot; &quot;6&quot; {-0-}
-  print $ test &quot;DBcDLaLgDBH&quot; &quot;6&quot; {-1-}
-  print $ test &quot;JJca&quot; &quot;0&quot; {-2-}
-  print $ test &quot;FJDLBH&quot; &quot;0&quot; {-3-}
-  print $ test &quot;HJBLFDg&quot; &quot;6&quot; {-4-}
-  print $ test &quot;HBaDLFJ&quot; &quot;6&quot; {-5-}
-  print $ test &quot;DJaHLB&quot; &quot;2&quot; {-6-}
-  print $ test &quot;gDLHJF&quot; &quot;3&quot; {-7-}
-  print $ test &quot;cJFgLHD&quot; &quot;5&quot; {-8-}
-  print $ test &quot;FFBJaJJ&quot; &quot;1&quot; {-9-}
-  print $ test &quot;FJeJFBJ&quot; &quot;2&quot; {-10-}
-  print $ test &quot;iJFFJJB&quot; &quot;3&quot; {-11-}
-  print $ test &quot;JBJiLFJF&quot; &quot;5&quot; {-12-}
-  print $ test &quot;JDiFLFBJJ&quot; &quot;8&quot; {-13-}
-  print $ test &quot;BDFDFFDFFLLFFJFDBFDFFFFDDFaDBFFB&quot; &quot;28&quot; {-14-}
-  print $ test &quot;DDFBFcBDFFFFFFLBFDFFBFLFDFDJDFDF&quot; &quot;24&quot; {-15-}
-  print $ test &quot;FDLBFDDBFFFeFFFFFDFBLDDFDDFBFFJF&quot; &quot;16&quot; {-16-}
-  print $ test &quot;FDBFFLFDFFDBBDFFBJDLFgDFFFDFFDFF&quot; &quot;0&quot; {-17-}
-  print $ test &quot;FDiFLDFFFFBDDJDDBFBFDFFFBFFDFLFF&quot; &quot;31&quot; {-18-}
-  print $ test &quot;FDFDJBLBLBFFDDFFFDFFFFFDDFBkFDFF&quot; &quot;30&quot; {-19-}
-  print $ test &quot;HBkFFFFHBLH&quot; &quot;3&quot; {-20-}
-  print $ test &quot;FBHHFFFHLaB&quot; &quot;2&quot; {-21-}
-  print $ test &quot;LFHFBBcHFHF&quot; &quot;0&quot; {-22-}
-  print $ test &quot;LFBHFFeFHBH&quot; &quot;7&quot; {-23-}
-  print $ test &quot;LgFHHHBFBFF&quot; &quot;3&quot; {-24-}
-  print $ test &quot;FFiFHBHLBFH&quot; &quot;0&quot; {-25-}
-  print $ test &quot;BFHHFFHBeFLk&quot; &quot;10&quot; {-26-}
-  print $ test &quot;FHFaBBHFHLFg&quot; &quot;5&quot; {-27-}
-  print $ test &quot;FFgacaFg&quot; &quot;0&quot; {-28-}
-  print $ test &quot;JHDaDcBJiiHccBHDBDH&quot; &quot;9&quot; {-29-}
-  print $ test &quot;FHJJLckFckFJHDFF&quot; &quot;12&quot; {-30-}
-  print $ test &quot;DeDHJHDFHJBLHDLLDHJLBDD&quot; &quot;22&quot; {-31-}
-  print $ test &quot;gJLLLJgJgJLJL&quot; &quot;0&quot; {-32-}
-  print $ test &quot;DaaaDDD&quot; &quot;0&quot; {-33-}
-  print $ test &quot;HFeJFHiBiiBJeJBBFFB&quot; &quot;9&quot; {-34-}
-  print $ test &quot;FJFFJDBHBHaLJBHJHDLHkLLLFFFgJgHJLHkJkB&quot; &quot;32&quot; {-35-}
-  print $ test &quot;giFLBiBJLLJgHBFJigJJJBLHFLDLL&quot; &quot;23&quot; {-36-}
-  print $ test &quot;cgkLJcLJJJJgJc&quot; &quot;2&quot; {-37-}
-  print $ test &quot;LDFHJHcFBDBLJBLFLcFJcDFBL&quot; &quot;22&quot; {-38-}
-  print $ test &quot;JJHHHkHJkHLJk&quot; &quot;1&quot; {-39-}
-  print $ test &quot;kHHBBaBgHagHgaHBBB&quot; &quot;11&quot; {-40-}
-  print $ test &quot;HDBFFDHHHDFLDcHHLFDcJD&quot; &quot;20&quot; {-41-}
-  print $ test &quot;HFFFHeFFee&quot; &quot;7&quot; {-42-}
-  print $ test &quot;gLLDHgDLgFL&quot; &quot;1&quot; {-43-}
-  print $ test &quot;JJJBBaBBHBBHaLBHJ&quot; &quot;7&quot; {-44-}
-  print $ test &quot;FBFBgJBDBDgF&quot; &quot;0&quot; {-45-}
-  print $ test &quot;LLLLakakLakLL&quot; &quot;7&quot; {-46-}
-  print $ test &quot;HeJHeJe&quot; &quot;0&quot; {-47-}
-  print $ test &quot;LDFLBLLeBLDBBFFBLFBB&quot; &quot;4&quot; {-48-}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第27回 オフラインリアルタイムどう書くの問題「分岐と行き止まり」をRustで解く]]></title><description><![CDATA[オフラインリアルタイムどう書くの過去問題「分岐と行き止まり」を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答はこちら) Rustの感想 Rust…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://yhpg.doorkeeper.jp/&quot;&gt;オフラインリアルタイムどう書く&lt;/a&gt;の&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord27raswi/&quot;&gt;過去問題「分岐と行き止まり」&lt;/a&gt;を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答は&lt;a href=&quot;http://qiita.com/Nabetani/items/23ebddb44f0234e7fb15&quot;&gt;こちら&lt;/a&gt;)&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[第27回 オフラインリアルタイムどう書くの問題「分岐と行き止まり」をRustで解く]]></title><description><![CDATA[オフラインリアルタイムどう書くの過去問題「分岐と行き止まり」を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答はこちら) Rustの感想 Rust…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://yhpg.doorkeeper.jp/&quot;&gt;オフラインリアルタイムどう書く&lt;/a&gt;の&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord27raswi/&quot;&gt;過去問題「分岐と行き止まり」&lt;/a&gt;を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答は&lt;a href=&quot;http://qiita.com/Nabetani/items/23ebddb44f0234e7fb15&quot;&gt;こちら&lt;/a&gt;)&lt;/p&gt;
 &lt;h1&gt;Rustの感想&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Rustは関数型プログラミングには向いてない、と思ったが、勘違いだった。&lt;strong&gt;やればできる&lt;/strong&gt;。&lt;/li&gt;
@@ -1035,7 +824,70 @@ fn main() {
 /*43*/ test( &quot;bdefg&quot;, &quot;24,26&quot; );    
 /*44*/ test( &quot;bdefgi&quot;, &quot;24&quot; );    
 }
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[React-SpringのHooks APIでブラウザアニメーションを基本から極めよう!]]></title><description><![CDATA[🎄メリークリスマスイブ!🎄 この記事は、React-Springというアニメーションのライブラリを紹介する NTTテクノクロス Advent Calendar 2019 の24日目の記事です。23日目は@yuitomoさんの記事、明日25日最終日は@korodroid…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[スタンドアローンGORMをGroovyスクリプトからシュっと利用する]]></title><description><![CDATA[G* Advent Calendar 2017 20日目の記事です。 GrailsのO/Rマッピングライブラリである「GORM」は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。 非WebアプリやGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;G* Advent Calendar 2017 20日目の記事です。&lt;/p&gt;
+&lt;p&gt;Grailsの&lt;a href=&quot;http://gorm.grails.org/latest/&quot;&gt;O/Rマッピングライブラリである「GORM」&lt;/a&gt;は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。&lt;/p&gt;
+&lt;p&gt;非WebアプリやGrails以外の他のフレームワークから高機能なORMとして使うことも可能ですし、Grailsでのシステム開発の一部として、バッチやシェルスクリプトやsshでキックしたいとか、シェルアカウントの管理者権限者だけがデータベースにアクセスしたいときには、スタンドアローンGORMが有用なケースがあります。&lt;/p&gt;
+&lt;p&gt;というのも、そういうケースでは以下のような選択肢があるにはあるのですが、いずれも固有の課題を抱えているからです。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://docs.grails.org/latest/guide/commandLine.html#creatingCustomScripts&quot;&gt;grails scripts&lt;/a&gt;としてGrailsサービスやGrailsドメインクラスを呼び出す処理などを記述し、Grailsのプロジェクトフォルダ(GRAILS_PROJ/scriptsを含む)に格納して、grailsコマンドで起動。
+問題は、プロジェクトソースコードを運用環境に展開しておく必要があること。&lt;/li&gt;
+&lt;li&gt;DB処理をWeb APIとして公開して、それを叩くクライアントを開発する。
+転送速度がネックになったり、ポートを公開することでセキュリティの問題になるかもしれない。&lt;/li&gt;
+&lt;li&gt;Service層をGrailsの&lt;a href=&quot;https://grails.org/plugin/remoting&quot;&gt;Remoting Plugin&lt;/a&gt;を使って公開する。
+問題は同上。&lt;/li&gt;
+&lt;li&gt;SQLを叩く別プログラムを開発する(Groovy SQL, ..)。
+この場合の問題は、GrailsのドメインクラスからDDL生成されたデータベースに対して、生SQLを書くのはかったるいだけではなく、ドメインクラスの制約(constraint)の処理を別途しなければならないということ。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;それぞれのケースで示した問題が許容できないとき、スタンドアローンGORMが有用です。&lt;/p&gt;
+&lt;p&gt;さて、具体的な使用方法としては、Spring Bootのアプリケーションから呼び出すこともできるでしょう。
+本記事では、もっとストレートに素のGroovyスクリプトからGORMを呼び出す例を紹介します。&lt;/p&gt;
+&lt;h1&gt;方法&lt;/h1&gt;
+&lt;p&gt;たとえば、こんな感じでGroovyスクリプトを書いて、&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;@Grab(&apos;org.grails:grails-datastore-gorm-hibernate5:6.1.0.RELEASE&apos;)
+@GrabExclude(&apos;javax.transaction:jta&apos;)
+@Grab(&apos;com.h2database:h2:1.4.192&apos;)
+@Grab(&apos;org.apache.tomcat:tomcat-jdbc:8.5.0&apos;)
+@Grab(&apos;org.slf4j:slf4j-log4j12&apos;)
+import java.lang.String
+import org.grails.orm.hibernate.HibernateDatastore
+import grails.gorm.annotation.Entity
+
+@Entity
+class Book {
+    String title
+    static hasMany = [authors: Author]
+    String toString() {&quot;$id: $title&quot;}
+}
+
+@Entity
+class Author {
+    String name
+    static hasMany = [books: Book]
+    static belongsTo = Book
+    String toString() {&quot;$id: $name&quot;}
+}
+
+def hibernateDatastore = new HibernateDatastore([
+        &apos;hibernate.hbm2ddl.auto&apos;: &apos;create-drop&apos;,
+        &apos;dataSource.driverClassName&apos;: &apos;org.h2.Driver&apos;,
+        &apos;dataSource.url&apos;: &apos;jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE&apos;,
+        &apos;dataSource.username&apos;: &apos;sa&apos;,
+        &apos;dataSource.password&apos;: &apos;&apos;,
+    ],
+    Author)
+
+Author.withTransaction {
+    Author a = new Author(name:&apos;上原 潤二&apos;);
+    Book b1 = new Book(title: &apos;プログラミングGROOVY&apos;).addToAuthors(a).save()
+    Book b2 = new Book(title: &apos;Grails徹底入門&apos;).addToAuthors(a).save()
+    println Book.findByTitleLike(&apos;G%&apos;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;GroovyおよびJDKがインストールされていれば、以下で実行できます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&gt; groovy groovyスクリプトファイル名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;GroovyやJDK以外の何かを事前ダウンロードしたりインストールしたりフォルダ構成を考えたりコンパイルしたりビルドしたりビルドスクリプトを書いたりデプロイしたりパッケージングしたりが一切不要なのが利点です✌。&lt;/p&gt;
+&lt;p&gt;なお、上記では@Entityでドメインクラスを定義していますが、データベースがGrailsアプリケーションの一部であるなら、Grailsアプリケーション本体のwar(やjar)に含まれるドメインクラスのクラスファイルのjarをクラスパスに含めれば別に書かなくても利用可能です(多分)。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[React-SpringのHooks APIでブラウザアニメーションを基本から極めよう!]]></title><description><![CDATA[🎄メリークリスマスイブ!🎄 この記事は、React-Springというアニメーションのライブラリを紹介する NTTテクノクロス Advent Calendar 2019 の24日目の記事です。23日目は@yuitomoさんの記事、明日25日最終日は@korodroid…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th align=&quot;center&quot;&gt;&lt;/th&gt;
@@ -1615,7 +1467,40 @@ export default SampleSpring;
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解く]]></title><description><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/53460a9772f2bfbaa3c1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/53460a9772f2bfbaa3c1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/9810b301648099028bf0&quot;&gt;第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」&lt;/a&gt;を、Haskellで解きました。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[npmのモジュールバージョン指定におけるチルダ(~)とキャレット(^)の違いについての直感的な理解]]></title><description><![CDATA[package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。 記法 種別 意味 問題点など ^x.y.z…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;記法&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;種別&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;意味&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;問題点など&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;^x.y.z&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;キャレット表記&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;a href=&quot;http://semver.org/lang/ja/&quot;&gt;セマンティックバージョニング&lt;/a&gt;に従う。つまり、メジャーバージョンxを指定し、マイナーバージョンyの上昇、パッチバージョンzの上昇は互換性があるはずだと信じて、「x.{y以上}.{yが同じならz以上、yが上昇していれば任意} 」にあてはまる最新のものを使う。&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;開発時点と、ソース共有を経ての再ビルド(npm install)時の間で、NPMリポジトリ上の対象パッケージのバージョンが上がっている場合、より新しいものが使われることになる可能性があるが、セマンティックバージョニングの仕様に厳密に従わないパッケージは世の中に結構あるのではまり易い。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;~x.y.z&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;チルダ表記&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;セマンティックバージョニングにおける「マイナーバージョンが上がっても互換性が保たれるはずだ」という建前を信じないが、パッチバージョン上昇だったら互換性があるだろうとは信じて、「x.y.{z以上}」にあてはまるものを使う。&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;キャレット表記に比べて、上記の可能性がパッチバージョンのみなので少ない。とはいえ、はまるときははまるだろう。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;x.y.z&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;固定&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;指定したバージョン「x.y.z」に厳密にあてはまるものを使う。&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;開発時と異なるバージョンが使用される問題は回避できるが、たとえばセキュリテイ問題があってそのバージョンのNPMがリポジトリから削除された場合に(互換性のある後継バージョンがあるのに)ビルド不可能になったり、許容できるバージョン上昇を指定できないなど、セマンティックバージョンのメリットを全く享受できない。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;いずれも問題があるので、^なり~で指定した上で、&lt;a href=&quot;https://docs.npmjs.com/files/package-lock.json&quot;&gt;package-lock.json&lt;/a&gt;なり&lt;a href=&quot;https://yarnpkg.com/lang/en/docs/yarn-lock/&quot;&gt;yarn.lock&lt;/a&gt;を併用するのが正しい(それぞれNPM5、yarnのデフォルト動作)。&lt;/p&gt;
+&lt;p&gt;これらのロックファイルを使うのは、セマンティックバージョニングの建前と本音を使いわけることである。つまり、^~をつかって「このバージョンの範囲なら、互換性に問題ないはずだ」という希望と理想をpackage.jsonに記す。それはその上で、「実際にはこのバージョン使ってビルドしましたよ、動作保証するのはこっちなんで、こちらをお使い下さいね、げっひっひ」とlockファイルを裏で提供する。&lt;/p&gt;
+&lt;p&gt;左端の桁が0であったり、3桁以外の場合を含めては&lt;a href=&quot;http://qiita.com/sotarok/items/4ebd4cfedab186355867&quot;&gt;こちら&lt;/a&gt;の記事などを参照のこと。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解く]]></title><description><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/53460a9772f2bfbaa3c1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/53460a9772f2bfbaa3c1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/9810b301648099028bf0&quot;&gt;第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」&lt;/a&gt;を、Haskellで解きました。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-haskell:sectors.hs&quot;&gt;import Data.Ratio
 import Data.List
 
@@ -1684,45 +1569,6 @@ main = do
    test [400,308,105,430,203,428,209] [104,210,429,431]     {- 38  -}
    test [200,305,214] [215]     {- 39  -}
    test [214,408,410,407,317,422] [306,316,409,423] {- 40  -}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Node.jsでgetchar]]></title><description><![CDATA[Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。 Promise…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Promiseベース。以下で「〜を返す」は、「〜をPromiseのresolve値とするPromiseを返す」と読みかえてほしい。&lt;/li&gt;
-&lt;li&gt;呼ぶごとに標準入力から1文字ずつ取得したUnicodeのコードポイント値を返す。readlineから得たstringからcharCodeAtしているのでサロゲートペアは別に対処が必要。&lt;/li&gt;
-&lt;li&gt;バッファにデータがなければブロッキングして入力を待つ(stdinがTTYの場合)。&lt;/li&gt;
-&lt;li&gt;行単位のバッファリングは行う。改行キーを押さない限りブロックは解除されない。&lt;/li&gt;
-&lt;li&gt;バッファにデータが存在する限り、バッファから1文字を取り出し文字コードを返す。&lt;/li&gt;
-&lt;li&gt;EOFでnullを返す。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;const readline = require(&apos;readline&apos;);
-const rl  = readline.createInterface(process.stdin);
-let buf = &quot;&quot;;
-
-function getchar() {
-  if (buf.length == 0) {
-    if (process.stdin.AtEndOfStream) {
-      return Promise.resolve(null); // EOF
-    }
-    return new Promise((resolve, reject) =&gt; {
-      rl.once(&apos;line&apos;, (line) =&gt; {
-        buf = buf + line + &quot;\n&quot;;
-        resolve(getchar());
-      });
-    });
-  } else {
-    const result = buf.charCodeAt(0);
-    buf = buf.substring(1);
-    return Promise.resolve(result);
-  }
-}
-
-async function test() {
-  let ch
-  while ((ch = await getchar()) !== null) {
-    console.log(ch);
-  }
-}
-
-test();
 &lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Grails3で、Grails2と同様に設定ファイルを外部化する]]></title><description><![CDATA[Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。 本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5cd1e9a1ea3d451e784e/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5cd1e9a1ea3d451e784e/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。&lt;/p&gt;
 &lt;p&gt;本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails 3設定してみます。&lt;/p&gt;
 &lt;p&gt;やることは、Applicationクラス(grails-app/init/hoge/Application.groovy)に以下のようにアノテーションを付与することだけです。&lt;/p&gt;
@@ -1873,139 +1719,160 @@ main = do
     print $ test &quot;NESEEN&quot; &quot;1531263&quot;  {-- 40 --}
     print $ test &quot;WSW&quot; &quot;1426&quot;  {-- 41 --}
     print $ test &quot;ENEWE&quot; &quot;135656&quot;  {-- 42 --}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第13回オフラインリアルタイムどう書くの問題をFregeで解く]]></title><description><![CDATA[第13回 オフラインリアルタイムどう書くの問題「積み木の水槽」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/60abb9be0dfac0755dcf/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/60abb9be0dfac0755dcf/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://atnd.org/events/41603&quot;&gt;第13回 オフラインリアルタイムどう書く&lt;/a&gt;の問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord13blocktup/&quot;&gt;積み木の水槽&lt;/a&gt;」を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-frege:shortest.fr&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord13blocktup/
-     
-data Cell = Wall | Empty | Water
-derive Eq Cell -- Haskellのdata Cell = ... deriving(Eq)
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Node.jsでgetchar]]></title><description><![CDATA[Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。 Promise…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Promiseベース。以下で「〜を返す」は、「〜をPromiseのresolve値とするPromiseを返す」と読みかえてほしい。&lt;/li&gt;
+&lt;li&gt;呼ぶごとに標準入力から1文字ずつ取得したUnicodeのコードポイント値を返す。readlineから得たstringからcharCodeAtしているのでサロゲートペアは別に対処が必要。&lt;/li&gt;
+&lt;li&gt;バッファにデータがなければブロッキングして入力を待つ(stdinがTTYの場合)。&lt;/li&gt;
+&lt;li&gt;行単位のバッファリングは行う。改行キーを押さない限りブロックは解除されない。&lt;/li&gt;
+&lt;li&gt;バッファにデータが存在する限り、バッファから1文字を取り出し文字コードを返す。&lt;/li&gt;
+&lt;li&gt;EOFでnullを返す。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;const readline = require(&apos;readline&apos;);
+const rl  = readline.createInterface(process.stdin);
+let buf = &quot;&quot;;
 
--- セルを表示する
-instance Show Cell where
-    show Wall = &quot;*&quot;
-    show Empty = &quot; &quot;
-    show Water = &quot;+&quot;
+function getchar() {
+  if (buf.length == 0) {
+    if (process.stdin.AtEndOfStream) {
+      return Promise.resolve(null); // EOF
+    }
+    return new Promise((resolve, reject) =&gt; {
+      rl.once(&apos;line&apos;, (line) =&gt; {
+        buf = buf + line + &quot;\n&quot;;
+        resolve(getchar());
+      });
+    });
+  } else {
+    const result = buf.charCodeAt(0);
+    buf = buf.substring(1);
+    return Promise.resolve(result);
+  }
+}
 
--- 盤面を表示する
-data Matrix = Matrix [ [ Cell ] ] Int Int
-derive Eq Matrix
-instance Show Matrix where
-    show (Matrix xs w h) = &quot;w=&quot;++show w++&quot;,h=&quot;++show h++&quot;\n&quot;++ unlines (map showLine xs)
-        where
-          showLine :: [Cell] -&gt; String
-          showLine line = &quot;[&quot; ++ foldl (++) &quot;&quot; (map show line) ++ &quot;]&quot;
+async function test() {
+  let ch
+  while ((ch = await getchar()) !== null) {
+    console.log(ch);
+  }
+}
 
--- 盤面を生成する
-toMatrix :: String -&gt; Matrix
-toMatrix str =
-    let maxx = length str
-        maxy = maximum $ map (\ch -&gt; ord ch - ord &apos;0&apos;) (unpacked str)
-        makeLine n maxn = replicate n Wall ++ replicate (maxn-n) Empty
-    in Matrix (map (\ch -&gt; makeLine (ord ch - ord &apos;0&apos;) maxy) (unpacked str)) maxx maxy
+test();
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第14回オフラインリアルタイムどう書くの参考問題をHaskellで解く]]></title><description><![CDATA[第14回 オフラインリアルタイムどう書くの参考問題「眠れるモンスターを狩る」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/48cb682cc3441f1066a3/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/48cb682cc3441f1066a3/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/0597bd3af481e5834ae1&quot;&gt;第14回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord14linedung/&quot;&gt;眠れるモンスターを狩る&lt;/a&gt;」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-haskell:monster.hs&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord14linedung/
+import Control.Monad
+import Control.Monad.State
+    
+data Monster = B|D|F|H|J|L deriving (Eq, Show)
+data Arm = A|C|E|G|I|K deriving (Eq, Show)
 
--- 指定した座標(xPos,yPos)のセル内容を取得する
-getCell :: Matrix -&gt; Int -&gt; Int -&gt; Cell
-getCell (Matrix mat w h) xPos yPos
-      | (0 &amp;#x3C;= xPos) &amp;#x26;&amp;#x26; ( xPos &amp;#x3C; w ) &amp;#x26;&amp;#x26; (0 &amp;#x3C;= yPos) &amp;#x26;&amp;#x26; (yPos &amp;#x3C; h) = mat !! xPos !! yPos
-      | otherwise = Empty
-
--- Matrix型の盤面の指定した座標(xPos,yPos)にセル内容cを設定する
-setCell:: Matrix -&gt; Int -&gt; Int -&gt; Cell -&gt; Matrix
-setCell (Matrix mat w h) xPos yPos c
-      | ( xPos &amp;#x3C; w ) &amp;#x26;&amp;#x26; (yPos &amp;#x3C; h) = Matrix (setCell&apos; mat xPos yPos c) w h
-
--- [[Cell]]型の盤面の指定した座標(xPos,yPos)にセル内容cを設定する
-setCell&apos; :: [[Cell]] -&gt; Int -&gt; Int -&gt; Cell -&gt; [[Cell]]
-setCell&apos; (x:xs) xPos yPos c
-    | xPos == 0 = setCellY x yPos c : xs
-    | otherwise = x:setCell&apos; xs (xPos-1) yPos c
-
--- Cellの列の指定した座標(yPos)にセル内容cを設定する
-setCellY :: [Cell] -&gt; Int -&gt; Cell -&gt; [Cell]
-setCellY (x:xs) yPos c
-    | yPos == 0 = c:xs
-    | otherwise = x:setCellY xs (yPos-1) c
-
--- 以下のtmpは、以下が通らなかったための苦肉の策。fregeのバグ?
--- fillWater m0 = foldl (\mat (x,y)-&gt; fillWaterCell mat x y) m0 (cells m0)
-tmp:: Matrix -&gt; (Int, Int) -&gt; Matrix
-tmp mat (x,y) = fillWaterCell mat x y
-
--- 盤面に水を満たす
-fillWater :: Matrix -&gt; Matrix
-fillWater m0 = foldl tmp m0 (cells m0)
-  where
-    cells (Matrix _ width height) = do
-        y &amp;#x3C;- [0.. height-1]
-        x &amp;#x3C;- [0.. width-1]
-        return (x, y)
-
-fillWaterCell mat x y
-    | isKeepWater mat x y &amp;#x26;&amp;#x26; getCell mat x y == Empty = setCell mat x y Water
-    | otherwise = mat
-
--- 指定した座標x,yは水を保持できるか？
-isKeepWater :: Matrix -&gt; Int -&gt; Int -&gt; Bool
-isKeepWater mat x y
-    | hereOK mat x y = true
-    | leftOK mat x y &amp;#x26;&amp;#x26; bottomOK mat x y &amp;#x26;&amp;#x26; rightThroughOK mat x y = true
-    | otherwise = false
+removeOne e xs
+    | after == [] = before
+    | otherwise = before ++ tail(after)
     where
-        ok x = (x == Wall) || (x == Water)
-        hereOK mat x y = ok $ getCell mat x y
-        leftOK mat x y = ok $ getCell mat (x-1) y
-        bottomOK mat x y = ok $ getCell mat x (y-1)
-        rightOK mat x y = ok $ getCell mat (x+1) y
-        rightThroughOK mat x y
-            | bottomOK mat x y &amp;#x26;&amp;#x26; rightOK mat x y = true
-            | bottomOK mat x y &amp;#x26;&amp;#x26; rightThroughOK mat (x+1) y = true
-            | otherwise = false
-           
--- 水の個数を返す
-countAllWater :: Matrix -&gt; Int
-countAllWater (Matrix m _ _) = foldr ((+) . countAllWaterY) 0 m
-    where
-        countAllWaterY [] = 0
-        countAllWaterY (Water:xs) = 1 + countAllWaterY xs
-        countAllWaterY (x:xs) = 0 + countAllWaterY xs
+      before = takeWhile (\t-&gt; t /= e) xs
+      after = dropWhile (\t-&gt; t /= e) xs
 
--- x.atoiはHaskellのread xと等価(xがintとして解釈可能である文字列の場合)。
-test :: String -&gt; String -&gt; Bool
-test dat expected = expected.atoi == (countAllWater $ fillWater (toMatrix dat))
+step (ms, as, n)
+    | A `elem` as &amp;#x26;&amp;#x26; B `elem` ms = (True, (removeOne B ms, C:as, n+1))
+    | C `elem` as &amp;#x26;&amp;#x26; D `elem` ms = (True, (removeOne D ms, E:as, n+1))
+    | E `elem` as &amp;#x26;&amp;#x26; F `elem` ms = (True, (removeOne F ms, G:as, n+1))
+    | G `elem` as &amp;#x26;&amp;#x26; H `elem` ms = (True, (removeOne H ms, I:as, n+1))
+    | I `elem` as &amp;#x26;&amp;#x26; J `elem` ms = (True, (removeOne J ms, K:as, n+1))
+    | K `elem` as &amp;#x26;&amp;#x26; L `elem` ms = (True, (removeOne L ms, A:as, n+1))
+    | otherwise = (False, (ms, as, n))
 
-main :: [String] -&gt; IO ()
-main _ = do
-   println $ test &quot;83141310145169154671122&quot; &quot;24&quot; {-0-}
-   println $ test &quot;923111128&quot; &quot;45&quot; {-1-}
-   println $ test &quot;923101128&quot; &quot;1&quot; {-2-}
-   println $ test &quot;903111128&quot; &quot;9&quot; {-3-}
-   println $ test &quot;3&quot; &quot;0&quot; {-4-}
-   println $ test &quot;31&quot; &quot;0&quot; {-5-}
-   println $ test &quot;412&quot; &quot;1&quot; {-6-}
-   println $ test &quot;3124&quot; &quot;3&quot; {-7-}
-   println $ test &quot;11111&quot; &quot;0&quot; {-8-}
-   println $ test &quot;222111&quot; &quot;0&quot; {-9-}
-   println $ test &quot;335544&quot; &quot;0&quot; {-10-}
-   println $ test &quot;1223455321&quot; &quot;0&quot; {-11-}
-   println $ test &quot;000&quot; &quot;0&quot; {-12-}
-   println $ test &quot;000100020003121&quot; &quot;1&quot; {-13-}
-   println $ test &quot;1213141516171819181716151413121&quot; &quot;56&quot; {-14-}
-   println $ test &quot;712131415161718191817161514131216&quot; &quot;117&quot; {-15-}
-   println $ test &quot;712131405161718191817161514031216&quot; &quot;64&quot; {-16-}
-   println $ test &quot;03205301204342100&quot; &quot;1&quot; {-17-}
-   println $ test &quot;0912830485711120342&quot; &quot;18&quot; {-18-}
-   println $ test &quot;1113241120998943327631001&quot; &quot;20&quot; {-19-}
-   println $ test &quot;7688167781598943035023813337019904732&quot; &quot;41&quot; {-20-}
-   println $ test &quot;2032075902729233234129146823006063388&quot; &quot;79&quot; {-21-}
-   println $ test &quot;8323636570846582397534533&quot; &quot;44&quot; {-22-}
-   println $ test &quot;2142555257761672319599209190604843&quot; &quot;41&quot; {-23-}
-   println $ test &quot;06424633785085474133925235&quot; &quot;51&quot; {-24-}
-   println $ test &quot;503144400846933212134&quot; &quot;21&quot; {-25-}
-   println $ test &quot;1204706243676306476295999864&quot; &quot;21&quot; {-26-}
-   println $ test &quot;050527640248767717738306306596466224&quot; &quot;29&quot; {-27-}
-   println $ test &quot;5926294098216193922825&quot; &quot;65&quot; {-28-}
-   println $ test &quot;655589141599534035&quot; &quot;29&quot; {-29-}
-   println $ test &quot;7411279689677738&quot; &quot;34&quot; {-30-}
-   println $ test &quot;268131111165754619136819109839402&quot; &quot;102&quot; {-31-}
+next :: State ([Monster],[Arm],Int) Bool
+next = state $ \(ms, as, n) -&gt; step (ms, as, n)
+
+toMonster :: [Monster] -&gt; Char -&gt; [Monster]
+toMonster xs ch = case ch of
+                    &apos;B&apos; -&gt; B:xs
+                    &apos;D&apos; -&gt; D:xs
+                    &apos;F&apos; -&gt; F:xs
+                    &apos;H&apos; -&gt; H:xs
+                    &apos;J&apos; -&gt; J:xs
+                    &apos;L&apos; -&gt; L:xs
+                    _ -&gt; xs
+
+toArm :: [Arm] -&gt; Char -&gt; [Arm]
+toArm xs ch = case ch of
+                &apos;a&apos; -&gt; A:xs
+                &apos;c&apos; -&gt; C:xs
+                &apos;e&apos; -&gt; E:xs
+                &apos;g&apos; -&gt; G:xs
+                &apos;i&apos; -&gt; I:xs
+                &apos;k&apos; -&gt; K:xs
+                _ -&gt; xs
+
+toState :: [Char] -&gt; ([Monster], [Arm], Int)
+toState str = (foldl (toMonster) [] str, foldl (toArm) [] str, 0)
+
+solve :: State ([Monster], [Arm], Int) ()
+solve = do
+  result &amp;#x3C;- next
+  if (result == False) then return () else solve
+
+solve&apos; :: [Char] -&gt; ([Monster], [Arm], Int)
+solve&apos; str = do
+  execState solve (toState str)
+   
+test :: [Char] -&gt; String -&gt; Bool
+test str expected = do
+  let (_, _, n) = solve&apos; str
+  n == read expected
+
+main :: IO ()
+main = do
+  print $ test &quot;gLDLBgBgHDaD&quot; &quot;6&quot; {-0-}
+  print $ test &quot;DBcDLaLgDBH&quot; &quot;6&quot; {-1-}
+  print $ test &quot;JJca&quot; &quot;0&quot; {-2-}
+  print $ test &quot;FJDLBH&quot; &quot;0&quot; {-3-}
+  print $ test &quot;HJBLFDg&quot; &quot;6&quot; {-4-}
+  print $ test &quot;HBaDLFJ&quot; &quot;6&quot; {-5-}
+  print $ test &quot;DJaHLB&quot; &quot;2&quot; {-6-}
+  print $ test &quot;gDLHJF&quot; &quot;3&quot; {-7-}
+  print $ test &quot;cJFgLHD&quot; &quot;5&quot; {-8-}
+  print $ test &quot;FFBJaJJ&quot; &quot;1&quot; {-9-}
+  print $ test &quot;FJeJFBJ&quot; &quot;2&quot; {-10-}
+  print $ test &quot;iJFFJJB&quot; &quot;3&quot; {-11-}
+  print $ test &quot;JBJiLFJF&quot; &quot;5&quot; {-12-}
+  print $ test &quot;JDiFLFBJJ&quot; &quot;8&quot; {-13-}
+  print $ test &quot;BDFDFFDFFLLFFJFDBFDFFFFDDFaDBFFB&quot; &quot;28&quot; {-14-}
+  print $ test &quot;DDFBFcBDFFFFFFLBFDFFBFLFDFDJDFDF&quot; &quot;24&quot; {-15-}
+  print $ test &quot;FDLBFDDBFFFeFFFFFDFBLDDFDDFBFFJF&quot; &quot;16&quot; {-16-}
+  print $ test &quot;FDBFFLFDFFDBBDFFBJDLFgDFFFDFFDFF&quot; &quot;0&quot; {-17-}
+  print $ test &quot;FDiFLDFFFFBDDJDDBFBFDFFFBFFDFLFF&quot; &quot;31&quot; {-18-}
+  print $ test &quot;FDFDJBLBLBFFDDFFFDFFFFFDDFBkFDFF&quot; &quot;30&quot; {-19-}
+  print $ test &quot;HBkFFFFHBLH&quot; &quot;3&quot; {-20-}
+  print $ test &quot;FBHHFFFHLaB&quot; &quot;2&quot; {-21-}
+  print $ test &quot;LFHFBBcHFHF&quot; &quot;0&quot; {-22-}
+  print $ test &quot;LFBHFFeFHBH&quot; &quot;7&quot; {-23-}
+  print $ test &quot;LgFHHHBFBFF&quot; &quot;3&quot; {-24-}
+  print $ test &quot;FFiFHBHLBFH&quot; &quot;0&quot; {-25-}
+  print $ test &quot;BFHHFFHBeFLk&quot; &quot;10&quot; {-26-}
+  print $ test &quot;FHFaBBHFHLFg&quot; &quot;5&quot; {-27-}
+  print $ test &quot;FFgacaFg&quot; &quot;0&quot; {-28-}
+  print $ test &quot;JHDaDcBJiiHccBHDBDH&quot; &quot;9&quot; {-29-}
+  print $ test &quot;FHJJLckFckFJHDFF&quot; &quot;12&quot; {-30-}
+  print $ test &quot;DeDHJHDFHJBLHDLLDHJLBDD&quot; &quot;22&quot; {-31-}
+  print $ test &quot;gJLLLJgJgJLJL&quot; &quot;0&quot; {-32-}
+  print $ test &quot;DaaaDDD&quot; &quot;0&quot; {-33-}
+  print $ test &quot;HFeJFHiBiiBJeJBBFFB&quot; &quot;9&quot; {-34-}
+  print $ test &quot;FJFFJDBHBHaLJBHJHDLHkLLLFFFgJgHJLHkJkB&quot; &quot;32&quot; {-35-}
+  print $ test &quot;giFLBiBJLLJgHBFJigJJJBLHFLDLL&quot; &quot;23&quot; {-36-}
+  print $ test &quot;cgkLJcLJJJJgJc&quot; &quot;2&quot; {-37-}
+  print $ test &quot;LDFHJHcFBDBLJBLFLcFJcDFBL&quot; &quot;22&quot; {-38-}
+  print $ test &quot;JJHHHkHJkHLJk&quot; &quot;1&quot; {-39-}
+  print $ test &quot;kHHBBaBgHagHgaHBBB&quot; &quot;11&quot; {-40-}
+  print $ test &quot;HDBFFDHHHDFLDcHHLFDcJD&quot; &quot;20&quot; {-41-}
+  print $ test &quot;HFFFHeFFee&quot; &quot;7&quot; {-42-}
+  print $ test &quot;gLLDHgDLgFL&quot; &quot;1&quot; {-43-}
+  print $ test &quot;JJJBBaBBHBBHaLBHJ&quot; &quot;7&quot; {-44-}
+  print $ test &quot;FBFBgJBDBDgF&quot; &quot;0&quot; {-45-}
+  print $ test &quot;LLLLakakLakLL&quot; &quot;7&quot; {-46-}
+  print $ test &quot;HeJHeJe&quot; &quot;0&quot; {-47-}
+  print $ test &quot;LDFLBLLeBLDBBFFBLFBB&quot; &quot;4&quot; {-48-}
 &lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[WebAssemblyへのコンパイラ言語を簡単に実装]]></title><description><![CDATA[後入りですみませんが、WebAssemblyアドベントカレンダー未投稿のところ埋めさせて頂きます。 本記事では、WebAssemblyをターゲットとするコンパイラ処理系を実装します。 方針 WebAssembly…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5276bd3425d1000e48ba/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5276bd3425d1000e48ba/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;後入りですみませんが、WebAssemblyアドベントカレンダー未投稿のところ埋めさせて頂きます。&lt;/p&gt;
 &lt;p&gt;本記事では、WebAssemblyをターゲットとするコンパイラ処理系を実装します。&lt;/p&gt;
 &lt;h1&gt;方針&lt;/h1&gt;
@@ -2296,7 +2163,140 @@ main(process.argv);
 &lt;a href=&quot;#fnref-2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Node.jsでPEG.jsでBrainf*ck]]></title><description><![CDATA[Node.jsでのBrainf*ckインタプリタ実装。PEG.js使用。
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[第13回オフラインリアルタイムどう書くの問題をFregeで解く]]></title><description><![CDATA[第13回 オフラインリアルタイムどう書くの問題「積み木の水槽」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/60abb9be0dfac0755dcf/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/60abb9be0dfac0755dcf/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://atnd.org/events/41603&quot;&gt;第13回 オフラインリアルタイムどう書く&lt;/a&gt;の問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord13blocktup/&quot;&gt;積み木の水槽&lt;/a&gt;」を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-frege:shortest.fr&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord13blocktup/
+     
+data Cell = Wall | Empty | Water
+derive Eq Cell -- Haskellのdata Cell = ... deriving(Eq)
+
+-- セルを表示する
+instance Show Cell where
+    show Wall = &quot;*&quot;
+    show Empty = &quot; &quot;
+    show Water = &quot;+&quot;
+
+-- 盤面を表示する
+data Matrix = Matrix [ [ Cell ] ] Int Int
+derive Eq Matrix
+instance Show Matrix where
+    show (Matrix xs w h) = &quot;w=&quot;++show w++&quot;,h=&quot;++show h++&quot;\n&quot;++ unlines (map showLine xs)
+        where
+          showLine :: [Cell] -&gt; String
+          showLine line = &quot;[&quot; ++ foldl (++) &quot;&quot; (map show line) ++ &quot;]&quot;
+
+-- 盤面を生成する
+toMatrix :: String -&gt; Matrix
+toMatrix str =
+    let maxx = length str
+        maxy = maximum $ map (\ch -&gt; ord ch - ord &apos;0&apos;) (unpacked str)
+        makeLine n maxn = replicate n Wall ++ replicate (maxn-n) Empty
+    in Matrix (map (\ch -&gt; makeLine (ord ch - ord &apos;0&apos;) maxy) (unpacked str)) maxx maxy
+
+-- 指定した座標(xPos,yPos)のセル内容を取得する
+getCell :: Matrix -&gt; Int -&gt; Int -&gt; Cell
+getCell (Matrix mat w h) xPos yPos
+      | (0 &amp;#x3C;= xPos) &amp;#x26;&amp;#x26; ( xPos &amp;#x3C; w ) &amp;#x26;&amp;#x26; (0 &amp;#x3C;= yPos) &amp;#x26;&amp;#x26; (yPos &amp;#x3C; h) = mat !! xPos !! yPos
+      | otherwise = Empty
+
+-- Matrix型の盤面の指定した座標(xPos,yPos)にセル内容cを設定する
+setCell:: Matrix -&gt; Int -&gt; Int -&gt; Cell -&gt; Matrix
+setCell (Matrix mat w h) xPos yPos c
+      | ( xPos &amp;#x3C; w ) &amp;#x26;&amp;#x26; (yPos &amp;#x3C; h) = Matrix (setCell&apos; mat xPos yPos c) w h
+
+-- [[Cell]]型の盤面の指定した座標(xPos,yPos)にセル内容cを設定する
+setCell&apos; :: [[Cell]] -&gt; Int -&gt; Int -&gt; Cell -&gt; [[Cell]]
+setCell&apos; (x:xs) xPos yPos c
+    | xPos == 0 = setCellY x yPos c : xs
+    | otherwise = x:setCell&apos; xs (xPos-1) yPos c
+
+-- Cellの列の指定した座標(yPos)にセル内容cを設定する
+setCellY :: [Cell] -&gt; Int -&gt; Cell -&gt; [Cell]
+setCellY (x:xs) yPos c
+    | yPos == 0 = c:xs
+    | otherwise = x:setCellY xs (yPos-1) c
+
+-- 以下のtmpは、以下が通らなかったための苦肉の策。fregeのバグ?
+-- fillWater m0 = foldl (\mat (x,y)-&gt; fillWaterCell mat x y) m0 (cells m0)
+tmp:: Matrix -&gt; (Int, Int) -&gt; Matrix
+tmp mat (x,y) = fillWaterCell mat x y
+
+-- 盤面に水を満たす
+fillWater :: Matrix -&gt; Matrix
+fillWater m0 = foldl tmp m0 (cells m0)
+  where
+    cells (Matrix _ width height) = do
+        y &amp;#x3C;- [0.. height-1]
+        x &amp;#x3C;- [0.. width-1]
+        return (x, y)
+
+fillWaterCell mat x y
+    | isKeepWater mat x y &amp;#x26;&amp;#x26; getCell mat x y == Empty = setCell mat x y Water
+    | otherwise = mat
+
+-- 指定した座標x,yは水を保持できるか？
+isKeepWater :: Matrix -&gt; Int -&gt; Int -&gt; Bool
+isKeepWater mat x y
+    | hereOK mat x y = true
+    | leftOK mat x y &amp;#x26;&amp;#x26; bottomOK mat x y &amp;#x26;&amp;#x26; rightThroughOK mat x y = true
+    | otherwise = false
+    where
+        ok x = (x == Wall) || (x == Water)
+        hereOK mat x y = ok $ getCell mat x y
+        leftOK mat x y = ok $ getCell mat (x-1) y
+        bottomOK mat x y = ok $ getCell mat x (y-1)
+        rightOK mat x y = ok $ getCell mat (x+1) y
+        rightThroughOK mat x y
+            | bottomOK mat x y &amp;#x26;&amp;#x26; rightOK mat x y = true
+            | bottomOK mat x y &amp;#x26;&amp;#x26; rightThroughOK mat (x+1) y = true
+            | otherwise = false
+           
+-- 水の個数を返す
+countAllWater :: Matrix -&gt; Int
+countAllWater (Matrix m _ _) = foldr ((+) . countAllWaterY) 0 m
+    where
+        countAllWaterY [] = 0
+        countAllWaterY (Water:xs) = 1 + countAllWaterY xs
+        countAllWaterY (x:xs) = 0 + countAllWaterY xs
+
+-- x.atoiはHaskellのread xと等価(xがintとして解釈可能である文字列の場合)。
+test :: String -&gt; String -&gt; Bool
+test dat expected = expected.atoi == (countAllWater $ fillWater (toMatrix dat))
+
+main :: [String] -&gt; IO ()
+main _ = do
+   println $ test &quot;83141310145169154671122&quot; &quot;24&quot; {-0-}
+   println $ test &quot;923111128&quot; &quot;45&quot; {-1-}
+   println $ test &quot;923101128&quot; &quot;1&quot; {-2-}
+   println $ test &quot;903111128&quot; &quot;9&quot; {-3-}
+   println $ test &quot;3&quot; &quot;0&quot; {-4-}
+   println $ test &quot;31&quot; &quot;0&quot; {-5-}
+   println $ test &quot;412&quot; &quot;1&quot; {-6-}
+   println $ test &quot;3124&quot; &quot;3&quot; {-7-}
+   println $ test &quot;11111&quot; &quot;0&quot; {-8-}
+   println $ test &quot;222111&quot; &quot;0&quot; {-9-}
+   println $ test &quot;335544&quot; &quot;0&quot; {-10-}
+   println $ test &quot;1223455321&quot; &quot;0&quot; {-11-}
+   println $ test &quot;000&quot; &quot;0&quot; {-12-}
+   println $ test &quot;000100020003121&quot; &quot;1&quot; {-13-}
+   println $ test &quot;1213141516171819181716151413121&quot; &quot;56&quot; {-14-}
+   println $ test &quot;712131415161718191817161514131216&quot; &quot;117&quot; {-15-}
+   println $ test &quot;712131405161718191817161514031216&quot; &quot;64&quot; {-16-}
+   println $ test &quot;03205301204342100&quot; &quot;1&quot; {-17-}
+   println $ test &quot;0912830485711120342&quot; &quot;18&quot; {-18-}
+   println $ test &quot;1113241120998943327631001&quot; &quot;20&quot; {-19-}
+   println $ test &quot;7688167781598943035023813337019904732&quot; &quot;41&quot; {-20-}
+   println $ test &quot;2032075902729233234129146823006063388&quot; &quot;79&quot; {-21-}
+   println $ test &quot;8323636570846582397534533&quot; &quot;44&quot; {-22-}
+   println $ test &quot;2142555257761672319599209190604843&quot; &quot;41&quot; {-23-}
+   println $ test &quot;06424633785085474133925235&quot; &quot;51&quot; {-24-}
+   println $ test &quot;503144400846933212134&quot; &quot;21&quot; {-25-}
+   println $ test &quot;1204706243676306476295999864&quot; &quot;21&quot; {-26-}
+   println $ test &quot;050527640248767717738306306596466224&quot; &quot;29&quot; {-27-}
+   println $ test &quot;5926294098216193922825&quot; &quot;65&quot; {-28-}
+   println $ test &quot;655589141599534035&quot; &quot;29&quot; {-29-}
+   println $ test &quot;7411279689677738&quot; &quot;34&quot; {-30-}
+   println $ test &quot;268131111165754619136819109839402&quot; &quot;102&quot; {-31-}
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Node.jsでPEG.jsでBrainf*ck]]></title><description><![CDATA[Node.jsでのBrainf*ckインタプリタ実装。PEG.js使用。
 PEG.jsの勉強に作ってみました。PEG.js便利です。JSに馴染むぞぉ〜。 BF…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/68fa097e03d0572aefe4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/68fa097e03d0572aefe4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Node.jsでのBrainf*ckインタプリタ実装。&lt;a href=&quot;https://pegjs.org/&quot;&gt;PEG.js&lt;/a&gt;使用。
 PEG.jsの勉強に作ってみました。PEG.js便利です。JSに馴染むぞぉ〜。&lt;/p&gt;
 &lt;p&gt;BF処理系として、工夫といえば工夫なのは、ループブロック構文[と]の対応を、実行時に命令列からスキャンするのではなく、パース/AST構築の段階でシンタックスの問題として解決するところ。まあ、普通に考えればそうなるべきな話ではあるのですが。&lt;/p&gt;
@@ -2694,7 +2694,142 @@ fn main() {
     assert_eq!(solve(314159, 265358, 979323, 84626, 89099331642), &quot;S&quot;);
     assert_eq!(solve(314159, 265358, 979323, 84626, 89099331643), &quot;W&quot;);
 }
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Dartの変数定義時の修飾static/final/const、そしてconst constructorについて]]></title><description><![CDATA[2019/09/13追記 Dart 2.5で「 As of Dart 2.5, we support many more ways to define constant expressions, including the ability to use casts and the…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/7c07f019e05a743d1022/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/7c07f019e05a743d1022/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;2019/09/13追記&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[TypeScriptの関数の型指定まとめ]]></title><description><![CDATA[はじめに TypeScriptの関数型について、いまいちすっきりしてなかったので整理してみました。
+まず、準備としてとして とします。 関数定義の基本パターン 次に、関数定義の基本パターンとして とします。このときfunc1の型は「function func1(a: IHoge…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/79c277301f89d109c11d/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/79c277301f89d109c11d/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;TypeScriptの関数型について、いまいちすっきりしてなかったので整理してみました。
+まず、準備としてとして&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;type IHoge = {
+    a: number;
+    b: string;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;とします。&lt;/p&gt;
+&lt;h1&gt;関数定義の基本パターン&lt;/h1&gt;
+&lt;p&gt;次に、関数定義の基本パターンとして&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;function func1(a: IHoge): IHoge {
+    return { a: 3, b: &apos;a&apos;};
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;とします。このときfunc1の型は「&lt;code&gt;function func1(a: IHoge): IHoge&lt;/code&gt;」です。
+以降、このバリエーションを見ていきます。意味的にはすべて同じです。&lt;/p&gt;
+&lt;h1&gt;アロー式での関数定義&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;//-------------------------これ以上できないぐらいの型のフル指定(アロー式リテラル版)。------------------
+ const func2: (a: IHoge) =&gt; IHoge
+    = (a: IHoge): IHoge =&gt; ({ a: 3, b: &apos;a&apos;}) ;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;アロー式で定義します。このときfunc2の型は「&lt;code&gt;const func2: (a: IHoge) =&gt; IHoge&lt;/code&gt;」です。
+func1のfunction型とは型としては異なることがわかります。しかし両者の型は実質的には同じで、以下のように代入が可能です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;const func2_a: (a: IHoge) =&gt; IHoge = func1;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;「これ以上できないぐらいの型のフル指定」では、func2というシンボルの型と、関数本体の定義の方で、関数と引数と返り値の型を二重に指定していることがわかると思います。これは無駄なので、省略を試みます。
+まず、シンボルの型を省略してみます。省略された場所は「&lt;code&gt;/**/&lt;/code&gt;」で示します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;//-------------------------以下の2つは型推論によりほぼ同じ(アロー式リテラル版)------------------
+const func3 /**/
+     = (a: IHoge): IHoge =&gt; ({ a: 3, b: &apos;a&apos;}) ;
+
+const func4 /**/
+    = (a: IHoge) /**/ =&gt; ({ a: 3, b: &apos;a&apos;}) ;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;のようになります。戻り値の型を省略したfunc4の場合、戻り値の型は関数本体から推論されていることになります。func4の戻り値の型は「&lt;code&gt;{ a: number; b: string; }&lt;/code&gt;」で、IHogeとはノミナルな意味では一致しませんが、TypeScriptでは特に問題はありません。しかし一般には、この推論があたっているとは限らないので、func3のように明示したいところです。型チェックの意義が薄れるからです。&lt;/p&gt;
+&lt;p&gt;次、引数の型を省略を試みます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;//-------------------------引数は型推論しないので型指定すべき(アロー式リテラル版)------------------
+const func5 /**/
+    = (a: any/**/) : IHoge =&gt; ({ a: 3, b: &apos;a&apos;}) ;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;引数の型を省略すると、TypeScriptは呼び出し側の引数から型推論をすることはないので、「Parameter ‘a’ implicitly has an ‘any’ type.」というエラーになると思います(オプションによる)。ここではanyを補っていますが、こういうことをすると、引数の型チェックがなされなくなるので、やめるべきです。func1よりもコンパイル時に型エラーチェックできる能力が減損しています。&lt;/p&gt;
+&lt;p&gt;次に、シンボルの型の方ではなく、関数定義本体の方の型を省略してみます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;//-------------------------以下の三つは同じ(アロー式リテラル版)------------------
+const func6: (a: IHoge) =&gt; IHoge
+     = (a /**/) /**/ =&gt; ({ a: 3, b: &apos;a&apos;}) ;
+
+const func7: (a: IHoge) =&gt; IHoge
+     = (a /**/): IHoge =&gt; ({ a: 3, b: &apos;a&apos;}) ;
+
+const func8: (a: IHoge) =&gt; IHoge
+     = (a : IHoge) /**/ =&gt; ({ a: 3, b: &apos;a&apos;}) ;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;これでわかるように、関数定義本体の方の型は省略しても不都合がありません。
+func7, func8は二重指定になっています。
+&lt;strong&gt;&lt;em&gt;個人的にはfunc6のパターンがお勧めです。&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;なお、func2〜3, 6〜8の型は「&lt;code&gt;const func*: (a: IHoge) =&gt; IHoge&lt;/code&gt;」です。
+func4の型は「&lt;code&gt;const func11: (a: IHoge) =&gt; { a: number; b: string; }&lt;/code&gt;」です。
+func5の型は「&lt;code&gt;const func5: (a: any) =&gt; IHoge&lt;/code&gt;」です。&lt;/p&gt;
+&lt;h1&gt;functionリテラル形式での関数定義&lt;/h1&gt;
+&lt;p&gt;さて、今まではアロー式で型を与えてきましたが、まったく同じことがfunction形式の関数でも言えます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;//-------------------------これ以上できないぐらいの型のフル指定(functionリテラル版)。------------------
+const func9: (a: IHoge) =&gt; IHoge
+    = function(a: IHoge): IHoge { return ({ a: 3, b: &apos;a&apos;}) }
+
+//-------------------------以下の2つは型推論によりほぼ同じ(functionリテラル版)------------------
+const func10 /**/
+    = function(a: IHoge): IHoge { return ({ a: 3, b: &apos;a&apos;}) };
+
+const func11 /**/
+    = function(a: IHoge) { return ({ a: 3, b: &apos;a&apos;}) }
+
+//-------------------------引数は型推論しないので型指定すべき(functionリテラル版)------------------
+const func12 /**/
+    = function(a: any/**/) : IHoge { return ({ a: 3, b: &apos;a&apos;}) }
+
+//-------------------------以下の三つは同じ(functionリテラル版)------------------
+const func13: (a: IHoge) =&gt; IHoge
+    = function(a /**/) /**/ { return ({ a: 3, b: &apos;a&apos;}) }
+
+const func14: (a: IHoge) =&gt; IHoge
+    = function(a /**/): IHoge { return ({ a: 3, b: &apos;a&apos;}) }
+
+const func15: (a: IHoge) =&gt; IHoge
+    = function(a : IHoge) { return ({ a: 3, b: &apos;a&apos;}) }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;個人的おすすめはこのfunc13のパターンです。&lt;/p&gt;
+&lt;p&gt;このとき、func9〜10, 13〜15の型は「&lt;code&gt;const func*: (a: IHoge) =&gt; IHoge&lt;/code&gt;」です。(functionではない)。
+func11の型は「&lt;code&gt;const func11: (a: IHoge) =&gt; { a: number; b: string; }&lt;/code&gt;」です。
+func12の型は「&lt;code&gt;const func12: (a: any) =&gt; IHoge&lt;/code&gt;」です。&lt;/p&gt;
+&lt;p&gt;以下はテストコード。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;const d = {a: 3, b: &apos;abc&apos;};
+const x1: number = func1(3); const y1: number = func1(d); const z1: IHoge = func1(d);
+const x2: number = func2(3); const y2: number = func2(d); const z2: IHoge = func2(d);
+const x3: number = func3(3); const y3: number = func3(d); const z3: IHoge = func3(d);
+const x4: number = func4(3); const y4: number = func4(d); const z4: IHoge = func4(d);
+const x5: number = func5(3); const y5: number = func5(d); const z5: IHoge = func5(d);
+const x6: number = func6(3); const y6: number = func6(d); const z6: IHoge = func6(d);
+const x7: number = func7(3); const y7: number = func7(d); const z7: IHoge = func7(d);
+const x8: number = func8(3); const y8: number = func8(d); const z8: IHoge = func8(d);
+const x9: number = func9(3); const y9: number = func9(d); const z9: IHoge = func9(d);
+const x10: number = func10(3); const y10: number = func10(d); const z10: IHoge = func10(d);
+const x11: number = func11(3); const y11: number = func11(d); const z11: IHoge = func11(d);
+const x12: number = func12(3); const y12: number = func12(d); const z12: IHoge = func12(d);
+const x13: number = func13(3); const y13: number = func13(d); const z13: IHoge = func13(d);
+const x14: number = func14(3); const y14: number = func14(d); const z14: IHoge = func14(d);
+const x15: number = func15(3); const y15: number = func15(d); const z15: IHoge = func15(d);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;まとめますと、TypeScriptで関数の型定義は論理的には多種多様なパターンがありますが、個人的おすすめとして、&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;function シンボル(引数と型指定): 戻り値型指定 {
+ 本体
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;か、&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;const シンボル: (引数と型指定) =&gt; 戻り値型指定 = (引数指定) =&gt; {
+ 本体
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;が良いです。この2つで比べると、「=&gt;」が出てこない上の方が一見簡単です。しかし「関数をかえす関数」の場合にはいずれにせよ「=&gt;」を使わざるを得なくなります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;// 関数を返す関数
+function シンボル(引数と型指定A): (引数と型指定B) =&gt; 戻り値型指定 {
+ return (引数指定B) =&gt; { 本体 }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;// 関数を返す関数
+const シンボル: (引数と型指定A) =&gt; (引数と型指定B) =&gt; 戻り値型指定
+ = (引数指定A) =&gt; {
+ return (引数指定B) =&gt; { 本体 }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;これの各箇所で型指定を省略する、しないのパターンがあるので組み合わせ的に爆裂していき、ややこしです。&lt;/p&gt;
+&lt;p&gt;このルールをわかりやすく書きたかったのですが力およばず。読むポイントは、型アノテーションがどこか、型アノテーションはどこで終るか、です。&lt;/p&gt;
+&lt;p&gt;そして、型指定を、本体側でがんばるか、シンボル側でがんばるかですが、シンボル側に直接指定する型指定の部分をがんばって定義し、本体から暗黙の推論をさせないほうが、きっちりした型エラーチェックができると思います。特に、型が「関数を返す関数を…」といった複雑になる場合は、リターン型からの推論は、コードをまちがえたら終わりで、ある意味anyを使うのと同じだからです。&lt;/p&gt;
+&lt;p&gt;本体側からは型を省略していく方針もあれば、「重複をおそれずに」という方針もありえます。まあそこは適当に。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Dartの変数定義時の修飾static/final/const、そしてconst constructorについて]]></title><description><![CDATA[2019/09/13追記 Dart 2.5で「 As of Dart 2.5, we support many more ways to define constant expressions, including the ability to use casts and the…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/7c07f019e05a743d1022/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/7c07f019e05a743d1022/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;2019/09/13追記&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&quot;https://medium.com/dartlang/announcing-dart-2-5-super-charged-development-328822024970&quot;&gt;Dart 2.5&lt;/a&gt;で「 As of Dart 2.5, we support many more ways to define constant expressions, including the ability to use casts and the new control flow and collection spread features shipped in Dart 2.3:」とのことで以下が可能となりました。本文には反映していません。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Dart&quot;&gt;// Example: these are now valid compile-time constants.
 const Object i = 3;
@@ -3010,142 +3145,7 @@ class _SomeClass { // 他モジュールに公開されないクラス
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[TypeScriptの関数の型指定まとめ]]></title><description><![CDATA[はじめに TypeScriptの関数型について、いまいちすっきりしてなかったので整理してみました。
-まず、準備としてとして とします。 関数定義の基本パターン 次に、関数定義の基本パターンとして とします。このときfunc1の型は「function func1(a: IHoge…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/79c277301f89d109c11d/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/79c277301f89d109c11d/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;TypeScriptの関数型について、いまいちすっきりしてなかったので整理してみました。
-まず、準備としてとして&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;type IHoge = {
-    a: number;
-    b: string;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;とします。&lt;/p&gt;
-&lt;h1&gt;関数定義の基本パターン&lt;/h1&gt;
-&lt;p&gt;次に、関数定義の基本パターンとして&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;function func1(a: IHoge): IHoge {
-    return { a: 3, b: &apos;a&apos;};
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;とします。このときfunc1の型は「&lt;code&gt;function func1(a: IHoge): IHoge&lt;/code&gt;」です。
-以降、このバリエーションを見ていきます。意味的にはすべて同じです。&lt;/p&gt;
-&lt;h1&gt;アロー式での関数定義&lt;/h1&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;//-------------------------これ以上できないぐらいの型のフル指定(アロー式リテラル版)。------------------
- const func2: (a: IHoge) =&gt; IHoge
-    = (a: IHoge): IHoge =&gt; ({ a: 3, b: &apos;a&apos;}) ;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;アロー式で定義します。このときfunc2の型は「&lt;code&gt;const func2: (a: IHoge) =&gt; IHoge&lt;/code&gt;」です。
-func1のfunction型とは型としては異なることがわかります。しかし両者の型は実質的には同じで、以下のように代入が可能です。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;const func2_a: (a: IHoge) =&gt; IHoge = func1;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;「これ以上できないぐらいの型のフル指定」では、func2というシンボルの型と、関数本体の定義の方で、関数と引数と返り値の型を二重に指定していることがわかると思います。これは無駄なので、省略を試みます。
-まず、シンボルの型を省略してみます。省略された場所は「&lt;code&gt;/**/&lt;/code&gt;」で示します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;//-------------------------以下の2つは型推論によりほぼ同じ(アロー式リテラル版)------------------
-const func3 /**/
-     = (a: IHoge): IHoge =&gt; ({ a: 3, b: &apos;a&apos;}) ;
-
-const func4 /**/
-    = (a: IHoge) /**/ =&gt; ({ a: 3, b: &apos;a&apos;}) ;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;のようになります。戻り値の型を省略したfunc4の場合、戻り値の型は関数本体から推論されていることになります。func4の戻り値の型は「&lt;code&gt;{ a: number; b: string; }&lt;/code&gt;」で、IHogeとはノミナルな意味では一致しませんが、TypeScriptでは特に問題はありません。しかし一般には、この推論があたっているとは限らないので、func3のように明示したいところです。型チェックの意義が薄れるからです。&lt;/p&gt;
-&lt;p&gt;次、引数の型を省略を試みます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;//-------------------------引数は型推論しないので型指定すべき(アロー式リテラル版)------------------
-const func5 /**/
-    = (a: any/**/) : IHoge =&gt; ({ a: 3, b: &apos;a&apos;}) ;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;引数の型を省略すると、TypeScriptは呼び出し側の引数から型推論をすることはないので、「Parameter ‘a’ implicitly has an ‘any’ type.」というエラーになると思います(オプションによる)。ここではanyを補っていますが、こういうことをすると、引数の型チェックがなされなくなるので、やめるべきです。func1よりもコンパイル時に型エラーチェックできる能力が減損しています。&lt;/p&gt;
-&lt;p&gt;次に、シンボルの型の方ではなく、関数定義本体の方の型を省略してみます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;//-------------------------以下の三つは同じ(アロー式リテラル版)------------------
-const func6: (a: IHoge) =&gt; IHoge
-     = (a /**/) /**/ =&gt; ({ a: 3, b: &apos;a&apos;}) ;
-
-const func7: (a: IHoge) =&gt; IHoge
-     = (a /**/): IHoge =&gt; ({ a: 3, b: &apos;a&apos;}) ;
-
-const func8: (a: IHoge) =&gt; IHoge
-     = (a : IHoge) /**/ =&gt; ({ a: 3, b: &apos;a&apos;}) ;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;これでわかるように、関数定義本体の方の型は省略しても不都合がありません。
-func7, func8は二重指定になっています。
-&lt;strong&gt;&lt;em&gt;個人的にはfunc6のパターンがお勧めです。&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;なお、func2〜3, 6〜8の型は「&lt;code&gt;const func*: (a: IHoge) =&gt; IHoge&lt;/code&gt;」です。
-func4の型は「&lt;code&gt;const func11: (a: IHoge) =&gt; { a: number; b: string; }&lt;/code&gt;」です。
-func5の型は「&lt;code&gt;const func5: (a: any) =&gt; IHoge&lt;/code&gt;」です。&lt;/p&gt;
-&lt;h1&gt;functionリテラル形式での関数定義&lt;/h1&gt;
-&lt;p&gt;さて、今まではアロー式で型を与えてきましたが、まったく同じことがfunction形式の関数でも言えます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;//-------------------------これ以上できないぐらいの型のフル指定(functionリテラル版)。------------------
-const func9: (a: IHoge) =&gt; IHoge
-    = function(a: IHoge): IHoge { return ({ a: 3, b: &apos;a&apos;}) }
-
-//-------------------------以下の2つは型推論によりほぼ同じ(functionリテラル版)------------------
-const func10 /**/
-    = function(a: IHoge): IHoge { return ({ a: 3, b: &apos;a&apos;}) };
-
-const func11 /**/
-    = function(a: IHoge) { return ({ a: 3, b: &apos;a&apos;}) }
-
-//-------------------------引数は型推論しないので型指定すべき(functionリテラル版)------------------
-const func12 /**/
-    = function(a: any/**/) : IHoge { return ({ a: 3, b: &apos;a&apos;}) }
-
-//-------------------------以下の三つは同じ(functionリテラル版)------------------
-const func13: (a: IHoge) =&gt; IHoge
-    = function(a /**/) /**/ { return ({ a: 3, b: &apos;a&apos;}) }
-
-const func14: (a: IHoge) =&gt; IHoge
-    = function(a /**/): IHoge { return ({ a: 3, b: &apos;a&apos;}) }
-
-const func15: (a: IHoge) =&gt; IHoge
-    = function(a : IHoge) { return ({ a: 3, b: &apos;a&apos;}) }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;個人的おすすめはこのfunc13のパターンです。&lt;/p&gt;
-&lt;p&gt;このとき、func9〜10, 13〜15の型は「&lt;code&gt;const func*: (a: IHoge) =&gt; IHoge&lt;/code&gt;」です。(functionではない)。
-func11の型は「&lt;code&gt;const func11: (a: IHoge) =&gt; { a: number; b: string; }&lt;/code&gt;」です。
-func12の型は「&lt;code&gt;const func12: (a: any) =&gt; IHoge&lt;/code&gt;」です。&lt;/p&gt;
-&lt;p&gt;以下はテストコード。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;const d = {a: 3, b: &apos;abc&apos;};
-const x1: number = func1(3); const y1: number = func1(d); const z1: IHoge = func1(d);
-const x2: number = func2(3); const y2: number = func2(d); const z2: IHoge = func2(d);
-const x3: number = func3(3); const y3: number = func3(d); const z3: IHoge = func3(d);
-const x4: number = func4(3); const y4: number = func4(d); const z4: IHoge = func4(d);
-const x5: number = func5(3); const y5: number = func5(d); const z5: IHoge = func5(d);
-const x6: number = func6(3); const y6: number = func6(d); const z6: IHoge = func6(d);
-const x7: number = func7(3); const y7: number = func7(d); const z7: IHoge = func7(d);
-const x8: number = func8(3); const y8: number = func8(d); const z8: IHoge = func8(d);
-const x9: number = func9(3); const y9: number = func9(d); const z9: IHoge = func9(d);
-const x10: number = func10(3); const y10: number = func10(d); const z10: IHoge = func10(d);
-const x11: number = func11(3); const y11: number = func11(d); const z11: IHoge = func11(d);
-const x12: number = func12(3); const y12: number = func12(d); const z12: IHoge = func12(d);
-const x13: number = func13(3); const y13: number = func13(d); const z13: IHoge = func13(d);
-const x14: number = func14(3); const y14: number = func14(d); const z14: IHoge = func14(d);
-const x15: number = func15(3); const y15: number = func15(d); const z15: IHoge = func15(d);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;まとめますと、TypeScriptで関数の型定義は論理的には多種多様なパターンがありますが、個人的おすすめとして、&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;function シンボル(引数と型指定): 戻り値型指定 {
- 本体
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;か、&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;const シンボル: (引数と型指定) =&gt; 戻り値型指定 = (引数指定) =&gt; {
- 本体
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;が良いです。この2つで比べると、「=&gt;」が出てこない上の方が一見簡単です。しかし「関数をかえす関数」の場合にはいずれにせよ「=&gt;」を使わざるを得なくなります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;// 関数を返す関数
-function シンボル(引数と型指定A): (引数と型指定B) =&gt; 戻り値型指定 {
- return (引数指定B) =&gt; { 本体 }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;language-TypeScript&quot;&gt;// 関数を返す関数
-const シンボル: (引数と型指定A) =&gt; (引数と型指定B) =&gt; 戻り値型指定
- = (引数指定A) =&gt; {
- return (引数指定B) =&gt; { 本体 }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;これの各箇所で型指定を省略する、しないのパターンがあるので組み合わせ的に爆裂していき、ややこしです。&lt;/p&gt;
-&lt;p&gt;このルールをわかりやすく書きたかったのですが力およばず。読むポイントは、型アノテーションがどこか、型アノテーションはどこで終るか、です。&lt;/p&gt;
-&lt;p&gt;そして、型指定を、本体側でがんばるか、シンボル側でがんばるかですが、シンボル側に直接指定する型指定の部分をがんばって定義し、本体から暗黙の推論をさせないほうが、きっちりした型エラーチェックができると思います。特に、型が「関数を返す関数を…」といった複雑になる場合は、リターン型からの推論は、コードをまちがえたら終わりで、ある意味anyを使うのと同じだからです。&lt;/p&gt;
-&lt;p&gt;本体側からは型を省略していく方針もあれば、「重複をおそれずに」という方針もありえます。まあそこは適当に。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[第13回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第13回 オフラインリアルタイムどう書くの参考問題「増やす減らす二倍する」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://atnd.org/events/41603&quot;&gt;第13回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord13updowndouble/&quot;&gt;増やす減らす二倍する&lt;/a&gt;」を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[第13回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第13回 オフラインリアルタイムどう書くの参考問題「増やす減らす二倍する」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://atnd.org/events/41603&quot;&gt;第13回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord13updowndouble/&quot;&gt;増やす減らす二倍する&lt;/a&gt;」を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-frege:shortest.fr&quot;&gt;shortestPath&apos; :: Int -&gt; Int -&gt; Int
 shortestPath&apos; n maxn
   | n==0 = 0
@@ -3219,7 +3219,227 @@ main args = do
   println (shortestPath 109227 ==  26)
   println (shortestPath 174763 ==  27)
   
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[React HooksのuseCallbackを正しく理解する]]></title><description><![CDATA[はじめに React HooksのuseCallback…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/99f7cd014e2c0fa1fc4e/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/99f7cd014e2c0fa1fc4e/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;はじめに&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[macosで Control+[ 押下をEscapeに割り当てる]]></title><description><![CDATA[Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。 Karabinar Elementsをインストールする 以下を作成する。 `json:~/.config/karabiner/assets…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Karabinar Elementsをインストールする&lt;/li&gt;
+&lt;li&gt;以下を作成する。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;`&lt;code&gt;&lt;/code&gt;json:~/.config/karabiner/assets/complex&lt;em&gt;modifications/myconfig.json
+{
+“title”: “Ctrl+[をEscapeにする。”,
+“rules”: [
+{
+“description”: “Ctrl+[をEscapeにする。”,
+“manipulators”: [
+{
+“type”: “basic”,
+“from”: {
+“key&lt;/em&gt;code”: “open&lt;em&gt;bracket”,
+“modifiers”: {
+“mandatory”: [“control”]
+}
+},
+“to”: [
+{
+“key&lt;/em&gt;code”: “escape”
+}
+]
+}
+]
+}
+]
+}&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;3. karabinar-elementsのpreferenceからenableする
+
+&amp;#x3C;img width=&quot;945&quot; alt=&quot;スクリーンショット 2019-02-23 10.45.59.png&quot; src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/2560d287-f1ef-ac12-1d78-3fd3ca60c421.png&quot;&gt;
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Material UIのスタイル指定(JSS)]]></title><description><![CDATA[Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。 classNameで即値指定 HTMLで言うclass=の指定。Material UI…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。&lt;/p&gt;
+&lt;h1&gt;classNameで即値指定&lt;/h1&gt;
+&lt;p&gt;HTMLで言うclass=の指定。Material UI的には何もしない。BEMやscssでもなんでもいいのですが、外部スタイルシートを定義してあてがっていくパターン。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;&amp;#x3C;Hoge className=&quot;hoge fuga&quot;/&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;styleで指定&lt;/h1&gt;
+&lt;p&gt;styleプロパティの指定。Material UI的には何もしない。オブジェクトがdomのstyle属性に変換されて付けられる、Reactの仕組み。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;&amp;#x3C;Hoge style={{fontSize:1, padding: &apos;1rem&apos;} /&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;DOM上は、要素に直接紐付いたスタイル指定(devtool上、element.styleで表示される)となる。疑似要素は原理的に指定不可。&lt;/p&gt;
+&lt;h1&gt;StyledComponent💅で指定。&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://material-ui.com/styles/api/#styled-component-styles-options-component&quot;&gt;こちら&lt;/a&gt;を参照。本資料では説明を割愛する。&lt;/p&gt;
+&lt;h1&gt;JSSのスタイルシートオブジェクトで指定&lt;/h1&gt;
+&lt;p&gt;Material UIがかかわるのはここから。JSSは基本的にDOMのインラインスタイル属性ではなく、クラス名による指定の仕組みである。&lt;/p&gt;
+&lt;h2&gt;大きな流れ&lt;/h2&gt;
+&lt;p&gt;以下のような流れとなる。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;スタイルシートの元になる「元のスタイルシートオブジェクト」をJSで作る&lt;code&gt;const styles = { root: { backgroundColor: &apos;red&apos;, }, };&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;「元のスタイルシートオブジェクト」を元に、Material UIが準備しているHoCやhooksを使って、以下を生成する。&lt;/li&gt;
+&lt;li&gt;「元のスタイルシートオブジェクト」のプロパティ名と、コンポーネントローカルにリネームされた実際に生成される「クラス名の対応表」。こんなやつ:
+&lt;code&gt;{&quot;tabBar&quot;:&quot;TabBar-tabBar-284&quot;,&quot;selectedTab&quot;:&quot;TabBar-selectedTab-285&quot;}&lt;/code&gt;&lt;br/&gt;この値自体をプログラマが意識することは(デバッグ時を除き)基本的にはない。&lt;/li&gt;
+&lt;li&gt;この実クラス名でのスタイル定義が、背後で&amp;#x3C;head&gt;に挿入される(プログラマは意識しないでよい)。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;「クラス名の対応表」をMaterial UIが提供するReactコンポーネントにおいて以下のいずれかの方法で利用する&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;「クラス名の対応表」から実クラス名を取得して「classNames」propsで指定する。&lt;/li&gt;
+&lt;li&gt;「クラス名の対応表」から実クラス名を「classes」propsで指定する。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;「元のスタイルシートオブジェクト」の作りかた&lt;/h2&gt;
+&lt;h3&gt;単なるJSオブジェクトとして「スタイルシートオブジェクト」を作る&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = {
+  root: {
+    backgroundColor: &apos;red&apos;,
+  },
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;もしくは&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = createStyles({
+  root: {
+    backgroundColor: &apos;red&apos;,
+  },
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;両者の意味は同じである。後者ではTypeScriptの型エラーを黙らすことができる。&lt;/p&gt;
+&lt;h2&gt;themeを引数とする関数として「スタイルシートオブジェクト」を作る&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: Theme) =&gt;{
+  root: {
+    backgroundColor: theme.color.red,
+  },
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;もしくは&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: Theme) =&gt; createStyles({
+  root: {
+    backgroundColor: theme.color.red,
+  },
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;両者の意味は同じである。後者ではTypeScriptの型エラーを黙らすことができる。&lt;/p&gt;
+&lt;p&gt;ここでは、Reactのインラインstyle属性のようにJavaScriptオブジェクトを用いるが、rootの階層が入っていることが異なる。この階層の名前は、(実CSSクラス名を隠蔽した)、ローカルなCSSクラス名と思ってよい。&lt;/p&gt;
+&lt;p&gt;CSSクラスなので疑似クラスも指定できる。たとえば、以下のように:hover疑似クラスが指定できる。(JSSの機能)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles: any = (theme: Theme): StyleRules =&gt;
+  createStyles({
+    button: {
+      margin: &apos;0.3rem&apos;,
+      &apos;&amp;#x26;:hover&apos;: { transform: &apos;scale(1.1)&apos; },
+    },
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;「元のスタイルシートオブジェクト」から「クラス名の対応表」を入手する&lt;/h2&gt;
+&lt;h3&gt;React Hooks系で&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://material-ui.com/styles/api/#makestyles-styles-options-hook&quot;&gt;こちらから&lt;/a&gt;引用だが、以下のように「makeStyles」の引数に「元のスタイルシートオブジェクト」を渡すと、「クラス名の対応表」を取得できるフック関数を入手することができる。そのフック関数の呼び出し結果をclasses変数に取得している。(createStylesは使用していない。)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;import React from &apos;react&apos;;
+import { makeStyles } from &apos;@material-ui/core/styles&apos;;
+
+const useStyles = makeStyles({
+  root: {
+    backgroundColor: &apos;red&apos;,
+    color: props =&gt; props.color,
+  },
+});
+
+export default function MyComponent(props) {
+  const classes = useStyles(props);
+  return &amp;#x3C;div className={classes.root} /&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;HoC系で&lt;/h3&gt;
+&lt;p&gt;HoCである&lt;a href=&quot;https://material-ui.com/styles/api/#withstyles-styles-options-higher-order-component&quot;&gt;withStyles&lt;/a&gt;を使う。こちらも引用だが以下となる。意味はHooks系と同じだが、「元のスタイルシートオブジェクト」をwithStylesの入力として与え、「クラス名の対応表」がprops.classesに得られるようなコンポーネントを生成している。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;import React from &apos;react&apos;;
+import { withStyles } from &apos;@material-ui/core/styles&apos;;
+
+const styles = {
+  root: {
+    backgroundColor: &apos;red&apos;,
+  },
+};
+
+function MyComponent(props) {
+  return &amp;#x3C;div className={props.classes.root} /&gt;;
+}
+
+export default withStyles(styles)(MyComponent);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;取得した「クラス名の対応表」の使いかた&lt;/h2&gt;
+&lt;p&gt;「クラス名の対応表」は、入手方法としてHooksでもHoCで得ることができるが、同じものである。上記サンプルでは、入手した「クラス名の対応表」はclassesという名前のprops(props.classes)もしくは変数classesに格納している。&lt;/p&gt;
+&lt;p&gt;「クラス名の対応表」には2つの使いかたがある。&lt;/p&gt;
+&lt;h2&gt;classNameに与える&lt;/h2&gt;
+&lt;p&gt;サンプルにもあるが、&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;  return &amp;#x3C;div className={classes.root} /&gt;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;のように指定する。複数あれば&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;  return &amp;#x3C;div className={classNames(classes.root,classes.hoge)} /&gt;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;のようにNPMモジュールclassnamesを使うのがよいだろう。classnamesはクラス名を結合させているだけである。(&lt;a href=&quot;https://qiita.com/taqm/items/c38855d8158cdd9d5a3e&quot;&gt;clsx&lt;/a&gt;というのもあり効率がよいらしい)。&lt;/p&gt;
+&lt;h2&gt;classesで指定&lt;/h2&gt;
+&lt;p&gt;最後になったが、これがJSSの本領である。Material UIのコンポーネントにはCSS APIというものが定義されており、それを使ってカスタマイズすることができる。
+たとえば、&lt;a href=&quot;https://material-ui.com/api/tabs/&quot;&gt;Tabsコンポーネントには以下のようにかかれている&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;CSS&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Style sheet name: MuiTab.&lt;/li&gt;
+&lt;li&gt;Style sheet details:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;Rule name&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Global class&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;root&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.MuiTab-root&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Styles applied to the root element.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;labelIcon&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.MuiTab-labelIcon&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if both icon and label are provided.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;textColorInherit&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorInherit&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“inherit”.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;textColorPrimary&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorPrimary&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“primary”.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;textColorSecondary&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorSecondary&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“secondary”.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;font color=&quot;red&quot;&gt;selected&lt;/font&gt;&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.Mui-selected&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Pseudo-class applied to the root element if selected={true} (controlled by the Tabs component).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;これらを必要に応じてオーバーライド定義することができる。赤字”selected”は後述の説明で例として使用するCSS APIのキー名である。このスタイルをオーバーライドする方法は3つある。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;With a rule name of the classes object prop.(classes propsのルール名)&lt;/li&gt;
+&lt;li&gt;With a global class name. (グローバルクラス名)&lt;/li&gt;
+&lt;li&gt;With a theme and an overrides property..(テーマと上書きプロパティ)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以降では最初の「 rule name of the classes object prop.」について説明する。
+やるべきことは、classes属性に、指定したCSS API名をキー(ここではslected)とし「クラス名の対応表」の実クラス名を指定するのである。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: any) =&gt;
+  createStyles({
+    selectedTab: {
+      backgroundColor: &apos;#eeeeff&apos;,
+      fontWeight: &apos;bold&apos;,
+    },
+  });
+:
+          &amp;#x3C;Tabs&gt;
+            &amp;#x3C;Tab
+              classes={{ selected: classes.selectedTab }} /&gt;
+               :
+          &amp;#x3C;/Tabs&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;するともともとMUIで定義されていたCSSに上書きされる形でCSSスタイルが定義される。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[React HooksのuseCallbackを正しく理解する]]></title><description><![CDATA[はじめに React HooksのuseCallback…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/99f7cd014e2c0fa1fc4e/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/99f7cd014e2c0fa1fc4e/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;React HooksのuseCallbackは、イベントハンドラ(コールバック)を使うときは無条件に使うものだと思っていませんか。実際にはコールバックが「ある条件をみたす」ときに使うべきもののようです。このある条件を整理して明確にするために記事を書きました。&lt;/p&gt;
 &lt;h1&gt;useCallbackとは何か&lt;/h1&gt;
 &lt;p&gt;useCallbackは、useMemoのような、重い計算を回避しキャッシュを使うというような効率向上のための仕組みではありません。useCallbackに渡す関数内で行なう計算の重さはまったく無関係です。
@@ -3370,40 +3590,7 @@ useCallbackの使いかたの本道です。&lt;/p&gt;
 &lt;h1&gt;まとめ&lt;/h1&gt;
 &lt;p&gt;まとめると、useCallbackを使うべきなのは、イベントハンドラをローカル関数にせざるを得ない場合、つまり関数コンポーネント本体のスコープ内の引数や、ローカル変数、特にpropの引数や他のuseStateを始めとするhooks呼び出しで得られるローカル変数の値に、関数の処理が依存している場合であり、かつ、そのローカル変数をイベントハンドラとして渡そうとしているReact要素がReact.memoされている場合です。&lt;/p&gt;
 &lt;h1&gt;おわり&lt;/h1&gt;
-&lt;p&gt;hooksは最高なんですが、留意点がありますので気をつけて使っていきましょう。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[macosで Control+[ 押下をEscapeに割り当てる]]></title><description><![CDATA[Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。 Karabinar Elementsをインストールする 以下を作成する。 `json:~/.config/karabiner/assets…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Karabinar Elementsをインストールする&lt;/li&gt;
-&lt;li&gt;以下を作成する。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;`&lt;code&gt;&lt;/code&gt;json:~/.config/karabiner/assets/complex&lt;em&gt;modifications/myconfig.json
-{
-“title”: “Ctrl+[をEscapeにする。”,
-“rules”: [
-{
-“description”: “Ctrl+[をEscapeにする。”,
-“manipulators”: [
-{
-“type”: “basic”,
-“from”: {
-“key&lt;/em&gt;code”: “open&lt;em&gt;bracket”,
-“modifiers”: {
-“mandatory”: [“control”]
-}
-},
-“to”: [
-{
-“key&lt;/em&gt;code”: “escape”
-}
-]
-}
-]
-}
-]
-}&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;3. karabinar-elementsのpreferenceからenableする
-
-&amp;#x3C;img width=&quot;945&quot; alt=&quot;スクリーンショット 2019-02-23 10.45.59.png&quot; src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/2560d287-f1ef-ac12-1d78-3fd3ca60c421.png&quot;&gt;
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[redux-sagaで検索機能の実装を写経してCSPのパワーを感じる]]></title><description><![CDATA[この記事は、@inuscriptさんによる「redux-observableで検索機能の実装を写経してRxJSのパワーを感じる」をRedux-Saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;この記事は、@inuscriptさんによる「&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;redux-observableで検索機能の実装を写経してRxJSのパワーを感じる&lt;/a&gt;」を&lt;a href=&quot;https://github.com/redux-saga/redux-saga&quot;&gt;Redux-Saga&lt;/a&gt;で書きなおしたものです。&lt;/p&gt;
+&lt;p&gt;hooksは最高なんですが、留意点がありますので気をつけて使っていきましょう。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[redux-sagaで検索機能の実装を写経してCSPのパワーを感じる]]></title><description><![CDATA[この記事は、@inuscriptさんによる「redux-observableで検索機能の実装を写経してRxJSのパワーを感じる」をRedux-Saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;この記事は、@inuscriptさんによる「&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;redux-observableで検索機能の実装を写経してRxJSのパワーを感じる&lt;/a&gt;」を&lt;a href=&quot;https://github.com/redux-saga/redux-saga&quot;&gt;Redux-Saga&lt;/a&gt;で書きなおしたものです。&lt;/p&gt;
 &lt;h1&gt;本記事の目的&lt;/h1&gt;
 &lt;p&gt;実用コードにおける非同期処理では以下のような問題が頻出する。これらについて元記事におけるRedux-obserbable(あるいはAngularが提供する)RxJSを用いた解決方法に対して、Redux-sagaによる解決方法を比較する。&lt;/p&gt;
 &lt;p&gt;(&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;元記事&lt;/a&gt;よりの引用)&lt;/p&gt;
@@ -3598,194 +3785,7 @@ function* changeInput() {
 &lt;a href=&quot;#fnref-2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Material UIのスタイル指定(JSS)]]></title><description><![CDATA[Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。 classNameで即値指定 HTMLで言うclass=の指定。Material UI…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。&lt;/p&gt;
-&lt;h1&gt;classNameで即値指定&lt;/h1&gt;
-&lt;p&gt;HTMLで言うclass=の指定。Material UI的には何もしない。BEMやscssでもなんでもいいのですが、外部スタイルシートを定義してあてがっていくパターン。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;&amp;#x3C;Hoge className=&quot;hoge fuga&quot;/&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;styleで指定&lt;/h1&gt;
-&lt;p&gt;styleプロパティの指定。Material UI的には何もしない。オブジェクトがdomのstyle属性に変換されて付けられる、Reactの仕組み。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;&amp;#x3C;Hoge style={{fontSize:1, padding: &apos;1rem&apos;} /&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;DOM上は、要素に直接紐付いたスタイル指定(devtool上、element.styleで表示される)となる。疑似要素は原理的に指定不可。&lt;/p&gt;
-&lt;h1&gt;StyledComponent💅で指定。&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://material-ui.com/styles/api/#styled-component-styles-options-component&quot;&gt;こちら&lt;/a&gt;を参照。本資料では説明を割愛する。&lt;/p&gt;
-&lt;h1&gt;JSSのスタイルシートオブジェクトで指定&lt;/h1&gt;
-&lt;p&gt;Material UIがかかわるのはここから。JSSは基本的にDOMのインラインスタイル属性ではなく、クラス名による指定の仕組みである。&lt;/p&gt;
-&lt;h2&gt;大きな流れ&lt;/h2&gt;
-&lt;p&gt;以下のような流れとなる。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;スタイルシートの元になる「元のスタイルシートオブジェクト」をJSで作る&lt;code&gt;const styles = { root: { backgroundColor: &apos;red&apos;, }, };&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;「元のスタイルシートオブジェクト」を元に、Material UIが準備しているHoCやhooksを使って、以下を生成する。&lt;/li&gt;
-&lt;li&gt;「元のスタイルシートオブジェクト」のプロパティ名と、コンポーネントローカルにリネームされた実際に生成される「クラス名の対応表」。こんなやつ:
-&lt;code&gt;{&quot;tabBar&quot;:&quot;TabBar-tabBar-284&quot;,&quot;selectedTab&quot;:&quot;TabBar-selectedTab-285&quot;}&lt;/code&gt;&lt;br/&gt;この値自体をプログラマが意識することは(デバッグ時を除き)基本的にはない。&lt;/li&gt;
-&lt;li&gt;この実クラス名でのスタイル定義が、背後で&amp;#x3C;head&gt;に挿入される(プログラマは意識しないでよい)。&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;「クラス名の対応表」をMaterial UIが提供するReactコンポーネントにおいて以下のいずれかの方法で利用する&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;「クラス名の対応表」から実クラス名を取得して「classNames」propsで指定する。&lt;/li&gt;
-&lt;li&gt;「クラス名の対応表」から実クラス名を「classes」propsで指定する。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;「元のスタイルシートオブジェクト」の作りかた&lt;/h2&gt;
-&lt;h3&gt;単なるJSオブジェクトとして「スタイルシートオブジェクト」を作る&lt;/h3&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = {
-  root: {
-    backgroundColor: &apos;red&apos;,
-  },
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;もしくは&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = createStyles({
-  root: {
-    backgroundColor: &apos;red&apos;,
-  },
-});
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;両者の意味は同じである。後者ではTypeScriptの型エラーを黙らすことができる。&lt;/p&gt;
-&lt;h2&gt;themeを引数とする関数として「スタイルシートオブジェクト」を作る&lt;/h2&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: Theme) =&gt;{
-  root: {
-    backgroundColor: theme.color.red,
-  },
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;もしくは&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: Theme) =&gt; createStyles({
-  root: {
-    backgroundColor: theme.color.red,
-  },
-});
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;両者の意味は同じである。後者ではTypeScriptの型エラーを黙らすことができる。&lt;/p&gt;
-&lt;p&gt;ここでは、Reactのインラインstyle属性のようにJavaScriptオブジェクトを用いるが、rootの階層が入っていることが異なる。この階層の名前は、(実CSSクラス名を隠蔽した)、ローカルなCSSクラス名と思ってよい。&lt;/p&gt;
-&lt;p&gt;CSSクラスなので疑似クラスも指定できる。たとえば、以下のように:hover疑似クラスが指定できる。(JSSの機能)&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles: any = (theme: Theme): StyleRules =&gt;
-  createStyles({
-    button: {
-      margin: &apos;0.3rem&apos;,
-      &apos;&amp;#x26;:hover&apos;: { transform: &apos;scale(1.1)&apos; },
-    },
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;「元のスタイルシートオブジェクト」から「クラス名の対応表」を入手する&lt;/h2&gt;
-&lt;h3&gt;React Hooks系で&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://material-ui.com/styles/api/#makestyles-styles-options-hook&quot;&gt;こちらから&lt;/a&gt;引用だが、以下のように「makeStyles」の引数に「元のスタイルシートオブジェクト」を渡すと、「クラス名の対応表」を取得できるフック関数を入手することができる。そのフック関数の呼び出し結果をclasses変数に取得している。(createStylesは使用していない。)&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;import React from &apos;react&apos;;
-import { makeStyles } from &apos;@material-ui/core/styles&apos;;
-
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: &apos;red&apos;,
-    color: props =&gt; props.color,
-  },
-});
-
-export default function MyComponent(props) {
-  const classes = useStyles(props);
-  return &amp;#x3C;div className={classes.root} /&gt;;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;HoC系で&lt;/h3&gt;
-&lt;p&gt;HoCである&lt;a href=&quot;https://material-ui.com/styles/api/#withstyles-styles-options-higher-order-component&quot;&gt;withStyles&lt;/a&gt;を使う。こちらも引用だが以下となる。意味はHooks系と同じだが、「元のスタイルシートオブジェクト」をwithStylesの入力として与え、「クラス名の対応表」がprops.classesに得られるようなコンポーネントを生成している。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;import React from &apos;react&apos;;
-import { withStyles } from &apos;@material-ui/core/styles&apos;;
-
-const styles = {
-  root: {
-    backgroundColor: &apos;red&apos;,
-  },
-};
-
-function MyComponent(props) {
-  return &amp;#x3C;div className={props.classes.root} /&gt;;
-}
-
-export default withStyles(styles)(MyComponent);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;取得した「クラス名の対応表」の使いかた&lt;/h2&gt;
-&lt;p&gt;「クラス名の対応表」は、入手方法としてHooksでもHoCで得ることができるが、同じものである。上記サンプルでは、入手した「クラス名の対応表」はclassesという名前のprops(props.classes)もしくは変数classesに格納している。&lt;/p&gt;
-&lt;p&gt;「クラス名の対応表」には2つの使いかたがある。&lt;/p&gt;
-&lt;h2&gt;classNameに与える&lt;/h2&gt;
-&lt;p&gt;サンプルにもあるが、&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;  return &amp;#x3C;div className={classes.root} /&gt;;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;のように指定する。複数あれば&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;  return &amp;#x3C;div className={classNames(classes.root,classes.hoge)} /&gt;;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;のようにNPMモジュールclassnamesを使うのがよいだろう。classnamesはクラス名を結合させているだけである。(&lt;a href=&quot;https://qiita.com/taqm/items/c38855d8158cdd9d5a3e&quot;&gt;clsx&lt;/a&gt;というのもあり効率がよいらしい)。&lt;/p&gt;
-&lt;h2&gt;classesで指定&lt;/h2&gt;
-&lt;p&gt;最後になったが、これがJSSの本領である。Material UIのコンポーネントにはCSS APIというものが定義されており、それを使ってカスタマイズすることができる。
-たとえば、&lt;a href=&quot;https://material-ui.com/api/tabs/&quot;&gt;Tabsコンポーネントには以下のようにかかれている&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;CSS&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Style sheet name: MuiTab.&lt;/li&gt;
-&lt;li&gt;Style sheet details:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&quot;left&quot;&gt;Rule name&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;Global class&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;Description&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;root&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.MuiTab-root&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Styles applied to the root element.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;labelIcon&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.MuiTab-labelIcon&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if both icon and label are provided.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;textColorInherit&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorInherit&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“inherit”.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;textColorPrimary&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorPrimary&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“primary”.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;textColorSecondary&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorSecondary&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“secondary”.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;&lt;font color=&quot;red&quot;&gt;selected&lt;/font&gt;&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.Mui-selected&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Pseudo-class applied to the root element if selected={true} (controlled by the Tabs component).&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;これらを必要に応じてオーバーライド定義することができる。赤字”selected”は後述の説明で例として使用するCSS APIのキー名である。このスタイルをオーバーライドする方法は3つある。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;With a rule name of the classes object prop.(classes propsのルール名)&lt;/li&gt;
-&lt;li&gt;With a global class name. (グローバルクラス名)&lt;/li&gt;
-&lt;li&gt;With a theme and an overrides property..(テーマと上書きプロパティ)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;以降では最初の「 rule name of the classes object prop.」について説明する。
-やるべきことは、classes属性に、指定したCSS API名をキー(ここではslected)とし「クラス名の対応表」の実クラス名を指定するのである。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: any) =&gt;
-  createStyles({
-    selectedTab: {
-      backgroundColor: &apos;#eeeeff&apos;,
-      fontWeight: &apos;bold&apos;,
-    },
-  });
-:
-          &amp;#x3C;Tabs&gt;
-            &amp;#x3C;Tab
-              classes={{ selected: classes.selectedTab }} /&gt;
-               :
-          &amp;#x3C;/Tabs&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;するともともとMUIで定義されていたCSSに上書きされる形でCSSスタイルが定義される。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[「リアクティブプログラミングが読み難い」というのは本当なのか?]]></title><description><![CDATA[追記(2017/05/2) redux-sagaでの非同期バージョンの紹介とリンクを追記。 追記(2017/2/23修正) 元記事の追記…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/80056c1ff10c63dc7810/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/80056c1ff10c63dc7810/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;追記(2017/05/2)&lt;/h1&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[「リアクティブプログラミングが読み難い」というのは本当なのか?]]></title><description><![CDATA[追記(2017/05/2) redux-sagaでの非同期バージョンの紹介とリンクを追記。 追記(2017/2/23修正) 元記事の追記…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/80056c1ff10c63dc7810/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/80056c1ff10c63dc7810/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;追記(2017/05/2)&lt;/h1&gt;
 &lt;p&gt;redux-sagaでの非同期バージョンの紹介とリンクを追記。&lt;/p&gt;
 &lt;h1&gt;追記(2017/2/23修正)&lt;/h1&gt;
 &lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;a href=&quot;http://qiita.com/hiruberuto/items/39e4126f470d8b84b291#%E8%BF%BD%E8%A8%98%EF%BC%93%E3%82%AB%E3%82%A6%E3%83%B3%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%B3%E3%83%88%E3%83%AA%E3%82%92%E9%A0%82%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E3%81%99%E3%81%8C%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%AB%E8%AA%A4%E3%82%8A%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99&quot;&gt;元記事の追記3&lt;/a&gt;にて言及を頂いたように、&lt;/font&gt;以下の「見易い版」コードは元コードが実現していた機能が抜けおちているという誤りがあります。遅くなりましたが、お詫びの上修正させていただきます。
@@ -4565,7 +4565,289 @@ import todoModule from &quot;./modules/todoModule&quot;;
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Redux-Sagaでテトリス風ゲームを実装して学んだこと]]></title><description><![CDATA[はじめに React #1 Advent Calendar 2017の11日目です。 Reduxのミドルウェア「Redux-saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/eaa039a7ce44d5969f06/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/eaa039a7ce44d5969f06/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;はじめに&lt;/h1&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[関数型プログラミングを業務開発に適用するための架空の社内勉強会資料]]></title><description><![CDATA[関数型プログラミングを業務開発で活用するために HaskellやScala、Erlang/Elixir、Clojure…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ff13229413b785cd9cf8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ff13229413b785cd9cf8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;関数型プログラミングを業務開発で活用するために&lt;/h1&gt;
+&lt;p&gt;HaskellやScala、Erlang/Elixir、Clojureなどの関数型プログラミング言語に興味がある人は多いと思いますが、自分らが日常行なっている業務での開発では到底それらの関数型言語を採用できないのが現実、という場合があるかもしれません。&lt;/p&gt;
+&lt;p&gt;なので、当面はJavaやGroovy、JS,Ruby,Pythonなどの非関数型プログラミング言語の上で関数型プログラミングスタイルや考え方をなるべく使っていくことでFPの考え方や技法に馴染み広めていき、利点を享受しつつ、将来は大手を振って&lt;strike&gt;転職&lt;/strike&gt;業務開発で本格的な関数型言語を使えるようにしていこうというのが現実的な戦略かもしれません。&lt;/p&gt;
+&lt;p&gt;以下はそのような目的での&lt;strike&gt;洗脳&lt;/strike&gt;勉強会をやるための架空の資料の目次(案)のようなものです。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;「独自研究」の注意&lt;/p&gt;
+&lt;p&gt;「FPとは何か」の定義について、現時点で一般に合意のある明確な唯一のものはないように見えます。しかし、上の目的を達成するためには「関数型プログラミングの本質は、非関数型言語での適用においても同様に有効だ、OOPと併用できる」という結論になる必要があります。また、良くある説明「関数型プログラミングには定義がなく人によってうんたらかんたら」というのも、「わかんねーよ!!おまえら初心者だと思って馬鹿にしてんのか」という印象を持たれる可能性があります。これらの問題を解決するため、本記事では意図的に独断的にFPの本質的定義を提示します。読者の方の認識と一致しない場合、「一つのあり得る説明のしかた」としてでも見ていただけますとありがたいです。コメント歓迎です。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(追記)
+「FPに定義などいらない書けばわかるさ」という意見もあると思いますが、またそれも一面の真理だと思いますが、それだと体験している特性が言語のものなのか、関数型パラダイムのものなのか弁別できません。それでも良いとは思いますが、この記事における独断的定義は、&lt;b&gt;他の言語、特に非関数型プログラミング言語に持ち込んでもなお有効であれば、つまり具体的な関数型言語それぞれの利点を完全に除去しても残っている特性があり利点を発揮し続けるのであれば、それこそが、あるいはそれのみが、個々の言語の利点と言うにはとどまらない関数型プログラミング固有の本質的な有効性と呼ぶに値する&lt;/b&gt;のではないか、という仮説に基づいています。ただ、言語個別のメリットを除去することによって「FPとしては残ってるのはほんのちょっぴり」に感じられたらごめんなさい。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1&gt;関数型プログラミング(FP)とは何か？&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;現象面・表象面では以下のとおり&lt;/li&gt;
+&lt;li&gt;(1)再代入をしない&lt;/li&gt;
+&lt;li&gt;(2)不変的データを使う(破壊的操作を禁止する)&lt;/li&gt;
+&lt;li&gt;(3)値を返さない関数や式・制御構造を使用せず、値や式、返り値を返す関数(メソッド)間の依存関係から構成される式木としてプログラムを記述する&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;以下はFPの必要条件とはしない。つまりFPにおいても許容する。理由は、完全には達成できないし、もしできたとしても入出力をしないプログラムには意味がないため。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(4)副作用としての入出力禁止。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;「FPの本質」とは&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;プログラムの実行は、引数を入力として結果を得るような計算であるとみなした上で、&lt;br&gt;計算結果を得るために必要な値の間の依存関係を、そのまま平たくプログラムに書き出すこと(cf.&lt;a href=&quot;https://ja.wikipedia.org/wiki/%E9%A0%85%E6%9B%B8%E3%81%8D%E6%8F%9B%E3%81%88&quot;&gt;項書き換え&lt;/a&gt; ※)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;結果を得るための計算が、「変更される状態、すなわちプログラムの実行=計算の進行によって刻々と変わっていく値」には依存しないようにする(メモ:図が必要)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;排除できなければ分離する&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;宣言的とも言う&lt;/li&gt;
+&lt;li&gt;←→命令型、手続き型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;この特性から、上の(1)(2)(3)が結果として導入される。また後述の「FPの効用」が得られる。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(追記)
+※ここで「項書き換え」をFPの本質と言っているわけではなくて、計算の結果の値を得るために必要な値の集合(葉としての引数・定数、中間計算結果としての節)の依存関係を有向グラフとみたときにプログラムないし着目した関数の評価の過程を通じて、&lt;b&gt;そのグラフが静的に定まっている&lt;/b&gt;(ボトムがあるからこの表現が適切かは確信ありませんが)、ということを言っています。項書き換えなりは評価戦略の話であり、結果的には得られる値が同じになるので参考としてリンクを貼りましたが、そこは主眼ではないです。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1&gt;上の説明に「関数」と言う言葉が出てきませんが?&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;それでよい。関数はここでは値の依存グラフを表現するための名前の付いた結節点にすぎない。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(追記)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;関数の振る舞いの特性に限定した定義にしてしまうと再代入禁止の根拠が薄れる。loopカウンタによる単なるforループの存在や、i=1;i++というコード断片を私はシンプルな統一的根拠によってなるべく否定したい。&lt;/li&gt;
+&lt;li&gt;「関数」の意味するものは言語によって異なる。かといって数学的関数で規定したくもない。だって明確化したいプログラムの振る舞いは、それとは実際に異なるものだから。嘘だと思うなら、純粋関数と信じるものを書き下して、呼び出し前の時刻と呼び出し後の時刻を計測してみると良い。「時間が経過した」という副作用を観測する事ができるから（cf.sleep sort）。電力消費量と熱雑音操作して音楽を鳴らすことだってできるらしいし。&lt;/li&gt;
+&lt;li&gt;計算に必要な値の依存関係に着目するのは、そのような関数概念や副作用概念の定義の差異やブレが介入できないと言う意味で本質的、少なくとも実用的である。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h1&gt;FPでやりたいこと・やれること&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;上記で「禁止」「排除」されたものは誰かが背負うことになる。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ランタイムがやる←Haskell&lt;/li&gt;
+&lt;li&gt;ライブラリがやる←FRP…&lt;/li&gt;
+&lt;li&gt;ユーザーコードの中で分離する。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;なので、結局やってることは「副作用の分離と管理」である。
+この観点から、前述の&lt;b&gt;「(4)副作用としての入出力」も射程に入る&lt;/b&gt;。
+入出力が禁止できなくても、分離もしくは管理できれば良し(HaskellのIOアクションがやっていることの一つ)。&lt;/li&gt;
+&lt;li&gt;「FPにおいて(副作用などを)禁止することで得られるものは何か？」
+は、問いが間違っていたことになる。
+FPは副作用を禁止しない。それを分離・管理する技術である。&lt;/li&gt;
+&lt;li&gt;FP以前も副作用、明示的状態管理はなされてきた。FPは、純粋関数、参照透過性という基準を元に明確にコード上に明確に
+わかる形で意識してやろうとする、のが違い。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;純粋関数と参照透過性&lt;/h1&gt;
+&lt;h2&gt;不純さは伝染する&lt;/h2&gt;
+&lt;p&gt;tbd&lt;/p&gt;
+&lt;h1&gt;FPではないもの&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;「狭義のFP」は、前述のとおり(異論はあるであろうが、この記事ではそうする)&lt;/li&gt;
+&lt;li&gt;「広義のFP」は、高階関数があればFPだというタワゴト含めいろいろあるので、
+おいとく。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;「パターンマッチ、遅延評価、タプル、ADT、静的型付け、高階型に代表される強力な型システム、型クラス、定理証明、カリー化と部分適用、モナド、do記法、内包表記、第一級関数、高階関数」などはFPではない。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ただしいずれもFPの適用を助ける面がある。これらがFPの本質と不可分だ、と言いたくなる気持を持つ人も出てくるだろうし、その気持はわからんでもない。しかし本記事ではそういう主張は趣旨に反するので抑える。&lt;/li&gt;
+&lt;li&gt;上記を提供するのがいわゆる「関数型言語」の存在意義であり、実際有用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;FPの効用&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;品質向上、バグ減少&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;状態更新がないので動作の見通しが立てやすく、コード修正(順序変更、追加、削除)の影響が限定的で安定的。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://developers.srad.jp/story/14/11/08/081210/&quot;&gt;プログラミング言語がソフトウェアの品質に与える影響&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;合成可能性の向上、部品化&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;文脈としての状態に依存しないので異なる場所での利用がしやすい。&lt;/li&gt;
+&lt;li&gt;関数合成によるプログラミング(モナド、アロー、コンビネータライブラリ、モナドトランスフォーマー、ミドルウェアパターン、デコレータ関数)★&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;テストしやすさの向上&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;プロパティテスト★&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;状態を切り出すことによって実現が容易になる機能&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;タイムトラベリングデバッグ、…&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;高度な抽象概念をモナド、アロー等で表現・部品化★&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;演習&lt;/h1&gt;
+&lt;h2&gt;(1)ループ操作をコレクションを操作する高階関数で表現する&lt;/h2&gt;
+&lt;p&gt;リスト(言語によっては配列、シーケンスなどで良い)を逆順にするプログラムを関数型プログラミングスタイルで記述せよ。例として、ループで書かれたプログラム(Groovy)を前述のFPの定義に従って修正する。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Groovy&quot;&gt;List func1(List list) {
+    def a = []
+    def b = []
+    def c = []
+    list.reverseEach {
+        a.add(it.a)
+        b.add(it.b)
+        c.add(it.c)
+    }
+    return [a, b, c]
+}
+println func1([[a:1, b:2, c:3],[a:11, b:12, c:13],[a:21, b:22, c:23]])
+// ==&amp;#x26;gt; [[21, 11, 1], [22, 12, 2], [23, 13, 3]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;(2)ループの中断を遅延ストリームで表現し、部品化を高次元で達成する&lt;/h2&gt;
+&lt;p&gt;ファイルが複数個(n個)あるとします。それぞれのファイルサイズはわかっています。これらのファイル群のファイルサイズを整数のリスト[s1, s2, s3, … sn]で表現します(sn&gt;=0)。これをlistと呼びます。listの長さはnになります(n&gt;=0)。この「ファイルサイズのリストlist」が表現するファイルをこの順序で、容量limitSizeのフロッピーディスクにコピーする必要があるとします(limitSize&gt;=0)。合計値がlimitSize以下になるように、ファイルを選択してください。具体的には、listの先頭からの部分リストで、その合計値がlimitSize以下であり、長さが最長のものを返す関数を任意の言語で(関数型っぽく)書いてください。listの順序は変更できませんし、listの先頭からスキップすることなく順にコピーする必要があります。Groovyのコード例(関数型っぽくない元の例)は以下のとおり。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Groovy&quot;&gt;List&amp;#x26;lt;Integer&amp;#x26;gt; func0(List&amp;#x26;lt;Integer&amp;#x26;gt; list, int limitSize) {
+    int sum = 0
+    for (int i=0; i&amp;#x26;lt;list.size(); i++) {
+        sum += list[i]
+        if (sum&amp;#x26;gt;limitSize) {
+            if (i == 0) {
+                return []
+            }
+            else {
+                return list[0..i-1]
+            }
+        }
+    }
+    return list
+}
+println func0([15,50,2,20,8,16,7,22], 100) // =&amp;#x26;gt; [15, 50, 2, 20, 8]
+println func0([15], 100) // =&amp;#x26;gt; [15]
+println func0([15,50,2,20,8,16,7,22], 1000) // =&amp;#x26;gt; [15, 50, 2, 20, 8, 16, 7, 22]
+println func0([15,50,2,20,8,16,7,22], 0) // =&amp;#x26;gt; []
+println func0([15,50,2,20,8,16,7,22], 95) // =&amp;#x26;gt; [15, 50, 2, 20, 8]
+println func0([15,50,2,20,8,16,7,22], 94) // =&amp;#x26;gt; [15, 50, 2, 20]
+println func0([], 100) // =&amp;#x26;gt; []
+println func0([15,50,2,0,0,0,0,20,0,0,8,16,7,22,0,0], 94) // =&amp;#x26;gt; [15, 50, 2, 0, 0, 0, 0, 20, 0, 0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;(3)キューを非破壊的に実装し、状態を切り出す&lt;/h2&gt;
+&lt;p&gt;待ち行列をFP、つまり非破壊的操作のみで実装してみましょう。以下はGroovyの例(破壊的操作での例)です。状態を切り出して、とかになるはずです。並列処理は考えないでも良い例外やエラーについても考慮しても良い(Optionとか)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;class Queue&amp;#x26;lt;E&amp;#x26;gt; {
+  ArrayList&amp;#x26;lt;E&amp;#x26;gt; list = []
+  void add(E e) {
+    list.add(e)
+  }
+  E remove() {
+    if (list.size() &amp;#x26;gt; 0) {
+       return list.remove(0)
+    }
+    else return null
+  }
+}
+q = new Queue&amp;#x26;lt;Integer&amp;#x26;gt;()
+q.add(3)
+q.add(4)
+q.add(5)
+assert q.remove() == 3
+assert q.remove() == 4
+assert q.remove() == 5
+assert q.remove() == null
+q.add(6)
+assert q.remove() == 6
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;非関数型言語でのFP適用の勘所&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;「(1)再代入をしない」「(2)破壊的操作をしない」
+は高階関数の活用により可能。便利な高階関数ライブラリや非破壊的
+データ構造のライブラリがあればなおよい(cf.純粋関数型データ構造)。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;細かく見ると、(2)は以下にわかれる。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(2-1)状態の処理を持たない&lt;/li&gt;
+&lt;li&gt;(2-2)本質的に状態を必要とする処理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;(2-1)は慣れれば容易。練習あるのみ。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;map(collect), fold(join),scan(accumulate),zipなどを息を吐くように使えるようになる。&lt;/li&gt;
+&lt;li&gt;十分な機能をもった高階関数ライブラリは欲しい(Rx,EclipseCollection,underscore,lodash,ES2015…)。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;(2-2)は原理的には「引数に状態を渡して返り値として新しい状態も返す」関数に書きかえれば良い&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ただし読みにくくなる(連続して操作する場合特に)&lt;/li&gt;
+&lt;li&gt;状態書き換え後に、古い状態を使う必要なければむしろ状態をとりちがえるバグの元となる。&lt;/li&gt;
+&lt;li&gt;Stateモナド導入できると良いのだが★&lt;/li&gt;
+&lt;li&gt;とりあえずの工夫としては「状態の外出しによる純粋操作」と
+「状態管理に特化した部分」に分離し、選択的に使用する
+(両者の結合はクロージャがあれば簡単)。&lt;/li&gt;
+&lt;li&gt;もしくは割りきって、状態書き換えを許容する。(特に大きな問題があるわけではない)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;OOPとの併用のための留意点&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;レシーバ形式のレシーバ(this)をメソッド第一引数として見る&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Java 8のメソッド参照演算子::とGroovyの.&amp;#x26;演算子の差異&lt;/li&gt;
+&lt;li&gt;上記のクロージャでの代用&lt;/li&gt;
+&lt;li&gt;参考: &lt;a href=&quot;http://d.hatena.ne.jp/lyrical_logical/20111107/1320671610&quot;&gt;open recursion&lt;/a&gt;, &lt;a href=&quot;http://tune.hateblo.jp/entry/2015/03/27/035648&quot;&gt;Haskellオブジェクト指向に触れてみよう〜初級編〜&lt;/a&gt;, Lens&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;クラス定義、継承、仮想関数&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;例外処理との相性&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;型による失敗の表現: Optional(Option,Maybe,Either)&lt;/li&gt;
+&lt;li&gt;非同期例外(RuntimeException)は副作用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;flatMapの真実&lt;/h1&gt;
+&lt;p&gt;tbd&lt;/p&gt;
+&lt;h1&gt;非関数型言語でのFP適用の限界&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;言語のサポートがないので自力でがんばる&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;FP言語をたとえばScalaやHaskellで学び、その知識を持ち込む&lt;/li&gt;
+&lt;li&gt;課題は前提知識のない他の開発者には不自然に感じられるかもしれないこと
+(本記事でカバーしたい点でもある)。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;「★」で示したところは、現時点では、非関数型プログラミング言語での開発に無理に
+持ち込まない方がよいと思っているところ。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;FPを活用するライブラリの使用が一番問題がない。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用途にあえば是非トライを&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;FPを活用するライブラリなど&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;FRP, &lt;a href=&quot;http://reactivex.io/&quot;&gt;ReactiveX(Rx)&lt;/a&gt;, &lt;a href=&quot;https://gist.github.com/masakielastic/5897831&quot;&gt;BaconJS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;React/ &lt;a href=&quot;https://github.com/reactjs/redux&quot;&gt;Redux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Promise/Future/Observable&lt;/li&gt;
+&lt;li&gt;Immutable.JS&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.functionaljava.org/&quot;&gt;FunctionalJava(fj)&lt;/a&gt;, &lt;a href=&quot;https://github.com/mperry/functionalgroovy&quot;&gt;Functional Groovy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.eclipse.org/collections/&quot;&gt;Eclipse Collection&lt;/a&gt;(旧GS Collection)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;関連トピックス紹介&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;CQRS&lt;/li&gt;
+&lt;li&gt;RESTfulアーキテクチャ&lt;/li&gt;
+&lt;li&gt;べき等性&lt;/li&gt;
+&lt;li&gt;STM&lt;/li&gt;
+&lt;li&gt;Datomic&lt;/li&gt;
+&lt;li&gt;イミュータブルデータモデル&lt;/li&gt;
+&lt;li&gt;Elm, Frege&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;さあみなさんも関数型ライフを!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Redux-Sagaでテトリス風ゲームを実装して学んだこと]]></title><description><![CDATA[はじめに React #1 Advent Calendar 2017の11日目です。 Reduxのミドルウェア「Redux-saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/eaa039a7ce44d5969f06/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/eaa039a7ce44d5969f06/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;はじめに&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&quot;https://qiita.com/advent-calendar/2017/react&quot;&gt;React #1 Advent Calendar 2017&lt;/a&gt;の11日目です。&lt;/p&gt;
 &lt;p&gt;Reduxのミドルウェア「Redux-saga」で「やや複雑なリアルタイムゲーム」としてテトリス風のゲームの基本部分を開発し、それを通じて学んだこと・感じたことを紹介します。&lt;/p&gt;
 &lt;h1&gt;画面例&lt;/h1&gt;
@@ -4869,289 +5151,7 @@ export function* pieceFall() {
 &lt;a href=&quot;#fnref-4&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[関数型プログラミングを業務開発に適用するための架空の社内勉強会資料]]></title><description><![CDATA[関数型プログラミングを業務開発で活用するために HaskellやScala、Erlang/Elixir、Clojure…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ff13229413b785cd9cf8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ff13229413b785cd9cf8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;関数型プログラミングを業務開発で活用するために&lt;/h1&gt;
-&lt;p&gt;HaskellやScala、Erlang/Elixir、Clojureなどの関数型プログラミング言語に興味がある人は多いと思いますが、自分らが日常行なっている業務での開発では到底それらの関数型言語を採用できないのが現実、という場合があるかもしれません。&lt;/p&gt;
-&lt;p&gt;なので、当面はJavaやGroovy、JS,Ruby,Pythonなどの非関数型プログラミング言語の上で関数型プログラミングスタイルや考え方をなるべく使っていくことでFPの考え方や技法に馴染み広めていき、利点を享受しつつ、将来は大手を振って&lt;strike&gt;転職&lt;/strike&gt;業務開発で本格的な関数型言語を使えるようにしていこうというのが現実的な戦略かもしれません。&lt;/p&gt;
-&lt;p&gt;以下はそのような目的での&lt;strike&gt;洗脳&lt;/strike&gt;勉強会をやるための架空の資料の目次(案)のようなものです。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;「独自研究」の注意&lt;/p&gt;
-&lt;p&gt;「FPとは何か」の定義について、現時点で一般に合意のある明確な唯一のものはないように見えます。しかし、上の目的を達成するためには「関数型プログラミングの本質は、非関数型言語での適用においても同様に有効だ、OOPと併用できる」という結論になる必要があります。また、良くある説明「関数型プログラミングには定義がなく人によってうんたらかんたら」というのも、「わかんねーよ!!おまえら初心者だと思って馬鹿にしてんのか」という印象を持たれる可能性があります。これらの問題を解決するため、本記事では意図的に独断的にFPの本質的定義を提示します。読者の方の認識と一致しない場合、「一つのあり得る説明のしかた」としてでも見ていただけますとありがたいです。コメント歓迎です。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;(追記)
-「FPに定義などいらない書けばわかるさ」という意見もあると思いますが、またそれも一面の真理だと思いますが、それだと体験している特性が言語のものなのか、関数型パラダイムのものなのか弁別できません。それでも良いとは思いますが、この記事における独断的定義は、&lt;b&gt;他の言語、特に非関数型プログラミング言語に持ち込んでもなお有効であれば、つまり具体的な関数型言語それぞれの利点を完全に除去しても残っている特性があり利点を発揮し続けるのであれば、それこそが、あるいはそれのみが、個々の言語の利点と言うにはとどまらない関数型プログラミング固有の本質的な有効性と呼ぶに値する&lt;/b&gt;のではないか、という仮説に基づいています。ただ、言語個別のメリットを除去することによって「FPとしては残ってるのはほんのちょっぴり」に感じられたらごめんなさい。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1&gt;関数型プログラミング(FP)とは何か？&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;現象面・表象面では以下のとおり&lt;/li&gt;
-&lt;li&gt;(1)再代入をしない&lt;/li&gt;
-&lt;li&gt;(2)不変的データを使う(破壊的操作を禁止する)&lt;/li&gt;
-&lt;li&gt;(3)値を返さない関数や式・制御構造を使用せず、値や式、返り値を返す関数(メソッド)間の依存関係から構成される式木としてプログラムを記述する&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;以下はFPの必要条件とはしない。つまりFPにおいても許容する。理由は、完全には達成できないし、もしできたとしても入出力をしないプログラムには意味がないため。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;(4)副作用としての入出力禁止。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;「FPの本質」とは&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;プログラムの実行は、引数を入力として結果を得るような計算であるとみなした上で、&lt;br&gt;計算結果を得るために必要な値の間の依存関係を、そのまま平たくプログラムに書き出すこと(cf.&lt;a href=&quot;https://ja.wikipedia.org/wiki/%E9%A0%85%E6%9B%B8%E3%81%8D%E6%8F%9B%E3%81%88&quot;&gt;項書き換え&lt;/a&gt; ※)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;結果を得るための計算が、「変更される状態、すなわちプログラムの実行=計算の進行によって刻々と変わっていく値」には依存しないようにする(メモ:図が必要)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;排除できなければ分離する&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;宣言的とも言う&lt;/li&gt;
-&lt;li&gt;←→命令型、手続き型&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;この特性から、上の(1)(2)(3)が結果として導入される。また後述の「FPの効用」が得られる。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;(追記)
-※ここで「項書き換え」をFPの本質と言っているわけではなくて、計算の結果の値を得るために必要な値の集合(葉としての引数・定数、中間計算結果としての節)の依存関係を有向グラフとみたときにプログラムないし着目した関数の評価の過程を通じて、&lt;b&gt;そのグラフが静的に定まっている&lt;/b&gt;(ボトムがあるからこの表現が適切かは確信ありませんが)、ということを言っています。項書き換えなりは評価戦略の話であり、結果的には得られる値が同じになるので参考としてリンクを貼りましたが、そこは主眼ではないです。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1&gt;上の説明に「関数」と言う言葉が出てきませんが?&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;それでよい。関数はここでは値の依存グラフを表現するための名前の付いた結節点にすぎない。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;(追記)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;関数の振る舞いの特性に限定した定義にしてしまうと再代入禁止の根拠が薄れる。loopカウンタによる単なるforループの存在や、i=1;i++というコード断片を私はシンプルな統一的根拠によってなるべく否定したい。&lt;/li&gt;
-&lt;li&gt;「関数」の意味するものは言語によって異なる。かといって数学的関数で規定したくもない。だって明確化したいプログラムの振る舞いは、それとは実際に異なるものだから。嘘だと思うなら、純粋関数と信じるものを書き下して、呼び出し前の時刻と呼び出し後の時刻を計測してみると良い。「時間が経過した」という副作用を観測する事ができるから（cf.sleep sort）。電力消費量と熱雑音操作して音楽を鳴らすことだってできるらしいし。&lt;/li&gt;
-&lt;li&gt;計算に必要な値の依存関係に着目するのは、そのような関数概念や副作用概念の定義の差異やブレが介入できないと言う意味で本質的、少なくとも実用的である。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;h1&gt;FPでやりたいこと・やれること&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;上記で「禁止」「排除」されたものは誰かが背負うことになる。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ランタイムがやる←Haskell&lt;/li&gt;
-&lt;li&gt;ライブラリがやる←FRP…&lt;/li&gt;
-&lt;li&gt;ユーザーコードの中で分離する。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;なので、結局やってることは「副作用の分離と管理」である。
-この観点から、前述の&lt;b&gt;「(4)副作用としての入出力」も射程に入る&lt;/b&gt;。
-入出力が禁止できなくても、分離もしくは管理できれば良し(HaskellのIOアクションがやっていることの一つ)。&lt;/li&gt;
-&lt;li&gt;「FPにおいて(副作用などを)禁止することで得られるものは何か？」
-は、問いが間違っていたことになる。
-FPは副作用を禁止しない。それを分離・管理する技術である。&lt;/li&gt;
-&lt;li&gt;FP以前も副作用、明示的状態管理はなされてきた。FPは、純粋関数、参照透過性という基準を元に明確にコード上に明確に
-わかる形で意識してやろうとする、のが違い。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;純粋関数と参照透過性&lt;/h1&gt;
-&lt;h2&gt;不純さは伝染する&lt;/h2&gt;
-&lt;p&gt;tbd&lt;/p&gt;
-&lt;h1&gt;FPではないもの&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;「狭義のFP」は、前述のとおり(異論はあるであろうが、この記事ではそうする)&lt;/li&gt;
-&lt;li&gt;「広義のFP」は、高階関数があればFPだというタワゴト含めいろいろあるので、
-おいとく。&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;「パターンマッチ、遅延評価、タプル、ADT、静的型付け、高階型に代表される強力な型システム、型クラス、定理証明、カリー化と部分適用、モナド、do記法、内包表記、第一級関数、高階関数」などはFPではない。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ただしいずれもFPの適用を助ける面がある。これらがFPの本質と不可分だ、と言いたくなる気持を持つ人も出てくるだろうし、その気持はわからんでもない。しかし本記事ではそういう主張は趣旨に反するので抑える。&lt;/li&gt;
-&lt;li&gt;上記を提供するのがいわゆる「関数型言語」の存在意義であり、実際有用。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;FPの効用&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;品質向上、バグ減少&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;状態更新がないので動作の見通しが立てやすく、コード修正(順序変更、追加、削除)の影響が限定的で安定的。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://developers.srad.jp/story/14/11/08/081210/&quot;&gt;プログラミング言語がソフトウェアの品質に与える影響&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;合成可能性の向上、部品化&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;文脈としての状態に依存しないので異なる場所での利用がしやすい。&lt;/li&gt;
-&lt;li&gt;関数合成によるプログラミング(モナド、アロー、コンビネータライブラリ、モナドトランスフォーマー、ミドルウェアパターン、デコレータ関数)★&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;テストしやすさの向上&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;プロパティテスト★&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;状態を切り出すことによって実現が容易になる機能&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;タイムトラベリングデバッグ、…&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;高度な抽象概念をモナド、アロー等で表現・部品化★&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;演習&lt;/h1&gt;
-&lt;h2&gt;(1)ループ操作をコレクションを操作する高階関数で表現する&lt;/h2&gt;
-&lt;p&gt;リスト(言語によっては配列、シーケンスなどで良い)を逆順にするプログラムを関数型プログラミングスタイルで記述せよ。例として、ループで書かれたプログラム(Groovy)を前述のFPの定義に従って修正する。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-Groovy&quot;&gt;List func1(List list) {
-    def a = []
-    def b = []
-    def c = []
-    list.reverseEach {
-        a.add(it.a)
-        b.add(it.b)
-        c.add(it.c)
-    }
-    return [a, b, c]
-}
-println func1([[a:1, b:2, c:3],[a:11, b:12, c:13],[a:21, b:22, c:23]])
-// ==&amp;#x26;gt; [[21, 11, 1], [22, 12, 2], [23, 13, 3]]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;(2)ループの中断を遅延ストリームで表現し、部品化を高次元で達成する&lt;/h2&gt;
-&lt;p&gt;ファイルが複数個(n個)あるとします。それぞれのファイルサイズはわかっています。これらのファイル群のファイルサイズを整数のリスト[s1, s2, s3, … sn]で表現します(sn&gt;=0)。これをlistと呼びます。listの長さはnになります(n&gt;=0)。この「ファイルサイズのリストlist」が表現するファイルをこの順序で、容量limitSizeのフロッピーディスクにコピーする必要があるとします(limitSize&gt;=0)。合計値がlimitSize以下になるように、ファイルを選択してください。具体的には、listの先頭からの部分リストで、その合計値がlimitSize以下であり、長さが最長のものを返す関数を任意の言語で(関数型っぽく)書いてください。listの順序は変更できませんし、listの先頭からスキップすることなく順にコピーする必要があります。Groovyのコード例(関数型っぽくない元の例)は以下のとおり。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-Groovy&quot;&gt;List&amp;#x26;lt;Integer&amp;#x26;gt; func0(List&amp;#x26;lt;Integer&amp;#x26;gt; list, int limitSize) {
-    int sum = 0
-    for (int i=0; i&amp;#x26;lt;list.size(); i++) {
-        sum += list[i]
-        if (sum&amp;#x26;gt;limitSize) {
-            if (i == 0) {
-                return []
-            }
-            else {
-                return list[0..i-1]
-            }
-        }
-    }
-    return list
-}
-println func0([15,50,2,20,8,16,7,22], 100) // =&amp;#x26;gt; [15, 50, 2, 20, 8]
-println func0([15], 100) // =&amp;#x26;gt; [15]
-println func0([15,50,2,20,8,16,7,22], 1000) // =&amp;#x26;gt; [15, 50, 2, 20, 8, 16, 7, 22]
-println func0([15,50,2,20,8,16,7,22], 0) // =&amp;#x26;gt; []
-println func0([15,50,2,20,8,16,7,22], 95) // =&amp;#x26;gt; [15, 50, 2, 20, 8]
-println func0([15,50,2,20,8,16,7,22], 94) // =&amp;#x26;gt; [15, 50, 2, 20]
-println func0([], 100) // =&amp;#x26;gt; []
-println func0([15,50,2,0,0,0,0,20,0,0,8,16,7,22,0,0], 94) // =&amp;#x26;gt; [15, 50, 2, 0, 0, 0, 0, 20, 0, 0]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;(3)キューを非破壊的に実装し、状態を切り出す&lt;/h2&gt;
-&lt;p&gt;待ち行列をFP、つまり非破壊的操作のみで実装してみましょう。以下はGroovyの例(破壊的操作での例)です。状態を切り出して、とかになるはずです。並列処理は考えないでも良い例外やエラーについても考慮しても良い(Optionとか)&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;class Queue&amp;#x26;lt;E&amp;#x26;gt; {
-  ArrayList&amp;#x26;lt;E&amp;#x26;gt; list = []
-  void add(E e) {
-    list.add(e)
-  }
-  E remove() {
-    if (list.size() &amp;#x26;gt; 0) {
-       return list.remove(0)
-    }
-    else return null
-  }
-}
-q = new Queue&amp;#x26;lt;Integer&amp;#x26;gt;()
-q.add(3)
-q.add(4)
-q.add(5)
-assert q.remove() == 3
-assert q.remove() == 4
-assert q.remove() == 5
-assert q.remove() == null
-q.add(6)
-assert q.remove() == 6
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;非関数型言語でのFP適用の勘所&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;「(1)再代入をしない」「(2)破壊的操作をしない」
-は高階関数の活用により可能。便利な高階関数ライブラリや非破壊的
-データ構造のライブラリがあればなおよい(cf.純粋関数型データ構造)。&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;細かく見ると、(2)は以下にわかれる。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;(2-1)状態の処理を持たない&lt;/li&gt;
-&lt;li&gt;(2-2)本質的に状態を必要とする処理&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;(2-1)は慣れれば容易。練習あるのみ。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;map(collect), fold(join),scan(accumulate),zipなどを息を吐くように使えるようになる。&lt;/li&gt;
-&lt;li&gt;十分な機能をもった高階関数ライブラリは欲しい(Rx,EclipseCollection,underscore,lodash,ES2015…)。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;(2-2)は原理的には「引数に状態を渡して返り値として新しい状態も返す」関数に書きかえれば良い&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ただし読みにくくなる(連続して操作する場合特に)&lt;/li&gt;
-&lt;li&gt;状態書き換え後に、古い状態を使う必要なければむしろ状態をとりちがえるバグの元となる。&lt;/li&gt;
-&lt;li&gt;Stateモナド導入できると良いのだが★&lt;/li&gt;
-&lt;li&gt;とりあえずの工夫としては「状態の外出しによる純粋操作」と
-「状態管理に特化した部分」に分離し、選択的に使用する
-(両者の結合はクロージャがあれば簡単)。&lt;/li&gt;
-&lt;li&gt;もしくは割りきって、状態書き換えを許容する。(特に大きな問題があるわけではない)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;OOPとの併用のための留意点&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;レシーバ形式のレシーバ(this)をメソッド第一引数として見る&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Java 8のメソッド参照演算子::とGroovyの.&amp;#x26;演算子の差異&lt;/li&gt;
-&lt;li&gt;上記のクロージャでの代用&lt;/li&gt;
-&lt;li&gt;参考: &lt;a href=&quot;http://d.hatena.ne.jp/lyrical_logical/20111107/1320671610&quot;&gt;open recursion&lt;/a&gt;, &lt;a href=&quot;http://tune.hateblo.jp/entry/2015/03/27/035648&quot;&gt;Haskellオブジェクト指向に触れてみよう〜初級編〜&lt;/a&gt;, Lens&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;クラス定義、継承、仮想関数&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;例外処理との相性&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;型による失敗の表現: Optional(Option,Maybe,Either)&lt;/li&gt;
-&lt;li&gt;非同期例外(RuntimeException)は副作用&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;flatMapの真実&lt;/h1&gt;
-&lt;p&gt;tbd&lt;/p&gt;
-&lt;h1&gt;非関数型言語でのFP適用の限界&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;言語のサポートがないので自力でがんばる&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;FP言語をたとえばScalaやHaskellで学び、その知識を持ち込む&lt;/li&gt;
-&lt;li&gt;課題は前提知識のない他の開発者には不自然に感じられるかもしれないこと
-(本記事でカバーしたい点でもある)。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;「★」で示したところは、現時点では、非関数型プログラミング言語での開発に無理に
-持ち込まない方がよいと思っているところ。&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;FPを活用するライブラリの使用が一番問題がない。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;用途にあえば是非トライを&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;FPを活用するライブラリなど&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;FRP, &lt;a href=&quot;http://reactivex.io/&quot;&gt;ReactiveX(Rx)&lt;/a&gt;, &lt;a href=&quot;https://gist.github.com/masakielastic/5897831&quot;&gt;BaconJS&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;React/ &lt;a href=&quot;https://github.com/reactjs/redux&quot;&gt;Redux&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Promise/Future/Observable&lt;/li&gt;
-&lt;li&gt;Immutable.JS&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.functionaljava.org/&quot;&gt;FunctionalJava(fj)&lt;/a&gt;, &lt;a href=&quot;https://github.com/mperry/functionalgroovy&quot;&gt;Functional Groovy&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.eclipse.org/collections/&quot;&gt;Eclipse Collection&lt;/a&gt;(旧GS Collection)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;関連トピックス紹介&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;CQRS&lt;/li&gt;
-&lt;li&gt;RESTfulアーキテクチャ&lt;/li&gt;
-&lt;li&gt;べき等性&lt;/li&gt;
-&lt;li&gt;STM&lt;/li&gt;
-&lt;li&gt;Datomic&lt;/li&gt;
-&lt;li&gt;イミュータブルデータモデル&lt;/li&gt;
-&lt;li&gt;Elm, Frege&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;さあみなさんも関数型ライフを!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[As You]]></title><description><![CDATA[This is my first post on my new fake blog! How exciting! I’m sure I’ll write a lot more interesting things in the future. Oh, and here’s a…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/as-you/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/as-you/</guid><pubDate>Sat, 01 Sep 2018 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;This is my first post on my new fake blog! How exciting!&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[As You]]></title><description><![CDATA[This is my first post on my new fake blog! How exciting! I’m sure I’ll write a lot more interesting things in the future. Oh, and here’s a…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/as-you/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/as-you/</guid><pubDate>Sat, 01 Sep 2018 22:12:03 GMT</pubDate><content:encoded>&lt;p&gt;This is my first post on my new fake blog! How exciting!&lt;/p&gt;
 &lt;p&gt;I’m sure I’ll write a lot more interesting things in the future.&lt;/p&gt;
 &lt;p&gt;Oh, and here’s a great quote from this Wikipedia on
 &lt;a href=&quot;http://en.wikipedia.org/wiki/Salted_duck_egg&quot;&gt;salted duck eggs&lt;/a&gt;.&lt;/p&gt;
