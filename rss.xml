@@ -1,79 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog Grommet v2]]></title><description><![CDATA[This is a DEMO site! SSG - Gatsby JS, UI - Grommet v2]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 30 Mar 2020 13:27:52 GMT</lastBuildDate><item><title><![CDATA[TAPLのML実装をRustでやってみるシリーズ「4章 算術式のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみます。 まずは4章の算術式です。書籍でのtype termが保持するinfo…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみます。&lt;/p&gt;
-&lt;p&gt;まずは4章の算術式です。書籍でのtype termが保持するinfoは、ソースからパージングするわけではないので略します。いらなそうなletは省きました(OCamlでの必要性は不明)。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;#![feature(box_patterns)]
-#![feature(box_syntax)]
-
-#[derive(Debug,Clone)]
-enum Term {
-    True,
-    False,
-    If(Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;),
-    Zero,
-    Succ(Box&amp;#x3C;Term&gt;),
-    Pred(Box&amp;#x3C;Term&gt;),
-    IsZero(Box&amp;#x3C;Term&gt;)
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Gatsby Starter Blog Grommet v2]]></title><description><![CDATA[This is a DEMO site! SSG - Gatsby JS, UI - Grommet v2]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 30 Mar 2020 13:32:01 GMT</lastBuildDate><item><title><![CDATA[【React+TypeScript】Function Componentで省略可能propsの省略した場合の値を型安全に指定する]]></title><description><![CDATA[https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521 こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。 リンク先から引用。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&quot;&gt;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。&lt;/p&gt;
+&lt;p&gt;リンク先から引用。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;const MyComponent = (props: { name: string, telephone: string }) =&gt; {
+  ...
 }
 
-use Term::*;
+MyComponent.defaultProps = { telephone: &quot;222-333-4444&quot; }
 
-fn is_numerical(t: &amp;#x26;Term) -&gt; bool {
-    match *t {
-        Zero =&gt; true,
-        Succ(box ref t1) =&gt; is_numerical(t1),
-        _ =&gt; false
-    }
-}
+// Works - good
+const test = &amp;#x3C;MyComponent name=&quot;Hulk Hogan&quot; /&gt;
 
-fn is_val(t: &amp;#x26;Term) -&gt; bool {
-    match *t {
-        True =&gt; true,
-        False =&gt; true,
-        _ =&gt; is_numerical(t)
-    }
-}
-
-fn eval1(t: Term) -&gt; Term {
-    match t {
-        Zero =&gt; Zero,
-        If(box True, box t2, _) =&gt; t2,
-        If(box False, _, box t3) =&gt; t3,
-        If(box t1, t2, t3) =&gt; If(box eval1(t1), t2, t3),
-        Succ(box t1) =&gt; Succ(box eval1(t1)),
-        Pred(box Zero) =&gt; Zero,
-        Pred(box Succ(box ref t1)) if is_numerical(t1) =&gt; t1.clone(),
-        Pred(box t1) =&gt; Pred(box eval1(t1)),
-        IsZero(box Zero) =&gt; True,
-        IsZero(box Succ(box ref t1)) if is_numerical(t1) =&gt; False,
-        IsZero(box t1) =&gt; IsZero(box eval1(t1)),
-        _ =&gt; panic!()
-    }
-}
-
-fn main() {
-    assert_eq!(format!(&quot;{:?}&quot;, True), &quot;True&quot;);
-    assert_eq!(is_numerical(&amp;#x26;True), false);
-    assert_eq!(is_numerical(&amp;#x26;Zero), true);
-    assert_eq!(is_val(&amp;#x26;True), true);
-    assert_eq!(is_val(&amp;#x26;If(box True,box True,box False)), false);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box True,box True,box False))), &quot;True&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box False,box True,box False))), &quot;False&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box IsZero(box Zero), box True, box False))), &quot;If(True, True, False)&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Succ(box Succ(box Zero)))), &quot;Succ(Succ(Zero))&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Zero))), &quot;Zero&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Zero))), &quot;True&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Succ(box Zero)))), &quot;False&quot;);
-    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Pred(box Succ(box Zero))))), &quot;IsZero(Zero)&quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-&lt;li&gt;boxを除けば、ほぼOCamlと同等。GCの無い言語としては、良い線に行っていると思う。&lt;/li&gt;
-&lt;li&gt;実行メモリモデルがまさにC/C++なので、参照と値、cloneを完璧に適切に使いわける必要がある。OCaml版では全く意識する必要がない点である。この区別をてきとうにやっておけばうまく動く、ということはない。ここがGC言語との違い。&lt;/li&gt;
-&lt;li&gt;もし完璧に適切に使いわけられないならば、それはコンパイルが通らないことを意味する。やりとげてみると、目から鱗の自然な形なのだが、最初わからないとつらい。根性しかない。&lt;/li&gt;
-&lt;li&gt;今回の場合、match式の背後にある「暗黙の代入」、すなわちマッチ対象から各パターン、ガード、枝の本体に分配されるための代入が、それぞれムーブセマンティクスなのか、ownershipをとらない参照(&amp;#x26;mutではない&amp;#x26;)なのか、boxなのかrefなのかbox refなのか、そのすべてが正しく的確に指定されている必要がある。matchが展開された結果における暗黙の代入の様子を想像する力が問われる。どっかにドキュメントありますかね…。&lt;/li&gt;
-&lt;li&gt;Rustにおけるデータ管理は、「値」が基本になる、というのはたぶん間違いない。しかし、リアルワールドでは「値だけ」でやっていくことはできない。borrwingとclone()を適宜組合せる必要がある。&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[第12回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/1de39df381dfeee305ab&quot;&gt;第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」&lt;/a&gt;を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
+// Doesn&apos;t work - missing name, good
+const test = &amp;#x3C;MyComponent /&gt;
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第12回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/0e0e7979b7e2b19e55f5/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/1de39df381dfeee305ab&quot;&gt;第12回 オフラインリアルタイムどう書くの参考問題「道なりの亀」&lt;/a&gt;を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-frege:turtle.fr&quot;&gt;package sample.Turtle where
 
 type Position = Char
@@ -414,7 +353,214 @@ fn apply(t1:Term, t2:Term) -&gt; Term {
     Apply(Box::new(t1), Box::new(t2))
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;テストコードを含めたものは&lt;a href=&quot;https://gist.github.com/uehaj/07a2f4856a2c51df4e1f&quot;&gt;こちらのgist&lt;/a&gt;にあります。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Reactベース静的サイトジェネレータGatsbyの真の力をお見せします]]></title><description><![CDATA[NTTテクノクロスの上原です。
+&lt;p&gt;テストコードを含めたものは&lt;a href=&quot;https://gist.github.com/uehaj/07a2f4856a2c51df4e1f&quot;&gt;こちらのgist&lt;/a&gt;にあります。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[TAPLのML実装をRustでやってみるシリーズ「4章 算術式のML実装」]]></title><description><![CDATA[TAPL本(Types And Programming Language、型システム入門)の各章にある「ML実装」の例をRustにポーティングしてみます。 まずは4章の算術式です。書籍でのtype termが保持するinfo…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1ac71855d05132d54eb8/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://www.amazon.co.jp/exec/obidos/ASIN/4274069117/uehaj-22/ref=nosim/&quot;&gt;TAPL本(Types And Programming Language、型システム入門)&lt;/a&gt;の各章にある「ML実装」の例をRustにポーティングしてみます。&lt;/p&gt;
+&lt;p&gt;まずは4章の算術式です。書籍でのtype termが保持するinfoは、ソースからパージングするわけではないので略します。いらなそうなletは省きました(OCamlでの必要性は不明)。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;#![feature(box_patterns)]
+#![feature(box_syntax)]
+
+#[derive(Debug,Clone)]
+enum Term {
+    True,
+    False,
+    If(Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;, Box&amp;#x3C;Term&gt;),
+    Zero,
+    Succ(Box&amp;#x3C;Term&gt;),
+    Pred(Box&amp;#x3C;Term&gt;),
+    IsZero(Box&amp;#x3C;Term&gt;)
+}
+
+use Term::*;
+
+fn is_numerical(t: &amp;#x26;Term) -&gt; bool {
+    match *t {
+        Zero =&gt; true,
+        Succ(box ref t1) =&gt; is_numerical(t1),
+        _ =&gt; false
+    }
+}
+
+fn is_val(t: &amp;#x26;Term) -&gt; bool {
+    match *t {
+        True =&gt; true,
+        False =&gt; true,
+        _ =&gt; is_numerical(t)
+    }
+}
+
+fn eval1(t: Term) -&gt; Term {
+    match t {
+        Zero =&gt; Zero,
+        If(box True, box t2, _) =&gt; t2,
+        If(box False, _, box t3) =&gt; t3,
+        If(box t1, t2, t3) =&gt; If(box eval1(t1), t2, t3),
+        Succ(box t1) =&gt; Succ(box eval1(t1)),
+        Pred(box Zero) =&gt; Zero,
+        Pred(box Succ(box ref t1)) if is_numerical(t1) =&gt; t1.clone(),
+        Pred(box t1) =&gt; Pred(box eval1(t1)),
+        IsZero(box Zero) =&gt; True,
+        IsZero(box Succ(box ref t1)) if is_numerical(t1) =&gt; False,
+        IsZero(box t1) =&gt; IsZero(box eval1(t1)),
+        _ =&gt; panic!()
+    }
+}
+
+fn main() {
+    assert_eq!(format!(&quot;{:?}&quot;, True), &quot;True&quot;);
+    assert_eq!(is_numerical(&amp;#x26;True), false);
+    assert_eq!(is_numerical(&amp;#x26;Zero), true);
+    assert_eq!(is_val(&amp;#x26;True), true);
+    assert_eq!(is_val(&amp;#x26;If(box True,box True,box False)), false);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box True,box True,box False))), &quot;True&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box False,box True,box False))), &quot;False&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(If(box IsZero(box Zero), box True, box False))), &quot;If(True, True, False)&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Succ(box Succ(box Zero)))), &quot;Succ(Succ(Zero))&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Zero))), &quot;Zero&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(Pred(box Succ(box Zero)))), &quot;Zero&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Zero))), &quot;True&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Succ(box Zero)))), &quot;False&quot;);
+    assert_eq!(format!(&quot;{:?}&quot;, eval1(IsZero(box Pred(box Succ(box Zero))))), &quot;IsZero(Zero)&quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;boxを除けば、ほぼOCamlと同等。GCの無い言語としては、良い線に行っていると思う。&lt;/li&gt;
+&lt;li&gt;実行メモリモデルがまさにC/C++なので、参照と値、cloneを完璧に適切に使いわける必要がある。OCaml版では全く意識する必要がない点である。この区別をてきとうにやっておけばうまく動く、ということはない。ここがGC言語との違い。&lt;/li&gt;
+&lt;li&gt;もし完璧に適切に使いわけられないならば、それはコンパイルが通らないことを意味する。やりとげてみると、目から鱗の自然な形なのだが、最初わからないとつらい。根性しかない。&lt;/li&gt;
+&lt;li&gt;今回の場合、match式の背後にある「暗黙の代入」、すなわちマッチ対象から各パターン、ガード、枝の本体に分配されるための代入が、それぞれムーブセマンティクスなのか、ownershipをとらない参照(&amp;#x26;mutではない&amp;#x26;)なのか、boxなのかrefなのかbox refなのか、そのすべてが正しく的確に指定されている必要がある。matchが展開された結果における暗黙の代入の様子を想像する力が問われる。どっかにドキュメントありますかね…。&lt;/li&gt;
+&lt;li&gt;Rustにおけるデータ管理は、「値」が基本になる、というのはたぶん間違いない。しかし、リアルワールドでは「値だけ」でやっていくことはできない。borrwingとclone()を適宜組合せる必要がある。&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[第27回 オフラインリアルタイムどう書くの問題「分岐と行き止まり」をRustで解く]]></title><description><![CDATA[オフラインリアルタイムどう書くの過去問題「分岐と行き止まり」を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答はこちら) Rustの感想 Rust…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://yhpg.doorkeeper.jp/&quot;&gt;オフラインリアルタイムどう書く&lt;/a&gt;の&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord27raswi/&quot;&gt;過去問題「分岐と行き止まり」&lt;/a&gt;を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答は&lt;a href=&quot;http://qiita.com/Nabetani/items/23ebddb44f0234e7fb15&quot;&gt;こちら&lt;/a&gt;)&lt;/p&gt;
+&lt;h1&gt;Rustの感想&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Rustは関数型プログラミングには向いてない、と思ったが、勘違いだった。&lt;strong&gt;やればできる&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;やればできるのだが(後述)、iter(),into_iter()とcollect::&amp;#x3C;&gt;()だらけのこれが関数型と呼べるのか、関数型プログラミングの成立条件には、簡潔さというものは必須条件なのではないか? あるいはiter()とcollect()は慣れると見えなくなるのか。&lt;/li&gt;
+&lt;li&gt;ただ、ライブラリの作りとしては関数型プログラミングの道具立はそろえられている。&lt;a href=&quot;http://doc.rust-lang.org/std/iter/trait.IteratorExt.html&quot;&gt;flat_mapしかり、zip, fold, fuse, ..&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;ちなみに、iter(),into_iter()はコレクション(Vec,..)をイテレータに変換、collect()はその逆。&lt;/li&gt;
+&lt;li&gt;mapやfilterなどの処理は、イテレータ上で行う(Java8のstreamみたいなもんですね)。&lt;/li&gt;
+&lt;li&gt;iter()は繰り返し要素がborrowing(&amp;#x26;, ポインタ参照)でわたってくる。&lt;/li&gt;
+&lt;li&gt;into_iterは値渡しで、(Copy traitをderiveしてなければ)ムーブセマンティクス。&lt;/li&gt;
+&lt;li&gt;rustcの&lt;strong&gt;エラーメッセージは丁寧ですばらしい&lt;/strong&gt;、賞賛すべきレベル。学習者にとっては、このエラーメッセージが死活的に重要。エラーメッセージがこれほど丁寧でなれば、このレベルのプログラムでも絶対書けなかった(断言)。&lt;/li&gt;
+&lt;li&gt;今でもRustは&lt;strong&gt;どんどん変更されている&lt;/strong&gt;。さすがにbreaking changeの頻度は少なくなっていると思うが、この程度のプログラムでも影響のある変更は結構ある。エラーメッセージがわかりやすくなってたりもするので、できるかぎりnightlyを追うべし。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Rustが関数型プログラミングに向いてないと思った理由と、乗り越えるための対策&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;コレクションライブラリが破壊的操作ベース(sort,dedup) &lt;/li&gt;
+&lt;li&gt;(対策) → BTreeSetを使う&lt;/li&gt;
+&lt;li&gt;文字列操作も同じく破壊的操作ベース。結合するのにpush_str()とか。破壊的以前に煩雑で死ぬ。&lt;/li&gt;
+&lt;li&gt;(対策) → format!()マクロを多用。&lt;/li&gt;
+&lt;li&gt;式中の関数返り値はその場だけのテンポラリなライフタイムなので、直接・間接に後でも使う場合、ローカル変数に保存してライフタイムで延長することで回避するしかないかと思った。&lt;/li&gt;
+&lt;li&gt;(対策) → into_iter()でムーブセマンティクスにすることで回避。&lt;strong&gt;値渡しがRustの基本&lt;/strong&gt;であると心に刻む。&lt;/li&gt;
+&lt;li&gt;(クロージャにmove接頭辞を付ける(move |a| ..)のも関係がありそうだが、どういうときに使うのだろうか謎)&lt;/li&gt;
+&lt;li&gt;collectは多相だが、どんな型を返したいのかを示せる型情報が引数やselfでは与えられないため、多相性の解決を代入先の変数の型で指定するしかないのでは。&lt;/li&gt;
+&lt;li&gt;(対策)→collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()みたいに型アノテーションを使用できる。このとき、「collect::&amp;#x3C;Vec&amp;#x3C;_&gt;&gt;()」のように要素の型は指定しなくても推論されるようだ。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;コード&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;/*
+http://nabetani.sakura.ne.jp/hena/ord27raswi/
+*/
+#![feature(collections)]
+#![feature(core)]
+
+extern crate core;
+use std::string::String;
+use std::collections::BTreeSet;
+use core::iter::FromIterator;
+
+static PATHS:[(char, char);21]
+    = [(&apos;1&apos;,&apos;a&apos;),(&apos;1&apos;,&apos;g&apos;),(&apos;2&apos;,&apos;d&apos;),(&apos;2&apos;,&apos;h&apos;),
+       (&apos;3&apos;,&apos;b&apos;),(&apos;3&apos;,&apos;f&apos;),(&apos;a&apos;,&apos;b&apos;),(&apos;b&apos;,&apos;5&apos;),
+       (&apos;b&apos;,&apos;c&apos;),(&apos;c&apos;,&apos;4&apos;),(&apos;c&apos;,&apos;6&apos;),(&apos;d&apos;,&apos;c&apos;),
+       (&apos;d&apos;,&apos;e&apos;),(&apos;e&apos;,&apos;5&apos;),(&apos;f&apos;,&apos;g&apos;),(&apos;g&apos;,&apos;c&apos;),
+       (&apos;g&apos;,&apos;e&apos;),(&apos;g&apos;,&apos;h&apos;),(&apos;h&apos;,&apos;4&apos;),(&apos;h&apos;,&apos;i&apos;),
+       (&apos;i&apos;,&apos;6&apos;)];
+ 
+fn traverse(node:char, stopper:&amp;#x26;str) -&gt; Vec&amp;#x3C;String&gt; {
+    if stopper.contains(node) {
+        vec![]
+    }
+    else if node == &apos;4&apos; || node == &apos;5&apos; || node == &apos;6&apos; {
+        vec![format!(&quot;{}&quot;, node)]
+    }
+    else {
+        PATHS
+            .iter()
+            .filter(|&amp;#x26;&amp;#x26;(beg,_)|{beg==node})
+            .flat_map(|&amp;#x26;(_,end)|traverse(end, stopper).into_iter())
+            .collect()
+    }
+}
+
+fn solve(stopper:&amp;#x26;str) -&gt; Vec&amp;#x3C;String&gt; {
+    BTreeSet::from_iter(
+        [&apos;1&apos;,&apos;2&apos;,&apos;3&apos;]
+            .iter()
+            .flat_map(|start_point|
+                      traverse(*start_point, stopper)
+                      .iter()
+                      .map(|end_point| format!(&quot;{}{}&quot;, *start_point, end_point))
+                      .collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()
+                      .into_iter()
+                      )).into_iter().collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()
+}
+
+fn test(stopper: &amp;#x26;str, expected: &amp;#x26;str) {
+    let mut answer = solve(stopper)
+        .iter()
+        .map(|s| s.as_slice())
+        .collect::&amp;#x3C;Vec&amp;#x3C;&amp;#x26;str&gt;&gt;().connect(&quot;,&quot;);
+    if answer == &quot;&quot; {
+        answer = String::from_str(&quot;-&quot;);
+    }
+    assert_eq!(answer, expected);
+}
+
+fn main() {
+/*0*/ test( &quot;befi&quot;, &quot;14,16,24,26&quot; );    
+/*1*/ test( &quot;abc&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
+/*2*/ test( &quot;de&quot;, &quot;14,15,16,24,26,34,35,36&quot; );    
+/*3*/ test( &quot;fghi&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
+/*4*/ test( &quot;abcdefghi&quot;, &quot;-&quot; );    
+/*5*/ test( &quot;ag&quot;, &quot;24,25,26,34,35,36&quot; );    
+/*6*/ test( &quot;dh&quot;, &quot;14,15,16,34,35,36&quot; );    
+/*7*/ test( &quot;bf&quot;, &quot;14,15,16,24,25,26&quot; );    
+/*8*/ test( &quot;ch&quot;, &quot;15,25,35&quot; );    
+/*9*/ test( &quot;be&quot;, &quot;14,16,24,26,34,36&quot; );    
+/*10*/ test( &quot;ci&quot;, &quot;14,15,24,25,34,35&quot; );    
+/*11*/ test( &quot;cgi&quot;, &quot;15,24,25,35&quot; );    
+/*12*/ test( &quot;acgi&quot;, &quot;24,25,35&quot; );    
+/*13*/ test( &quot;cdefghi&quot;, &quot;15,35&quot; );    
+/*14*/ test( &quot;acdefghi&quot;, &quot;35&quot; );    
+/*15*/ test( &quot;cdegi&quot;, &quot;15,24,35&quot; );    
+/*16*/ test( &quot;bcdegi&quot;, &quot;24&quot; );    
+/*17*/ test( &quot;afh&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
+/*18*/ test( &quot;abfh&quot;, &quot;14,15,16,24,25,26&quot; );    
+/*19*/ test( &quot;dfh&quot;, &quot;14,15,16,34,35,36&quot; );    
+/*20*/ test( &quot;cdfh&quot;, &quot;15,35&quot; );    
+/*21*/ test( &quot;deh&quot;, &quot;14,15,16,34,35,36&quot; );    
+/*22*/ test( &quot;cdeh&quot;, &quot;15,35&quot; );    
+/*23*/ test( &quot;abefgh&quot;, &quot;24,26&quot; );    
+/*24*/ test( &quot;abdefgh&quot;, &quot;-&quot; );    
+/*25*/ test( &quot;acfghi&quot;, &quot;25,35&quot; );    
+/*26*/ test( &quot;acdfghi&quot;, &quot;35&quot; );    
+/*27*/ test( &quot;cegi&quot;, &quot;15,24,35&quot; );    
+/*28*/ test( &quot;abcfhi&quot;, &quot;15,25&quot; );    
+/*29*/ test( &quot;abcefhi&quot;, &quot;-&quot; );    
+/*30*/ test( &quot;abdi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
+/*31*/ test( &quot;abdfi&quot;, &quot;14,15,16,24&quot; );    
+/*32*/ test( &quot;bdi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
+/*33*/ test( &quot;bdfi&quot;, &quot;14,15,16,24&quot; );    
+/*34*/ test( &quot;adfh&quot;, &quot;14,15,16,34,35,36&quot; );    
+/*35*/ test( &quot;adfgh&quot;, &quot;34,35,36&quot; );    
+/*36*/ test( &quot;acdfhi&quot;, &quot;15,35&quot; );    
+/*37*/ test( &quot;bcdfgi&quot;, &quot;24&quot; );    
+/*38*/ test( &quot;bcdfghi&quot;, &quot;-&quot; );    
+/*39*/ test( &quot;defi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
+/*40*/ test( &quot;defhi&quot;, &quot;14,15,16,34,35,36&quot; );    
+/*41*/ test( &quot;cdefg&quot;, &quot;15,24,26,35&quot; );    
+/*42*/ test( &quot;cdefgi&quot;, &quot;15,24,35&quot; );    
+/*43*/ test( &quot;bdefg&quot;, &quot;24,26&quot; );    
+/*44*/ test( &quot;bdefgi&quot;, &quot;24&quot; );    
+}
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Reactベース静的サイトジェネレータGatsbyの真の力をお見せします]]></title><description><![CDATA[NTTテクノクロスの上原です。
 業務では、社内情報のReact製自前キュレーションサイトの構築を担当しています。過去に社外ブログにReactVRの記事を途中まで書いたりしましたが、ReactVR(今は改名されてReact 36…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1b7f0a86596353587466/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/1b7f0a86596353587466/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;NTTテクノクロスの上原です。
 業務では、社内情報のReact製自前キュレーションサイトの構築を担当しています。過去に&lt;a href=&quot;https://www.ntt-tx.co.jp/column/dojo_review_blog/20170511/?utm_source=qiita&amp;#x26;utm_medium=ac2018&amp;#x26;utm_campaign=24&quot;&gt;社外ブログにReactVRの記事&lt;/a&gt;を途中まで書いたりしましたが、ReactVR(今は改名されて&lt;a href=&quot;https://facebook.github.io/react-360/&quot;&gt;React 360&lt;/a&gt;)が思ったより流行らなくて放置してしまい、誠に申し訳ないです。&lt;/p&gt;
 &lt;p&gt;この記事は&lt;a href=&quot;https://qiita.com/advent-calendar/2018/ntt-tx&quot;&gt;NTTテクノクロスAdvent Calendar24日目&lt;/a&gt;の記事であり、社内の勉強会で発表した内容をQiita記事として書きなおしたものです。タイトルは釣りです。
@@ -678,153 +824,7 @@ A: Gatsby can be used to build fully dynamic sites, which surprises some people 
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[第27回 オフラインリアルタイムどう書くの問題「分岐と行き止まり」をRustで解く]]></title><description><![CDATA[オフラインリアルタイムどう書くの過去問題「分岐と行き止まり」を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答はこちら) Rustの感想 Rust…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/25caa06ce666fc175d99/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://yhpg.doorkeeper.jp/&quot;&gt;オフラインリアルタイムどう書く&lt;/a&gt;の&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord27raswi/&quot;&gt;過去問題「分岐と行き止まり」&lt;/a&gt;を、Rust(rustc 1.0.0-nightly (2fc8b1e7c 2015-03-07) (built 2015-03-07))で解きました。(他の言語での回答は&lt;a href=&quot;http://qiita.com/Nabetani/items/23ebddb44f0234e7fb15&quot;&gt;こちら&lt;/a&gt;)&lt;/p&gt;
-&lt;h1&gt;Rustの感想&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Rustは関数型プログラミングには向いてない、と思ったが、勘違いだった。&lt;strong&gt;やればできる&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;やればできるのだが(後述)、iter(),into_iter()とcollect::&amp;#x3C;&gt;()だらけのこれが関数型と呼べるのか、関数型プログラミングの成立条件には、簡潔さというものは必須条件なのではないか? あるいはiter()とcollect()は慣れると見えなくなるのか。&lt;/li&gt;
-&lt;li&gt;ただ、ライブラリの作りとしては関数型プログラミングの道具立はそろえられている。&lt;a href=&quot;http://doc.rust-lang.org/std/iter/trait.IteratorExt.html&quot;&gt;flat_mapしかり、zip, fold, fuse, ..&lt;/a&gt;。&lt;/li&gt;
-&lt;li&gt;ちなみに、iter(),into_iter()はコレクション(Vec,..)をイテレータに変換、collect()はその逆。&lt;/li&gt;
-&lt;li&gt;mapやfilterなどの処理は、イテレータ上で行う(Java8のstreamみたいなもんですね)。&lt;/li&gt;
-&lt;li&gt;iter()は繰り返し要素がborrowing(&amp;#x26;, ポインタ参照)でわたってくる。&lt;/li&gt;
-&lt;li&gt;into_iterは値渡しで、(Copy traitをderiveしてなければ)ムーブセマンティクス。&lt;/li&gt;
-&lt;li&gt;rustcの&lt;strong&gt;エラーメッセージは丁寧ですばらしい&lt;/strong&gt;、賞賛すべきレベル。学習者にとっては、このエラーメッセージが死活的に重要。エラーメッセージがこれほど丁寧でなれば、このレベルのプログラムでも絶対書けなかった(断言)。&lt;/li&gt;
-&lt;li&gt;今でもRustは&lt;strong&gt;どんどん変更されている&lt;/strong&gt;。さすがにbreaking changeの頻度は少なくなっていると思うが、この程度のプログラムでも影響のある変更は結構ある。エラーメッセージがわかりやすくなってたりもするので、できるかぎりnightlyを追うべし。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;Rustが関数型プログラミングに向いてないと思った理由と、乗り越えるための対策&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;コレクションライブラリが破壊的操作ベース(sort,dedup) &lt;/li&gt;
-&lt;li&gt;(対策) → BTreeSetを使う&lt;/li&gt;
-&lt;li&gt;文字列操作も同じく破壊的操作ベース。結合するのにpush_str()とか。破壊的以前に煩雑で死ぬ。&lt;/li&gt;
-&lt;li&gt;(対策) → format!()マクロを多用。&lt;/li&gt;
-&lt;li&gt;式中の関数返り値はその場だけのテンポラリなライフタイムなので、直接・間接に後でも使う場合、ローカル変数に保存してライフタイムで延長することで回避するしかないかと思った。&lt;/li&gt;
-&lt;li&gt;(対策) → into_iter()でムーブセマンティクスにすることで回避。&lt;strong&gt;値渡しがRustの基本&lt;/strong&gt;であると心に刻む。&lt;/li&gt;
-&lt;li&gt;(クロージャにmove接頭辞を付ける(move |a| ..)のも関係がありそうだが、どういうときに使うのだろうか謎)&lt;/li&gt;
-&lt;li&gt;collectは多相だが、どんな型を返したいのかを示せる型情報が引数やselfでは与えられないため、多相性の解決を代入先の変数の型で指定するしかないのでは。&lt;/li&gt;
-&lt;li&gt;(対策)→collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()みたいに型アノテーションを使用できる。このとき、「collect::&amp;#x3C;Vec&amp;#x3C;_&gt;&gt;()」のように要素の型は指定しなくても推論されるようだ。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;コード&lt;/h1&gt;
-&lt;pre&gt;&lt;code class=&quot;language-rust&quot;&gt;/*
-http://nabetani.sakura.ne.jp/hena/ord27raswi/
-*/
-#![feature(collections)]
-#![feature(core)]
-
-extern crate core;
-use std::string::String;
-use std::collections::BTreeSet;
-use core::iter::FromIterator;
-
-static PATHS:[(char, char);21]
-    = [(&apos;1&apos;,&apos;a&apos;),(&apos;1&apos;,&apos;g&apos;),(&apos;2&apos;,&apos;d&apos;),(&apos;2&apos;,&apos;h&apos;),
-       (&apos;3&apos;,&apos;b&apos;),(&apos;3&apos;,&apos;f&apos;),(&apos;a&apos;,&apos;b&apos;),(&apos;b&apos;,&apos;5&apos;),
-       (&apos;b&apos;,&apos;c&apos;),(&apos;c&apos;,&apos;4&apos;),(&apos;c&apos;,&apos;6&apos;),(&apos;d&apos;,&apos;c&apos;),
-       (&apos;d&apos;,&apos;e&apos;),(&apos;e&apos;,&apos;5&apos;),(&apos;f&apos;,&apos;g&apos;),(&apos;g&apos;,&apos;c&apos;),
-       (&apos;g&apos;,&apos;e&apos;),(&apos;g&apos;,&apos;h&apos;),(&apos;h&apos;,&apos;4&apos;),(&apos;h&apos;,&apos;i&apos;),
-       (&apos;i&apos;,&apos;6&apos;)];
- 
-fn traverse(node:char, stopper:&amp;#x26;str) -&gt; Vec&amp;#x3C;String&gt; {
-    if stopper.contains(node) {
-        vec![]
-    }
-    else if node == &apos;4&apos; || node == &apos;5&apos; || node == &apos;6&apos; {
-        vec![format!(&quot;{}&quot;, node)]
-    }
-    else {
-        PATHS
-            .iter()
-            .filter(|&amp;#x26;&amp;#x26;(beg,_)|{beg==node})
-            .flat_map(|&amp;#x26;(_,end)|traverse(end, stopper).into_iter())
-            .collect()
-    }
-}
-
-fn solve(stopper:&amp;#x26;str) -&gt; Vec&amp;#x3C;String&gt; {
-    BTreeSet::from_iter(
-        [&apos;1&apos;,&apos;2&apos;,&apos;3&apos;]
-            .iter()
-            .flat_map(|start_point|
-                      traverse(*start_point, stopper)
-                      .iter()
-                      .map(|end_point| format!(&quot;{}{}&quot;, *start_point, end_point))
-                      .collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()
-                      .into_iter()
-                      )).into_iter().collect::&amp;#x3C;Vec&amp;#x3C;String&gt;&gt;()
-}
-
-fn test(stopper: &amp;#x26;str, expected: &amp;#x26;str) {
-    let mut answer = solve(stopper)
-        .iter()
-        .map(|s| s.as_slice())
-        .collect::&amp;#x3C;Vec&amp;#x3C;&amp;#x26;str&gt;&gt;().connect(&quot;,&quot;);
-    if answer == &quot;&quot; {
-        answer = String::from_str(&quot;-&quot;);
-    }
-    assert_eq!(answer, expected);
-}
-
-fn main() {
-/*0*/ test( &quot;befi&quot;, &quot;14,16,24,26&quot; );    
-/*1*/ test( &quot;abc&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
-/*2*/ test( &quot;de&quot;, &quot;14,15,16,24,26,34,35,36&quot; );    
-/*3*/ test( &quot;fghi&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
-/*4*/ test( &quot;abcdefghi&quot;, &quot;-&quot; );    
-/*5*/ test( &quot;ag&quot;, &quot;24,25,26,34,35,36&quot; );    
-/*6*/ test( &quot;dh&quot;, &quot;14,15,16,34,35,36&quot; );    
-/*7*/ test( &quot;bf&quot;, &quot;14,15,16,24,25,26&quot; );    
-/*8*/ test( &quot;ch&quot;, &quot;15,25,35&quot; );    
-/*9*/ test( &quot;be&quot;, &quot;14,16,24,26,34,36&quot; );    
-/*10*/ test( &quot;ci&quot;, &quot;14,15,24,25,34,35&quot; );    
-/*11*/ test( &quot;cgi&quot;, &quot;15,24,25,35&quot; );    
-/*12*/ test( &quot;acgi&quot;, &quot;24,25,35&quot; );    
-/*13*/ test( &quot;cdefghi&quot;, &quot;15,35&quot; );    
-/*14*/ test( &quot;acdefghi&quot;, &quot;35&quot; );    
-/*15*/ test( &quot;cdegi&quot;, &quot;15,24,35&quot; );    
-/*16*/ test( &quot;bcdegi&quot;, &quot;24&quot; );    
-/*17*/ test( &quot;afh&quot;, &quot;14,15,16,24,25,26,34,35,36&quot; );    
-/*18*/ test( &quot;abfh&quot;, &quot;14,15,16,24,25,26&quot; );    
-/*19*/ test( &quot;dfh&quot;, &quot;14,15,16,34,35,36&quot; );    
-/*20*/ test( &quot;cdfh&quot;, &quot;15,35&quot; );    
-/*21*/ test( &quot;deh&quot;, &quot;14,15,16,34,35,36&quot; );    
-/*22*/ test( &quot;cdeh&quot;, &quot;15,35&quot; );    
-/*23*/ test( &quot;abefgh&quot;, &quot;24,26&quot; );    
-/*24*/ test( &quot;abdefgh&quot;, &quot;-&quot; );    
-/*25*/ test( &quot;acfghi&quot;, &quot;25,35&quot; );    
-/*26*/ test( &quot;acdfghi&quot;, &quot;35&quot; );    
-/*27*/ test( &quot;cegi&quot;, &quot;15,24,35&quot; );    
-/*28*/ test( &quot;abcfhi&quot;, &quot;15,25&quot; );    
-/*29*/ test( &quot;abcefhi&quot;, &quot;-&quot; );    
-/*30*/ test( &quot;abdi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
-/*31*/ test( &quot;abdfi&quot;, &quot;14,15,16,24&quot; );    
-/*32*/ test( &quot;bdi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
-/*33*/ test( &quot;bdfi&quot;, &quot;14,15,16,24&quot; );    
-/*34*/ test( &quot;adfh&quot;, &quot;14,15,16,34,35,36&quot; );    
-/*35*/ test( &quot;adfgh&quot;, &quot;34,35,36&quot; );    
-/*36*/ test( &quot;acdfhi&quot;, &quot;15,35&quot; );    
-/*37*/ test( &quot;bcdfgi&quot;, &quot;24&quot; );    
-/*38*/ test( &quot;bcdfghi&quot;, &quot;-&quot; );    
-/*39*/ test( &quot;defi&quot;, &quot;14,15,16,24,34,35,36&quot; );    
-/*40*/ test( &quot;defhi&quot;, &quot;14,15,16,34,35,36&quot; );    
-/*41*/ test( &quot;cdefg&quot;, &quot;15,24,26,35&quot; );    
-/*42*/ test( &quot;cdefgi&quot;, &quot;15,24,35&quot; );    
-/*43*/ test( &quot;bdefg&quot;, &quot;24,26&quot; );    
-/*44*/ test( &quot;bdefgi&quot;, &quot;24&quot; );    
-}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[【React+TypeScript】Function Componentで省略可能propsの省略した場合の値を型安全に指定する]]></title><description><![CDATA[https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521 こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。 リンク先から引用。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/036e17f54cf623cee1a6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&quot;&gt;https://github.com/microsoft/TypeScript/issues/27425#issuecomment-478004521&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;こんな問題がありますが、結論としては、回避策として「名前のついた型を指定しない」のが楽です。&lt;/p&gt;
-&lt;p&gt;リンク先から引用。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;const MyComponent = (props: { name: string, telephone: string }) =&gt; {
-  ...
-}
-
-MyComponent.defaultProps = { telephone: &quot;222-333-4444&quot; }
-
-// Works - good
-const test = &amp;#x3C;MyComponent name=&quot;Hulk Hogan&quot; /&gt;
-
-// Doesn&apos;t work - missing name, good
-const test = &amp;#x3C;MyComponent /&gt;
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[スタンドアローンGORMをGroovyスクリプトからシュっと利用する]]></title><description><![CDATA[G* Advent Calendar 2017 20日目の記事です。 GrailsのO/Rマッピングライブラリである「GORM」は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。 非WebアプリやGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;G* Advent Calendar 2017 20日目の記事です。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[スタンドアローンGORMをGroovyスクリプトからシュっと利用する]]></title><description><![CDATA[G* Advent Calendar 2017 20日目の記事です。 GrailsのO/Rマッピングライブラリである「GORM」は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。 非WebアプリやGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/3a65b9c7dcbcc800fbf4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;G* Advent Calendar 2017 20日目の記事です。&lt;/p&gt;
 &lt;p&gt;Grailsの&lt;a href=&quot;http://gorm.grails.org/latest/&quot;&gt;O/Rマッピングライブラリである「GORM」&lt;/a&gt;は、Grailsから切りはなして単体で使用することもできます。これをスタンドアローンGORMと呼びます。&lt;/p&gt;
 &lt;p&gt;非WebアプリやGrails以外の他のフレームワークから高機能なORMとして使うことも可能ですし、Grailsでのシステム開発の一部として、バッチやシェルスクリプトやsshでキックしたいとか、シェルアカウントの管理者権限者だけがデータベースにアクセスしたいときには、スタンドアローンGORMが有用なケースがあります。&lt;/p&gt;
 &lt;p&gt;というのも、そういうケースでは以下のような選択肢があるにはあるのですが、いずれも固有の課題を抱えているからです。&lt;/p&gt;
@@ -887,514 +887,7 @@ Author.withTransaction {
 &lt;pre&gt;&lt;code&gt;&gt; groovy groovyスクリプトファイル名
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;GroovyやJDK以外の何かを事前ダウンロードしたりインストールしたりフォルダ構成を考えたりコンパイルしたりビルドしたりビルドスクリプトを書いたりデプロイしたりパッケージングしたりが一切不要なのが利点です✌。&lt;/p&gt;
-&lt;p&gt;なお、上記では@Entityでドメインクラスを定義していますが、データベースがGrailsアプリケーションの一部であるなら、Grailsアプリケーション本体のwar(やjar)に含まれるドメインクラスのクラスファイルのjarをクラスパスに含めれば別に書かなくても利用可能です(多分)。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[npmのモジュールバージョン指定におけるチルダ(~)とキャレット(^)の違いについての直感的な理解]]></title><description><![CDATA[package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。 記法 種別 意味 問題点など ^x.y.z…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&quot;left&quot;&gt;記法&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;種別&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;意味&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;問題点など&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;^x.y.z&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;キャレット表記&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;&lt;a href=&quot;http://semver.org/lang/ja/&quot;&gt;セマンティックバージョニング&lt;/a&gt;に従う。つまり、メジャーバージョンxを指定し、マイナーバージョンyの上昇、パッチバージョンzの上昇は互換性があるはずだと信じて、「x.{y以上}.{yが同じならz以上、yが上昇していれば任意} 」にあてはまる最新のものを使う。&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;開発時点と、ソース共有を経ての再ビルド(npm install)時の間で、NPMリポジトリ上の対象パッケージのバージョンが上がっている場合、より新しいものが使われることになる可能性があるが、セマンティックバージョニングの仕様に厳密に従わないパッケージは世の中に結構あるのではまり易い。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;~x.y.z&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;チルダ表記&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;セマンティックバージョニングにおける「マイナーバージョンが上がっても互換性が保たれるはずだ」という建前を信じないが、パッチバージョン上昇だったら互換性があるだろうとは信じて、「x.y.{z以上}」にあてはまるものを使う。&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;キャレット表記に比べて、上記の可能性がパッチバージョンのみなので少ない。とはいえ、はまるときははまるだろう。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;x.y.z&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;固定&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;指定したバージョン「x.y.z」に厳密にあてはまるものを使う。&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;開発時と異なるバージョンが使用される問題は回避できるが、たとえばセキュリテイ問題があってそのバージョンのNPMがリポジトリから削除された場合に(互換性のある後継バージョンがあるのに)ビルド不可能になったり、許容できるバージョン上昇を指定できないなど、セマンティックバージョンのメリットを全く享受できない。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;いずれも問題があるので、^なり~で指定した上で、&lt;a href=&quot;https://docs.npmjs.com/files/package-lock.json&quot;&gt;package-lock.json&lt;/a&gt;なり&lt;a href=&quot;https://yarnpkg.com/lang/en/docs/yarn-lock/&quot;&gt;yarn.lock&lt;/a&gt;を併用するのが正しい(それぞれNPM5、yarnのデフォルト動作)。&lt;/p&gt;
-&lt;p&gt;これらのロックファイルを使うのは、セマンティックバージョニングの建前と本音を使いわけることである。つまり、^~をつかって「このバージョンの範囲なら、互換性に問題ないはずだ」という希望と理想をpackage.jsonに記す。それはその上で、「実際にはこのバージョン使ってビルドしましたよ、動作保証するのはこっちなんで、こちらをお使い下さいね、げっひっひ」とlockファイルを裏で提供する。&lt;/p&gt;
-&lt;p&gt;左端の桁が0であったり、3桁以外の場合を含めては&lt;a href=&quot;http://qiita.com/sotarok/items/4ebd4cfedab186355867&quot;&gt;こちら&lt;/a&gt;の記事などを参照のこと。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[第14回オフラインリアルタイムどう書くの参考問題をHaskellで解く]]></title><description><![CDATA[第14回 オフラインリアルタイムどう書くの参考問題「眠れるモンスターを狩る」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/48cb682cc3441f1066a3/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/48cb682cc3441f1066a3/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/0597bd3af481e5834ae1&quot;&gt;第14回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord14linedung/&quot;&gt;眠れるモンスターを狩る&lt;/a&gt;」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-haskell:monster.hs&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord14linedung/
-import Control.Monad
-import Control.Monad.State
-    
-data Monster = B|D|F|H|J|L deriving (Eq, Show)
-data Arm = A|C|E|G|I|K deriving (Eq, Show)
-
-removeOne e xs
-    | after == [] = before
-    | otherwise = before ++ tail(after)
-    where
-      before = takeWhile (\t-&gt; t /= e) xs
-      after = dropWhile (\t-&gt; t /= e) xs
-
-step (ms, as, n)
-    | A `elem` as &amp;#x26;&amp;#x26; B `elem` ms = (True, (removeOne B ms, C:as, n+1))
-    | C `elem` as &amp;#x26;&amp;#x26; D `elem` ms = (True, (removeOne D ms, E:as, n+1))
-    | E `elem` as &amp;#x26;&amp;#x26; F `elem` ms = (True, (removeOne F ms, G:as, n+1))
-    | G `elem` as &amp;#x26;&amp;#x26; H `elem` ms = (True, (removeOne H ms, I:as, n+1))
-    | I `elem` as &amp;#x26;&amp;#x26; J `elem` ms = (True, (removeOne J ms, K:as, n+1))
-    | K `elem` as &amp;#x26;&amp;#x26; L `elem` ms = (True, (removeOne L ms, A:as, n+1))
-    | otherwise = (False, (ms, as, n))
-
-next :: State ([Monster],[Arm],Int) Bool
-next = state $ \(ms, as, n) -&gt; step (ms, as, n)
-
-toMonster :: [Monster] -&gt; Char -&gt; [Monster]
-toMonster xs ch = case ch of
-                    &apos;B&apos; -&gt; B:xs
-                    &apos;D&apos; -&gt; D:xs
-                    &apos;F&apos; -&gt; F:xs
-                    &apos;H&apos; -&gt; H:xs
-                    &apos;J&apos; -&gt; J:xs
-                    &apos;L&apos; -&gt; L:xs
-                    _ -&gt; xs
-
-toArm :: [Arm] -&gt; Char -&gt; [Arm]
-toArm xs ch = case ch of
-                &apos;a&apos; -&gt; A:xs
-                &apos;c&apos; -&gt; C:xs
-                &apos;e&apos; -&gt; E:xs
-                &apos;g&apos; -&gt; G:xs
-                &apos;i&apos; -&gt; I:xs
-                &apos;k&apos; -&gt; K:xs
-                _ -&gt; xs
-
-toState :: [Char] -&gt; ([Monster], [Arm], Int)
-toState str = (foldl (toMonster) [] str, foldl (toArm) [] str, 0)
-
-solve :: State ([Monster], [Arm], Int) ()
-solve = do
-  result &amp;#x3C;- next
-  if (result == False) then return () else solve
-
-solve&apos; :: [Char] -&gt; ([Monster], [Arm], Int)
-solve&apos; str = do
-  execState solve (toState str)
-   
-test :: [Char] -&gt; String -&gt; Bool
-test str expected = do
-  let (_, _, n) = solve&apos; str
-  n == read expected
-
-main :: IO ()
-main = do
-  print $ test &quot;gLDLBgBgHDaD&quot; &quot;6&quot; {-0-}
-  print $ test &quot;DBcDLaLgDBH&quot; &quot;6&quot; {-1-}
-  print $ test &quot;JJca&quot; &quot;0&quot; {-2-}
-  print $ test &quot;FJDLBH&quot; &quot;0&quot; {-3-}
-  print $ test &quot;HJBLFDg&quot; &quot;6&quot; {-4-}
-  print $ test &quot;HBaDLFJ&quot; &quot;6&quot; {-5-}
-  print $ test &quot;DJaHLB&quot; &quot;2&quot; {-6-}
-  print $ test &quot;gDLHJF&quot; &quot;3&quot; {-7-}
-  print $ test &quot;cJFgLHD&quot; &quot;5&quot; {-8-}
-  print $ test &quot;FFBJaJJ&quot; &quot;1&quot; {-9-}
-  print $ test &quot;FJeJFBJ&quot; &quot;2&quot; {-10-}
-  print $ test &quot;iJFFJJB&quot; &quot;3&quot; {-11-}
-  print $ test &quot;JBJiLFJF&quot; &quot;5&quot; {-12-}
-  print $ test &quot;JDiFLFBJJ&quot; &quot;8&quot; {-13-}
-  print $ test &quot;BDFDFFDFFLLFFJFDBFDFFFFDDFaDBFFB&quot; &quot;28&quot; {-14-}
-  print $ test &quot;DDFBFcBDFFFFFFLBFDFFBFLFDFDJDFDF&quot; &quot;24&quot; {-15-}
-  print $ test &quot;FDLBFDDBFFFeFFFFFDFBLDDFDDFBFFJF&quot; &quot;16&quot; {-16-}
-  print $ test &quot;FDBFFLFDFFDBBDFFBJDLFgDFFFDFFDFF&quot; &quot;0&quot; {-17-}
-  print $ test &quot;FDiFLDFFFFBDDJDDBFBFDFFFBFFDFLFF&quot; &quot;31&quot; {-18-}
-  print $ test &quot;FDFDJBLBLBFFDDFFFDFFFFFDDFBkFDFF&quot; &quot;30&quot; {-19-}
-  print $ test &quot;HBkFFFFHBLH&quot; &quot;3&quot; {-20-}
-  print $ test &quot;FBHHFFFHLaB&quot; &quot;2&quot; {-21-}
-  print $ test &quot;LFHFBBcHFHF&quot; &quot;0&quot; {-22-}
-  print $ test &quot;LFBHFFeFHBH&quot; &quot;7&quot; {-23-}
-  print $ test &quot;LgFHHHBFBFF&quot; &quot;3&quot; {-24-}
-  print $ test &quot;FFiFHBHLBFH&quot; &quot;0&quot; {-25-}
-  print $ test &quot;BFHHFFHBeFLk&quot; &quot;10&quot; {-26-}
-  print $ test &quot;FHFaBBHFHLFg&quot; &quot;5&quot; {-27-}
-  print $ test &quot;FFgacaFg&quot; &quot;0&quot; {-28-}
-  print $ test &quot;JHDaDcBJiiHccBHDBDH&quot; &quot;9&quot; {-29-}
-  print $ test &quot;FHJJLckFckFJHDFF&quot; &quot;12&quot; {-30-}
-  print $ test &quot;DeDHJHDFHJBLHDLLDHJLBDD&quot; &quot;22&quot; {-31-}
-  print $ test &quot;gJLLLJgJgJLJL&quot; &quot;0&quot; {-32-}
-  print $ test &quot;DaaaDDD&quot; &quot;0&quot; {-33-}
-  print $ test &quot;HFeJFHiBiiBJeJBBFFB&quot; &quot;9&quot; {-34-}
-  print $ test &quot;FJFFJDBHBHaLJBHJHDLHkLLLFFFgJgHJLHkJkB&quot; &quot;32&quot; {-35-}
-  print $ test &quot;giFLBiBJLLJgHBFJigJJJBLHFLDLL&quot; &quot;23&quot; {-36-}
-  print $ test &quot;cgkLJcLJJJJgJc&quot; &quot;2&quot; {-37-}
-  print $ test &quot;LDFHJHcFBDBLJBLFLcFJcDFBL&quot; &quot;22&quot; {-38-}
-  print $ test &quot;JJHHHkHJkHLJk&quot; &quot;1&quot; {-39-}
-  print $ test &quot;kHHBBaBgHagHgaHBBB&quot; &quot;11&quot; {-40-}
-  print $ test &quot;HDBFFDHHHDFLDcHHLFDcJD&quot; &quot;20&quot; {-41-}
-  print $ test &quot;HFFFHeFFee&quot; &quot;7&quot; {-42-}
-  print $ test &quot;gLLDHgDLgFL&quot; &quot;1&quot; {-43-}
-  print $ test &quot;JJJBBaBBHBBHaLBHJ&quot; &quot;7&quot; {-44-}
-  print $ test &quot;FBFBgJBDBDgF&quot; &quot;0&quot; {-45-}
-  print $ test &quot;LLLLakakLakLL&quot; &quot;7&quot; {-46-}
-  print $ test &quot;HeJHeJe&quot; &quot;0&quot; {-47-}
-  print $ test &quot;LDFLBLLeBLDBBFFBLFBB&quot; &quot;4&quot; {-48-}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解く]]></title><description><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/53460a9772f2bfbaa3c1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/53460a9772f2bfbaa3c1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/9810b301648099028bf0&quot;&gt;第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」&lt;/a&gt;を、Haskellで解きました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-haskell:sectors.hs&quot;&gt;import Data.Ratio
-import Data.List
-
-hasIntersect :: (Ratio Int, Ratio Int, Int) -&gt; (Ratio Int, Ratio Int, Int) -&gt; Bool
-hasIntersect (fst_a,snd_a,_) (fst_b,snd_b,_) = (fst_a&amp;#x3C;=snd_b &amp;#x26;&amp;#x26; fst_b &amp;#x3C;=snd_a) || (fst_b &amp;#x3C;=snd_a &amp;#x26;&amp;#x26; snd_a&amp;#x3C;=snd_b)
-
-ranges n = take (8*n+2) $ [(low,up,n*100+(m `mod` (8*n))) | m&amp;#x3C;-[-1..], let w=(1%(8*n)), let low=(-w/2+(w*(m%1))), let up=low+w]
-
-inRange n m = filter $ hasIntersect (ranges n !! (m+1))
-
-neighbor&apos; n m = (ranges n !! (m+1-1)) : (ranges n !! (m+1+1)) : neighbor&apos;&apos; n m
- where
-   neighbor&apos;&apos; n m
-     | n &amp;#x3C;= 1 = nub $ (inRange n m (ranges $ n+1))
-     | n == 4 = nub $ (inRange n m (ranges $ n-1))
-     | otherwise = nub ((inRange n m (ranges $ n-1)) ++
-                        (inRange n m (ranges $ n+1)))
-
-neighbor n = neighbor&apos; (n `div` 100) (n `mod` 100)
-
-reserved xs = map (!!0) $ filter (\ x -&gt; length x &gt; 1) $ group $ sort $ filter (\x-&gt;not (x `elem` xs)) $ map (\(_,_,n)-&gt;n) $ concatMap neighbor xs
-
-test :: [Int] -&gt; [Int] -&gt; IO()
-test s1 s2 = do
-   putStrLn $ show $ reserved s1 == s2
-
-main = do
-   test [400,401,302] [300,301,402] {- 0 -}
-   test [105,100,306,414] [] {- 1 -}
-   test [100] [] {- 2 -}
-   test [211] [] {- 3 -}
-   test [317] [] {- 4 -}
-   test [414] [] {- 5 -}
-   test [100,106] [107] {- 6 -}
-   test [205,203] [102,204] {- 7 -}
-   test [303,305] [304] {- 8 -}
-   test [407,409] [306,408] {- 9  -}
-   test [104,103] [207] {- 10  -}
-   test [204,203] [102,305]     {- 11  -}
-   test [313,314] [209,418]     {- 12  -}
-   test [419,418] [314]     {- 13  -}
-   test [100,102,101] [201,203]     {- 14  -}
-   test [103,206,309] [205,207,308,310]     {- 15  -}
-   test [414,310,309] [206,311,413]     {- 16  -}
-   test [104,102,206,307,102,202] [101,103,203,204,205,207,308]     {- 17  -}
-   test [104,206,308,409,407] [103,205,207,306,307,309,408,410]     {- 18  -}
-   test [313,406,213,301,409,422,412,102,428] []     {- 19  -}
-   test [101,300,210,308,423,321,403,408,415] []     {- 20  -}
-   test [304,316,307,207,427,402,107,431,412,418,424] []     {- 21  -}
-   test [205,408,210,215,425,302,311,400,428,412] []     {- 22  -}
-   test [200,311,306,412,403,318,427,105,420] []     {- 23  -}
-   test [105,305,407,408,309,208,427] [104,209,306,406]     {- 24  -}
-   test [311,304,322,404,429,305,316] [203,303,321,405,406,430]     {- 25  -}
-   test [210,401,316,425,101] [211,315]     {- 26  -}
-   test [414,403,404,416,428,421] [303,415]     {- 27  -}
-   test [207,300,103,211,428] [104,206]     {- 28  -}
-   test [322,314,310] []     {- 29  -}
-   test [427,200,215] [100,323]     {- 30  -}
-   test [311,402,424,307,318,430,323,305,201] [200,204,301,302,306,322,423,425,431]     {- 31  -}
-   test [425,430,408] []     {- 32  -}
-   test [202,320,209,426] [319,427]     {- 33  -}
-   test [430,209,302,310,304,431,320] [202,303,323]     {- 34  -}
-   test [208,206,406,424,213,312] [207,311,313]     {- 35  -}
-   test [420,302,313,413,317,402] [301,403]     {- 36  -}
-   test [319,306,309,418,204,411] [305,307,308,412]     {- 37  -}
-   test [400,308,105,430,203,428,209] [104,210,429,431]     {- 38  -}
-   test [200,305,214] [215]     {- 39  -}
-   test [214,408,410,407,317,422] [306,316,409,423] {- 40  -}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[WebAssemblyへのコンパイラ言語を簡単に実装]]></title><description><![CDATA[後入りですみませんが、WebAssemblyアドベントカレンダー未投稿のところ埋めさせて頂きます。 本記事では、WebAssemblyをターゲットとするコンパイラ処理系を実装します。 方針 WebAssembly…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5276bd3425d1000e48ba/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5276bd3425d1000e48ba/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;後入りですみませんが、WebAssemblyアドベントカレンダー未投稿のところ埋めさせて頂きます。&lt;/p&gt;
-&lt;p&gt;本記事では、WebAssemblyをターゲットとするコンパイラ処理系を実装します。&lt;/p&gt;
-&lt;h1&gt;方針&lt;/h1&gt;
-&lt;p&gt;WebAssemblyへのコンパイル言語処理系を&lt;strong&gt;&lt;em&gt;最も簡単に&lt;/em&gt;&lt;/strong&gt; &lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;実装するための方針は以下のとおり。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;言語は「&lt;a href=&quot;https://ja.wikipedia.org/wiki/Brainfuck&quot;&gt;コンパイラがなるべく小さくなる言語として考案&lt;/a&gt;」されたBrainf*ckを採用&lt;/li&gt;
-&lt;li&gt;文法は&lt;a href=&quot;https://ja.wikipedia.org/wiki/Parsing_Expression_Grammar&quot;&gt;PEG(Parsing Expression Grammar)&lt;/a&gt;で記述し、生成系&lt;a href=&quot;https://pegjs.org/&quot;&gt;PEG.js&lt;/a&gt;でパーサを実行時に生成する&lt;/li&gt;
-&lt;li&gt;WebAssemblyコード生成では文字列でWAST形式を生成し、&lt;a href=&quot;https://github.com/ewasm/wast2wasm&quot;&gt;wast2wasm&lt;/a&gt;&lt;sup id=&quot;fnref-3&quot;&gt;&lt;a href=&quot;#fn-3&quot; class=&quot;footnote-ref&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;で変換する(直接WASMを生成しない)。またEmscriptenやbinaryenは使用しない&lt;/li&gt;
-&lt;li&gt;WASTの表現ではflat形式ではなくs-expression形式を使用する&lt;/li&gt;
-&lt;li&gt;ブラウザ上ではなくNode上で実行する。なのでWebAssemblyを実行できるバージョンのNode.jsが必要。Node8以降では普通に実行できる&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;コードは&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly&quot;&gt;こちら&lt;/a&gt;に。
-NPMに登録されているので以下で実行できます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;% cat hello.bf
-+++++++++[&gt;++++++++&gt;+++++++++++&gt;+++++&amp;#x3C;&amp;#x3C;&amp;#x3C;-]&gt;.&gt;++.+++++++..+++.&gt;-.------------.&amp;#x3C;++++++++.--------.+++.------.--------.&gt;+.
-
-% npx bf-compiler-webassembly hello.bf
-npx: 5個のパッケージを1.592秒でインストールしました。
-Hello, world!
-
-% npx bf-compiler-webassembly -e &apos;+++++++++[&gt;++++++++&gt;+++++++++++&gt;+++++&amp;#x3C;&amp;#x3C;&amp;#x3C;-]&gt;.&gt;++.+++++++..+++.&gt;-.------------.&amp;#x3C;++++++++.--------.+++.------.--------.&gt;+.&apos;
-npx: 5個のパッケージを2.06秒でインストールしました。
-Hello, world!
-
-% npx bf-compiler-webassembly --help
-npx: 5個のパッケージを1.506秒でインストールしました。
-
-  Usage: bf-compiler-webassembly [options] [file...]
-
-
-  Options:
-
-    -V, --version         output the version number
-    -e,--script [script]  run script from command line
-    -v,--verbose          verbose output
-    -h, --help            output usage information
-
-
-  Examples:
-
-    $ npx bf-compiler-webassembly -e &quot;+++&quot;
-    $ npx bf-compiler-webassembly hello.bf
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;実行例&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/d79db6b1-f1ba-f816-b6ea-7f5481a650b3.gif&quot; alt=&quot;bf2.mov.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;以降、コードの説明をしていきます。&lt;/p&gt;
-&lt;h1&gt;全体の流れ&lt;/h1&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:driver.js&quot;&gt;// compile from string
-async function compileAndRunString(bfSource, opts) {
-  const bfAst = bfParser.parse(bfSource, opts);
-  const wast = bfCompiler.compile(bfAst, opts);
-  const wasm = await wast2wasm.convert(wast, opts);
-  return await wasmRuner.run(wasm, opts);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/driver.js&quot;&gt;driver.js&lt;/a&gt;でコンパイル・実行の全体の流れを制御しています。以下の順で処理が実行されます。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Brainf*ckコードの構文解析(パース)、ASTの生成。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/bfParser.js&quot;&gt;bfParser.parse()&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;ASTをwastに変換する(コード生成)。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/bfCompiler.js&quot;&gt;bfCompiler.compile()&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;wast形式をwasmに変換し、WASMのバイト列表現に変換。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/wast2wasm.js&quot;&gt;wast2wasm.convert()&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;WASMバイト列をWebAssemblyの内部形式(機械語?)に変換・コンパイルし、wasmコードを呼び出して実行する。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/wasmRunner.js&quot;&gt;wasmRunner.run()&lt;/a&gt;)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;それぞれ以下のように処理ごとにモジュール化しています。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:driver.js&quot;&gt;const bfParser = require(&apos;./bfParser&apos;);
-const bfCompiler = require(&apos;./bfCompiler&apos;);
-const wast2wasm = require(&apos;./wast2wasm&apos;);
-const wasmRuner = require(&apos;./wasmRunner&apos;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;パーサ&lt;/h1&gt;
-&lt;p&gt;rainf*ckを構文解析してASTを生成するパーサをPEG.jsで作成します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:bfParser.js&quot;&gt;const peg = require(&apos;pegjs&apos;);
-
-const syntax = `
-code = (normal_insn / block_insn / otherchar) *
-
-normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
-block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
-
-block = cod:code {
-  return cod;
-}
-
-otherchar = [^&gt;&amp;#x3C;+-.,\\[\\]] {
-  return undefined
-}
-`;
-
-const parser = peg.generate(syntax);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;syntaxという文字列変数にPEG文法を与えてpeg.generate()でパーサを生成しています。
-PEGでBNFのように構文を表現します。PEGでは構文解析と字句解析を分ける必要がありません。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:bfParser.js&quot;&gt;function parse(bfSource, opts) {
-  const bfAst = parser.parse(bfSource);
-  return bfAst;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;生成したパーサにBrainf*ckのコードを与えて抽象構文木を返します。
-PEGのJS実装であるPEG.jsが生成するパーサは、JSONで抽象構文木を返してくれます。
-抽象構文木(という程のものでもありませんが)では、[と]で表現されるブロックは配列、それ以外はその文字の配列が返ります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-brainfuck&quot;&gt;,[-&gt;+&amp;#x3C;]&gt;+.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;であれば、以下のようなJSONが返ります。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;[ &apos;,&apos;, [ &apos;-&apos;, &apos;&gt;&apos;, &apos;+&apos;, &apos;&amp;#x3C;&apos; ], &apos;&gt;&apos;, &apos;+&apos;, &apos;.&apos; ]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;[と]の対応は静的にコンパイル時チェックされることになります。&lt;/p&gt;
-&lt;h1&gt;コード生成&lt;/h1&gt;
-&lt;p&gt;抽象構文木を再帰的に辿って&lt;a href=&quot;https://ukyo.github.io/wasm-usui-book/webroot/text-format.html&quot;&gt;WAST形式テキスト&lt;/a&gt;を生成します。
-先のBFコードは以下を生成します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-lisp&quot;&gt;(module
-  (func $getchar (import &quot;imports&quot; &quot;getchar&quot;) (result i32))
-  (func $putchar (import &quot;imports&quot; &quot;putchar&quot;) (param i32))
-  (memory $0 (export &quot;memory&quot;) 1 1)
-
-  (func (export &quot;main&quot;) (local $ptr i32)
-    (i32.store8 (get_local $ptr) (call $getchar)) ;; ,
-    (block ;; [
-      (loop
-        (br_if 1 (i32.eqz (i32.load8_s (get_local $ptr))))
-        (i32.store8 (get_local $ptr) (i32.sub (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; -
-        (set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
-        (i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
-        (set_local $ptr (i32.sub (get_local $ptr) (i32.const 1))) ;; &amp;#x3C;
-        (br 0)
-      )
-    ) ;; ]
-    (set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
-    (i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
-    (i32.load8_s (get_local $ptr)) (call $putchar) ;; .
-  )
-)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;生成コードの説明&lt;/h1&gt;
-&lt;h2&gt;冒頭のいくつかの宣言&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;  (func $getchar (import &quot;imports&quot; &quot;getchar&quot;) (result i32))
-  (func $putchar (import &quot;imports&quot; &quot;putchar&quot;) (param i32))
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;BFでの入出力を行うためのgetchar、putcharを外部JS関数として供給します。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  (memory $0 (export &quot;memory&quot;) 1 1)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;memoryでWebAssemby側でメモリ領域を&lt;a href=&quot;https://github.com/sunfishcode/wasm-reference-manual/blob/master/WebAssembly.md#linear-memories&quot;&gt;リニアメモリ&lt;/a&gt;として確保。サイズと最大サイズをブロックサイズで指定。ここではいずれも1ブロック(64 KiB)を指定。&lt;/p&gt;
-&lt;h2&gt;コード本体の定義&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;  (func (export &quot;main&quot;) (local $ptr i32)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;JSから呼べる関数としてWebAssembly関数をmainという名前でexport。&lt;/p&gt;
-&lt;p&gt;以降、関数本体となる実行命令の説明をしていきます。&lt;/p&gt;
-&lt;h2&gt;’[‘と’]‘に対応するコード&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;    (block ;; [
-      (loop
-        (br_if 1 (i32.eqz (i32.load8_s (get_local $ptr))))
-:
-        (br 0)
-      )
-    ) ;; ]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;whileループに相当する[〜]のブロックがコンパイルされたコード。ptrの内容がゼロならループを抜け&lt;code&gt;(br_if 1)&lt;/code&gt;、loop末尾でloopの先頭にジャンプ&lt;code&gt;(br 0)&lt;/code&gt;しています。brはbranchの略で、分岐もしくは条件付き分岐命令です。
-wast2wasmではなぜかbrの飛び先をラベルで指定できなかったので、ネストレベルの相対指定&lt;sup id=&quot;fnref-2&quot;&gt;&lt;a href=&quot;#fn-2&quot; class=&quot;footnote-ref&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;で飛び先を指定しています。「0」は最内周のloopもしくはblock、「1」は1段外側のレベルのloopもしくはblockを意味します。ラベルを管理する必要がないので、ここでは好都合です。&lt;/p&gt;
-&lt;p&gt;brやbr_ifのジャンプの動作は、指定したネストレベルに対応するものがloopであればloop冒頭にジャンプ(ここではwhileループ内でのcontinue文の動作)、blockであればblockの末尾にジャンプ(ここではwhileループのbreak)をします。&lt;/p&gt;
-&lt;h2&gt;’+‘と’-‘に対応するコード&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;(i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
-(i32.store8 (get_local $ptr) (i32.sub (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; -
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;$ptrで間接参照したリニアメモリの指す先の内容を1バイトloadして加減算してリニアメモリにstoreし戻します。i32.load8は拡幅になるので符号付きと無しがあり、この場合は符号付きで処理するように注意します。&lt;/p&gt;
-&lt;h2&gt;’&gt;‘と’&amp;#x3C;‘に対応するコード&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;(set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
-(set_local $ptr (i32.sub (get_local $ptr) (i32.const 1))) ;; &amp;#x3C;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;$ptrを増減させます。&lt;/p&gt;
-&lt;h2&gt;’.‘と’,‘に対応するコード&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;(i32.load8_s (get_local $ptr)) (call $putchar) ;; .
-(i32.store8 (get_local $ptr) (call $getchar)) ;; ,
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;importsで宣言されているJS関数を指定して呼び出します。ここで用意したのはいずれも同期的な関数です。非同期関数を呼ぶ際にはコールバック関数を指定する必要がありますが、ここでは簡単さを優先するために同期関数で以下のように実装しておいたものを呼び出しています。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:wasmRunner.js&quot;&gt;const readlineSync = require(&apos;readline-sync&apos;);
- :
-function putchar(ch) {
-  process.stdout.write(String.fromCharCode(ch));
-}
-
-let buf = &apos;&apos;;
-function getchar() {
-  if (buf === &apos;&apos;) {
-    buf = buf + readlineSync.question() + &apos;\n&apos;;
-  }
-  const result = buf.charCodeAt(0);
-  buf = buf.substring(1);
-  return result;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;WAST→WASM変換&lt;/h1&gt;
-&lt;pre&gt;&lt;code class=&quot;language-wast2wasm.js&quot;&gt;const wast2wasm = require(&apos;wast2wasm&apos;);
-
-async function convert(wasmTextCode, opts) {
-  const wasm = await wast2wasm(wasmTextCode, true);
-  if (opts.verbose || process.env.NODE_ENV === &apos;debug&apos;) {
-    console.log(wasm.log);
-  }
-  return wasm.buffer;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;wastをwasmのバイト列表現に変換します。&lt;/p&gt;
-&lt;h1&gt;実行&lt;/h1&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:wastRunner.js&quot;&gt;async function run(uint8array, opts) {
-  const wasm = await WebAssembly.instantiate(uint8array, {
-    imports: {
-      getchar,
-      putchar,
-    },
-  });
-
-  const result = wasm.instance.exports.main();
-  if (opts.verbose || process.env.NODE_ENV === &apos;debug&apos;) {
-    const memory = new Uint8Array(wasm.instance.exports.memory.buffer);
-    console.log(memory);
-  }
-  return result;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;受け取ったwasmのバイト列表現をWebAssembly.instantiate()で実際のコンパイルを行い、WebAssemblyインスタンスを生成します。通常のWebAssembly実行であれば、wasm生成までは事前コンパイルでできていて、wasmのロードから始まるところ。
-そして、exportされた関数(ここではmainで固定)を実行します。&lt;/p&gt;
-&lt;h1&gt;コマンドラインの処理&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.npmjs.com/package/commander&quot;&gt;commander&lt;/a&gt;を使用して簡潔に。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js:index.js&quot;&gt;const program = require(&apos;commander&apos;);
-const driver = require(&apos;../lib/driver&apos;);
-
-function main(argv) {
-  program
-    .version(&apos;0.1.0&apos;)
-    .option(&apos;-e,--script [script]&apos;, &apos;run script from command line&apos;)
-    .option(&apos;-v,--verbose&apos;, &apos;verbose output&apos;)
-    .arguments(&apos;[file...]&apos;, &apos;Brainf*ck file&apos;)
-    .action(function(files, opts) {
-      for (const file of files) {
-        driver
-          .compileAndRunFile(file, { verbose: opts.verbose })
-          .catch(e =&gt; console.log(&apos;error:&apos; + e));
-      }
-    })
-    .on(&apos;--help&apos;, function() {
-      console.log(`
-      
-  Examples:
-
-    $ npx bf-compiler-webassembly -e &quot;+++&quot;
-    $ npx bf-compiler-webassembly hello.bf
-
-`);
-    })
-    .parse(argv);
-
-  // for -e,--script option
-  if (program.script) {
-    driver
-      .compileAndRunString(program.script, { verbose: program.verbose })
-      .catch(e =&gt; console.log(&apos;error:&apos; + e));
-  } else {
-    program.args.length !== 0 || program.help();
-  }
-}
-
-main(process.argv);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;WASM所感&lt;/h1&gt;
-&lt;p&gt;スタックマシンで変数も使え命令の対称性も高くわかりやすい。JVMのようにクラスベースではなく関数ベースであることが様々な効果を発揮しすっきりしている。
-呼び出しスタックを(引数やローカル変数を通じないで)直接見ることも書くこともできないのでスタック上をバッファオーバーフローで書き壊したり、リターンアドレス書き換えてコード呼び出される攻撃について安全。ヒープは別問題だが、間接参照呼び出しはtableという構造のインデックスのみで実現されるので列挙される関数の範囲に限定されるので比較的安全。引数や返り値の型や個数を指定する必要があり、軽くバイトコードベリファイがなされスタックズレなどは防止される。&lt;/p&gt;
-&lt;h1&gt;WAST形式所感&lt;/h1&gt;
-&lt;p&gt;WAST形式のS-expressionはLispっぽいですが、バイナリフォーマットとしてのWASMでの実際のバイト配置としてはFORTHのような逆ポーランド記法であり、これに対応するflat形式という記法もあるそうです(併用もできる?)。引数の評価順が決まっているのでS-Expressionとflat形式は1対1対応です。&lt;/p&gt;
-&lt;h1&gt;最適化&lt;/h1&gt;
-&lt;p&gt;していませんが、本来なら種々の最適化を実行することができるでしょう。たとえば複数連続する+や-、&gt;や&amp;#x3C;をまとめて計算するなどは効果的だろうし、BFの個々の命令をテーブルジャンプとか間接参照にすることも考えられます。&lt;/p&gt;
-&lt;h1&gt;まとめ&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;WebAssemblyはコンパイラの勉強のターゲットとしてモチベーションが高まるし、しきいも低いのでぜひどうぞ。&lt;/li&gt;
-&lt;li&gt;ただし現時点ではドキュメント不足、今後仕様が変化していくだろう、という予測もできます。&lt;/li&gt;
-&lt;li&gt;PEG.jsは便利。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;footnotes&quot;&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id=&quot;fn-1&quot;&gt;
-&lt;p&gt;主観です。&lt;/p&gt;
-&lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
-&lt;/li&gt;
-&lt;li id=&quot;fn-3&quot;&gt;
-&lt;p&gt;wast2wabtはたぶん&lt;a href=&quot;https://github.com/WebAssembly/wabt&quot;&gt;WABT(The WebAssembly Binary Toolkit)&lt;/a&gt;からEmscriptenか何かでJSに変換されている。&lt;/p&gt;
-&lt;a href=&quot;#fnref-3&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
-&lt;/li&gt;
-&lt;li id=&quot;fn-2&quot;&gt;
-&lt;p&gt;ネストレベルの外側向きの相対指定であることがドキュメント上読み取れず、ものすごく苦労した。&lt;/p&gt;
-&lt;a href=&quot;#fnref-2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[React-SpringのHooks APIでブラウザアニメーションを基本から極めよう!]]></title><description><![CDATA[🎄メリークリスマスイブ!🎄 この記事は、React-Springというアニメーションのライブラリを紹介する NTTテクノクロス Advent Calendar 2019 の24日目の記事です。23日目は@yuitomoさんの記事、明日25日最終日は@korodroid…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
+&lt;p&gt;なお、上記では@Entityでドメインクラスを定義していますが、データベースがGrailsアプリケーションの一部であるなら、Grailsアプリケーション本体のwar(やjar)に含まれるドメインクラスのクラスファイルのjarをクラスパスに含めれば別に書かなくても利用可能です(多分)。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[React-SpringのHooks APIでブラウザアニメーションを基本から極めよう!]]></title><description><![CDATA[🎄メリークリスマスイブ!🎄 この記事は、React-Springというアニメーションのライブラリを紹介する NTTテクノクロス Advent Calendar 2019 の24日目の記事です。23日目は@yuitomoさんの記事、明日25日最終日は@korodroid…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/260f188851045cc091ac/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th align=&quot;center&quot;&gt;&lt;/th&gt;
@@ -1974,32 +1467,514 @@ export default SampleSpring;
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Grails3で、Grails2と同様に設定ファイルを外部化する]]></title><description><![CDATA[Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。 本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5cd1e9a1ea3d451e784e/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5cd1e9a1ea3d451e784e/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。&lt;/p&gt;
-&lt;p&gt;本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails 3設定してみます。&lt;/p&gt;
-&lt;p&gt;やることは、Applicationクラス(grails-app/init/hoge/Application.groovy)に以下のようにアノテーションを付与することだけです。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;import org.springframework.context.annotation.*
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[npmのモジュールバージョン指定におけるチルダ(~)とキャレット(^)の違いについての直感的な理解]]></title><description><![CDATA[package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。 記法 種別 意味 問題点など ^x.y.z…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/443580da712d2ccee159/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;package.jsonのdependencies/devDependenciesにおいて、左端が0ではない、z.y.zという3桁のバージョンを指定する場合、以下のとおり。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;記法&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;種別&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;意味&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;問題点など&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;^x.y.z&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;キャレット表記&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;a href=&quot;http://semver.org/lang/ja/&quot;&gt;セマンティックバージョニング&lt;/a&gt;に従う。つまり、メジャーバージョンxを指定し、マイナーバージョンyの上昇、パッチバージョンzの上昇は互換性があるはずだと信じて、「x.{y以上}.{yが同じならz以上、yが上昇していれば任意} 」にあてはまる最新のものを使う。&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;開発時点と、ソース共有を経ての再ビルド(npm install)時の間で、NPMリポジトリ上の対象パッケージのバージョンが上がっている場合、より新しいものが使われることになる可能性があるが、セマンティックバージョニングの仕様に厳密に従わないパッケージは世の中に結構あるのではまり易い。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;~x.y.z&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;チルダ表記&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;セマンティックバージョニングにおける「マイナーバージョンが上がっても互換性が保たれるはずだ」という建前を信じないが、パッチバージョン上昇だったら互換性があるだろうとは信じて、「x.y.{z以上}」にあてはまるものを使う。&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;キャレット表記に比べて、上記の可能性がパッチバージョンのみなので少ない。とはいえ、はまるときははまるだろう。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;x.y.z&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;固定&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;指定したバージョン「x.y.z」に厳密にあてはまるものを使う。&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;開発時と異なるバージョンが使用される問題は回避できるが、たとえばセキュリテイ問題があってそのバージョンのNPMがリポジトリから削除された場合に(互換性のある後継バージョンがあるのに)ビルド不可能になったり、許容できるバージョン上昇を指定できないなど、セマンティックバージョンのメリットを全く享受できない。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;いずれも問題があるので、^なり~で指定した上で、&lt;a href=&quot;https://docs.npmjs.com/files/package-lock.json&quot;&gt;package-lock.json&lt;/a&gt;なり&lt;a href=&quot;https://yarnpkg.com/lang/en/docs/yarn-lock/&quot;&gt;yarn.lock&lt;/a&gt;を併用するのが正しい(それぞれNPM5、yarnのデフォルト動作)。&lt;/p&gt;
+&lt;p&gt;これらのロックファイルを使うのは、セマンティックバージョニングの建前と本音を使いわけることである。つまり、^~をつかって「このバージョンの範囲なら、互換性に問題ないはずだ」という希望と理想をpackage.jsonに記す。それはその上で、「実際にはこのバージョン使ってビルドしましたよ、動作保証するのはこっちなんで、こちらをお使い下さいね、げっひっひ」とlockファイルを裏で提供する。&lt;/p&gt;
+&lt;p&gt;左端の桁が0であったり、3桁以外の場合を含めては&lt;a href=&quot;http://qiita.com/sotarok/items/4ebd4cfedab186355867&quot;&gt;こちら&lt;/a&gt;の記事などを参照のこと。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[第14回オフラインリアルタイムどう書くの参考問題をHaskellで解く]]></title><description><![CDATA[第14回 オフラインリアルタイムどう書くの参考問題「眠れるモンスターを狩る」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/48cb682cc3441f1066a3/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/48cb682cc3441f1066a3/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/0597bd3af481e5834ae1&quot;&gt;第14回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord14linedung/&quot;&gt;眠れるモンスターを狩る&lt;/a&gt;」を、Haskellで解きました。Stateモナドを使ってみたけど苦労のわりには…。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-haskell:monster.hs&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord14linedung/
+import Control.Monad
+import Control.Monad.State
+    
+data Monster = B|D|F|H|J|L deriving (Eq, Show)
+data Arm = A|C|E|G|I|K deriving (Eq, Show)
 
-@PropertySources([
-  @PropertySource(value=&quot;classpath:hoge.properties&quot;),
-  @PropertySource(value=&quot;file:///opt/hoge/conf/hoge.properties&quot;, ignoreResourceNotFound = true),
-  @PropertySource(value=&apos;file:///${hoge.conf.file}&apos;, ignoreResourceNotFound = true)
-])
-class Application extends GrailsAutoConfiguration {
-    static void main(String[] args) {
-  :
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;上記によって以下のように動作します。&lt;/p&gt;
+removeOne e xs
+    | after == [] = before
+    | otherwise = before ++ tail(after)
+    where
+      before = takeWhile (\t-&gt; t /= e) xs
+      after = dropWhile (\t-&gt; t /= e) xs
+
+step (ms, as, n)
+    | A `elem` as &amp;#x26;&amp;#x26; B `elem` ms = (True, (removeOne B ms, C:as, n+1))
+    | C `elem` as &amp;#x26;&amp;#x26; D `elem` ms = (True, (removeOne D ms, E:as, n+1))
+    | E `elem` as &amp;#x26;&amp;#x26; F `elem` ms = (True, (removeOne F ms, G:as, n+1))
+    | G `elem` as &amp;#x26;&amp;#x26; H `elem` ms = (True, (removeOne H ms, I:as, n+1))
+    | I `elem` as &amp;#x26;&amp;#x26; J `elem` ms = (True, (removeOne J ms, K:as, n+1))
+    | K `elem` as &amp;#x26;&amp;#x26; L `elem` ms = (True, (removeOne L ms, A:as, n+1))
+    | otherwise = (False, (ms, as, n))
+
+next :: State ([Monster],[Arm],Int) Bool
+next = state $ \(ms, as, n) -&gt; step (ms, as, n)
+
+toMonster :: [Monster] -&gt; Char -&gt; [Monster]
+toMonster xs ch = case ch of
+                    &apos;B&apos; -&gt; B:xs
+                    &apos;D&apos; -&gt; D:xs
+                    &apos;F&apos; -&gt; F:xs
+                    &apos;H&apos; -&gt; H:xs
+                    &apos;J&apos; -&gt; J:xs
+                    &apos;L&apos; -&gt; L:xs
+                    _ -&gt; xs
+
+toArm :: [Arm] -&gt; Char -&gt; [Arm]
+toArm xs ch = case ch of
+                &apos;a&apos; -&gt; A:xs
+                &apos;c&apos; -&gt; C:xs
+                &apos;e&apos; -&gt; E:xs
+                &apos;g&apos; -&gt; G:xs
+                &apos;i&apos; -&gt; I:xs
+                &apos;k&apos; -&gt; K:xs
+                _ -&gt; xs
+
+toState :: [Char] -&gt; ([Monster], [Arm], Int)
+toState str = (foldl (toMonster) [] str, foldl (toArm) [] str, 0)
+
+solve :: State ([Monster], [Arm], Int) ()
+solve = do
+  result &amp;#x3C;- next
+  if (result == False) then return () else solve
+
+solve&apos; :: [Char] -&gt; ([Monster], [Arm], Int)
+solve&apos; str = do
+  execState solve (toState str)
+   
+test :: [Char] -&gt; String -&gt; Bool
+test str expected = do
+  let (_, _, n) = solve&apos; str
+  n == read expected
+
+main :: IO ()
+main = do
+  print $ test &quot;gLDLBgBgHDaD&quot; &quot;6&quot; {-0-}
+  print $ test &quot;DBcDLaLgDBH&quot; &quot;6&quot; {-1-}
+  print $ test &quot;JJca&quot; &quot;0&quot; {-2-}
+  print $ test &quot;FJDLBH&quot; &quot;0&quot; {-3-}
+  print $ test &quot;HJBLFDg&quot; &quot;6&quot; {-4-}
+  print $ test &quot;HBaDLFJ&quot; &quot;6&quot; {-5-}
+  print $ test &quot;DJaHLB&quot; &quot;2&quot; {-6-}
+  print $ test &quot;gDLHJF&quot; &quot;3&quot; {-7-}
+  print $ test &quot;cJFgLHD&quot; &quot;5&quot; {-8-}
+  print $ test &quot;FFBJaJJ&quot; &quot;1&quot; {-9-}
+  print $ test &quot;FJeJFBJ&quot; &quot;2&quot; {-10-}
+  print $ test &quot;iJFFJJB&quot; &quot;3&quot; {-11-}
+  print $ test &quot;JBJiLFJF&quot; &quot;5&quot; {-12-}
+  print $ test &quot;JDiFLFBJJ&quot; &quot;8&quot; {-13-}
+  print $ test &quot;BDFDFFDFFLLFFJFDBFDFFFFDDFaDBFFB&quot; &quot;28&quot; {-14-}
+  print $ test &quot;DDFBFcBDFFFFFFLBFDFFBFLFDFDJDFDF&quot; &quot;24&quot; {-15-}
+  print $ test &quot;FDLBFDDBFFFeFFFFFDFBLDDFDDFBFFJF&quot; &quot;16&quot; {-16-}
+  print $ test &quot;FDBFFLFDFFDBBDFFBJDLFgDFFFDFFDFF&quot; &quot;0&quot; {-17-}
+  print $ test &quot;FDiFLDFFFFBDDJDDBFBFDFFFBFFDFLFF&quot; &quot;31&quot; {-18-}
+  print $ test &quot;FDFDJBLBLBFFDDFFFDFFFFFDDFBkFDFF&quot; &quot;30&quot; {-19-}
+  print $ test &quot;HBkFFFFHBLH&quot; &quot;3&quot; {-20-}
+  print $ test &quot;FBHHFFFHLaB&quot; &quot;2&quot; {-21-}
+  print $ test &quot;LFHFBBcHFHF&quot; &quot;0&quot; {-22-}
+  print $ test &quot;LFBHFFeFHBH&quot; &quot;7&quot; {-23-}
+  print $ test &quot;LgFHHHBFBFF&quot; &quot;3&quot; {-24-}
+  print $ test &quot;FFiFHBHLBFH&quot; &quot;0&quot; {-25-}
+  print $ test &quot;BFHHFFHBeFLk&quot; &quot;10&quot; {-26-}
+  print $ test &quot;FHFaBBHFHLFg&quot; &quot;5&quot; {-27-}
+  print $ test &quot;FFgacaFg&quot; &quot;0&quot; {-28-}
+  print $ test &quot;JHDaDcBJiiHccBHDBDH&quot; &quot;9&quot; {-29-}
+  print $ test &quot;FHJJLckFckFJHDFF&quot; &quot;12&quot; {-30-}
+  print $ test &quot;DeDHJHDFHJBLHDLLDHJLBDD&quot; &quot;22&quot; {-31-}
+  print $ test &quot;gJLLLJgJgJLJL&quot; &quot;0&quot; {-32-}
+  print $ test &quot;DaaaDDD&quot; &quot;0&quot; {-33-}
+  print $ test &quot;HFeJFHiBiiBJeJBBFFB&quot; &quot;9&quot; {-34-}
+  print $ test &quot;FJFFJDBHBHaLJBHJHDLHkLLLFFFgJgHJLHkJkB&quot; &quot;32&quot; {-35-}
+  print $ test &quot;giFLBiBJLLJgHBFJigJJJBLHFLDLL&quot; &quot;23&quot; {-36-}
+  print $ test &quot;cgkLJcLJJJJgJc&quot; &quot;2&quot; {-37-}
+  print $ test &quot;LDFHJHcFBDBLJBLFLcFJcDFBL&quot; &quot;22&quot; {-38-}
+  print $ test &quot;JJHHHkHJkHLJk&quot; &quot;1&quot; {-39-}
+  print $ test &quot;kHHBBaBgHagHgaHBBB&quot; &quot;11&quot; {-40-}
+  print $ test &quot;HDBFFDHHHDFLDcHHLFDcJD&quot; &quot;20&quot; {-41-}
+  print $ test &quot;HFFFHeFFee&quot; &quot;7&quot; {-42-}
+  print $ test &quot;gLLDHgDLgFL&quot; &quot;1&quot; {-43-}
+  print $ test &quot;JJJBBaBBHBBHaLBHJ&quot; &quot;7&quot; {-44-}
+  print $ test &quot;FBFBgJBDBDgF&quot; &quot;0&quot; {-45-}
+  print $ test &quot;LLLLakakLakLL&quot; &quot;7&quot; {-46-}
+  print $ test &quot;HeJHeJe&quot; &quot;0&quot; {-47-}
+  print $ test &quot;LDFLBLLeBLDBBFFBLFBB&quot; &quot;4&quot; {-48-}
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解く]]></title><description><![CDATA[第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」を、Haskellで解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/53460a9772f2bfbaa3c1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/53460a9772f2bfbaa3c1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/9810b301648099028bf0&quot;&gt;第19回 オフラインリアルタイムどう書くの問題「不良セクタの隣」&lt;/a&gt;を、Haskellで解きました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-haskell:sectors.hs&quot;&gt;import Data.Ratio
+import Data.List
+
+hasIntersect :: (Ratio Int, Ratio Int, Int) -&gt; (Ratio Int, Ratio Int, Int) -&gt; Bool
+hasIntersect (fst_a,snd_a,_) (fst_b,snd_b,_) = (fst_a&amp;#x3C;=snd_b &amp;#x26;&amp;#x26; fst_b &amp;#x3C;=snd_a) || (fst_b &amp;#x3C;=snd_a &amp;#x26;&amp;#x26; snd_a&amp;#x3C;=snd_b)
+
+ranges n = take (8*n+2) $ [(low,up,n*100+(m `mod` (8*n))) | m&amp;#x3C;-[-1..], let w=(1%(8*n)), let low=(-w/2+(w*(m%1))), let up=low+w]
+
+inRange n m = filter $ hasIntersect (ranges n !! (m+1))
+
+neighbor&apos; n m = (ranges n !! (m+1-1)) : (ranges n !! (m+1+1)) : neighbor&apos;&apos; n m
+ where
+   neighbor&apos;&apos; n m
+     | n &amp;#x3C;= 1 = nub $ (inRange n m (ranges $ n+1))
+     | n == 4 = nub $ (inRange n m (ranges $ n-1))
+     | otherwise = nub ((inRange n m (ranges $ n-1)) ++
+                        (inRange n m (ranges $ n+1)))
+
+neighbor n = neighbor&apos; (n `div` 100) (n `mod` 100)
+
+reserved xs = map (!!0) $ filter (\ x -&gt; length x &gt; 1) $ group $ sort $ filter (\x-&gt;not (x `elem` xs)) $ map (\(_,_,n)-&gt;n) $ concatMap neighbor xs
+
+test :: [Int] -&gt; [Int] -&gt; IO()
+test s1 s2 = do
+   putStrLn $ show $ reserved s1 == s2
+
+main = do
+   test [400,401,302] [300,301,402] {- 0 -}
+   test [105,100,306,414] [] {- 1 -}
+   test [100] [] {- 2 -}
+   test [211] [] {- 3 -}
+   test [317] [] {- 4 -}
+   test [414] [] {- 5 -}
+   test [100,106] [107] {- 6 -}
+   test [205,203] [102,204] {- 7 -}
+   test [303,305] [304] {- 8 -}
+   test [407,409] [306,408] {- 9  -}
+   test [104,103] [207] {- 10  -}
+   test [204,203] [102,305]     {- 11  -}
+   test [313,314] [209,418]     {- 12  -}
+   test [419,418] [314]     {- 13  -}
+   test [100,102,101] [201,203]     {- 14  -}
+   test [103,206,309] [205,207,308,310]     {- 15  -}
+   test [414,310,309] [206,311,413]     {- 16  -}
+   test [104,102,206,307,102,202] [101,103,203,204,205,207,308]     {- 17  -}
+   test [104,206,308,409,407] [103,205,207,306,307,309,408,410]     {- 18  -}
+   test [313,406,213,301,409,422,412,102,428] []     {- 19  -}
+   test [101,300,210,308,423,321,403,408,415] []     {- 20  -}
+   test [304,316,307,207,427,402,107,431,412,418,424] []     {- 21  -}
+   test [205,408,210,215,425,302,311,400,428,412] []     {- 22  -}
+   test [200,311,306,412,403,318,427,105,420] []     {- 23  -}
+   test [105,305,407,408,309,208,427] [104,209,306,406]     {- 24  -}
+   test [311,304,322,404,429,305,316] [203,303,321,405,406,430]     {- 25  -}
+   test [210,401,316,425,101] [211,315]     {- 26  -}
+   test [414,403,404,416,428,421] [303,415]     {- 27  -}
+   test [207,300,103,211,428] [104,206]     {- 28  -}
+   test [322,314,310] []     {- 29  -}
+   test [427,200,215] [100,323]     {- 30  -}
+   test [311,402,424,307,318,430,323,305,201] [200,204,301,302,306,322,423,425,431]     {- 31  -}
+   test [425,430,408] []     {- 32  -}
+   test [202,320,209,426] [319,427]     {- 33  -}
+   test [430,209,302,310,304,431,320] [202,303,323]     {- 34  -}
+   test [208,206,406,424,213,312] [207,311,313]     {- 35  -}
+   test [420,302,313,413,317,402] [301,403]     {- 36  -}
+   test [319,306,309,418,204,411] [305,307,308,412]     {- 37  -}
+   test [400,308,105,430,203,428,209] [104,210,429,431]     {- 38  -}
+   test [200,305,214] [215]     {- 39  -}
+   test [214,408,410,407,317,422] [306,316,409,423] {- 40  -}
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[WebAssemblyへのコンパイラ言語を簡単に実装]]></title><description><![CDATA[後入りですみませんが、WebAssemblyアドベントカレンダー未投稿のところ埋めさせて頂きます。 本記事では、WebAssemblyをターゲットとするコンパイラ処理系を実装します。 方針 WebAssembly…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5276bd3425d1000e48ba/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5276bd3425d1000e48ba/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;後入りですみませんが、WebAssemblyアドベントカレンダー未投稿のところ埋めさせて頂きます。&lt;/p&gt;
+&lt;p&gt;本記事では、WebAssemblyをターゲットとするコンパイラ処理系を実装します。&lt;/p&gt;
+&lt;h1&gt;方針&lt;/h1&gt;
+&lt;p&gt;WebAssemblyへのコンパイル言語処理系を&lt;strong&gt;&lt;em&gt;最も簡単に&lt;/em&gt;&lt;/strong&gt; &lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;実装するための方針は以下のとおり。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;(1) warファイルやクラスパス中のhoge.properties(ソースコードとしてはsrc/main/resouces/hoge.propertiesに置く)を読み込む。このファイル中には設定のデフォルト値を記入しておく。&lt;/li&gt;
-&lt;li&gt;(2) もしファイル「file:///opt/hoge/conf/hoge.properties」があれば設定ファイルとしてそれを読み込む。(1)で設定されたプロパティで同名のものは上書きされる。なければ何もしない。&lt;/li&gt;
-&lt;li&gt;(3) もし、システムプロパティ「hoge.conf.file」もしくは環境変数「HOGE&lt;em&gt;CONF&lt;/em&gt;FILE」で指定されたファイル名のファイルががあればそれを読み込む。(1)(2)で設定されたプロパティで同名のものは上書きされる。なければ何もしない。&lt;/li&gt;
+&lt;li&gt;言語は「&lt;a href=&quot;https://ja.wikipedia.org/wiki/Brainfuck&quot;&gt;コンパイラがなるべく小さくなる言語として考案&lt;/a&gt;」されたBrainf*ckを採用&lt;/li&gt;
+&lt;li&gt;文法は&lt;a href=&quot;https://ja.wikipedia.org/wiki/Parsing_Expression_Grammar&quot;&gt;PEG(Parsing Expression Grammar)&lt;/a&gt;で記述し、生成系&lt;a href=&quot;https://pegjs.org/&quot;&gt;PEG.js&lt;/a&gt;でパーサを実行時に生成する&lt;/li&gt;
+&lt;li&gt;WebAssemblyコード生成では文字列でWAST形式を生成し、&lt;a href=&quot;https://github.com/ewasm/wast2wasm&quot;&gt;wast2wasm&lt;/a&gt;&lt;sup id=&quot;fnref-3&quot;&gt;&lt;a href=&quot;#fn-3&quot; class=&quot;footnote-ref&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;で変換する(直接WASMを生成しない)。またEmscriptenやbinaryenは使用しない&lt;/li&gt;
+&lt;li&gt;WASTの表現ではflat形式ではなくs-expression形式を使用する&lt;/li&gt;
+&lt;li&gt;ブラウザ上ではなくNode上で実行する。なのでWebAssemblyを実行できるバージョンのNode.jsが必要。Node8以降では普通に実行できる&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;run-app時、およびwar化してtomcatにデプロイしても同様に動作します。
-ちなみに上記はSpring Bootの機能というだけです。(&lt;a href=&quot;https://www.jayway.com/2014/02/16/spring-propertysource/&quot;&gt;→参考&lt;/a&gt;)&lt;/p&gt;
-&lt;h1&gt;余談&lt;/h1&gt;
-&lt;p&gt;Spring Boot標準の設定ファイルの外部化の説明は&lt;a href=&quot;http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html&quot;&gt;こちら&lt;/a&gt;にありますが、非常に高機能かつ汎用的です。Spring Bootの主たる設定ファイルapplication.yaml(application.properties)は、特に何も設定しなくてもシステムプロパティspring.config.location(もしくは環境変数SPRING&lt;em&gt;CONFIG&lt;/em&gt;LOCATION、etc)で切り替えることができます。その場合、&lt;a href=&quot;http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-profile-specific-properties&quot;&gt;Profile-specific application properties&lt;/a&gt;というものに応じてファイル名を選択する、なども可能です。(Seasar2の&lt;a href=&quot;http://s2container.seasar.org/2.4/ja/DIContainer.html#ConditionalInclude&quot;&gt;「暗黙的な条件インクルード」&lt;/a&gt;と似た機能)&lt;/p&gt;
-&lt;p&gt;ただ、spring.config.location方式だと、ベース名(デフォルトでappliction.yamlの「application」)を変更したい場合については、別のシステムプロパティ(spring.config.name)などの設定が必要になり、その設定は設定ファイルに書けない以上、環境変数やシステムプロパティで指定するしかなく、「環境変数やシステムプロパティを指定しない」ときにapplicationから読み込もうとしてしまう、という問題があり、Grails 2までの動作と上手く整合する方法をみつけられませんでした。&lt;/p&gt;
-&lt;p&gt;もし、外部化する設定ファイルのファイル名がapplication.yaml(.properties)のままで良いのであれば、あるいはシステムプロパティや環境変数の設定が必須であるような運用ルールとするならば、spring.config.locationを使う方式でも良いかもしれません。その場合、特に設定はいりません。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Node.jsでgetchar]]></title><description><![CDATA[Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。 Promise…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。&lt;/p&gt;
+&lt;p&gt;コードは&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly&quot;&gt;こちら&lt;/a&gt;に。
+NPMに登録されているので以下で実行できます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;% cat hello.bf
++++++++++[&gt;++++++++&gt;+++++++++++&gt;+++++&amp;#x3C;&amp;#x3C;&amp;#x3C;-]&gt;.&gt;++.+++++++..+++.&gt;-.------------.&amp;#x3C;++++++++.--------.+++.------.--------.&gt;+.
+
+% npx bf-compiler-webassembly hello.bf
+npx: 5個のパッケージを1.592秒でインストールしました。
+Hello, world!
+
+% npx bf-compiler-webassembly -e &apos;+++++++++[&gt;++++++++&gt;+++++++++++&gt;+++++&amp;#x3C;&amp;#x3C;&amp;#x3C;-]&gt;.&gt;++.+++++++..+++.&gt;-.------------.&amp;#x3C;++++++++.--------.+++.------.--------.&gt;+.&apos;
+npx: 5個のパッケージを2.06秒でインストールしました。
+Hello, world!
+
+% npx bf-compiler-webassembly --help
+npx: 5個のパッケージを1.506秒でインストールしました。
+
+  Usage: bf-compiler-webassembly [options] [file...]
+
+
+  Options:
+
+    -V, --version         output the version number
+    -e,--script [script]  run script from command line
+    -v,--verbose          verbose output
+    -h, --help            output usage information
+
+
+  Examples:
+
+    $ npx bf-compiler-webassembly -e &quot;+++&quot;
+    $ npx bf-compiler-webassembly hello.bf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;実行例&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/d79db6b1-f1ba-f816-b6ea-7f5481a650b3.gif&quot; alt=&quot;bf2.mov.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;以降、コードの説明をしていきます。&lt;/p&gt;
+&lt;h1&gt;全体の流れ&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:driver.js&quot;&gt;// compile from string
+async function compileAndRunString(bfSource, opts) {
+  const bfAst = bfParser.parse(bfSource, opts);
+  const wast = bfCompiler.compile(bfAst, opts);
+  const wasm = await wast2wasm.convert(wast, opts);
+  return await wasmRuner.run(wasm, opts);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/driver.js&quot;&gt;driver.js&lt;/a&gt;でコンパイル・実行の全体の流れを制御しています。以下の順で処理が実行されます。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Brainf*ckコードの構文解析(パース)、ASTの生成。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/bfParser.js&quot;&gt;bfParser.parse()&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;ASTをwastに変換する(コード生成)。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/bfCompiler.js&quot;&gt;bfCompiler.compile()&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;wast形式をwasmに変換し、WASMのバイト列表現に変換。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/wast2wasm.js&quot;&gt;wast2wasm.convert()&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;WASMバイト列をWebAssemblyの内部形式(機械語?)に変換・コンパイルし、wasmコードを呼び出して実行する。(&lt;a href=&quot;https://github.com/uehaj/bf-compiler-webassembly/blob/master/lib/wasmRunner.js&quot;&gt;wasmRunner.run()&lt;/a&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;それぞれ以下のように処理ごとにモジュール化しています。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:driver.js&quot;&gt;const bfParser = require(&apos;./bfParser&apos;);
+const bfCompiler = require(&apos;./bfCompiler&apos;);
+const wast2wasm = require(&apos;./wast2wasm&apos;);
+const wasmRuner = require(&apos;./wasmRunner&apos;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;パーサ&lt;/h1&gt;
+&lt;p&gt;rainf*ckを構文解析してASTを生成するパーサをPEG.jsで作成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:bfParser.js&quot;&gt;const peg = require(&apos;pegjs&apos;);
+
+const syntax = `
+code = (normal_insn / block_insn / otherchar) *
+
+normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
+block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
+
+block = cod:code {
+  return cod;
+}
+
+otherchar = [^&gt;&amp;#x3C;+-.,\\[\\]] {
+  return undefined
+}
+`;
+
+const parser = peg.generate(syntax);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;syntaxという文字列変数にPEG文法を与えてpeg.generate()でパーサを生成しています。
+PEGでBNFのように構文を表現します。PEGでは構文解析と字句解析を分ける必要がありません。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:bfParser.js&quot;&gt;function parse(bfSource, opts) {
+  const bfAst = parser.parse(bfSource);
+  return bfAst;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;生成したパーサにBrainf*ckのコードを与えて抽象構文木を返します。
+PEGのJS実装であるPEG.jsが生成するパーサは、JSONで抽象構文木を返してくれます。
+抽象構文木(という程のものでもありませんが)では、[と]で表現されるブロックは配列、それ以外はその文字の配列が返ります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-brainfuck&quot;&gt;,[-&gt;+&amp;#x3C;]&gt;+.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;であれば、以下のようなJSONが返ります。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;[ &apos;,&apos;, [ &apos;-&apos;, &apos;&gt;&apos;, &apos;+&apos;, &apos;&amp;#x3C;&apos; ], &apos;&gt;&apos;, &apos;+&apos;, &apos;.&apos; ]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;[と]の対応は静的にコンパイル時チェックされることになります。&lt;/p&gt;
+&lt;h1&gt;コード生成&lt;/h1&gt;
+&lt;p&gt;抽象構文木を再帰的に辿って&lt;a href=&quot;https://ukyo.github.io/wasm-usui-book/webroot/text-format.html&quot;&gt;WAST形式テキスト&lt;/a&gt;を生成します。
+先のBFコードは以下を生成します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-lisp&quot;&gt;(module
+  (func $getchar (import &quot;imports&quot; &quot;getchar&quot;) (result i32))
+  (func $putchar (import &quot;imports&quot; &quot;putchar&quot;) (param i32))
+  (memory $0 (export &quot;memory&quot;) 1 1)
+
+  (func (export &quot;main&quot;) (local $ptr i32)
+    (i32.store8 (get_local $ptr) (call $getchar)) ;; ,
+    (block ;; [
+      (loop
+        (br_if 1 (i32.eqz (i32.load8_s (get_local $ptr))))
+        (i32.store8 (get_local $ptr) (i32.sub (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; -
+        (set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
+        (i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
+        (set_local $ptr (i32.sub (get_local $ptr) (i32.const 1))) ;; &amp;#x3C;
+        (br 0)
+      )
+    ) ;; ]
+    (set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
+    (i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
+    (i32.load8_s (get_local $ptr)) (call $putchar) ;; .
+  )
+)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;生成コードの説明&lt;/h1&gt;
+&lt;h2&gt;冒頭のいくつかの宣言&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;  (func $getchar (import &quot;imports&quot; &quot;getchar&quot;) (result i32))
+  (func $putchar (import &quot;imports&quot; &quot;putchar&quot;) (param i32))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;BFでの入出力を行うためのgetchar、putcharを外部JS関数として供給します。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  (memory $0 (export &quot;memory&quot;) 1 1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;memoryでWebAssemby側でメモリ領域を&lt;a href=&quot;https://github.com/sunfishcode/wasm-reference-manual/blob/master/WebAssembly.md#linear-memories&quot;&gt;リニアメモリ&lt;/a&gt;として確保。サイズと最大サイズをブロックサイズで指定。ここではいずれも1ブロック(64 KiB)を指定。&lt;/p&gt;
+&lt;h2&gt;コード本体の定義&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;  (func (export &quot;main&quot;) (local $ptr i32)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;JSから呼べる関数としてWebAssembly関数をmainという名前でexport。&lt;/p&gt;
+&lt;p&gt;以降、関数本体となる実行命令の説明をしていきます。&lt;/p&gt;
+&lt;h2&gt;’[‘と’]‘に対応するコード&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;    (block ;; [
+      (loop
+        (br_if 1 (i32.eqz (i32.load8_s (get_local $ptr))))
+:
+        (br 0)
+      )
+    ) ;; ]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;whileループに相当する[〜]のブロックがコンパイルされたコード。ptrの内容がゼロならループを抜け&lt;code&gt;(br_if 1)&lt;/code&gt;、loop末尾でloopの先頭にジャンプ&lt;code&gt;(br 0)&lt;/code&gt;しています。brはbranchの略で、分岐もしくは条件付き分岐命令です。
+wast2wasmではなぜかbrの飛び先をラベルで指定できなかったので、ネストレベルの相対指定&lt;sup id=&quot;fnref-2&quot;&gt;&lt;a href=&quot;#fn-2&quot; class=&quot;footnote-ref&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;で飛び先を指定しています。「0」は最内周のloopもしくはblock、「1」は1段外側のレベルのloopもしくはblockを意味します。ラベルを管理する必要がないので、ここでは好都合です。&lt;/p&gt;
+&lt;p&gt;brやbr_ifのジャンプの動作は、指定したネストレベルに対応するものがloopであればloop冒頭にジャンプ(ここではwhileループ内でのcontinue文の動作)、blockであればblockの末尾にジャンプ(ここではwhileループのbreak)をします。&lt;/p&gt;
+&lt;h2&gt;’+‘と’-‘に対応するコード&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;(i32.store8 (get_local $ptr) (i32.add (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; +
+(i32.store8 (get_local $ptr) (i32.sub (i32.load8_s (get_local $ptr)) (i32.const 1))) ;; -
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;$ptrで間接参照したリニアメモリの指す先の内容を1バイトloadして加減算してリニアメモリにstoreし戻します。i32.load8は拡幅になるので符号付きと無しがあり、この場合は符号付きで処理するように注意します。&lt;/p&gt;
+&lt;h2&gt;’&gt;‘と’&amp;#x3C;‘に対応するコード&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;(set_local $ptr (i32.add (get_local $ptr) (i32.const 1))) ;; &gt;
+(set_local $ptr (i32.sub (get_local $ptr) (i32.const 1))) ;; &amp;#x3C;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;$ptrを増減させます。&lt;/p&gt;
+&lt;h2&gt;’.‘と’,‘に対応するコード&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;(i32.load8_s (get_local $ptr)) (call $putchar) ;; .
+(i32.store8 (get_local $ptr) (call $getchar)) ;; ,
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;importsで宣言されているJS関数を指定して呼び出します。ここで用意したのはいずれも同期的な関数です。非同期関数を呼ぶ際にはコールバック関数を指定する必要がありますが、ここでは簡単さを優先するために同期関数で以下のように実装しておいたものを呼び出しています。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:wasmRunner.js&quot;&gt;const readlineSync = require(&apos;readline-sync&apos;);
+ :
+function putchar(ch) {
+  process.stdout.write(String.fromCharCode(ch));
+}
+
+let buf = &apos;&apos;;
+function getchar() {
+  if (buf === &apos;&apos;) {
+    buf = buf + readlineSync.question() + &apos;\n&apos;;
+  }
+  const result = buf.charCodeAt(0);
+  buf = buf.substring(1);
+  return result;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;WAST→WASM変換&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&quot;language-wast2wasm.js&quot;&gt;const wast2wasm = require(&apos;wast2wasm&apos;);
+
+async function convert(wasmTextCode, opts) {
+  const wasm = await wast2wasm(wasmTextCode, true);
+  if (opts.verbose || process.env.NODE_ENV === &apos;debug&apos;) {
+    console.log(wasm.log);
+  }
+  return wasm.buffer;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;wastをwasmのバイト列表現に変換します。&lt;/p&gt;
+&lt;h1&gt;実行&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:wastRunner.js&quot;&gt;async function run(uint8array, opts) {
+  const wasm = await WebAssembly.instantiate(uint8array, {
+    imports: {
+      getchar,
+      putchar,
+    },
+  });
+
+  const result = wasm.instance.exports.main();
+  if (opts.verbose || process.env.NODE_ENV === &apos;debug&apos;) {
+    const memory = new Uint8Array(wasm.instance.exports.memory.buffer);
+    console.log(memory);
+  }
+  return result;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;受け取ったwasmのバイト列表現をWebAssembly.instantiate()で実際のコンパイルを行い、WebAssemblyインスタンスを生成します。通常のWebAssembly実行であれば、wasm生成までは事前コンパイルでできていて、wasmのロードから始まるところ。
+そして、exportされた関数(ここではmainで固定)を実行します。&lt;/p&gt;
+&lt;h1&gt;コマンドラインの処理&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.npmjs.com/package/commander&quot;&gt;commander&lt;/a&gt;を使用して簡潔に。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js:index.js&quot;&gt;const program = require(&apos;commander&apos;);
+const driver = require(&apos;../lib/driver&apos;);
+
+function main(argv) {
+  program
+    .version(&apos;0.1.0&apos;)
+    .option(&apos;-e,--script [script]&apos;, &apos;run script from command line&apos;)
+    .option(&apos;-v,--verbose&apos;, &apos;verbose output&apos;)
+    .arguments(&apos;[file...]&apos;, &apos;Brainf*ck file&apos;)
+    .action(function(files, opts) {
+      for (const file of files) {
+        driver
+          .compileAndRunFile(file, { verbose: opts.verbose })
+          .catch(e =&gt; console.log(&apos;error:&apos; + e));
+      }
+    })
+    .on(&apos;--help&apos;, function() {
+      console.log(`
+      
+  Examples:
+
+    $ npx bf-compiler-webassembly -e &quot;+++&quot;
+    $ npx bf-compiler-webassembly hello.bf
+
+`);
+    })
+    .parse(argv);
+
+  // for -e,--script option
+  if (program.script) {
+    driver
+      .compileAndRunString(program.script, { verbose: program.verbose })
+      .catch(e =&gt; console.log(&apos;error:&apos; + e));
+  } else {
+    program.args.length !== 0 || program.help();
+  }
+}
+
+main(process.argv);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;WASM所感&lt;/h1&gt;
+&lt;p&gt;スタックマシンで変数も使え命令の対称性も高くわかりやすい。JVMのようにクラスベースではなく関数ベースであることが様々な効果を発揮しすっきりしている。
+呼び出しスタックを(引数やローカル変数を通じないで)直接見ることも書くこともできないのでスタック上をバッファオーバーフローで書き壊したり、リターンアドレス書き換えてコード呼び出される攻撃について安全。ヒープは別問題だが、間接参照呼び出しはtableという構造のインデックスのみで実現されるので列挙される関数の範囲に限定されるので比較的安全。引数や返り値の型や個数を指定する必要があり、軽くバイトコードベリファイがなされスタックズレなどは防止される。&lt;/p&gt;
+&lt;h1&gt;WAST形式所感&lt;/h1&gt;
+&lt;p&gt;WAST形式のS-expressionはLispっぽいですが、バイナリフォーマットとしてのWASMでの実際のバイト配置としてはFORTHのような逆ポーランド記法であり、これに対応するflat形式という記法もあるそうです(併用もできる?)。引数の評価順が決まっているのでS-Expressionとflat形式は1対1対応です。&lt;/p&gt;
+&lt;h1&gt;最適化&lt;/h1&gt;
+&lt;p&gt;していませんが、本来なら種々の最適化を実行することができるでしょう。たとえば複数連続する+や-、&gt;や&amp;#x3C;をまとめて計算するなどは効果的だろうし、BFの個々の命令をテーブルジャンプとか間接参照にすることも考えられます。&lt;/p&gt;
+&lt;h1&gt;まとめ&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;WebAssemblyはコンパイラの勉強のターゲットとしてモチベーションが高まるし、しきいも低いのでぜひどうぞ。&lt;/li&gt;
+&lt;li&gt;ただし現時点ではドキュメント不足、今後仕様が変化していくだろう、という予測もできます。&lt;/li&gt;
+&lt;li&gt;PEG.jsは便利。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn-1&quot;&gt;
+&lt;p&gt;主観です。&lt;/p&gt;
+&lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn-3&quot;&gt;
+&lt;p&gt;wast2wabtはたぶん&lt;a href=&quot;https://github.com/WebAssembly/wabt&quot;&gt;WABT(The WebAssembly Binary Toolkit)&lt;/a&gt;からEmscriptenか何かでJSに変換されている。&lt;/p&gt;
+&lt;a href=&quot;#fnref-3&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn-2&quot;&gt;
+&lt;p&gt;ネストレベルの外側向きの相対指定であることがドキュメント上読み取れず、ものすごく苦労した。&lt;/p&gt;
+&lt;a href=&quot;#fnref-2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Node.jsでgetchar]]></title><description><![CDATA[Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。 Promise…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5d9fec1ba6cc4c76e378/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Node.jsでC言語のgetchar()マクロ(getc()関数)に相当するような、標準入力から1文字文字を読みとる処理を書くやりかた。NPMを使わずに手軽に直接できる方法を見つけられなかったため作成。仕様は以下のとおり。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Promiseベース。以下で「〜を返す」は、「〜をPromiseのresolve値とするPromiseを返す」と読みかえてほしい。&lt;/li&gt;
 &lt;li&gt;呼ぶごとに標準入力から1文字ずつ取得したUnicodeのコードポイント値を返す。readlineから得たstringからcharCodeAtしているのでサロゲートペアは別に対処が必要。&lt;/li&gt;
@@ -2038,6 +2013,140 @@ async function test() {
 }
 
 test();
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Grails3で、Grails2と同様に設定ファイルを外部化する]]></title><description><![CDATA[Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。 本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5cd1e9a1ea3d451e784e/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5cd1e9a1ea3d451e784e/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Grails 2ではGrails自身が実装していた設定ファイルの外部化は、Grails 3ではSpring Bootにまかされることになりました。&lt;/p&gt;
+&lt;p&gt;本記事では、Grails 2までの設定ファイル外部化となるべく似たような動作をするようにGrails 3設定してみます。&lt;/p&gt;
+&lt;p&gt;やることは、Applicationクラス(grails-app/init/hoge/Application.groovy)に以下のようにアノテーションを付与することだけです。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;import org.springframework.context.annotation.*
+
+@PropertySources([
+  @PropertySource(value=&quot;classpath:hoge.properties&quot;),
+  @PropertySource(value=&quot;file:///opt/hoge/conf/hoge.properties&quot;, ignoreResourceNotFound = true),
+  @PropertySource(value=&apos;file:///${hoge.conf.file}&apos;, ignoreResourceNotFound = true)
+])
+class Application extends GrailsAutoConfiguration {
+    static void main(String[] args) {
+  :
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;上記によって以下のように動作します。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(1) warファイルやクラスパス中のhoge.properties(ソースコードとしてはsrc/main/resouces/hoge.propertiesに置く)を読み込む。このファイル中には設定のデフォルト値を記入しておく。&lt;/li&gt;
+&lt;li&gt;(2) もしファイル「file:///opt/hoge/conf/hoge.properties」があれば設定ファイルとしてそれを読み込む。(1)で設定されたプロパティで同名のものは上書きされる。なければ何もしない。&lt;/li&gt;
+&lt;li&gt;(3) もし、システムプロパティ「hoge.conf.file」もしくは環境変数「HOGE&lt;em&gt;CONF&lt;/em&gt;FILE」で指定されたファイル名のファイルががあればそれを読み込む。(1)(2)で設定されたプロパティで同名のものは上書きされる。なければ何もしない。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;run-app時、およびwar化してtomcatにデプロイしても同様に動作します。
+ちなみに上記はSpring Bootの機能というだけです。(&lt;a href=&quot;https://www.jayway.com/2014/02/16/spring-propertysource/&quot;&gt;→参考&lt;/a&gt;)&lt;/p&gt;
+&lt;h1&gt;余談&lt;/h1&gt;
+&lt;p&gt;Spring Boot標準の設定ファイルの外部化の説明は&lt;a href=&quot;http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html&quot;&gt;こちら&lt;/a&gt;にありますが、非常に高機能かつ汎用的です。Spring Bootの主たる設定ファイルapplication.yaml(application.properties)は、特に何も設定しなくてもシステムプロパティspring.config.location(もしくは環境変数SPRING&lt;em&gt;CONFIG&lt;/em&gt;LOCATION、etc)で切り替えることができます。その場合、&lt;a href=&quot;http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-profile-specific-properties&quot;&gt;Profile-specific application properties&lt;/a&gt;というものに応じてファイル名を選択する、なども可能です。(Seasar2の&lt;a href=&quot;http://s2container.seasar.org/2.4/ja/DIContainer.html#ConditionalInclude&quot;&gt;「暗黙的な条件インクルード」&lt;/a&gt;と似た機能)&lt;/p&gt;
+&lt;p&gt;ただ、spring.config.location方式だと、ベース名(デフォルトでappliction.yamlの「application」)を変更したい場合については、別のシステムプロパティ(spring.config.name)などの設定が必要になり、その設定は設定ファイルに書けない以上、環境変数やシステムプロパティで指定するしかなく、「環境変数やシステムプロパティを指定しない」ときにapplicationから読み込もうとしてしまう、という問題があり、Grails 2までの動作と上手く整合する方法をみつけられませんでした。&lt;/p&gt;
+&lt;p&gt;もし、外部化する設定ファイルのファイル名がapplication.yaml(.properties)のままで良いのであれば、あるいはシステムプロパティや環境変数の設定が必須であるような運用ルールとするならば、spring.config.locationを使う方式でも良いかもしれません。その場合、特に設定はいりません。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Node.jsでPEG.jsでBrainf*ck]]></title><description><![CDATA[Node.jsでのBrainf*ckインタプリタ実装。PEG.js使用。
+PEG.jsの勉強に作ってみました。PEG.js便利です。JSに馴染むぞぉ〜。 BF…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/68fa097e03d0572aefe4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/68fa097e03d0572aefe4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Node.jsでのBrainf*ckインタプリタ実装。&lt;a href=&quot;https://pegjs.org/&quot;&gt;PEG.js&lt;/a&gt;使用。
+PEG.jsの勉強に作ってみました。PEG.js便利です。JSに馴染むぞぉ〜。&lt;/p&gt;
+&lt;p&gt;BF処理系として、工夫といえば工夫なのは、ループブロック構文[と]の対応を、実行時に命令列からスキャンするのではなく、パース/AST構築の段階でシンタックスの問題として解決するところ。まあ、普通に考えればそうなるべきな話ではあるのですが。&lt;/p&gt;
+&lt;p&gt;苦労したのは、1文字入力で、標準ライブラリを呼べばいいのかなと思ったら、見付けられなかったので作りました(&lt;a href=&quot;https://qiita.com/uehaj/items/5d9fec1ba6cc4c76e378&quot;&gt;別記事&lt;/a&gt;)。&lt;/p&gt;
+&lt;p&gt;require(‘./parser’)しているところは、&lt;a href=&quot;https://pegjs.org/online&quot;&gt;PEG.js online&lt;/a&gt;で以下から生成させたパーサをparser.jsというファイル名でダウンロードし、同じディレクトリに保存してください。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;code = (normal_insn / block_insn / otherchar) *
+
+normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
+block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
+
+block = cod:code {
+  return cod;
+}
+
+otherchar = [^&gt;&amp;#x3C;+-.,\[\]] {
+  return undefined
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;実行例:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/a2428b6b-bb1e-2ff6-7ed0-c25ba2286b2a.gif&quot; alt=&quot;bfjs.mov.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;以下、main.js&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;const readline = require(&apos;readline&apos;);
+const rl = readline.createInterface({input:process.stdin});
+let buf = &quot;&quot;;
+
+function getchar() {
+  if (buf.length == 0) {
+    if (process.stdin.AtEndOfStream) {
+      return Promise.resolve(null); // EOF
+    }
+    return new Promise((resolve, reject) =&gt; {
+      rl.once(&apos;line&apos;, (line) =&gt; {
+        buf = buf + line + &quot;\n&quot;;
+        resolve(getchar());
+      });
+    });
+  } else {
+    const result = buf.charCodeAt(0);
+    buf = buf.substring(1);
+    return Promise.resolve(result);
+  }
+}
+
+/*
+  code = (normal_insn / block_insn / otherchar) *
+
+  normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
+  block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
+
+  block = cod:code {
+  return cod;
+  }
+
+  otherchar = [^&gt;&amp;#x3C;+-.,\[\]] {
+  return undefined
+  }
+*/
+// generated with PEG.js from above peg syntax.
+const parser = require(&quot;./parser.js&quot;); 
+
+
+const source = `
+&gt;&gt;++++++++[-&gt;++++++++&amp;#x3C;]&gt;&gt;&gt;&gt;+++++++++[-&gt;++++++++++&amp;#x3C;]&gt;[&amp;#x3C;&amp;#x3C;,[-&gt;+&amp;#x3C;&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;[
+-&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;&gt;&gt;&gt;[-&gt;+&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;[&amp;#x3C;&amp;#x3C;[-&gt;+&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;&gt;[-&amp;#x3C;&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;[[-]&amp;#x3C;-&gt;]&gt;-]&gt;&gt;[-&amp;#x3C;&amp;#x3C;&amp;#x3C;+
+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;[-&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;[&gt;&gt;[-&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;[-&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;[[-]&gt;-&amp;#x3C;]&amp;#x3C;-]&amp;#x3C;&amp;#x3C;[-&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;
+]&gt;&gt;&gt;&gt;&gt;&amp;#x3C;[[-]&gt;++++++++++++++++++++++++++++++++&gt;[[-]&amp;#x3C;------------------------
+--------&gt;]&amp;#x3C;&amp;#x3C;]&gt;&gt;[-]&amp;#x3C;.&gt;&gt;]`;
+
+const ast = parser.parse(source);
+
+const memSize = 20;
+let ptr = 0;
+const memory = Array(memSize).fill(0);
+
+async function run(code, prefix) {
+  // console.log(&quot;run code=&quot;,code,&apos;mem=&apos;,memory,&apos;ptr=&apos;,ptr);
+  for (const i of code) {
+    // console.log(&quot;  ins=&quot;,i);
+    if (Array.isArray(i)) {
+      while (memory[ptr] !== 0) {
+        await run(i, prefix+&quot; &quot;);
+      }
+    }
+    else if (i === &apos;&gt;&apos;){
+      ptr += 1;
+    }
+    else if (i === &apos;&amp;#x3C;&apos;){
+      ptr -= 1;
+    }
+    else if (i === &apos;+&apos;){
+      memory[ptr] += 1;
+    }
+    else if (i === &apos;-&apos;){
+      memory[ptr] -= 1;
+    }
+    else if (i === &apos;.&apos;){
+      process.stdout.write(String.fromCharCode(memory[ptr]));
+    }
+    else if (i === &apos;,&apos;){
+      memory[ptr] = await getchar();
+    }
+  }
+}
+
+run(ast, &quot;&quot;).then(()=&gt;{
+  console.log(memory);
+  process.exit()
+});
 &lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第12回オフラインリアルタイムどう書くの問題「サイコロを転がす」をHaskellで解く]]></title><description><![CDATA[第12回 オフラインリアルタイムどう書くの問題「サイコロを転がす」を、Haskellで解きました。
 Stateモナド厨。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5f46b012f13e1d3cee55/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/5f46b012f13e1d3cee55/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://qiita.com/Nabetani/items/f3cca410428f90333e28&quot;&gt;第12回 オフラインリアルタイムどう書く&lt;/a&gt;の問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord12rotdice/&quot;&gt;サイコロを転がす&lt;/a&gt;」を、Haskellで解きました。
 Stateモナド厨。&lt;/p&gt;
@@ -2163,115 +2272,6 @@ main = do
     print $ test &quot;NESEEN&quot; &quot;1531263&quot;  {-- 40 --}
     print $ test &quot;WSW&quot; &quot;1426&quot;  {-- 41 --}
     print $ test &quot;ENEWE&quot; &quot;135656&quot;  {-- 42 --}
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[Node.jsでPEG.jsでBrainf*ck]]></title><description><![CDATA[Node.jsでのBrainf*ckインタプリタ実装。PEG.js使用。
-PEG.jsの勉強に作ってみました。PEG.js便利です。JSに馴染むぞぉ〜。 BF…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/68fa097e03d0572aefe4/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/68fa097e03d0572aefe4/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Node.jsでのBrainf*ckインタプリタ実装。&lt;a href=&quot;https://pegjs.org/&quot;&gt;PEG.js&lt;/a&gt;使用。
-PEG.jsの勉強に作ってみました。PEG.js便利です。JSに馴染むぞぉ〜。&lt;/p&gt;
-&lt;p&gt;BF処理系として、工夫といえば工夫なのは、ループブロック構文[と]の対応を、実行時に命令列からスキャンするのではなく、パース/AST構築の段階でシンタックスの問題として解決するところ。まあ、普通に考えればそうなるべきな話ではあるのですが。&lt;/p&gt;
-&lt;p&gt;苦労したのは、1文字入力で、標準ライブラリを呼べばいいのかなと思ったら、見付けられなかったので作りました(&lt;a href=&quot;https://qiita.com/uehaj/items/5d9fec1ba6cc4c76e378&quot;&gt;別記事&lt;/a&gt;)。&lt;/p&gt;
-&lt;p&gt;require(‘./parser’)しているところは、&lt;a href=&quot;https://pegjs.org/online&quot;&gt;PEG.js online&lt;/a&gt;で以下から生成させたパーサをparser.jsというファイル名でダウンロードし、同じディレクトリに保存してください。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;code = (normal_insn / block_insn / otherchar) *
-
-normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
-block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
-
-block = cod:code {
-  return cod;
-}
-
-otherchar = [^&gt;&amp;#x3C;+-.,\[\]] {
-  return undefined
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;実行例:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/a2428b6b-bb1e-2ff6-7ed0-c25ba2286b2a.gif&quot; alt=&quot;bfjs.mov.gif&quot;&gt;&lt;/p&gt;
-&lt;p&gt;以下、main.js&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;const readline = require(&apos;readline&apos;);
-const rl = readline.createInterface({input:process.stdin});
-let buf = &quot;&quot;;
-
-function getchar() {
-  if (buf.length == 0) {
-    if (process.stdin.AtEndOfStream) {
-      return Promise.resolve(null); // EOF
-    }
-    return new Promise((resolve, reject) =&gt; {
-      rl.once(&apos;line&apos;, (line) =&gt; {
-        buf = buf + line + &quot;\n&quot;;
-        resolve(getchar());
-      });
-    });
-  } else {
-    const result = buf.charCodeAt(0);
-    buf = buf.substring(1);
-    return Promise.resolve(result);
-  }
-}
-
-/*
-  code = (normal_insn / block_insn / otherchar) *
-
-  normal_insn = ch:[&gt;&amp;#x3C;+-.,] { return ch }
-  block_insn = &apos;[&apos; brk:block &apos;]&apos; { return brk  }
-
-  block = cod:code {
-  return cod;
-  }
-
-  otherchar = [^&gt;&amp;#x3C;+-.,\[\]] {
-  return undefined
-  }
-*/
-// generated with PEG.js from above peg syntax.
-const parser = require(&quot;./parser.js&quot;); 
-
-
-const source = `
-&gt;&gt;++++++++[-&gt;++++++++&amp;#x3C;]&gt;&gt;&gt;&gt;+++++++++[-&gt;++++++++++&amp;#x3C;]&gt;[&amp;#x3C;&amp;#x3C;,[-&gt;+&amp;#x3C;&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;[
--&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;&gt;&gt;&gt;[-&gt;+&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;[&amp;#x3C;&amp;#x3C;[-&gt;+&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;&gt;[-&amp;#x3C;&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;[[-]&amp;#x3C;-&gt;]&gt;-]&gt;&gt;[-&amp;#x3C;&amp;#x3C;&amp;#x3C;+
-&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;&amp;#x3C;[-&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;[&gt;&gt;[-&amp;#x3C;+&amp;#x3C;&amp;#x3C;+&gt;&gt;&gt;]&amp;#x3C;&amp;#x3C;&amp;#x3C;[-&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;]&gt;&gt;[[-]&gt;-&amp;#x3C;]&amp;#x3C;-]&amp;#x3C;&amp;#x3C;[-&gt;&gt;&gt;+&amp;#x3C;&amp;#x3C;&amp;#x3C;
-]&gt;&gt;&gt;&gt;&gt;&amp;#x3C;[[-]&gt;++++++++++++++++++++++++++++++++&gt;[[-]&amp;#x3C;------------------------
---------&gt;]&amp;#x3C;&amp;#x3C;]&gt;&gt;[-]&amp;#x3C;.&gt;&gt;]`;
-
-const ast = parser.parse(source);
-
-const memSize = 20;
-let ptr = 0;
-const memory = Array(memSize).fill(0);
-
-async function run(code, prefix) {
-  // console.log(&quot;run code=&quot;,code,&apos;mem=&apos;,memory,&apos;ptr=&apos;,ptr);
-  for (const i of code) {
-    // console.log(&quot;  ins=&quot;,i);
-    if (Array.isArray(i)) {
-      while (memory[ptr] !== 0) {
-        await run(i, prefix+&quot; &quot;);
-      }
-    }
-    else if (i === &apos;&gt;&apos;){
-      ptr += 1;
-    }
-    else if (i === &apos;&amp;#x3C;&apos;){
-      ptr -= 1;
-    }
-    else if (i === &apos;+&apos;){
-      memory[ptr] += 1;
-    }
-    else if (i === &apos;-&apos;){
-      memory[ptr] -= 1;
-    }
-    else if (i === &apos;.&apos;){
-      process.stdout.write(String.fromCharCode(memory[ptr]));
-    }
-    else if (i === &apos;,&apos;){
-      memory[ptr] = await getchar();
-    }
-  }
-}
-
-run(ast, &quot;&quot;).then(()=&gt;{
-  console.log(memory);
-  process.exit()
-});
 &lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[第13回オフラインリアルタイムどう書くの問題をFregeで解く]]></title><description><![CDATA[第13回 オフラインリアルタイムどう書くの問題「積み木の水槽」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/60abb9be0dfac0755dcf/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/60abb9be0dfac0755dcf/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://atnd.org/events/41603&quot;&gt;第13回 オフラインリアルタイムどう書く&lt;/a&gt;の問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord13blocktup/&quot;&gt;積み木の水槽&lt;/a&gt;」を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-frege:shortest.fr&quot;&gt;-- http://nabetani.sakura.ne.jp/hena/ord13blocktup/
      
@@ -3145,7 +3145,81 @@ class _SomeClass { // 他モジュールに公開されないクラス
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[「リアクティブプログラミングが読み難い」というのは本当なのか?]]></title><description><![CDATA[追記(2017/05/2) redux-sagaでの非同期バージョンの紹介とリンクを追記。 追記(2017/2/23修正) 元記事の追記…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/80056c1ff10c63dc7810/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/80056c1ff10c63dc7810/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;追記(2017/05/2)&lt;/h1&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[第13回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第13回 オフラインリアルタイムどう書くの参考問題「増やす減らす二倍する」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://atnd.org/events/41603&quot;&gt;第13回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord13updowndouble/&quot;&gt;増やす減らす二倍する&lt;/a&gt;」を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-frege:shortest.fr&quot;&gt;shortestPath&apos; :: Int -&gt; Int -&gt; Int
+shortestPath&apos; n maxn
+  | n==0 = 0
+  | n==1 = 1
+  | n &gt; maxn = maxBound::Int
+  | even(n) = (shortestPath&apos; (n `div` 2) (maxn-2)) + 1
+  | otherwise = minimum [(shortestPath&apos; (n-1) (maxn-2)) + 1, (shortestPath&apos; (n+1) (maxn-2)) + 1]
+
+shortestPath :: Int -&gt; Int  
+shortestPath n = shortestPath&apos; n (n*2)
+  
+
+main args = do
+  println (shortestPath 59 ==  9)
+  println (shortestPath 10 ==  5)
+  println (shortestPath 11 ==  6)
+  println (shortestPath 12 ==  5)
+  println (shortestPath 13 ==  6)
+  println (shortestPath 14 ==  6)
+  println (shortestPath 15 ==  6)
+  println (shortestPath 16 ==  5)
+  println (shortestPath 17 ==  6)
+  println (shortestPath 18 ==  6)
+  println (shortestPath 27 ==  8)
+  println (shortestPath 28 ==  7)
+  println (shortestPath 29 ==  8)
+  println (shortestPath 30 ==  7)
+  println (shortestPath 31 ==  7)
+  println (shortestPath 32 ==  6)
+  println (shortestPath 33 ==  7)
+  println (shortestPath 34 ==  7)
+  println (shortestPath 35 ==  8)
+  println (shortestPath 41 ==  8)
+  println (shortestPath 71 ==  9)
+  println (shortestPath 1023 ==  12)
+  println (shortestPath 1024 ==  11)
+  println (shortestPath 1025 ==  12)
+  println (shortestPath 1707 ==  17)
+  println (shortestPath 683 ==  15)
+  println (shortestPath 123 ==  10)
+  println (shortestPath 187 ==  11)
+  println (shortestPath 237 ==  12)
+  println (shortestPath 5267 ==  18)
+  println (shortestPath 6737 ==  18)
+  println (shortestPath 14796 ==  20)
+  println (shortestPath 18998 ==  20)
+  println (shortestPath 23820 ==  20)
+  println (shortestPath 30380 ==  21)
+  println (shortestPath 31119 ==  21)
+  println (shortestPath 33301 ==  20)
+  println (shortestPath 33967 ==  21)
+  println (shortestPath 35443 ==  22)
+  println (shortestPath 35641 ==  22)
+  println (shortestPath 43695 ==  23)
+  println (shortestPath 44395 ==  23)
+  println (shortestPath 44666 ==  22)
+  println (shortestPath 987 ==  14)
+  println (shortestPath 1021 ==  13)
+  println (shortestPath 1019 ==  13)
+  println (shortestPath 1015 ==  13)
+  println (shortestPath 1007 ==  13)
+  println (shortestPath 1011 ==  14)
+  println (shortestPath 1003 ==  14)
+  println (shortestPath 983 ==  14)
+  println (shortestPath 999 ==  14)
+  println (shortestPath 2731 ==  18)
+  println (shortestPath 6827 ==  20)
+  println (shortestPath 10923 ==  21)
+  println (shortestPath 27307 ==  23)
+  println (shortestPath 43691 ==  24)
+  println (shortestPath 109227 ==  26)
+  println (shortestPath 174763 ==  27)
+  
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[「リアクティブプログラミングが読み難い」というのは本当なのか?]]></title><description><![CDATA[追記(2017/05/2) redux-sagaでの非同期バージョンの紹介とリンクを追記。 追記(2017/2/23修正) 元記事の追記…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/80056c1ff10c63dc7810/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/80056c1ff10c63dc7810/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;追記(2017/05/2)&lt;/h1&gt;
 &lt;p&gt;redux-sagaでの非同期バージョンの紹介とリンクを追記。&lt;/p&gt;
 &lt;h1&gt;追記(2017/2/23修正)&lt;/h1&gt;
 &lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;a href=&quot;http://qiita.com/hiruberuto/items/39e4126f470d8b84b291#%E8%BF%BD%E8%A8%98%EF%BC%93%E3%82%AB%E3%82%A6%E3%83%B3%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%B3%E3%83%88%E3%83%AA%E3%82%92%E9%A0%82%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E3%81%99%E3%81%8C%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%AB%E8%AA%A4%E3%82%8A%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99&quot;&gt;元記事の追記3&lt;/a&gt;にて言及を頂いたように、&lt;/font&gt;以下の「見易い版」コードは元コードが実現していた機能が抜けおちているという誤りがあります。遅くなりましたが、お詫びの上修正させていただきます。
@@ -3379,268 +3453,7 @@ export default function* rootSaga() {
 &lt;li&gt;flatMapをネストさせていくときに、JSではdo記法がないので煩雑になるかと思いましたが(当初それが原因かと当て推量していた)、今回のコードではそんな複雑なものではありませんでした。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1&gt;おわりに&lt;/h1&gt;
-&lt;p&gt;元記事「リアクティブプログラミングとは何だったか」をかかれた、hiruberutoさまにおかれましては、上記調査のきっかけを作ってくださったことを感謝いたします。ありがとうございました。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Material UIのスタイル指定(JSS)]]></title><description><![CDATA[Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。 classNameで即値指定 HTMLで言うclass=の指定。Material UI…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。&lt;/p&gt;
-&lt;h1&gt;classNameで即値指定&lt;/h1&gt;
-&lt;p&gt;HTMLで言うclass=の指定。Material UI的には何もしない。BEMやscssでもなんでもいいのですが、外部スタイルシートを定義してあてがっていくパターン。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;&amp;#x3C;Hoge className=&quot;hoge fuga&quot;/&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;styleで指定&lt;/h1&gt;
-&lt;p&gt;styleプロパティの指定。Material UI的には何もしない。オブジェクトがdomのstyle属性に変換されて付けられる、Reactの仕組み。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;&amp;#x3C;Hoge style={{fontSize:1, padding: &apos;1rem&apos;} /&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;DOM上は、要素に直接紐付いたスタイル指定(devtool上、element.styleで表示される)となる。疑似要素は原理的に指定不可。&lt;/p&gt;
-&lt;h1&gt;StyledComponent💅で指定。&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://material-ui.com/styles/api/#styled-component-styles-options-component&quot;&gt;こちら&lt;/a&gt;を参照。本資料では説明を割愛する。&lt;/p&gt;
-&lt;h1&gt;JSSのスタイルシートオブジェクトで指定&lt;/h1&gt;
-&lt;p&gt;Material UIがかかわるのはここから。JSSは基本的にDOMのインラインスタイル属性ではなく、クラス名による指定の仕組みである。&lt;/p&gt;
-&lt;h2&gt;大きな流れ&lt;/h2&gt;
-&lt;p&gt;以下のような流れとなる。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;スタイルシートの元になる「元のスタイルシートオブジェクト」をJSで作る&lt;code&gt;const styles = { root: { backgroundColor: &apos;red&apos;, }, };&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;「元のスタイルシートオブジェクト」を元に、Material UIが準備しているHoCやhooksを使って、以下を生成する。&lt;/li&gt;
-&lt;li&gt;「元のスタイルシートオブジェクト」のプロパティ名と、コンポーネントローカルにリネームされた実際に生成される「クラス名の対応表」。こんなやつ:
-&lt;code&gt;{&quot;tabBar&quot;:&quot;TabBar-tabBar-284&quot;,&quot;selectedTab&quot;:&quot;TabBar-selectedTab-285&quot;}&lt;/code&gt;&lt;br/&gt;この値自体をプログラマが意識することは(デバッグ時を除き)基本的にはない。&lt;/li&gt;
-&lt;li&gt;この実クラス名でのスタイル定義が、背後で&amp;#x3C;head&gt;に挿入される(プログラマは意識しないでよい)。&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;「クラス名の対応表」をMaterial UIが提供するReactコンポーネントにおいて以下のいずれかの方法で利用する&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;「クラス名の対応表」から実クラス名を取得して「classNames」propsで指定する。&lt;/li&gt;
-&lt;li&gt;「クラス名の対応表」から実クラス名を「classes」propsで指定する。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;「元のスタイルシートオブジェクト」の作りかた&lt;/h2&gt;
-&lt;h3&gt;単なるJSオブジェクトとして「スタイルシートオブジェクト」を作る&lt;/h3&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = {
-  root: {
-    backgroundColor: &apos;red&apos;,
-  },
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;もしくは&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = createStyles({
-  root: {
-    backgroundColor: &apos;red&apos;,
-  },
-});
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;両者の意味は同じである。後者ではTypeScriptの型エラーを黙らすことができる。&lt;/p&gt;
-&lt;h2&gt;themeを引数とする関数として「スタイルシートオブジェクト」を作る&lt;/h2&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: Theme) =&gt;{
-  root: {
-    backgroundColor: theme.color.red,
-  },
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;もしくは&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: Theme) =&gt; createStyles({
-  root: {
-    backgroundColor: theme.color.red,
-  },
-});
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;両者の意味は同じである。後者ではTypeScriptの型エラーを黙らすことができる。&lt;/p&gt;
-&lt;p&gt;ここでは、Reactのインラインstyle属性のようにJavaScriptオブジェクトを用いるが、rootの階層が入っていることが異なる。この階層の名前は、(実CSSクラス名を隠蔽した)、ローカルなCSSクラス名と思ってよい。&lt;/p&gt;
-&lt;p&gt;CSSクラスなので疑似クラスも指定できる。たとえば、以下のように:hover疑似クラスが指定できる。(JSSの機能)&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles: any = (theme: Theme): StyleRules =&gt;
-  createStyles({
-    button: {
-      margin: &apos;0.3rem&apos;,
-      &apos;&amp;#x26;:hover&apos;: { transform: &apos;scale(1.1)&apos; },
-    },
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;「元のスタイルシートオブジェクト」から「クラス名の対応表」を入手する&lt;/h2&gt;
-&lt;h3&gt;React Hooks系で&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://material-ui.com/styles/api/#makestyles-styles-options-hook&quot;&gt;こちらから&lt;/a&gt;引用だが、以下のように「makeStyles」の引数に「元のスタイルシートオブジェクト」を渡すと、「クラス名の対応表」を取得できるフック関数を入手することができる。そのフック関数の呼び出し結果をclasses変数に取得している。(createStylesは使用していない。)&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;import React from &apos;react&apos;;
-import { makeStyles } from &apos;@material-ui/core/styles&apos;;
-
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: &apos;red&apos;,
-    color: props =&gt; props.color,
-  },
-});
-
-export default function MyComponent(props) {
-  const classes = useStyles(props);
-  return &amp;#x3C;div className={classes.root} /&gt;;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;HoC系で&lt;/h3&gt;
-&lt;p&gt;HoCである&lt;a href=&quot;https://material-ui.com/styles/api/#withstyles-styles-options-higher-order-component&quot;&gt;withStyles&lt;/a&gt;を使う。こちらも引用だが以下となる。意味はHooks系と同じだが、「元のスタイルシートオブジェクト」をwithStylesの入力として与え、「クラス名の対応表」がprops.classesに得られるようなコンポーネントを生成している。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;import React from &apos;react&apos;;
-import { withStyles } from &apos;@material-ui/core/styles&apos;;
-
-const styles = {
-  root: {
-    backgroundColor: &apos;red&apos;,
-  },
-};
-
-function MyComponent(props) {
-  return &amp;#x3C;div className={props.classes.root} /&gt;;
-}
-
-export default withStyles(styles)(MyComponent);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;取得した「クラス名の対応表」の使いかた&lt;/h2&gt;
-&lt;p&gt;「クラス名の対応表」は、入手方法としてHooksでもHoCで得ることができるが、同じものである。上記サンプルでは、入手した「クラス名の対応表」はclassesという名前のprops(props.classes)もしくは変数classesに格納している。&lt;/p&gt;
-&lt;p&gt;「クラス名の対応表」には2つの使いかたがある。&lt;/p&gt;
-&lt;h2&gt;classNameに与える&lt;/h2&gt;
-&lt;p&gt;サンプルにもあるが、&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;  return &amp;#x3C;div className={classes.root} /&gt;;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;のように指定する。複数あれば&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;  return &amp;#x3C;div className={classNames(classes.root,classes.hoge)} /&gt;;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;のようにNPMモジュールclassnamesを使うのがよいだろう。classnamesはクラス名を結合させているだけである。(&lt;a href=&quot;https://qiita.com/taqm/items/c38855d8158cdd9d5a3e&quot;&gt;clsx&lt;/a&gt;というのもあり効率がよいらしい)。&lt;/p&gt;
-&lt;h2&gt;classesで指定&lt;/h2&gt;
-&lt;p&gt;最後になったが、これがJSSの本領である。Material UIのコンポーネントにはCSS APIというものが定義されており、それを使ってカスタマイズすることができる。
-たとえば、&lt;a href=&quot;https://material-ui.com/api/tabs/&quot;&gt;Tabsコンポーネントには以下のようにかかれている&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;CSS&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Style sheet name: MuiTab.&lt;/li&gt;
-&lt;li&gt;Style sheet details:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&quot;left&quot;&gt;Rule name&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;Global class&lt;/th&gt;
-&lt;th align=&quot;left&quot;&gt;Description&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;root&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.MuiTab-root&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Styles applied to the root element.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;labelIcon&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.MuiTab-labelIcon&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if both icon and label are provided.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;textColorInherit&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorInherit&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“inherit”.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;textColorPrimary&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorPrimary&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“primary”.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;textColorSecondary&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorSecondary&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“secondary”.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;left&quot;&gt;&lt;font color=&quot;red&quot;&gt;selected&lt;/font&gt;&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;.Mui-selected&lt;/td&gt;
-&lt;td align=&quot;left&quot;&gt;Pseudo-class applied to the root element if selected={true} (controlled by the Tabs component).&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;これらを必要に応じてオーバーライド定義することができる。赤字”selected”は後述の説明で例として使用するCSS APIのキー名である。このスタイルをオーバーライドする方法は3つある。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;With a rule name of the classes object prop.(classes propsのルール名)&lt;/li&gt;
-&lt;li&gt;With a global class name. (グローバルクラス名)&lt;/li&gt;
-&lt;li&gt;With a theme and an overrides property..(テーマと上書きプロパティ)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;以降では最初の「 rule name of the classes object prop.」について説明する。
-やるべきことは、classes属性に、指定したCSS API名をキー(ここではslected)とし「クラス名の対応表」の実クラス名を指定するのである。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: any) =&gt;
-  createStyles({
-    selectedTab: {
-      backgroundColor: &apos;#eeeeff&apos;,
-      fontWeight: &apos;bold&apos;,
-    },
-  });
-:
-          &amp;#x3C;Tabs&gt;
-            &amp;#x3C;Tab
-              classes={{ selected: classes.selectedTab }} /&gt;
-               :
-          &amp;#x3C;/Tabs&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;するともともとMUIで定義されていたCSSに上書きされる形でCSSスタイルが定義される。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[第13回オフラインリアルタイムどう書くの参考問題をFregeで解く]]></title><description><![CDATA[第13回 オフラインリアルタイムどう書くの参考問題「増やす減らす二倍する」を、JVM上で動作するHaskellライクな言語Frege(フレーゲ)で解きました。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/944cd9903c3827f1d1bc/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://atnd.org/events/41603&quot;&gt;第13回 オフラインリアルタイムどう書く&lt;/a&gt;の参考問題「&lt;a href=&quot;http://nabetani.sakura.ne.jp/hena/ord13updowndouble/&quot;&gt;増やす減らす二倍する&lt;/a&gt;」を、JVM上で動作するHaskellライクな言語&lt;a href=&quot;https://github.com/Frege/frege/wiki/_pages&quot;&gt;Frege&lt;/a&gt;(フレーゲ)で解きました。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-frege:shortest.fr&quot;&gt;shortestPath&apos; :: Int -&gt; Int -&gt; Int
-shortestPath&apos; n maxn
-  | n==0 = 0
-  | n==1 = 1
-  | n &gt; maxn = maxBound::Int
-  | even(n) = (shortestPath&apos; (n `div` 2) (maxn-2)) + 1
-  | otherwise = minimum [(shortestPath&apos; (n-1) (maxn-2)) + 1, (shortestPath&apos; (n+1) (maxn-2)) + 1]
-
-shortestPath :: Int -&gt; Int  
-shortestPath n = shortestPath&apos; n (n*2)
-  
-
-main args = do
-  println (shortestPath 59 ==  9)
-  println (shortestPath 10 ==  5)
-  println (shortestPath 11 ==  6)
-  println (shortestPath 12 ==  5)
-  println (shortestPath 13 ==  6)
-  println (shortestPath 14 ==  6)
-  println (shortestPath 15 ==  6)
-  println (shortestPath 16 ==  5)
-  println (shortestPath 17 ==  6)
-  println (shortestPath 18 ==  6)
-  println (shortestPath 27 ==  8)
-  println (shortestPath 28 ==  7)
-  println (shortestPath 29 ==  8)
-  println (shortestPath 30 ==  7)
-  println (shortestPath 31 ==  7)
-  println (shortestPath 32 ==  6)
-  println (shortestPath 33 ==  7)
-  println (shortestPath 34 ==  7)
-  println (shortestPath 35 ==  8)
-  println (shortestPath 41 ==  8)
-  println (shortestPath 71 ==  9)
-  println (shortestPath 1023 ==  12)
-  println (shortestPath 1024 ==  11)
-  println (shortestPath 1025 ==  12)
-  println (shortestPath 1707 ==  17)
-  println (shortestPath 683 ==  15)
-  println (shortestPath 123 ==  10)
-  println (shortestPath 187 ==  11)
-  println (shortestPath 237 ==  12)
-  println (shortestPath 5267 ==  18)
-  println (shortestPath 6737 ==  18)
-  println (shortestPath 14796 ==  20)
-  println (shortestPath 18998 ==  20)
-  println (shortestPath 23820 ==  20)
-  println (shortestPath 30380 ==  21)
-  println (shortestPath 31119 ==  21)
-  println (shortestPath 33301 ==  20)
-  println (shortestPath 33967 ==  21)
-  println (shortestPath 35443 ==  22)
-  println (shortestPath 35641 ==  22)
-  println (shortestPath 43695 ==  23)
-  println (shortestPath 44395 ==  23)
-  println (shortestPath 44666 ==  22)
-  println (shortestPath 987 ==  14)
-  println (shortestPath 1021 ==  13)
-  println (shortestPath 1019 ==  13)
-  println (shortestPath 1015 ==  13)
-  println (shortestPath 1007 ==  13)
-  println (shortestPath 1011 ==  14)
-  println (shortestPath 1003 ==  14)
-  println (shortestPath 983 ==  14)
-  println (shortestPath 999 ==  14)
-  println (shortestPath 2731 ==  18)
-  println (shortestPath 6827 ==  20)
-  println (shortestPath 10923 ==  21)
-  println (shortestPath 27307 ==  23)
-  println (shortestPath 43691 ==  24)
-  println (shortestPath 109227 ==  26)
-  println (shortestPath 174763 ==  27)
-  
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[macosで Control+[ 押下をEscapeに割り当てる]]></title><description><![CDATA[Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。 Karabinar Elementsをインストールする 以下を作成する。 `json:~/.config/karabiner/assets…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。&lt;/p&gt;
+&lt;p&gt;元記事「リアクティブプログラミングとは何だったか」をかかれた、hiruberutoさまにおかれましては、上記調査のきっかけを作ってくださったことを感謝いたします。ありがとうございました。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[macosで Control+[ 押下をEscapeに割り当てる]]></title><description><![CDATA[Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。 Karabinar Elementsをインストールする 以下を作成する。 `json:~/.config/karabiner/assets…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/a6637482c5f6246cb30f/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Escapeキーは遠く、さらにtouch barでは押しにくいので、Control+[をEscapeキーにわりあてます。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Karabinar Elementsをインストールする&lt;/li&gt;
 &lt;li&gt;以下を作成する。&lt;/li&gt;
@@ -3673,158 +3486,7 @@ main args = do
 &lt;pre&gt;&lt;code&gt;3. karabinar-elementsのpreferenceからenableする
 
 &amp;#x3C;img width=&quot;945&quot; alt=&quot;スクリーンショット 2019-02-23 10.45.59.png&quot; src=&quot;https://qiita-image-store.s3.amazonaws.com/0/9979/2560d287-f1ef-ac12-1d78-3fd3ca60c421.png&quot;&gt;
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[React HooksのuseCallbackを正しく理解する]]></title><description><![CDATA[はじめに React HooksのuseCallback…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/99f7cd014e2c0fa1fc4e/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/99f7cd014e2c0fa1fc4e/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;React HooksのuseCallbackは、イベントハンドラ(コールバック)を使うときは無条件に使うものだと思っていませんか。実際にはコールバックが「ある条件をみたす」ときに使うべきもののようです。このある条件を整理して明確にするために記事を書きました。&lt;/p&gt;
-&lt;h1&gt;useCallbackとは何か&lt;/h1&gt;
-&lt;p&gt;useCallbackは、useMemoのような、重い計算を回避しキャッシュを使うというような効率向上のための仕組みではありません。useCallbackに渡す関数内で行なう計算の重さはまったく無関係です。
-useCallbackがやることは、「コールバック関数の不変値化」です。&lt;/p&gt;
-&lt;p&gt;「関数を決定する処理のメモ化」と言えるかもしれません。アロー式は原理的に常に新規関数オブジェクトを作ってしまいますが、useCallbackは「意味的に同じ関数」が返るかどうかを判別して、同じ値を返す関数が返るべきなら新規のアロー式を捨てて、前に渡した同じ結果を返す関数を使い回しで返します。&lt;/p&gt;
-&lt;p&gt;同じ値を返す関数なのに、異なる実体関数をpropsに渡すと無駄なrenderが走ってしまうので、「一回useCallbackをくぐらせる」ことで一意化し、引き起こされるかもしれない無駄なレンダリングを抑制することができます。&lt;/p&gt;
-&lt;p&gt;関数が純粋であれば、引数が同じなら常に同じ値を返すはずだから毎回「くぐらせる」必要なんかなくて、保存していた前の値を常にかえせばいいのでは、と思うかもしれませんが、関数がクロージャとして変数をキャプチャしているとそうはいかず、「同じ引数なのに異なる値を返す」ということがありうるのです。クロージャがキャプチャしている変数は、追加的な暗黙の引数なのです。なのでキャプチャしていて、結果に影響を及ぼす変数の値を考慮するために、それらを依存変数として渡して判別を行います。&lt;/p&gt;
-&lt;h2&gt;コールバック関数の不変値化とは何か&lt;/h2&gt;
-&lt;p&gt;ローカル関数がローカル変数などをキャプチャするというのは実質的にはそのローカル関数の引数なのですが、useCallbackがやってくれることは、ローカル関数と、そのローカル関数がキャプチャする変数列を依存変数として与えて呼び出すと、依存引数の値と関数本体をあわせてinternし、不変値化することです。Immutable.jsの提供する不変データと同じように、その結果を使うことでpropsとして関数を使う場合のシャロー比較がうまくいきます。&lt;/p&gt;
-&lt;p&gt;その結果として、その渡したコンポーネントが以下の条件を満す場合、不要な画面更新が減ります。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;React.memo()されている場合&lt;/li&gt;
-&lt;li&gt;クラスコンポーネントでshouldComponentUpdate()でpropsをシャロー比較して同じならスキップしている場合&lt;/li&gt;
-&lt;li&gt;クラスコンポーネントでPureComponentから継承した場合に相当)場合&lt;/li&gt;
-&lt;li&gt;react-reduxのconnectを使ったSmartコンポーネント&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;基本の整理&lt;/h1&gt;
-&lt;p&gt;useCallback Hookは以下の形で呼び出します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const callback = useCallback(関数, [deps])
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ここで関数にアロー式をあたえたとします。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const Component = () =&gt; {
-  const callback = useCallback(()=&gt;{処理}, [deps])
-    :
-  return &amp;#x3C;Hoge onHoge={callback} /&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;JavaScriptの言語仕様上、renderごとに常にアロー関数の生成式「()=&gt;{処理}」が評価されて新たな関数オブジェクトがつくられます(アロー関数のボディは評価されるわけではない)。アロー式が関数引数である場合、たとえばuseCallbackの引数である場合にしても同じです。引数として評価されたときに、&lt;strong&gt;常に新しく関数オブジェクトが作られます&lt;/strong&gt;。useCallback側で処理の選択肢があるのは、その関数値を捨てるか、次の呼び出しで返すまえにとっとくかだけです。&lt;/p&gt;
-&lt;p&gt;なので、このComponentのrender時に毎回関数オブジェクトを作らせないためには、関数本体の外側に移動して&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const handlerFunc = ()=&gt;{処理}
-const Component = () =&gt; {
-    :
-  return &amp;#x3C;Hoge onHoge={handlerFunc} /&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;とするしかありません。こうすると、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;利点1.&lt;/strong&gt; 関数オブジェクトの生成を抑制する&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;利点2.&lt;/strong&gt; Hogeが「propsがシャロー比較の意味で変化しなければrenderを呼ばない」という最適化されたコンポーネント(Rect.memo化されたコンポーネントやPureComponent)であったときに効率が良い&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;という2点で効率が高いです。&lt;/p&gt;
-&lt;h1&gt;何が問題か&lt;/h1&gt;
-&lt;p&gt;問題は、イベントハンドラを関数コンポーネントの外側に外出しできるのは、そのハンドラ本体の処理が、propsなどの関数引数(=ローカルスコープ)や、useStateなどで得られるローカル変数としてのstateを使用しないで実行できる場合のみだということです。それらへのアクセスが必要な場合は非常に多いので、無視することはできません。&lt;/p&gt;
-&lt;p&gt;なので、ローカル関数にする場合が多くなるでしょう。しかし、ローカル関数は、render時点でのローカル変数をキャプチャしてしまう&lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; ので、へたに保存して使いまわそうとすると、一般に非同期に呼び出されるイベントハンドラでは、そのキャプチャ元の変数の最新の値を使って処理できない、という問題があります。使いまわさなければいいんですけどね。使いまわしたくなる事情もあるのです。
-&lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;: &lt;a href=&quot;https://overreacted.io/ja/how-are-function-components-different-from-classes/&quot;&gt;https://overreacted.io/ja/how-are-function-components-different-from-classes/&lt;/a&gt;&lt;/p&gt;
-&lt;h1&gt;問題回避策&lt;/h1&gt;
-&lt;h2&gt;問題回避策1&lt;/h2&gt;
-&lt;p&gt;先ほど、ローカル関数がローカル変数をキャプチャしてしまうことが問題の一環だと述べました。useStateの返り値もローカル変数であり、この問題をかかえます。しかしuseStateを上手く使うことでイベントハンドラでのキャプチャを回避できる場合があります。&lt;/p&gt;
-&lt;p&gt;この状況を説明します。
-useState Hooksの返り値の配列(タプル)第二要素のいわゆるsetter関数が得られます。たとえば、&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const Component = () =&gt; {
-  const [counter, setCounter] = useState(0);
-    :
-  return &amp;#x3C;Hoge onHoge={setCounter} /&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ここでのsetCounterがsetter関数です。setter関数には通常は新しいstateの値を渡しますが、値ではなく関数を渡すこともでき、たとえば以下のように使えます。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;setCounter((oldCounter)=&gt;(oldCounter + 1)) // counterを1増加させる。
-// setCounter(counter + 1)と同じだがcounterをキャプチャしない。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;こちらを使ってstateをローカル関数経由ではなくsetStateの引数からもらうようにすれば、ローカル変数としてのcounterはキャプチャしないので、「古い値」問題はおきません。
-上の場合、setCounter自体もuseStateの返り値なのでローカル変数じゃないかと思うかもしれませんが、Hooksのしくみ的にはsetCounter自体はコンポーネントごとに一意で、複数回のuseStateでも同じ関数が得られますのでキャプチャ問題は起きません。&lt;/p&gt;
-&lt;h2&gt;問題回避策2&lt;/h2&gt;
-&lt;p&gt;useStateが返すsetCounter関数はローカルスコープにある変数や引数(具体的にはprops引数)に依存しないので、useCllbackに包まずにHogeのonHogeに直接わたしても効率は劣化しませんし問題も起きません。そのsetterを渡した側で、回避策1の方式でstateの値を参照することもできます。&lt;/p&gt;
-&lt;p&gt;もっともこれは個々の変数レベルのsetter操作なので、「いくつかの変数に対するロジック、操作」を、自コンポーネントでまとめてイベントハンドラに渡すためには関数にする必要があり、コールバック関数を定義する必要がでてきます。&lt;/p&gt;
-&lt;h2&gt;問題回避策3&lt;/h2&gt;
-&lt;p&gt;useReducerを使い、イベントハンドラ用途ではdispatchをprops経由で渡します。&lt;/p&gt;
-&lt;h2&gt;問題回避策4&lt;/h2&gt;
-&lt;p&gt;react-reduxを使い、イベントハンドラをpropsとしてはバケツリレーせず、イベントを検出する直下のコンポーネントでuseDispatchしてアクションをdispachさせます。
-これが個人的には妥当だとおもってます。react-redux 7.1のhooksベースreduxは別ものです。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://qiita.com/uehaj/items/f91d68ea4ef8450fc45c&quot;&gt;Redux Starter KitでHooksとReduxを使いこなそう
-&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;useCallbackを使うかどうかの判断&lt;/h1&gt;
-&lt;p&gt;さて、いずれの回避策も適用できない、もしくはしたくないとして、いよいよuseCallbackを使うかどうかの判断しなければなりません。&lt;/p&gt;
-&lt;h2&gt;ケース1「利点1」を得たい場合(自動的に「利点2」も得られる)&lt;/h2&gt;
-&lt;p&gt;「利点1」のために、不変のイベントハンドラを定義することが必要であり、state, props, ローカル変数を直接参照する必要がないなら以下が可能です。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const handleHoge = () =&gt; {propsやstateを使わない処理}
-const Component = (props) =&gt; {
-  return &amp;#x3C;Hoge onHoge={handleHoge} /&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;ケース2-1「利点1」をあきらめるが、「利点2」を得たい場合&lt;/h2&gt;
-&lt;p&gt;state, props, ローカル変数を参照する必要があり、かつその変更にもかかわらず同じ関数を得たいなら、それらを間接的に参照するように関数を作りこむことになります。ある意味、クラスコンポーネントのthisをエミュレーションし、それを通じてpropsアクセスするようにします。&lt;/p&gt;
-&lt;p&gt;具体的には、useRefなどを使ってstateやpropsの値をコピーしておき、それをつかった処理をする関数を保存して渡します。propsなどをrender時に毎回そのrefに保存するようにすればよいわけです。&lt;/p&gt;
-&lt;p&gt;useCallbackの依存変数指定にたよらず(指定を間違えるかもしれない! 依存変数はあとで増えるかもしれない!)、propsのみを信じ、そこを直接使います。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;// 試してない
-const Component = (props) =&gt; {
-  const ref = useRef(props);
-  useEffect(() =&gt; {
-    ref.current = props;
-  });
-  const handleHoge = useCallback(()=&gt;{
-    const props = ref.current;
-    // propsを使った処理 
-  }, []);
-  return &amp;#x3C;Hoge onHoge={handleHoge} /&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;(やったことないので本当にできるか不明)
-propsの変更を適当にスロットルして、依存変数を制御するとかもできるかもれない。
-(追記:コメントでうまくいったとご報告をいただきました。またアドバイスいただき[ref]を依存変数から除去しました。)&lt;/p&gt;
-&lt;h2&gt;ケース2-2「利点1」をあきらめるが、「利点2」は得られる場合その2&lt;/h2&gt;
-&lt;p&gt;依存変数がなければ、useCallbackは常に前回と同じ値もしくは初期値を返します。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const Component = (props) =&gt; {
-  const handleHoge = useCallback(() =&gt; {propsやstateを使わない処理}, []);
-  return &amp;#x3C;Hoge onHoge={handleHoge} /&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ケース1と比べると、利点2は同等です。利点1は得られませんが、たいてい無視できるでしょう。&lt;/p&gt;
-&lt;h2&gt;ケース2-3「利点1」をあきらめるが、「利点2」を&lt;strong&gt;&lt;em&gt;一部&lt;/em&gt;&lt;/strong&gt;得たい場合&lt;/h2&gt;
-&lt;p&gt;useCallbackに、必要な依存をつけてローカル関数をくぐらせたものを使ってください。
-useCallbackの使いかたの本道です。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const Component = (props) =&gt; {
-  const [state, setState] = useState(..);
-  const handleHoge = useCallback(
-     () =&gt; {propsやstateを使った処理},
-     [props.x, state]
-  );
-  return &amp;#x3C;Hoge onHoge={handleHoge} /&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;「利点2」を一部得たい場合」の一部というのは、依存変数が変化しなければ一応、再renderはおきないからです。しかし、クラスコンポーネントの場合に、コンストラクタでイベントハンドラを.bind(this)して保存しなおしたり、クラスフィールドで保存した場合は関数の更新は一切起きなかったわけなので、一部はあきらめていることになります。これは関数コンポーネントではthis経由でpropsとstateがアクセスできないことに起因する問題です。&lt;/p&gt;
-&lt;h2&gt;ケース3「利点1」と「利点2」の両方をあきらめる場合。&lt;/h2&gt;
-&lt;p&gt;ローカルなアロー関数をそのままわたしてください。useCallbackはdepsが漏れるとバグになりやすいので、良い選択かもしれません。&lt;/p&gt;
-&lt;h1&gt;利点2がそもそも得られないパターン&lt;/h1&gt;
-&lt;p&gt;上のケース2のいずれかを採用して、利点2が得られるとおもってuseCallbackを使うとしても、実際には利点2が得られていない場合があります。この場合ケース3にフォールダウンした方がよいかもしれません(統一性のためケース2-2,2-3を採用するという判断もありえますが、前述のようにバグ注意です)&lt;/p&gt;
-&lt;h2&gt;propsの変化の有無が効率に無関係な場合&lt;/h2&gt;
-&lt;p&gt;デフォルトでは、render()呼び出しはpropsの変化にかかわらず常に行なわれます。なので利点2を考えてケース2にする意味がない場合があります。propsをシャロー比較してrenderを最適化しようとしているケースは以下が考えられます。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;React.memoでメモ化されているケース&lt;/li&gt;
-&lt;li&gt;PureComponent&lt;/li&gt;
-&lt;li&gt;componentWillUpdateでシャロー比較の更新制御などをしているコンポーネント&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;react-reduxのconnectを使ったSmartコンポーネント&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;redux暗黙の処理として、propsのシャロー比較での更新制御が入っているので、ケース2-1,2-2のuseCallbackで「利点2」が得られる可能性があります。&lt;/li&gt;
-&lt;li&gt;ただし、reduxのdumbコンポーネントやreact-redux 7.1移行のHooks系でstoreと結びつけている場合はこの限りではありません。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;html要素にコールバックを渡す場合&lt;/h2&gt;
-&lt;p&gt;たとえばbuttonはReact.memo化されていないので(要出典)、利点2が得られません。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;#x3C;button onClick={()=&gt;{}} &gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;で充分です。&lt;/p&gt;
-&lt;h1&gt;まとめ&lt;/h1&gt;
-&lt;p&gt;まとめると、useCallbackを使うべきなのは、イベントハンドラをローカル関数にせざるを得ない場合、つまり関数コンポーネント本体のスコープ内の引数や、ローカル変数、特にpropの引数や他のuseStateを始めとするhooks呼び出しで得られるローカル変数の値に、関数の処理が依存している場合であり、かつ、そのローカル変数をイベントハンドラとして渡そうとしているReact要素がReact.memoされている場合です。&lt;/p&gt;
-&lt;h1&gt;おわり&lt;/h1&gt;
-&lt;p&gt;hooksは最高なんですが、留意点がありますので気をつけて使っていきましょう。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[redux-sagaで検索機能の実装を写経してCSPのパワーを感じる]]></title><description><![CDATA[この記事は、@inuscriptさんによる「redux-observableで検索機能の実装を写経してRxJSのパワーを感じる」をRedux-Saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;この記事は、@inuscriptさんによる「&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;redux-observableで検索機能の実装を写経してRxJSのパワーを感じる&lt;/a&gt;」を&lt;a href=&quot;https://github.com/redux-saga/redux-saga&quot;&gt;Redux-Saga&lt;/a&gt;で書きなおしたものです。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[redux-sagaで検索機能の実装を写経してCSPのパワーを感じる]]></title><description><![CDATA[この記事は、@inuscriptさんによる「redux-observableで検索機能の実装を写経してRxJSのパワーを感じる」をRedux-Saga…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/bee9b9dd8279b1a769bb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;この記事は、@inuscriptさんによる「&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;redux-observableで検索機能の実装を写経してRxJSのパワーを感じる&lt;/a&gt;」を&lt;a href=&quot;https://github.com/redux-saga/redux-saga&quot;&gt;Redux-Saga&lt;/a&gt;で書きなおしたものです。&lt;/p&gt;
 &lt;h1&gt;本記事の目的&lt;/h1&gt;
 &lt;p&gt;実用コードにおける非同期処理では以下のような問題が頻出する。これらについて元記事におけるRedux-obserbable(あるいはAngularが提供する)RxJSを用いた解決方法に対して、Redux-sagaによる解決方法を比較する。&lt;/p&gt;
 &lt;p&gt;(&lt;a href=&quot;http://qiita.com/inuscript/items/c672ddad4c24936b1061&quot;&gt;元記事&lt;/a&gt;よりの引用)&lt;/p&gt;
@@ -4019,7 +3681,382 @@ function* changeInput() {
 &lt;a href=&quot;#fnref-2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Elmでやってみようシリーズ1]]></title><description><![CDATA[elmでやってみるシリーズ1: ●を動かす。 こちらで実行できます。 感想 foldpは好き。 inputに対応するSignal…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ce95865dc999be1d68eb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ce95865dc999be1d68eb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://elm-lang.org/&quot;&gt;elm&lt;/a&gt;でやってみるシリーズ1: ●を動かす。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Material UIのスタイル指定(JSS)]]></title><description><![CDATA[Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。 classNameで即値指定 HTMLで言うclass=の指定。Material UI…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/969ef20ccef850d2e9b1/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;Material UIでのスタイル指定方法を説明します。Material UIのスタイルシステムの実体はJSSです。themeについては言及しません。もっと基礎的なところだけです。&lt;/p&gt;
+&lt;h1&gt;classNameで即値指定&lt;/h1&gt;
+&lt;p&gt;HTMLで言うclass=の指定。Material UI的には何もしない。BEMやscssでもなんでもいいのですが、外部スタイルシートを定義してあてがっていくパターン。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;&amp;#x3C;Hoge className=&quot;hoge fuga&quot;/&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;styleで指定&lt;/h1&gt;
+&lt;p&gt;styleプロパティの指定。Material UI的には何もしない。オブジェクトがdomのstyle属性に変換されて付けられる、Reactの仕組み。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;&amp;#x3C;Hoge style={{fontSize:1, padding: &apos;1rem&apos;} /&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;DOM上は、要素に直接紐付いたスタイル指定(devtool上、element.styleで表示される)となる。疑似要素は原理的に指定不可。&lt;/p&gt;
+&lt;h1&gt;StyledComponent💅で指定。&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://material-ui.com/styles/api/#styled-component-styles-options-component&quot;&gt;こちら&lt;/a&gt;を参照。本資料では説明を割愛する。&lt;/p&gt;
+&lt;h1&gt;JSSのスタイルシートオブジェクトで指定&lt;/h1&gt;
+&lt;p&gt;Material UIがかかわるのはここから。JSSは基本的にDOMのインラインスタイル属性ではなく、クラス名による指定の仕組みである。&lt;/p&gt;
+&lt;h2&gt;大きな流れ&lt;/h2&gt;
+&lt;p&gt;以下のような流れとなる。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;スタイルシートの元になる「元のスタイルシートオブジェクト」をJSで作る&lt;code&gt;const styles = { root: { backgroundColor: &apos;red&apos;, }, };&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;「元のスタイルシートオブジェクト」を元に、Material UIが準備しているHoCやhooksを使って、以下を生成する。&lt;/li&gt;
+&lt;li&gt;「元のスタイルシートオブジェクト」のプロパティ名と、コンポーネントローカルにリネームされた実際に生成される「クラス名の対応表」。こんなやつ:
+&lt;code&gt;{&quot;tabBar&quot;:&quot;TabBar-tabBar-284&quot;,&quot;selectedTab&quot;:&quot;TabBar-selectedTab-285&quot;}&lt;/code&gt;&lt;br/&gt;この値自体をプログラマが意識することは(デバッグ時を除き)基本的にはない。&lt;/li&gt;
+&lt;li&gt;この実クラス名でのスタイル定義が、背後で&amp;#x3C;head&gt;に挿入される(プログラマは意識しないでよい)。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;「クラス名の対応表」をMaterial UIが提供するReactコンポーネントにおいて以下のいずれかの方法で利用する&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;「クラス名の対応表」から実クラス名を取得して「classNames」propsで指定する。&lt;/li&gt;
+&lt;li&gt;「クラス名の対応表」から実クラス名を「classes」propsで指定する。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;「元のスタイルシートオブジェクト」の作りかた&lt;/h2&gt;
+&lt;h3&gt;単なるJSオブジェクトとして「スタイルシートオブジェクト」を作る&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = {
+  root: {
+    backgroundColor: &apos;red&apos;,
+  },
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;もしくは&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = createStyles({
+  root: {
+    backgroundColor: &apos;red&apos;,
+  },
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;両者の意味は同じである。後者ではTypeScriptの型エラーを黙らすことができる。&lt;/p&gt;
+&lt;h2&gt;themeを引数とする関数として「スタイルシートオブジェクト」を作る&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: Theme) =&gt;{
+  root: {
+    backgroundColor: theme.color.red,
+  },
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;もしくは&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: Theme) =&gt; createStyles({
+  root: {
+    backgroundColor: theme.color.red,
+  },
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;両者の意味は同じである。後者ではTypeScriptの型エラーを黙らすことができる。&lt;/p&gt;
+&lt;p&gt;ここでは、Reactのインラインstyle属性のようにJavaScriptオブジェクトを用いるが、rootの階層が入っていることが異なる。この階層の名前は、(実CSSクラス名を隠蔽した)、ローカルなCSSクラス名と思ってよい。&lt;/p&gt;
+&lt;p&gt;CSSクラスなので疑似クラスも指定できる。たとえば、以下のように:hover疑似クラスが指定できる。(JSSの機能)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles: any = (theme: Theme): StyleRules =&gt;
+  createStyles({
+    button: {
+      margin: &apos;0.3rem&apos;,
+      &apos;&amp;#x26;:hover&apos;: { transform: &apos;scale(1.1)&apos; },
+    },
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;「元のスタイルシートオブジェクト」から「クラス名の対応表」を入手する&lt;/h2&gt;
+&lt;h3&gt;React Hooks系で&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://material-ui.com/styles/api/#makestyles-styles-options-hook&quot;&gt;こちらから&lt;/a&gt;引用だが、以下のように「makeStyles」の引数に「元のスタイルシートオブジェクト」を渡すと、「クラス名の対応表」を取得できるフック関数を入手することができる。そのフック関数の呼び出し結果をclasses変数に取得している。(createStylesは使用していない。)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;import React from &apos;react&apos;;
+import { makeStyles } from &apos;@material-ui/core/styles&apos;;
+
+const useStyles = makeStyles({
+  root: {
+    backgroundColor: &apos;red&apos;,
+    color: props =&gt; props.color,
+  },
+});
+
+export default function MyComponent(props) {
+  const classes = useStyles(props);
+  return &amp;#x3C;div className={classes.root} /&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;HoC系で&lt;/h3&gt;
+&lt;p&gt;HoCである&lt;a href=&quot;https://material-ui.com/styles/api/#withstyles-styles-options-higher-order-component&quot;&gt;withStyles&lt;/a&gt;を使う。こちらも引用だが以下となる。意味はHooks系と同じだが、「元のスタイルシートオブジェクト」をwithStylesの入力として与え、「クラス名の対応表」がprops.classesに得られるようなコンポーネントを生成している。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;import React from &apos;react&apos;;
+import { withStyles } from &apos;@material-ui/core/styles&apos;;
+
+const styles = {
+  root: {
+    backgroundColor: &apos;red&apos;,
+  },
+};
+
+function MyComponent(props) {
+  return &amp;#x3C;div className={props.classes.root} /&gt;;
+}
+
+export default withStyles(styles)(MyComponent);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;取得した「クラス名の対応表」の使いかた&lt;/h2&gt;
+&lt;p&gt;「クラス名の対応表」は、入手方法としてHooksでもHoCで得ることができるが、同じものである。上記サンプルでは、入手した「クラス名の対応表」はclassesという名前のprops(props.classes)もしくは変数classesに格納している。&lt;/p&gt;
+&lt;p&gt;「クラス名の対応表」には2つの使いかたがある。&lt;/p&gt;
+&lt;h2&gt;classNameに与える&lt;/h2&gt;
+&lt;p&gt;サンプルにもあるが、&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;  return &amp;#x3C;div className={classes.root} /&gt;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;のように指定する。複数あれば&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;  return &amp;#x3C;div className={classNames(classes.root,classes.hoge)} /&gt;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;のようにNPMモジュールclassnamesを使うのがよいだろう。classnamesはクラス名を結合させているだけである。(&lt;a href=&quot;https://qiita.com/taqm/items/c38855d8158cdd9d5a3e&quot;&gt;clsx&lt;/a&gt;というのもあり効率がよいらしい)。&lt;/p&gt;
+&lt;h2&gt;classesで指定&lt;/h2&gt;
+&lt;p&gt;最後になったが、これがJSSの本領である。Material UIのコンポーネントにはCSS APIというものが定義されており、それを使ってカスタマイズすることができる。
+たとえば、&lt;a href=&quot;https://material-ui.com/api/tabs/&quot;&gt;Tabsコンポーネントには以下のようにかかれている&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;CSS&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Style sheet name: MuiTab.&lt;/li&gt;
+&lt;li&gt;Style sheet details:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;left&quot;&gt;Rule name&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Global class&lt;/th&gt;
+&lt;th align=&quot;left&quot;&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;root&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.MuiTab-root&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Styles applied to the root element.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;labelIcon&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.MuiTab-labelIcon&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if both icon and label are provided.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;textColorInherit&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorInherit&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“inherit”.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;textColorPrimary&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorPrimary&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“primary”.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;textColorSecondary&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.MuiTab-textColorSecondary&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Styles applied to the root element if the parent Tabs has textColor=“secondary”.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&quot;left&quot;&gt;&lt;font color=&quot;red&quot;&gt;selected&lt;/font&gt;&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;.Mui-selected&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt;Pseudo-class applied to the root element if selected={true} (controlled by the Tabs component).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;これらを必要に応じてオーバーライド定義することができる。赤字”selected”は後述の説明で例として使用するCSS APIのキー名である。このスタイルをオーバーライドする方法は3つある。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;With a rule name of the classes object prop.(classes propsのルール名)&lt;/li&gt;
+&lt;li&gt;With a global class name. (グローバルクラス名)&lt;/li&gt;
+&lt;li&gt;With a theme and an overrides property..(テーマと上書きプロパティ)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以降では最初の「 rule name of the classes object prop.」について説明する。
+やるべきことは、classes属性に、指定したCSS API名をキー(ここではslected)とし「クラス名の対応表」の実クラス名を指定するのである。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jsx&quot;&gt;const styles = (theme: any) =&gt;
+  createStyles({
+    selectedTab: {
+      backgroundColor: &apos;#eeeeff&apos;,
+      fontWeight: &apos;bold&apos;,
+    },
+  });
+:
+          &amp;#x3C;Tabs&gt;
+            &amp;#x3C;Tab
+              classes={{ selected: classes.selectedTab }} /&gt;
+               :
+          &amp;#x3C;/Tabs&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;するともともとMUIで定義されていたCSSに上書きされる形でCSSスタイルが定義される。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[React HooksのuseCallbackを正しく理解する]]></title><description><![CDATA[はじめに React HooksのuseCallback…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/99f7cd014e2c0fa1fc4e/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/99f7cd014e2c0fa1fc4e/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;h1&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;React HooksのuseCallbackは、イベントハンドラ(コールバック)を使うときは無条件に使うものだと思っていませんか。実際にはコールバックが「ある条件をみたす」ときに使うべきもののようです。このある条件を整理して明確にするために記事を書きました。&lt;/p&gt;
+&lt;h1&gt;useCallbackとは何か&lt;/h1&gt;
+&lt;p&gt;useCallbackは、useMemoのような、重い計算を回避しキャッシュを使うというような効率向上のための仕組みではありません。useCallbackに渡す関数内で行なう計算の重さはまったく無関係です。
+useCallbackがやることは、「コールバック関数の不変値化」です。&lt;/p&gt;
+&lt;p&gt;「関数を決定する処理のメモ化」と言えるかもしれません。アロー式は原理的に常に新規関数オブジェクトを作ってしまいますが、useCallbackは「意味的に同じ関数」が返るかどうかを判別して、同じ値を返す関数が返るべきなら新規のアロー式を捨てて、前に渡した同じ結果を返す関数を使い回しで返します。&lt;/p&gt;
+&lt;p&gt;同じ値を返す関数なのに、異なる実体関数をpropsに渡すと無駄なrenderが走ってしまうので、「一回useCallbackをくぐらせる」ことで一意化し、引き起こされるかもしれない無駄なレンダリングを抑制することができます。&lt;/p&gt;
+&lt;p&gt;関数が純粋であれば、引数が同じなら常に同じ値を返すはずだから毎回「くぐらせる」必要なんかなくて、保存していた前の値を常にかえせばいいのでは、と思うかもしれませんが、関数がクロージャとして変数をキャプチャしているとそうはいかず、「同じ引数なのに異なる値を返す」ということがありうるのです。クロージャがキャプチャしている変数は、追加的な暗黙の引数なのです。なのでキャプチャしていて、結果に影響を及ぼす変数の値を考慮するために、それらを依存変数として渡して判別を行います。&lt;/p&gt;
+&lt;h2&gt;コールバック関数の不変値化とは何か&lt;/h2&gt;
+&lt;p&gt;ローカル関数がローカル変数などをキャプチャするというのは実質的にはそのローカル関数の引数なのですが、useCallbackがやってくれることは、ローカル関数と、そのローカル関数がキャプチャする変数列を依存変数として与えて呼び出すと、依存引数の値と関数本体をあわせてinternし、不変値化することです。Immutable.jsの提供する不変データと同じように、その結果を使うことでpropsとして関数を使う場合のシャロー比較がうまくいきます。&lt;/p&gt;
+&lt;p&gt;その結果として、その渡したコンポーネントが以下の条件を満す場合、不要な画面更新が減ります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;React.memo()されている場合&lt;/li&gt;
+&lt;li&gt;クラスコンポーネントでshouldComponentUpdate()でpropsをシャロー比較して同じならスキップしている場合&lt;/li&gt;
+&lt;li&gt;クラスコンポーネントでPureComponentから継承した場合に相当)場合&lt;/li&gt;
+&lt;li&gt;react-reduxのconnectを使ったSmartコンポーネント&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;基本の整理&lt;/h1&gt;
+&lt;p&gt;useCallback Hookは以下の形で呼び出します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const callback = useCallback(関数, [deps])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ここで関数にアロー式をあたえたとします。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const Component = () =&gt; {
+  const callback = useCallback(()=&gt;{処理}, [deps])
+    :
+  return &amp;#x3C;Hoge onHoge={callback} /&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;JavaScriptの言語仕様上、renderごとに常にアロー関数の生成式「()=&gt;{処理}」が評価されて新たな関数オブジェクトがつくられます(アロー関数のボディは評価されるわけではない)。アロー式が関数引数である場合、たとえばuseCallbackの引数である場合にしても同じです。引数として評価されたときに、&lt;strong&gt;常に新しく関数オブジェクトが作られます&lt;/strong&gt;。useCallback側で処理の選択肢があるのは、その関数値を捨てるか、次の呼び出しで返すまえにとっとくかだけです。&lt;/p&gt;
+&lt;p&gt;なので、このComponentのrender時に毎回関数オブジェクトを作らせないためには、関数本体の外側に移動して&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const handlerFunc = ()=&gt;{処理}
+const Component = () =&gt; {
+    :
+  return &amp;#x3C;Hoge onHoge={handlerFunc} /&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;とするしかありません。こうすると、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;利点1.&lt;/strong&gt; 関数オブジェクトの生成を抑制する&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;利点2.&lt;/strong&gt; Hogeが「propsがシャロー比較の意味で変化しなければrenderを呼ばない」という最適化されたコンポーネント(Rect.memo化されたコンポーネントやPureComponent)であったときに効率が良い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;という2点で効率が高いです。&lt;/p&gt;
+&lt;h1&gt;何が問題か&lt;/h1&gt;
+&lt;p&gt;問題は、イベントハンドラを関数コンポーネントの外側に外出しできるのは、そのハンドラ本体の処理が、propsなどの関数引数(=ローカルスコープ)や、useStateなどで得られるローカル変数としてのstateを使用しないで実行できる場合のみだということです。それらへのアクセスが必要な場合は非常に多いので、無視することはできません。&lt;/p&gt;
+&lt;p&gt;なので、ローカル関数にする場合が多くなるでしょう。しかし、ローカル関数は、render時点でのローカル変数をキャプチャしてしまう&lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; ので、へたに保存して使いまわそうとすると、一般に非同期に呼び出されるイベントハンドラでは、そのキャプチャ元の変数の最新の値を使って処理できない、という問題があります。使いまわさなければいいんですけどね。使いまわしたくなる事情もあるのです。
+&lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;: &lt;a href=&quot;https://overreacted.io/ja/how-are-function-components-different-from-classes/&quot;&gt;https://overreacted.io/ja/how-are-function-components-different-from-classes/&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;問題回避策&lt;/h1&gt;
+&lt;h2&gt;問題回避策1&lt;/h2&gt;
+&lt;p&gt;先ほど、ローカル関数がローカル変数をキャプチャしてしまうことが問題の一環だと述べました。useStateの返り値もローカル変数であり、この問題をかかえます。しかしuseStateを上手く使うことでイベントハンドラでのキャプチャを回避できる場合があります。&lt;/p&gt;
+&lt;p&gt;この状況を説明します。
+useState Hooksの返り値の配列(タプル)第二要素のいわゆるsetter関数が得られます。たとえば、&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const Component = () =&gt; {
+  const [counter, setCounter] = useState(0);
+    :
+  return &amp;#x3C;Hoge onHoge={setCounter} /&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ここでのsetCounterがsetter関数です。setter関数には通常は新しいstateの値を渡しますが、値ではなく関数を渡すこともでき、たとえば以下のように使えます。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;setCounter((oldCounter)=&gt;(oldCounter + 1)) // counterを1増加させる。
+// setCounter(counter + 1)と同じだがcounterをキャプチャしない。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;こちらを使ってstateをローカル関数経由ではなくsetStateの引数からもらうようにすれば、ローカル変数としてのcounterはキャプチャしないので、「古い値」問題はおきません。
+上の場合、setCounter自体もuseStateの返り値なのでローカル変数じゃないかと思うかもしれませんが、Hooksのしくみ的にはsetCounter自体はコンポーネントごとに一意で、複数回のuseStateでも同じ関数が得られますのでキャプチャ問題は起きません。&lt;/p&gt;
+&lt;h2&gt;問題回避策2&lt;/h2&gt;
+&lt;p&gt;useStateが返すsetCounter関数はローカルスコープにある変数や引数(具体的にはprops引数)に依存しないので、useCllbackに包まずにHogeのonHogeに直接わたしても効率は劣化しませんし問題も起きません。そのsetterを渡した側で、回避策1の方式でstateの値を参照することもできます。&lt;/p&gt;
+&lt;p&gt;もっともこれは個々の変数レベルのsetter操作なので、「いくつかの変数に対するロジック、操作」を、自コンポーネントでまとめてイベントハンドラに渡すためには関数にする必要があり、コールバック関数を定義する必要がでてきます。&lt;/p&gt;
+&lt;h2&gt;問題回避策3&lt;/h2&gt;
+&lt;p&gt;useReducerを使い、イベントハンドラ用途ではdispatchをprops経由で渡します。&lt;/p&gt;
+&lt;h2&gt;問題回避策4&lt;/h2&gt;
+&lt;p&gt;react-reduxを使い、イベントハンドラをpropsとしてはバケツリレーせず、イベントを検出する直下のコンポーネントでuseDispatchしてアクションをdispachさせます。
+これが個人的には妥当だとおもってます。react-redux 7.1のhooksベースreduxは別ものです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://qiita.com/uehaj/items/f91d68ea4ef8450fc45c&quot;&gt;Redux Starter KitでHooksとReduxを使いこなそう
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;useCallbackを使うかどうかの判断&lt;/h1&gt;
+&lt;p&gt;さて、いずれの回避策も適用できない、もしくはしたくないとして、いよいよuseCallbackを使うかどうかの判断しなければなりません。&lt;/p&gt;
+&lt;h2&gt;ケース1「利点1」を得たい場合(自動的に「利点2」も得られる)&lt;/h2&gt;
+&lt;p&gt;「利点1」のために、不変のイベントハンドラを定義することが必要であり、state, props, ローカル変数を直接参照する必要がないなら以下が可能です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const handleHoge = () =&gt; {propsやstateを使わない処理}
+const Component = (props) =&gt; {
+  return &amp;#x3C;Hoge onHoge={handleHoge} /&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;ケース2-1「利点1」をあきらめるが、「利点2」を得たい場合&lt;/h2&gt;
+&lt;p&gt;state, props, ローカル変数を参照する必要があり、かつその変更にもかかわらず同じ関数を得たいなら、それらを間接的に参照するように関数を作りこむことになります。ある意味、クラスコンポーネントのthisをエミュレーションし、それを通じてpropsアクセスするようにします。&lt;/p&gt;
+&lt;p&gt;具体的には、useRefなどを使ってstateやpropsの値をコピーしておき、それをつかった処理をする関数を保存して渡します。propsなどをrender時に毎回そのrefに保存するようにすればよいわけです。&lt;/p&gt;
+&lt;p&gt;useCallbackの依存変数指定にたよらず(指定を間違えるかもしれない! 依存変数はあとで増えるかもしれない!)、propsのみを信じ、そこを直接使います。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;// 試してない
+const Component = (props) =&gt; {
+  const ref = useRef(props);
+  useEffect(() =&gt; {
+    ref.current = props;
+  });
+  const handleHoge = useCallback(()=&gt;{
+    const props = ref.current;
+    // propsを使った処理 
+  }, []);
+  return &amp;#x3C;Hoge onHoge={handleHoge} /&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;(やったことないので本当にできるか不明)
+propsの変更を適当にスロットルして、依存変数を制御するとかもできるかもれない。
+(追記:コメントでうまくいったとご報告をいただきました。またアドバイスいただき[ref]を依存変数から除去しました。)&lt;/p&gt;
+&lt;h2&gt;ケース2-2「利点1」をあきらめるが、「利点2」は得られる場合その2&lt;/h2&gt;
+&lt;p&gt;依存変数がなければ、useCallbackは常に前回と同じ値もしくは初期値を返します。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const Component = (props) =&gt; {
+  const handleHoge = useCallback(() =&gt; {propsやstateを使わない処理}, []);
+  return &amp;#x3C;Hoge onHoge={handleHoge} /&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ケース1と比べると、利点2は同等です。利点1は得られませんが、たいてい無視できるでしょう。&lt;/p&gt;
+&lt;h2&gt;ケース2-3「利点1」をあきらめるが、「利点2」を&lt;strong&gt;&lt;em&gt;一部&lt;/em&gt;&lt;/strong&gt;得たい場合&lt;/h2&gt;
+&lt;p&gt;useCallbackに、必要な依存をつけてローカル関数をくぐらせたものを使ってください。
+useCallbackの使いかたの本道です。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;const Component = (props) =&gt; {
+  const [state, setState] = useState(..);
+  const handleHoge = useCallback(
+     () =&gt; {propsやstateを使った処理},
+     [props.x, state]
+  );
+  return &amp;#x3C;Hoge onHoge={handleHoge} /&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;「利点2」を一部得たい場合」の一部というのは、依存変数が変化しなければ一応、再renderはおきないからです。しかし、クラスコンポーネントの場合に、コンストラクタでイベントハンドラを.bind(this)して保存しなおしたり、クラスフィールドで保存した場合は関数の更新は一切起きなかったわけなので、一部はあきらめていることになります。これは関数コンポーネントではthis経由でpropsとstateがアクセスできないことに起因する問題です。&lt;/p&gt;
+&lt;h2&gt;ケース3「利点1」と「利点2」の両方をあきらめる場合。&lt;/h2&gt;
+&lt;p&gt;ローカルなアロー関数をそのままわたしてください。useCallbackはdepsが漏れるとバグになりやすいので、良い選択かもしれません。&lt;/p&gt;
+&lt;h1&gt;利点2がそもそも得られないパターン&lt;/h1&gt;
+&lt;p&gt;上のケース2のいずれかを採用して、利点2が得られるとおもってuseCallbackを使うとしても、実際には利点2が得られていない場合があります。この場合ケース3にフォールダウンした方がよいかもしれません(統一性のためケース2-2,2-3を採用するという判断もありえますが、前述のようにバグ注意です)&lt;/p&gt;
+&lt;h2&gt;propsの変化の有無が効率に無関係な場合&lt;/h2&gt;
+&lt;p&gt;デフォルトでは、render()呼び出しはpropsの変化にかかわらず常に行なわれます。なので利点2を考えてケース2にする意味がない場合があります。propsをシャロー比較してrenderを最適化しようとしているケースは以下が考えられます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;React.memoでメモ化されているケース&lt;/li&gt;
+&lt;li&gt;PureComponent&lt;/li&gt;
+&lt;li&gt;componentWillUpdateでシャロー比較の更新制御などをしているコンポーネント&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;react-reduxのconnectを使ったSmartコンポーネント&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;redux暗黙の処理として、propsのシャロー比較での更新制御が入っているので、ケース2-1,2-2のuseCallbackで「利点2」が得られる可能性があります。&lt;/li&gt;
+&lt;li&gt;ただし、reduxのdumbコンポーネントやreact-redux 7.1移行のHooks系でstoreと結びつけている場合はこの限りではありません。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;html要素にコールバックを渡す場合&lt;/h2&gt;
+&lt;p&gt;たとえばbuttonはReact.memo化されていないので(要出典)、利点2が得られません。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;#x3C;button onClick={()=&gt;{}} &gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;で充分です。&lt;/p&gt;
+&lt;h1&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;まとめると、useCallbackを使うべきなのは、イベントハンドラをローカル関数にせざるを得ない場合、つまり関数コンポーネント本体のスコープ内の引数や、ローカル変数、特にpropの引数や他のuseStateを始めとするhooks呼び出しで得られるローカル変数の値に、関数の処理が依存している場合であり、かつ、そのローカル変数をイベントハンドラとして渡そうとしているReact要素がReact.memoされている場合です。&lt;/p&gt;
+&lt;h1&gt;おわり&lt;/h1&gt;
+&lt;p&gt;hooksは最高なんですが、留意点がありますので気をつけて使っていきましょう。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[JSでデフォルトカリー化]]></title><description><![CDATA[JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。 func = arg1 => arg2 => .. 関数本体 たとえば、以下のように関数を定義して… 呼び出しは以下のようにします。 これでOK…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;func = arg1 =&gt; arg2 =&gt; .. 関数本体&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;たとえば、以下のように関数を定義して…&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;func = x =&gt; y =&gt; z =&gt; x+y+z;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;呼び出しは以下のようにします。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;console.log(func(3)(4)(5)); // ==&gt; 12
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;これでOK。
+え?呼び出しが煩雑だって?
+ならば、以下のように$プロパティをFunctionに定義すると…&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;uncurry = (func) =&gt; {
+    return new Proxy(func,
+                     {
+                         apply(target, thisArg, argsList) {
+                             return argsList.reduce((last, arg)=&gt;{
+                                 return last.call(thisArg, arg);
+                             }, target);
+                         }
+                     }
+                    );
+};
+
+
+Object.defineProperty(Function.prototype, &quot;$&quot;, {
+    get: function() {return uncurry(this); },
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;こんな風にできます。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;console.log(func.$(3,4,5)); // ==&gt; 12 
+console.log(func(3).$(4,5)); // ==&gt; 12 
+console.log(func(3)(4).$(5)); // ==&gt; 12 
+console.log(func.$(3,4)(5)); // ==&gt; 12
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;$&lt;/code&gt;はhaskellの$のイメージ。&lt;/p&gt;
+&lt;h1&gt;追記&lt;/h1&gt;
+&lt;p&gt;NPMパッケージ化しました。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.npmjs.com/package/uncurry-apply&quot;&gt;https://www.npmjs.com/package/uncurry-apply&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Elmでやってみようシリーズ1]]></title><description><![CDATA[elmでやってみるシリーズ1: ●を動かす。 こちらで実行できます。 感想 foldpは好き。 inputに対応するSignal…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ce95865dc999be1d68eb/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/ce95865dc999be1d68eb/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://elm-lang.org/&quot;&gt;elm&lt;/a&gt;でやってみるシリーズ1: ●を動かす。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-haskell&quot;&gt;import Window
 
 pos : Signal Int
@@ -4226,44 +4263,7 @@ CMDに関して、「&lt;code&gt;/bin/sh -c&lt;/code&gt;」の付与は、ENTRYP
 &lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</content:encoded></item><item><title><![CDATA[JSでデフォルトカリー化]]></title><description><![CDATA[JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。 func = arg1 => arg2 => .. 関数本体 たとえば、以下のように関数を定義して… 呼び出しは以下のようにします。 これでOK…]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/d3dd93bc9266d35bd1c6/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;JS(ES2015)でデフォルトカリー化を味わうためには、関数定義は以下のようにするものだ、と自分に言いきかせます。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;func = arg1 =&gt; arg2 =&gt; .. 関数本体&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;たとえば、以下のように関数を定義して…&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;func = x =&gt; y =&gt; z =&gt; x+y+z;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;呼び出しは以下のようにします。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;console.log(func(3)(4)(5)); // ==&gt; 12
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;これでOK。
-え?呼び出しが煩雑だって?
-ならば、以下のように$プロパティをFunctionに定義すると…&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;uncurry = (func) =&gt; {
-    return new Proxy(func,
-                     {
-                         apply(target, thisArg, argsList) {
-                             return argsList.reduce((last, arg)=&gt;{
-                                 return last.call(thisArg, arg);
-                             }, target);
-                         }
-                     }
-                    );
-};
-
-
-Object.defineProperty(Function.prototype, &quot;$&quot;, {
-    get: function() {return uncurry(this); },
-});
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;こんな風にできます。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;console.log(func.$(3,4,5)); // ==&gt; 12 
-console.log(func(3).$(4,5)); // ==&gt; 12 
-console.log(func(3)(4).$(5)); // ==&gt; 12 
-console.log(func.$(3,4)(5)); // ==&gt; 12
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;$&lt;/code&gt;はhaskellの$のイメージ。&lt;/p&gt;
-&lt;h1&gt;追記&lt;/h1&gt;
-&lt;p&gt;NPMパッケージ化しました。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.npmjs.com/package/uncurry-apply&quot;&gt;https://www.npmjs.com/package/uncurry-apply&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Visual Studio Codeでエスケープキーの代りに^[を使用する設定]]></title><description><![CDATA[TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに ^[を割り当てます。Cmd-K Cmd-s からkeybindigs.jsonを開いて以下を追加。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに &lt;code&gt;^[&lt;/code&gt;を割り当てます。&lt;code&gt;Cmd-K&lt;/code&gt; &lt;code&gt;Cmd-s&lt;/code&gt; からkeybindigs.jsonを開いて以下を追加。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Visual Studio Codeでエスケープキーの代りに^[を使用する設定]]></title><description><![CDATA[TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに ^[を割り当てます。Cmd-K Cmd-s からkeybindigs.jsonを開いて以下を追加。]]></description><link>https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</link><guid isPermaLink="false">https://ganevru.github.io/gatsby-starter-blog-grommet/blog/f2c71325c9f7dc10357c/</guid><pubDate>Thu, 20 Feb 2020 15:08:12 GMT</pubDate><content:encoded>&lt;p&gt;TouchBarつきのMacBookでは、エスケープキーが使いにくいので、Escapeキーの代りに &lt;code&gt;^[&lt;/code&gt;を割り当てます。&lt;code&gt;Cmd-K&lt;/code&gt; &lt;code&gt;Cmd-s&lt;/code&gt; からkeybindigs.jsonを開いて以下を追加。&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;[
   {
     &quot;key&quot;: &quot;ctrl+[&quot;,
